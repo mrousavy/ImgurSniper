@@ -1,0 +1,18 @@
+﻿<Window x:Class="ImgurSniper.ScreenshotWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ImgurSniper"
+        mc:Ignorable="d" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize"
+        Title="ScreenshotWindow" Height="100" Width="100" ShowInTaskbar="False" Topmost="True" Top="0" Left="0"
+        Opacity="0.8">
+    <Grid>
+        <Image Name="img" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Fill" Cursor="Cross"
+           MouseDown="img_MouseDown" MouseUp="img_MouseUp" MouseMove="img_MouseMove">
+
+        </Image>
+        
+        <Label HorizontalAlignment="Center" VerticalAlignment="Top" Background="Black" Foreground="White" Name="coords" Opacity="0.3">x:0 | y:0</Label>
+    </Grid>
+</Window>
