@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -10,6 +11,7 @@ namespace ImgurSniper {
     public partial class ScreenshotWindow : Window {
         public byte[] CroppedImage;
         public Point from, to;
+        private bool _down = false; //Mouse Down
 
         public ScreenshotWindow(ImageSource source) {
             InitializeComponent();
@@ -25,6 +27,9 @@ namespace ImgurSniper {
 
         private void img_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
             from = e.GetPosition(this);
+            CropRect.Visibility = Visibility.Visible;
+            CropRect.Margin = new Thickness(e.GetPosition(this).X, e.GetPosition(this).Y, e.GetPosition(this).X, e.GetPosition(this).Y);
+            _down = true;
         }
 
         private void img_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e) {
@@ -46,23 +51,22 @@ namespace ImgurSniper {
         }
 
         private void MakeImage(int width, int height) {
+            try {
+                BitmapImage src = img.Source as BitmapImage;
+                src.CacheOption = BitmapCacheOption.OnLoad;
 
-            BitmapImage src = img.Source as BitmapImage;
-            src.CacheOption = BitmapCacheOption.OnLoad;
 
+                CroppedBitmap croppedImage = new CroppedBitmap(src, new Int32Rect((int)from.X, (int)from.Y, (int)(to.X - from.X), (int)(to.Y - from.Y)));
 
-            CroppedBitmap croppedImage = new CroppedBitmap(src, new Int32Rect((int)from.X, (int)from.Y, (int)(to.X - from.X), (int)(to.Y - from.Y)));
-
-            //BitmapImage resized = Screenshot.ResizeImage(croppedImage, width, height);
-
-            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-            encoder.QualityLevel = 100;
-            using(MemoryStream stream = new MemoryStream()) {
-                encoder.Frames.Add(BitmapFrame.Create(croppedImage));
-                encoder.Save(stream);
-                CroppedImage = stream.ToArray();
-                stream.Close();
-            }
+                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+                encoder.QualityLevel = 100;
+                using(MemoryStream stream = new MemoryStream()) {
+                    encoder.Frames.Add(BitmapFrame.Create(croppedImage));
+                    encoder.Save(stream);
+                    CroppedImage = stream.ToArray();
+                    stream.Close();
+                }
+            } catch(Exception) { }
         }
 
         private void Grid_KeyDown(object sender, System.Windows.Input.KeyEventArgs e) {
@@ -74,11 +78,32 @@ namespace ImgurSniper {
         private void img_MouseMove(object sender, System.Windows.Input.MouseEventArgs e) {
             double x = e.GetPosition(this).X;
             double y = e.GetPosition(this).Y;
-            this.coords.Content = "x:" + x + " | " + "y:" + y;
 
-            double right = this.Width - x - 35, bottom = this.Height - y;
+            double right = this.Width - x, bottom = this.Height - y;
 
-            MagnifyingGlass.Margin = new Thickness(x - 35, y - 90, right, bottom);
+
+            if(_down) {
+                double _left, _top, _right, _bottom;
+                _left = CropRect.Margin.Left;
+                _top = CropRect.Margin.Top;
+                _right = right;
+                _bottom = bottom;
+
+
+
+                CropRect.Margin = new Thickness(_left, _top, _right, _bottom);
+
+                //if(CropRect.ActualWidth < 5) {
+                //    CropRect.Margin = new Thickness(CropRect.Margin.Right, CropRect.Margin.Top, CropRect.Margin.Left, CropRect.Margin.Bottom);
+                //}
+                //if(CropRect.ActualHeight < 5) {
+                //    CropRect.Margin = new Thickness(CropRect.Margin.Left, CropRect.Margin.Bottom, CropRect.Margin.Right, CropRect.Margin.Top);
+                //}
+            }
+
+            right -= 35;
+
+            MagnifyingGlass.Margin = new Thickness(x - 35, y - 120, right, bottom);
             MagnifyedImage.Source = img.Source;
 
             var rect = new Rect(x, y, 70, 70);
@@ -105,7 +130,6 @@ namespace ImgurSniper {
 
 
 
-
             //int count = 0;
 
             //byte[] byteImage = Screenshot.ImageToByte(img.Source);
@@ -121,6 +145,8 @@ namespace ImgurSniper {
             //    for(int j = 0; j < 3; j++)
             //        objImg[count++] = new CroppedBitmap(src, new Int32Rect(j * 120, i * 120, 120, 120));
             ////MagnifyedImage.Margin = new Thickness(1,50,10,50);
+
+            this.coords.Content = "x:" + x + " | " + "y:" + y;
         }
     }
 }

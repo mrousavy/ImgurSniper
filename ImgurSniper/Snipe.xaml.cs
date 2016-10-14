@@ -48,8 +48,8 @@ namespace ImgurSniper {
                 File.WriteAllBytes(_dir + "\\test.png", cimg);
 
                 try {
-                    //string link = await Upload(cimg);
-                    //System.Windows.Clipboard.SetText(link);
+                    string link = await Upload(cimg);
+                    System.Windows.Clipboard.SetText(link);
                 } catch(Exception) {
                     System.Windows.Forms.MessageBox.Show("File size too Large", "Error");
                 }

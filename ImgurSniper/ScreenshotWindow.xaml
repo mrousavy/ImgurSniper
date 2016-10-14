@@ -19,5 +19,8 @@
 
             </Image>
         </Border>
+
+        <Border BorderBrush="Red" BorderThickness="2,2,2,2" CornerRadius="2,2,2,2" Name="CropRect" Visibility="Collapsed">
+        </Border>
     </Grid>
 </Window>
