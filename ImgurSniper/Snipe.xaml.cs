@@ -42,14 +42,19 @@ namespace ImgurSniper {
             ScreenshotWindow window = new ScreenshotWindow(Screenshot.getScreenshot());
             window.ShowDialog();
 
-            byte[] cimg = window.CroppedImage;
+            if(window.DialogResult == true) {
+                byte[] cimg = window.CroppedImage;
 
-            byte[] x = File.ReadAllBytes(@"F:\,Bilder\2k Dialga.jpg");
+                File.WriteAllBytes(_dir + "\\test.png", cimg);
 
-            //TODO: Fix UriFormatException (Uri too long)
-            string link = await Upload(cimg);
-
-            System.Windows.Clipboard.SetText(link);
+                try {
+                    //string link = await Upload(cimg);
+                    //System.Windows.Clipboard.SetText(link);
+                } catch(Exception) {
+                    System.Windows.Forms.MessageBox.Show("File size too Large", "Error");
+                }
+                this.Close();
+            }
         }
 
 

@@ -4,15 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImgurSniper"
-        mc:Ignorable="d" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize"
+        mc:Ignorable="d" AllowsTransparency="False" WindowStyle="None" ResizeMode="NoResize" Background="White"
         Title="ScreenshotWindow" Height="100" Width="100" ShowInTaskbar="False" Topmost="True" Top="0" Left="0"
         Opacity="0.8">
-    <Grid>
+    <Grid KeyDown="Grid_KeyDown">
         <Image Name="img" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Fill" Cursor="Cross"
            MouseDown="img_MouseDown" MouseUp="img_MouseUp" MouseMove="img_MouseMove">
-
         </Image>
-        
+
         <Label HorizontalAlignment="Center" VerticalAlignment="Top" Background="Black" Foreground="White" Name="coords" Opacity="0.3">x:0 | y:0</Label>
+
+        <Border Height="70" Width="70" BorderBrush="#FF555555" BorderThickness="2.5,2.5,2.5,3.5" CornerRadius="45,45,45,45" Name="MagnifyingGlass">
+            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="MagnifyedImage">
+
+            </Image>
+        </Border>
     </Grid>
 </Window>
