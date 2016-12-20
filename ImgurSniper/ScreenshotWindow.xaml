@@ -33,6 +33,8 @@
             </Image>
         </Border>
 
+        <Rectangle x:Name="selectionRectangle" Fill="Red" Visibility="Collapsed"></Rectangle>
+
         <Border BorderBrush="Red" BorderThickness="2,2,2,2" CornerRadius="2,2,2,2" Name="CropRect" Visibility="Collapsed">
         </Border>
 

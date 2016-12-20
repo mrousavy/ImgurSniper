@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -31,6 +32,10 @@ namespace ImgurSniper {
         private void img_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
             //Lock the from Point to the Mouse Position when started holding Mouse Button
             from = e.GetPosition(this);
+
+            drag = true;
+            selectionRectangle.Margin = new Thickness(from.X, from.Y, this.Width - from.X - 30, this.Height - from.Y - 30);
+            selectionRectangle.Visibility = Visibility.Visible;
         }
 
         private void img_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e) {
@@ -109,6 +114,10 @@ namespace ImgurSniper {
             }
         }
 
+        private bool drag = false;
+        private Point lastLoc;
+        private double CanvasLeft, CanvasTop;
+
         private void img_MouseMove(object sender, System.Windows.Input.MouseEventArgs e) {
             Point pos = e.GetPosition(this);
 
@@ -120,7 +129,28 @@ namespace ImgurSniper {
             double x = Math.Abs(from.X - to.X);
             double y = Math.Abs(from.Y - to.Y);
 
+            //Draw Rectangle
+            try {
+                if(drag) {
+                    var newX = (from.X + (e.GetPosition(this).X - from.X));
+                    var newY = (from.Y + (e.GetPosition(this).Y - from.Y));
+                    Point offset = new Point((from.X - lastLoc.X), (from.Y - lastLoc.Y));
+                    CanvasTop = newY - offset.Y;
+                    CanvasLeft = newX - offset.X;
 
+                    // check if the drag will pull the rectangle outside of it's host canvas before performing
+                    // TODO: protect against lower limits too...
+                    if((CanvasTop + selectionRectangle.Height > this.Height) ||
+                        (CanvasLeft + selectionRectangle.Width > this.Width) ||
+                        CanvasTop < 0 || CanvasLeft < 0) {
+                        return;
+                    }
+                    selectionRectangle.SetValue(Canvas.TopProperty, CanvasTop);
+                    selectionRectangle.SetValue(Canvas.LeftProperty, CanvasLeft);
+                }
+            } catch(Exception ex) {
+                errorToast.Show("An error occured! (Show this to the smart Computer Apes: \"" + ex.Message + "\")", TimeSpan.FromSeconds(3.3));
+            }
 
             //Window Cords Display
             this.coords.Content = "x:" + pos.X + " | " + "y:" + pos.Y;
