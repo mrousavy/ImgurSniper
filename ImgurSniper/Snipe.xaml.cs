@@ -87,7 +87,6 @@ namespace ImgurSniper {
             } catch(ImgurException imgurEx) {
                 return "Error: An error occurred uploading an image to Imgur. " + imgurEx.Message;
             }
-            return "Error: An error occurred uploading an image to Imgur.";
         }
     }
 }
