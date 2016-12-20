@@ -2,7 +2,6 @@
 using System.IO;
 using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -15,6 +14,7 @@ namespace ImgurSniper {
     public partial class ScreenshotWindow : Window {
         public byte[] CroppedImage;
         public Point from, to;
+        private bool drag = false;
 
         public ScreenshotWindow(ImageSource source) {
             InitializeComponent();
@@ -29,22 +29,28 @@ namespace ImgurSniper {
             //this.Width /= 2;
         }
 
-        private void img_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+        private void StartDrawing(object sender, System.Windows.Input.MouseButtonEventArgs e) {
             //Lock the from Point to the Mouse Position when started holding Mouse Button
             from = e.GetPosition(this);
 
-            drag = true;
-            selectionRectangle.Margin = new Thickness(from.X, from.Y, this.Width - from.X - 30, this.Height - from.Y - 30);
+
+            //selectionRectangle.Margin = new Thickness(from.X, from.Y, this.Width - from.X - 30, this.Height - from.Y - 30);
             selectionRectangle.Visibility = Visibility.Visible;
         }
 
-        private void img_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+        private void ReleaseRectangle(object sender, System.Windows.Input.MouseButtonEventArgs e) {
             to = e.GetPosition(this);
-            double width = Math.Abs(from.X - to.X);
-            double height = Math.Abs(from.Y - to.Y);
-            Int32Rect rect = new Int32Rect((int)from.X, (int)from.Y, (int)width, (int)height);
+            this.Cursor = Cursors.Arrow;
 
-            if(to.X == from.X && to.Y == to.Y) {
+            //Width (w) and Height (h) of dragged Rectangle
+            double w = Math.Abs(from.X - to.X);
+            double h = Math.Abs(from.Y - to.Y);
+            double x = Math.Min(from.X, to.X);
+            double y = Math.Min(from.Y, to.Y);
+
+            Int32Rect rect = new Int32Rect((int)x, (int)y, (int)w, (int)h);
+
+            if(to.X == from.X || to.Y == from.Y) {
                 errorToast.Show("The Image Width and Height cannot be 0!", TimeSpan.FromSeconds(3.3));
             } else {
                 //Crop the Image with current Size
@@ -52,13 +58,45 @@ namespace ImgurSniper {
 
                 //Was cropping successful?
                 if(response) {
+                    var converter = new System.Windows.Media.BrushConverter();
+                    var brush = (Brush)converter.ConvertFromString("#2196F3");
+
+                    errorToast.Background = brush;
                     errorToast.Show("Uploading Image...", TimeSpan.FromSeconds(1.5));
 
-                    CloseSnap(true, errorToast.Duration.Milliseconds + 30);
+                    CloseSnap(true, errorToast.Duration.Milliseconds);
                 } else {
                     errorToast.Show("Whoops, something went wrong!", TimeSpan.FromSeconds(3.3));
                 }
             }
+        }
+
+        private void DrawRectangle(object sender, System.Windows.Input.MouseEventArgs e) {
+            drag = e.LeftButton == MouseButtonState.Pressed;
+
+            //Draw Rectangle
+            try {
+                if(drag) {
+
+                    //Set Crop Rectangle to Mouse Position
+                    to = e.GetPosition(this);
+
+                    //Width (w) and Height (h) of dragged Rectangle
+                    double w = Math.Abs(from.X - to.X);
+                    double h = Math.Abs(from.Y - to.Y);
+                    double left = Math.Min(from.X, to.X);
+                    double top = Math.Min(from.Y, to.Y);
+                    double right = this.Width - left - w;
+                    double bottom = this.Height - top - h;
+
+                    selectionRectangle.Margin = new Thickness(left, top, right, bottom);
+                }
+            } catch(Exception ex) {
+                errorToast.Show("An error occured! (Show this to the smart Computer Apes: \"" + ex.Message + "\")", TimeSpan.FromSeconds(3.3));
+            }
+
+            //Window Cords Display
+            this.coords.Content = "x:" + to.X + " | " + "y:" + to.Y;
         }
 
         /// <summary>
@@ -112,48 +150,6 @@ namespace ImgurSniper {
             if(e.Key == System.Windows.Input.Key.Escape) {
                 CloseSnap(false, 0);
             }
-        }
-
-        private bool drag = false;
-        private Point lastLoc;
-        private double CanvasLeft, CanvasTop;
-
-        private void img_MouseMove(object sender, System.Windows.Input.MouseEventArgs e) {
-            Point pos = e.GetPosition(this);
-
-            //Set Crop Rectangle to Mouse Position (only if key is down obv.)
-            if(e.LeftButton == MouseButtonState.Pressed)
-                to = pos;
-
-            //Width (x) and Height (y) of dragged window
-            double x = Math.Abs(from.X - to.X);
-            double y = Math.Abs(from.Y - to.Y);
-
-            //Draw Rectangle
-            try {
-                if(drag) {
-                    var newX = (from.X + (e.GetPosition(this).X - from.X));
-                    var newY = (from.Y + (e.GetPosition(this).Y - from.Y));
-                    Point offset = new Point((from.X - lastLoc.X), (from.Y - lastLoc.Y));
-                    CanvasTop = newY - offset.Y;
-                    CanvasLeft = newX - offset.X;
-
-                    // check if the drag will pull the rectangle outside of it's host canvas before performing
-                    // TODO: protect against lower limits too...
-                    if((CanvasTop + selectionRectangle.Height > this.Height) ||
-                        (CanvasLeft + selectionRectangle.Width > this.Width) ||
-                        CanvasTop < 0 || CanvasLeft < 0) {
-                        return;
-                    }
-                    selectionRectangle.SetValue(Canvas.TopProperty, CanvasTop);
-                    selectionRectangle.SetValue(Canvas.LeftProperty, CanvasLeft);
-                }
-            } catch(Exception ex) {
-                errorToast.Show("An error occured! (Show this to the smart Computer Apes: \"" + ex.Message + "\")", TimeSpan.FromSeconds(3.3));
-            }
-
-            //Window Cords Display
-            this.coords.Content = "x:" + pos.X + " | " + "y:" + pos.Y;
         }
     }
 }

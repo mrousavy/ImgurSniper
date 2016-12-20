@@ -4,9 +4,10 @@
         xmlns:toasty="clr-namespace:Toast;assembly=Toast"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ImgurSniper" KeyDown="Cancel"
+        xmlns:local="clr-namespace:ImgurSniper" KeyDown="Cancel" Cursor="Cross"
         mc:Ignorable="d" AllowsTransparency="False" WindowStyle="None" ResizeMode="NoResize" Background="White"
-        Title="ScreenshotWindow" Height="100" Width="100" ShowInTaskbar="False" Topmost="True" Top="0" Left="0">
+        Title="ScreenshotWindow" Height="100" Width="100" ShowInTaskbar="False" Topmost="True" Top="0" Left="0"
+        MouseDown="StartDrawing" MouseUp="ReleaseRectangle" MouseMove="DrawRectangle">
     <Window.Triggers>
         <EventTrigger RoutedEvent="Window.Loaded">
             <BeginStoryboard>
@@ -21,8 +22,7 @@
 
 
     <Grid>
-        <Image Name="img" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Fill" Cursor="Cross"
-           MouseDown="img_MouseDown" MouseUp="img_MouseUp" MouseMove="img_MouseMove">
+        <Image Name="img" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Fill">
         </Image>
 
         <Label HorizontalAlignment="Center" VerticalAlignment="Top" Background="Black" Foreground="White" Name="coords" Opacity="0.3">x:0 | y:0</Label>
@@ -33,7 +33,10 @@
             </Image>
         </Border>
 
-        <Rectangle x:Name="selectionRectangle" Fill="Red" Visibility="Collapsed"></Rectangle>
+        <Border x:Name="selectionRectangle" Visibility="Collapsed"
+                BorderBrush="DarkGray" BorderThickness="1">
+            <Rectangle Fill="Gray" Opacity="0.3"></Rectangle>
+        </Border>
 
         <Border BorderBrush="Red" BorderThickness="2,2,2,2" CornerRadius="2,2,2,2" Name="CropRect" Visibility="Collapsed">
         </Border>

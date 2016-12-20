@@ -7,19 +7,17 @@
         xmlns:local="clr-namespace:ImgurSniper" AllowsTransparency="True"
         mc:Ignorable="d" WindowStyle="None" Background="Transparent"
         Title="Snipe a new Image" Height="30" Width="200" Opacity="1">
-    <Grid>
-        <ProgressBar Value="50"></ProgressBar>
-
-
-        <toasty:Toasty x:Name="toast"
-            Height="30"
-            VerticalAlignment="Bottom"
-            Duration="0:0:0:3.3"
-            Message="Whoops! Something went wrong!"
-            FontFamily="Segoe UI"
-            FontWeight="Bold"
-            MessageColor="White"
-            Background="Orange"
-            FontSize="13"/>
+    <Grid x:Name="grid">
+        
+        <toasty:Toasty x:Name = "toast"
+                        Height = "30"
+                        VerticalAlignment = "Bottom"
+                        Duration = "0:0:0:3.3"
+                        Message = "Whoops! Something went wrong!"
+                        FontFamily = "Segoe UI"
+                        FontWeight = "Bold"
+                        MessageColor = "White"
+                        Background = "Orange"
+                        FontSize = "13" />
     </Grid>
 </Window>
