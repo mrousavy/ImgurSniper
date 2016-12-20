@@ -26,6 +26,7 @@ namespace ImgurSniper {
         }
 
         private void img_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            //Lock the from Point to the Mouse Position when started holding Mouse Button
             from = e.GetPosition(this);
             CropRect.Visibility = Visibility.Visible;
             CropRect.Margin = new Thickness(e.GetPosition(this).X, e.GetPosition(this).Y, e.GetPosition(this).X, e.GetPosition(this).Y);
@@ -38,13 +39,9 @@ namespace ImgurSniper {
             if(to.X == from.X && to.Y == to.Y) {
                 System.Windows.Forms.MessageBox.Show("The Image Width and Height cannot be 0!", "Image too small");
             } else {
+                //Crop the Image with current Size
                 int width = (int)this.Width, height = (int)this.Height;
-                //while(CroppedImage.Length > 2000000) {
                 MakeImage(width, height);
-
-                //width -= 10;
-                //height -= 10;
-                //}
 
                 DialogResult = true;
             }
