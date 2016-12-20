@@ -1,35 +1,29 @@
-﻿using ImgurSharp;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Forms;
 
 namespace ImgurSniper {
     /// <summary>
     /// Interaction logic for Snipe.xaml
     /// </summary>
     public partial class Snipe : Window {
-        private string _dir, _keyPath, _applicationId;
+        private string _dir, _keyPath;
 
         public Snipe() {
             InitializeComponent();
-            this.Hide();
+
+            this.Top = SystemParameters.PrimaryScreenWidth - this.Height;
+            this.Width = SystemParameters.PrimaryScreenWidth;
+            this.Left = 0;
 
             _dir = Directory.GetCurrentDirectory();
             _keyPath = Path.Combine(_dir, "ImgurAppKey.txt");
 
-            //_applicationId = "4d2e45c3e7d07dc";
-
+            //TODO: Imgur Login
             if(File.Exists(_keyPath)) {
-                _applicationId = File.ReadAllText(_keyPath);
             } else {
-                using(FileStream fs = File.Create(_keyPath)) { }
-                System.Windows.Forms.MessageBox.Show("Your Imgur API App/Client ID was not found.\n" +
-                    "Please write your ID into " + _keyPath, "No API ID", MessageBoxButtons.OK);
-                Process.Start(@"https://api.imgur.com/oauth2/addclient");
-                Process.GetCurrentProcess().Kill();
             }
 
             Crop();
@@ -46,15 +40,18 @@ namespace ImgurSniper {
                 byte[] cimg = window.CroppedImage;
 
                 File.WriteAllBytes(_dir + "\\test.png", cimg);
+                Process.Start(_dir + "\\test.png");
 
                 try {
                     string link = await Upload(cimg);
                     System.Windows.Clipboard.SetText(link);
+                    toast.Show("Link to Imgur copied to Clipboard!");
                 } catch(Exception) {
+                    //TODO: Fancy error
                     System.Windows.Forms.MessageBox.Show("File size too Large", "Error");
                 }
-                this.Close();
             }
+            this.Close();
         }
 
 
@@ -63,14 +60,8 @@ namespace ImgurSniper {
         /// </summary>
         /// <param name="image">The image to upload</param>
         private async Task<string> Upload(byte[] image) {
-            Imgur imgur = new Imgur(_applicationId);
-            ImgurImage x = await imgur.UploadImageAnonymous(
-                new MemoryStream(image),
-                "ImgurSniper Upload @" + DateTime.Now.ToString(),
-                "ImgurSniper Upload @" + DateTime.Now.ToString(),
-                "Screenshot from ImgurSniper (www.github.com/mrousavy/ImgurSniper)");
-
-            return x.Link;
+            //TODO: Upload Image to Imgur and return Link
+            return "";
         }
     }
 }

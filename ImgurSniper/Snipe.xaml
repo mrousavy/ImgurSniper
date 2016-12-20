@@ -3,9 +3,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:toasty="clr-namespace:Toast;assembly=Toast"
         xmlns:local="clr-namespace:ImgurSniper" AllowsTransparency="True"
-        mc:Ignorable="d"
+        mc:Ignorable="d" WindowStyle="None" Background="Transparent"
         Title="Snipe a new Image" Height="30" Width="200" Opacity="1">
     <Grid>
+        <ProgressBar Value="50"></ProgressBar>
+
+
+        <toasty:Toasty x:Name="toast"
+            Height="30"
+            VerticalAlignment="Bottom"
+            Duration="0:0:0:3.3"
+            Message="Whoops! Something went wrong!"
+            FontFamily="Segoe UI"
+            FontWeight="Bold"
+            MessageColor="White"
+            Background="Orange"
+            FontSize="13"/>
     </Grid>
 </Window>

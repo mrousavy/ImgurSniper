@@ -2,8 +2,8 @@ C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\bin
 C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\bin\Debug\ImgurSniper.exe
 C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\bin\Debug\ImgurSniper.pdb
 C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\bin\Debug\Newtonsoft.Json.dll
+C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\bin\Debug\Toast.dll
 C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\bin\Debug\Newtonsoft.Json.xml
-C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Debug\ImgurSniper.csproj.ImgurSniper.exe.config
 C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Debug\ScreenshotWindow.g.cs
 C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Debug\Snipe.g.cs
 C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Debug\App.g.cs

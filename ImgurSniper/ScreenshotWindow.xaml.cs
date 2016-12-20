@@ -1,7 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 
 namespace ImgurSniper {
@@ -11,7 +14,6 @@ namespace ImgurSniper {
     public partial class ScreenshotWindow : Window {
         public byte[] CroppedImage;
         public Point from, to;
-        private bool _down = false; //Mouse Down
 
         public ScreenshotWindow(ImageSource source) {
             InitializeComponent();
@@ -22,38 +24,70 @@ namespace ImgurSniper {
             this.Width = source.Width;
             this.img.Source = source;
 
-            this.Height = 250;
+            //this.Height /= 2;
+            //this.Width /= 2;
         }
 
         private void img_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
             //Lock the from Point to the Mouse Position when started holding Mouse Button
             from = e.GetPosition(this);
-            CropRect.Visibility = Visibility.Visible;
-            CropRect.Margin = new Thickness(e.GetPosition(this).X, e.GetPosition(this).Y, e.GetPosition(this).X, e.GetPosition(this).Y);
-            _down = true;
         }
 
         private void img_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e) {
             to = e.GetPosition(this);
+            double width = Math.Abs(from.X - to.X);
+            double height = Math.Abs(from.Y - to.Y);
+            Int32Rect rect = new Int32Rect((int)from.X, (int)from.Y, (int)width, (int)height);
 
             if(to.X == from.X && to.Y == to.Y) {
-                System.Windows.Forms.MessageBox.Show("The Image Width and Height cannot be 0!", "Image too small");
+                errorToast.Show("The Image Width and Height cannot be 0!", TimeSpan.FromSeconds(3.3));
             } else {
                 //Crop the Image with current Size
-                int width = (int)this.Width, height = (int)this.Height;
-                MakeImage(width, height);
+                bool response = MakeImage(rect);
 
-                DialogResult = true;
+                //Was cropping successful?
+                if(response) {
+                    errorToast.Show("Uploading Image...", TimeSpan.FromSeconds(1.5));
+
+                    CloseSnap(true, errorToast.Duration.Milliseconds + 30);
+                } else {
+                    errorToast.Show("Whoops, something went wrong!", TimeSpan.FromSeconds(3.3));
+                }
             }
         }
 
-        private void MakeImage(int width, int height) {
+        /// <summary>
+        /// Close Window with fade out animation
+        /// </summary>
+        /// <param name="result">Dialog Result</param>
+        /// <param name="delay">Delay in milliseconds to close the window</param>
+        private void CloseSnap(bool result, int delay) {
+            var anim = new DoubleAnimation(0, (Duration)TimeSpan.FromSeconds(0.25));
+            anim.Completed += delegate {
+                DialogResult = result;
+            };
+            anim.From = 0.7;
+            anim.To = 1;
+
+            if(delay == 0) {
+                this.BeginAnimation(UIElement.OpacityProperty, anim);
+            } else {
+                //Ugly main Thread wait (For delayed closing)..
+                new Thread(() => {
+                    Thread.Sleep(delay);
+                    Application.Current.Dispatcher.Invoke(() => {
+                        this.BeginAnimation(UIElement.OpacityProperty, anim);
+                    });
+                }).Start();
+            }
+        }
+
+        private bool MakeImage(Int32Rect area) {
             try {
                 BitmapImage src = img.Source as BitmapImage;
                 src.CacheOption = BitmapCacheOption.OnLoad;
 
-
-                CroppedBitmap croppedImage = new CroppedBitmap(src, new Int32Rect((int)from.X, (int)from.Y, (int)(to.X - from.X), (int)(to.Y - from.Y)));
+                CroppedBitmap croppedImage = new CroppedBitmap(src, area);
 
                 JpegBitmapEncoder encoder = new JpegBitmapEncoder();
                 encoder.QualityLevel = 100;
@@ -63,87 +97,33 @@ namespace ImgurSniper {
                     CroppedImage = stream.ToArray();
                     stream.Close();
                 }
-            } catch(Exception) { }
+                return true;
+            } catch(Exception) {
+                return false;
+            }
         }
 
-        private void Grid_KeyDown(object sender, System.Windows.Input.KeyEventArgs e) {
+        private void Cancel(object sender, System.Windows.Input.KeyEventArgs e) {
             if(e.Key == System.Windows.Input.Key.Escape) {
-                this.DialogResult = false;
+                CloseSnap(false, 0);
             }
         }
 
         private void img_MouseMove(object sender, System.Windows.Input.MouseEventArgs e) {
-            double x = e.GetPosition(this).X;
-            double y = e.GetPosition(this).Y;
+            Point pos = e.GetPosition(this);
 
-            double right = this.Width - x, bottom = this.Height - y;
+            //Set Crop Rectangle to Mouse Position (only if key is down obv.)
+            if(e.LeftButton == MouseButtonState.Pressed)
+                to = pos;
 
-
-            if(_down) {
-                double _left, _top, _right, _bottom;
-                _left = CropRect.Margin.Left;
-                _top = CropRect.Margin.Top;
-                _right = right;
-                _bottom = bottom;
+            //Width (x) and Height (y) of dragged window
+            double x = Math.Abs(from.X - to.X);
+            double y = Math.Abs(from.Y - to.Y);
 
 
 
-                CropRect.Margin = new Thickness(_left, _top, _right, _bottom);
-
-                //if(CropRect.ActualWidth < 5) {
-                //    CropRect.Margin = new Thickness(CropRect.Margin.Right, CropRect.Margin.Top, CropRect.Margin.Left, CropRect.Margin.Bottom);
-                //}
-                //if(CropRect.ActualHeight < 5) {
-                //    CropRect.Margin = new Thickness(CropRect.Margin.Left, CropRect.Margin.Bottom, CropRect.Margin.Right, CropRect.Margin.Top);
-                //}
-            }
-
-            right -= 35;
-
-            MagnifyingGlass.Margin = new Thickness(x - 35, y - 120, right, bottom);
-            MagnifyedImage.Source = img.Source;
-
-            var rect = new Rect(x, y, 70, 70);
-
-            var group = new DrawingGroup();
-            RenderOptions.SetBitmapScalingMode(group, BitmapScalingMode.HighQuality);
-            group.Children.Add(new ImageDrawing(img.Source, rect));
-
-            var drawingVisual = new DrawingVisual();
-            using(var drawingContext = drawingVisual.RenderOpen())
-                drawingContext.DrawDrawing(group);
-
-            var resizedImage = new RenderTargetBitmap(
-                70, 70,         // Resized dimensions
-                96, 96,                // Default DPI values
-                PixelFormats.Default); // Default pixel format
-            resizedImage.Render(drawingVisual);
-
-            MagnifyedImage.Source = BitmapFrame.Create(resizedImage);
-
-
-
-
-
-
-
-            //int count = 0;
-
-            //byte[] byteImage = Screenshot.ImageToByte(img.Source);
-            //MemoryStream ms = new MemoryStream(byteImage);
-
-            //BitmapImage src = new BitmapImage();
-            //src.BeginInit();
-            //src.UriSource = new Uri(img);
-            //src.CacheOption = BitmapCacheOption.OnLoad;
-            //src.EndInit();
-
-            //for(int i = 0; i < 3; i++)
-            //    for(int j = 0; j < 3; j++)
-            //        objImg[count++] = new CroppedBitmap(src, new Int32Rect(j * 120, i * 120, 120, 120));
-            ////MagnifyedImage.Margin = new Thickness(1,50,10,50);
-
-            this.coords.Content = "x:" + x + " | " + "y:" + y;
+            //Window Cords Display
+            this.coords.Content = "x:" + pos.X + " | " + "y:" + pos.Y;
         }
     }
 }
