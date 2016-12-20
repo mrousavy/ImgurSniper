@@ -44,18 +44,15 @@ namespace ImgurSniper {
             if(window.DialogResult == true) {
                 byte[] cimg = window.CroppedImage;
 
-                File.WriteAllBytes(_dir + "\\test.png", cimg);
+                long time = DateTime.Now.ToFileTimeUtc();
+                File.WriteAllBytes(_dir + string.Format("\\Snipe_{0}.png", time), cimg);
 
                 string response = await Upload(cimg);
 
                 if(response.StartsWith("Error:")) {
                     //Some Error happened
 
-                    //Toasty tempToast = toast;
-                    //tempToast.Background = Brushes.Black;
-                    //toast = tempToast;
                     toast.Show(response);
-
                 } else {
                     //Copy Link to Clipboard
                     Clipboard.SetText(response);
@@ -90,6 +87,7 @@ namespace ImgurSniper {
             } catch(ImgurException imgurEx) {
                 return "Error: An error occurred uploading an image to Imgur. " + imgurEx.Message;
             }
+            return "Error: An error occurred uploading an image to Imgur.";
         }
     }
 }

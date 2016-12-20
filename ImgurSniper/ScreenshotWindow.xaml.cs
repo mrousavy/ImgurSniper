@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -24,15 +24,11 @@ namespace ImgurSniper {
             this.Height = source.Height;
             this.Width = source.Width;
             this.img.Source = source;
-
-            //this.Height /= 2;
-            //this.Width /= 2;
         }
 
         private void StartDrawing(object sender, System.Windows.Input.MouseButtonEventArgs e) {
             //Lock the from Point to the Mouse Position when started holding Mouse Button
             from = e.GetPosition(this);
-
 
             //selectionRectangle.Margin = new Thickness(from.X, from.Y, this.Width - from.X - 30, this.Height - from.Y - 30);
             selectionRectangle.Visibility = Visibility.Visible;
@@ -104,7 +100,7 @@ namespace ImgurSniper {
         /// </summary>
         /// <param name="result">Dialog Result</param>
         /// <param name="delay">Delay in milliseconds to close the window</param>
-        private void CloseSnap(bool result, int delay) {
+        private async void CloseSnap(bool result, int delay) {
             var anim = new DoubleAnimation(0, (Duration)TimeSpan.FromSeconds(0.25));
             anim.Completed += delegate {
                 DialogResult = result;
@@ -112,26 +108,22 @@ namespace ImgurSniper {
             anim.From = 0.7;
             anim.To = 1;
 
-            if(delay == 0) {
-                this.BeginAnimation(UIElement.OpacityProperty, anim);
-            } else {
-                //Ugly main Thread wait (For delayed closing)..
-                new Thread(() => {
-                    Thread.Sleep(delay);
-                    Application.Current.Dispatcher.Invoke(() => {
-                        this.BeginAnimation(UIElement.OpacityProperty, anim);
-                    });
-                }).Start();
-            }
+            //Wait delay (ms) and then begin animation
+            await Task.Delay(TimeSpan.FromMilliseconds(delay));
+            this.BeginAnimation(UIElement.OpacityProperty, anim);
         }
+
 
         private bool MakeImage(Int32Rect area) {
             try {
+                //Copy Image over
                 BitmapImage src = img.Source as BitmapImage;
                 src.CacheOption = BitmapCacheOption.OnLoad;
 
+                //Crop Image
                 CroppedBitmap croppedImage = new CroppedBitmap(src, area);
 
+                //Save Image
                 JpegBitmapEncoder encoder = new JpegBitmapEncoder();
                 encoder.QualityLevel = 100;
                 using(MemoryStream stream = new MemoryStream()) {

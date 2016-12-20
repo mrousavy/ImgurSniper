@@ -83,7 +83,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Commands.cs" />
     <Compile Include="Screenshot.cs" />
     <Compile Include="ScreenshotWindow.xaml.cs">
       <DependentUpon>ScreenshotWindow.xaml</DependentUpon>
