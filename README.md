@@ -1,4 +1,4 @@
-#<img src="https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniper/Resources/Icon.png?raw=true" width="42"> ImgurSniper
+#<img src="https://github.com/mrousavy/ImgurSniper/raw/master/ImgurSniper/Resources/icon.png" width="42"> ImgurSniper
 An alternative to Windows' built in Snipping Tool with auto Imgur Upload.
 
 # Downloads
