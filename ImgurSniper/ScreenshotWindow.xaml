@@ -27,7 +27,8 @@
 
         <Label HorizontalAlignment="Center" VerticalAlignment="Top" Background="Black" Foreground="White" Name="coords" Opacity="0.3">x:0 | y:0</Label>
 
-        <Border Height="70" Width="70" BorderBrush="#FF555555" BorderThickness="2.5,2.5,2.5,3.5" CornerRadius="45,45,45,45" Name="MagnifyingGlass">
+        <!--Not yet implemented! (TODO: Make magnifying glass with zoom functionality)-->
+        <Border Visibility="Collapsed" Height="70" Width="70" BorderBrush="#FF555555" BorderThickness="2.5,2.5,2.5,3.5" CornerRadius="45,45,45,45" Name="MagnifyingGlass">
             <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="MagnifyedImage">
 
             </Image>

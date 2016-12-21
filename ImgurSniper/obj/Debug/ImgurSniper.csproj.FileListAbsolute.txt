@@ -27,7 +27,6 @@ C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\bin
 C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\bin\Debug\Toast.dll
 C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\bin\Debug\Imgur.API.xml
 C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\bin\Debug\Newtonsoft.Json.xml
-C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Debug\ImgurSniper.csprojResolveAssemblyReference.cache
 C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Debug\ImgurLoginWindow.g.cs
 C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Debug\ScreenshotWindow.g.cs
 C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Debug\Snipe.g.cs
