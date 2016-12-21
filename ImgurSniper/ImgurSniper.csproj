@@ -100,7 +100,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Cipher.cs" />
-    <Compile Include="ClientKeyIO.cs" />
+    <Compile Include="FileIO.cs" />
+    <Compile Include="ImgurIO.cs" />
     <Compile Include="ImgurLoginWindow.xaml.cs">
       <DependentUpon>ImgurLoginWindow.xaml</DependentUpon>
     </Compile>

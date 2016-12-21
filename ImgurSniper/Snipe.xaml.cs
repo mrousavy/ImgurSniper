@@ -1,8 +1,4 @@
-﻿using Imgur.API;
-using Imgur.API.Authentication.Impl;
-using Imgur.API.Endpoints.Impl;
-using Imgur.API.Models;
-using System;
+﻿using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,26 +10,24 @@ namespace ImgurSniper {
     public partial class Snipe : Window {
         private string _dir {
             get {
-                return ClientKeyIO._path;
+                return FileIO._path;
             }
         }
-        private string _clientID, _clientSecret;
+        private ImgurIO _imgur;
 
         public Snipe() {
             InitializeComponent();
 
-            //this.Top = SystemParameters.PrimaryScreenWidth - this.Height;
+            this.Top = 0;
+            this.Top = SystemParameters.PrimaryScreenHeight - this.Height;
             this.Width = SystemParameters.PrimaryScreenWidth;
             this.Left = 0;
-            this.Top = 0;
 
-            try {
-                ClientKeyIO.ImgurData model = ClientKeyIO.ReadFromFile();
-                _clientID = model.ClientID;
-                _clientSecret = model.ClientSecret;
-            } catch(Exception) {
-                Login();
+            if(!Directory.Exists(_dir)) {
+                Directory.CreateDirectory(_dir);
             }
+
+            _imgur = new ImgurIO();
 
             Crop();
         }
@@ -51,7 +45,7 @@ namespace ImgurSniper {
                 long time = DateTime.Now.ToFileTimeUtc();
                 File.WriteAllBytes(_dir + string.Format("\\Snipe_{0}.png", time), cimg);
 
-                string response = await Upload(cimg);
+                string response = await _imgur.Upload(cimg);
 
                 if(response.StartsWith("Error:")) {
                     //Some Error happened
@@ -70,31 +64,6 @@ namespace ImgurSniper {
         private async void DelayedClose(int Delay) {
             await Task.Delay(TimeSpan.FromMilliseconds(Delay));
             this.Close();
-        }
-
-
-        private void Login() {
-            //TODO: Login
-        }
-
-        /// <summary>
-        /// Upload bytes (Image) to Imgur
-        /// </summary>
-        /// <param name="image">The image to upload</param>
-        /// <returns>The Image Link or the Exception Message</returns>
-        private async Task<string> Upload(byte[] bimage) {
-            //TODO: Upload Image to Imgur and return Link
-            try {
-                var client = new ImgurClient(_clientID, _clientSecret);
-                var endpoint = new ImageEndpoint(client);
-                IImage image;
-                using(MemoryStream stream = new MemoryStream(bimage)) {
-                    image = await endpoint.UploadImageStreamAsync(stream);
-                }
-                return image.Link;
-            } catch(ImgurException imgurEx) {
-                return "Error: An error occurred uploading an image to Imgur. " + imgurEx.Message;
-            }
         }
     }
 }
