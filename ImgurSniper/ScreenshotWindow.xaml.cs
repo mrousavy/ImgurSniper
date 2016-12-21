@@ -21,9 +21,11 @@ namespace ImgurSniper {
 
             this.Left = 0;
             this.Top = 0;
-            this.Height = source.Height;
-            this.Width = source.Width;
+            this.Height = (int)source.Height;
+            this.Width = (int)source.Width;
             this.img.Source = source;
+
+            //this.Activate();
         }
 
         private void StartDrawing(object sender, MouseButtonEventArgs e) {
@@ -36,7 +38,6 @@ namespace ImgurSniper {
 
         private void ReleaseRectangle(object sender, MouseButtonEventArgs e) {
             to = e.GetPosition(this);
-            this.Cursor = Cursors.Arrow;
 
             //Width (w) and Height (h) of dragged Rectangle
             double w = Math.Abs(from.X - to.X);
@@ -49,6 +50,7 @@ namespace ImgurSniper {
             if(to.X == from.X || to.Y == from.Y) {
                 toast.Show("The Image Width and Height cannot be 0!", TimeSpan.FromSeconds(3.3));
             } else {
+                this.Cursor = Cursors.Arrow;
                 //Crop the Image with current Size
                 bool response = MakeImage(rect);
 
@@ -64,6 +66,7 @@ namespace ImgurSniper {
                 } else {
                     toast.Show("Whoops, something went wrong!", TimeSpan.FromSeconds(3.3));
                 }
+                this.IsEnabled = false;
             }
         }
 

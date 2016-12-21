@@ -32,7 +32,7 @@ namespace ImgurSniper.UI {
             }
         }
 
-        public enum ConfigType { AfterSnipeAction }
+        public enum ConfigType { AfterSnipeAction, SaveImages }
 
 
         /// <summary>
@@ -40,10 +40,9 @@ namespace ImgurSniper.UI {
         /// </summary>
         /// <param name="ClientID">Imgur ClientID</param>
         /// <param name="ClientSecret">Imgur ClientSecret</param>
-        public static void SaveToFile(ConfigType type, string content) {
-            string encr_content = Cipher.Encrypt(content, _passPhrase);
+        public static void SaveConfig(ConfigType type, string content) {
 
-            string[] lines = ReadFromFile();
+            string[] lines = ReadConfig();
 
             bool found = false;
 
@@ -56,8 +55,15 @@ namespace ImgurSniper.UI {
                     break;
                 }
             }
+
+            string encr_content = Cipher.Encrypt(type.ToString() + ":" + content, _passPhrase);
+
+            for(int i = 0; i < lines.Length; i++) {
+                lines[i] = Cipher.Encrypt(lines[i], _passPhrase);
+            }
+
             if(!found) {
-                File.AppendAllLines(_config, new string[] { type.ToString() + ":" + content });
+                File.AppendAllLines(_config, new string[] { encr_content });
             } else {
                 File.WriteAllLines(_config, lines);
             }
@@ -68,7 +74,12 @@ namespace ImgurSniper.UI {
         /// Reads ClientID and ClientSecret from Encrypted File and Decryptes it
         /// </summary>
         /// <returns>A ImgurData Model with the decrypted ClientID and Secret</returns>
-        public static string[] ReadFromFile() {
+        public static string[] ReadConfig() {
+            if(!File.Exists(_config)) {
+                using(File.Create(_config)) { }
+                return new string[] { };
+            }
+
             string[] lines = File.ReadAllLines(_config);
 
             for(int i = 0; i < lines.Length; i++) {

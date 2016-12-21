@@ -11,6 +11,32 @@ namespace ImgurSniper.UI {
         public MainWindow() {
             InitializeComponent();
             this.Closing += WindowClosing;
+            Load();
+        }
+
+
+        private void Load() {
+            string[] lines = FileIO.ReadConfig();
+
+            for(int i = 0; i < lines.Length; i++) {
+                try {
+                    string property = lines[i].Split(':')[0];
+                    string value = lines[i].Split(':')[1];
+
+                    switch(property) {
+                        case "AfterSnipeAction":
+                            if(value == "Clipboard") {
+                                ClipboardRadio.IsChecked = true;
+                            } else {
+                                ImgurRadio.IsChecked = true;
+                            }
+                            break;
+                        case "SaveImages":
+                            SaveBox.IsChecked = bool.Parse(value);
+                            break;
+                    }
+                } catch(Exception) { }
+            }
         }
 
         private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e) {
@@ -32,11 +58,23 @@ namespace ImgurSniper.UI {
         private void AfterSnapClick(object sender, RoutedEventArgs e) {
             RadioButton button = sender as RadioButton;
             if(button != null) {
-
-                if(button.Tag as string == "Imgur") {
-
-                }
+                try {
+                    FileIO.SaveConfig(FileIO.ConfigType.AfterSnipeAction, button.Tag as string);
+                } catch(Exception) { }
             }
+        }
+
+        private void SaveImgs_Checkbox(object sender, RoutedEventArgs e) {
+            CheckBox box = sender as CheckBox;
+            if(box != null) {
+                try {
+                    FileIO.SaveConfig(FileIO.ConfigType.SaveImages, box.IsChecked.ToString());
+                } catch(Exception) { }
+            }
+        }
+
+        private void Snipe(object sender, RoutedEventArgs e) {
+
         }
     }
 }
