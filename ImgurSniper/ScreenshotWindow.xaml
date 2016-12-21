@@ -41,7 +41,7 @@
         <Border BorderBrush="Red" BorderThickness="2,2,2,2" CornerRadius="2,2,2,2" Name="CropRect" Visibility="Collapsed">
         </Border>
 
-        <toasty:Toasty x:Name="errorToast"
+        <toasty:Toasty x:Name="toast"
             Height="30"
             VerticalAlignment="Bottom"
             Duration="0:0:0:3.3"

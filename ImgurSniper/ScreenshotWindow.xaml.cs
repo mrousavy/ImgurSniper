@@ -26,7 +26,7 @@ namespace ImgurSniper {
             this.img.Source = source;
         }
 
-        private void StartDrawing(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+        private void StartDrawing(object sender, MouseButtonEventArgs e) {
             //Lock the from Point to the Mouse Position when started holding Mouse Button
             from = e.GetPosition(this);
 
@@ -34,7 +34,7 @@ namespace ImgurSniper {
             selectionRectangle.Visibility = Visibility.Visible;
         }
 
-        private void ReleaseRectangle(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+        private void ReleaseRectangle(object sender, MouseButtonEventArgs e) {
             to = e.GetPosition(this);
             this.Cursor = Cursors.Arrow;
 
@@ -47,7 +47,7 @@ namespace ImgurSniper {
             Int32Rect rect = new Int32Rect((int)x, (int)y, (int)w, (int)h);
 
             if(to.X == from.X || to.Y == from.Y) {
-                errorToast.Show("The Image Width and Height cannot be 0!", TimeSpan.FromSeconds(3.3));
+                toast.Show("The Image Width and Height cannot be 0!", TimeSpan.FromSeconds(3.3));
             } else {
                 //Crop the Image with current Size
                 bool response = MakeImage(rect);
@@ -57,17 +57,17 @@ namespace ImgurSniper {
                     var converter = new System.Windows.Media.BrushConverter();
                     var brush = (Brush)converter.ConvertFromString("#2196F3");
 
-                    errorToast.Background = brush;
-                    errorToast.Show("Uploading Image...", TimeSpan.FromSeconds(1.5));
+                    toast.Background = brush;
+                    toast.Show("Uploading Image...", TimeSpan.FromSeconds(1.5));
 
-                    CloseSnap(true, errorToast.Duration.Milliseconds);
+                    CloseSnap(true, 1500);
                 } else {
-                    errorToast.Show("Whoops, something went wrong!", TimeSpan.FromSeconds(3.3));
+                    toast.Show("Whoops, something went wrong!", TimeSpan.FromSeconds(3.3));
                 }
             }
         }
 
-        private void DrawRectangle(object sender, System.Windows.Input.MouseEventArgs e) {
+        private void DrawRectangle(object sender, MouseEventArgs e) {
             drag = e.LeftButton == MouseButtonState.Pressed;
 
             //Draw Rectangle
@@ -88,7 +88,7 @@ namespace ImgurSniper {
                     selectionRectangle.Margin = new Thickness(left, top, right, bottom);
                 }
             } catch(Exception ex) {
-                errorToast.Show("An error occured! (Show this to the smart Computer Apes: \"" + ex.Message + "\")", TimeSpan.FromSeconds(3.3));
+                toast.Show("An error occured! (Show this to the smart Computer Apes: \"" + ex.Message + "\")", TimeSpan.FromSeconds(3.3));
             }
 
             //Window Cords Display
@@ -138,8 +138,8 @@ namespace ImgurSniper {
             }
         }
 
-        private void Cancel(object sender, System.Windows.Input.KeyEventArgs e) {
-            if(e.Key == System.Windows.Input.Key.Escape) {
+        private void Cancel(object sender, KeyEventArgs e) {
+            if(e.Key == Key.Escape) {
                 CloseSnap(false, 0);
             }
         }

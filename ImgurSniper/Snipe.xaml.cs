@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 
 namespace ImgurSniper {
     /// <summary>
@@ -18,7 +19,6 @@ namespace ImgurSniper {
         public Snipe() {
             InitializeComponent();
 
-            this.Top = 0;
             this.Top = SystemParameters.PrimaryScreenHeight - this.Height;
             this.Width = SystemParameters.PrimaryScreenWidth;
             this.Left = 0;
@@ -47,6 +47,8 @@ namespace ImgurSniper {
 
                 string response = await _imgur.Upload(cimg);
 
+                Visibility = Visibility.Visible;
+
                 if(response.StartsWith("Error:")) {
                     //Some Error happened
 
@@ -55,6 +57,9 @@ namespace ImgurSniper {
                     //Copy Link to Clipboard
                     Clipboard.SetText(response);
 
+                    var converter = new System.Windows.Media.BrushConverter();
+                    var brush = (Brush)converter.ConvertFromString("#2196F3");
+                    toast.Background = brush;
                     toast.Show("Link to Imgur copied to Clipboard!");
                 }
             }

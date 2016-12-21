@@ -1,0 +1,41 @@
+﻿<Window x:Class="ImgurSniper.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:ImgurSniper.UI" Background="Transparent"
+        mc:Ignorable="d" 
+        Title="Imgur Sniper" Height="400" Width="575" Icon="Resources/icon.png">
+    <md:Card HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignPaper}">
+        <Grid x:Name="grid">
+            <Grid.Triggers>
+                <EventTrigger RoutedEvent="Grid.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard Name="GridFadeIn">
+                            <DoubleAnimation Name="GridFadeAnimation"
+                                     Storyboard.TargetProperty="(Window.Opacity)"
+                                     From="0.0" To="1.0" Duration="0:0:0.3"
+                                     AutoReverse="False" RepeatBehavior="1x" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Grid.Triggers>
+            <Image></Image>
+            <StackPanel>
+                <Label Margin="10" FontSize="15">After Snapping...</Label>
+                <RadioButton GroupName="AfterSnap" Tag="Imgur"
+                             FontSize="14" Margin="15,0,0,0"
+                             Foreground="Gray" Click="AfterSnapClick">
+                    Automatically upload to Imgur
+                </RadioButton>
+                <RadioButton GroupName="AfterSnap" Tag="Clipboard"
+                             FontSize="14" Margin="15,0,0,0"
+                             Foreground="Gray" Click="AfterSnapClick">
+                    Copy Image to Clipboard
+                </RadioButton>
+            </StackPanel>
+            <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5">Snipe!</Button>
+        </Grid>
+    </md:Card>
+</Window>
