@@ -12,7 +12,11 @@ namespace ImgurSniper {
     /// Interaction logic for Snipe.xaml
     /// </summary>
     public partial class Snipe : Window {
-        private string _dir, _keyPath;
+        private string _dir {
+            get {
+                return ClientKeyIO._path;
+            }
+        }
         private string _clientID, _clientSecret;
 
         public Snipe() {
@@ -23,12 +27,12 @@ namespace ImgurSniper {
             this.Left = 0;
             this.Top = 0;
 
-            _dir = Directory.GetCurrentDirectory();
-            _keyPath = Path.Combine(_dir, "ImgurAppKey.txt");
-
-            //TODO: Imgur Login
-            if(File.Exists(_keyPath)) {
-            } else {
+            try {
+                ClientKeyIO.ImgurData model = ClientKeyIO.ReadFromFile();
+                _clientID = model.ClientID;
+                _clientSecret = model.ClientSecret;
+            } catch(Exception) {
+                Login();
             }
 
             Crop();
@@ -68,6 +72,10 @@ namespace ImgurSniper {
             this.Close();
         }
 
+
+        private void Login() {
+            //TODO: Login
+        }
 
         /// <summary>
         /// Upload bytes (Image) to Imgur
