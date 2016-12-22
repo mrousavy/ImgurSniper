@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
@@ -13,16 +14,12 @@ namespace ImgurSniper.UI {
         private string _path {
             get {
                 string value = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "ImgurSniper");
-                if(!Directory.Exists(value))
-                    Directory.CreateDirectory(value);
                 return value;
             }
         }
         private string _docPath {
             get {
                 string value = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper");
-                if(!Directory.Exists(value))
-                    Directory.CreateDirectory(value);
                 return value;
             }
         }
@@ -34,8 +31,10 @@ namespace ImgurSniper.UI {
             InitializeComponent();
             this.Closing += WindowClosing;
 
-            if(!Directory.Exists(_path))
+            if(!Directory.Exists(_path)) {
                 Directory.CreateDirectory(_path);
+                NewToImgur();
+            }
 
             if(!Directory.Exists(_docPath))
                 Directory.CreateDirectory(_docPath);
@@ -43,6 +42,12 @@ namespace ImgurSniper.UI {
             helper = new InstallerHelper(_path, error_toast, success_toast, this);
 
             Load();
+        }
+
+
+        private async void NewToImgur() {
+            await Task.Delay(500);
+            success_toast.Show("Hi! You're new to ImgurSniper! Start by clicking \"Install\" first!", TimeSpan.FromSeconds(2));
         }
 
 

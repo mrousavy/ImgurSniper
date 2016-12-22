@@ -29,7 +29,6 @@ namespace ImgurSniper {
                 this.Activate();
                 this.Focus();
             };
-            //this.Activate();
         }
 
         private void StartDrawing(object sender, MouseButtonEventArgs e) {
@@ -51,8 +50,8 @@ namespace ImgurSniper {
 
             Int32Rect rect = new Int32Rect((int)x, (int)y, (int)w, (int)h);
 
-            if(to.X == from.X || to.Y == from.Y) {
-                toast.Show("The Image Width and Height cannot be 0!", TimeSpan.FromSeconds(3.3));
+            if(Math.Abs(to.X - from.X) < 7 || Math.Abs(to.Y - from.Y) < 7) {
+                toast.Show("The Image Width and/or Height is too small!", TimeSpan.FromSeconds(3.3));
             } else {
                 this.Cursor = Cursors.Arrow;
                 //Crop the Image with current Size
@@ -78,8 +77,7 @@ namespace ImgurSniper {
             drag = e.LeftButton == MouseButtonState.Pressed;
             Point pos = e.GetPosition(this);
 
-            if(!this.IsActive)
-                this.Activate();
+            this.Activate();
 
             //Draw Rectangle
             try {
