@@ -2,6 +2,7 @@
 using Imgur.API.Endpoints.Impl;
 using Imgur.API.Models;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ImgurSniper {
@@ -24,7 +25,22 @@ namespace ImgurSniper {
         /// </summary>
         public ImgurIO() {
             _client = new ImgurClient(ClientID, ClientSecret);
-            AccountEndpoint aep = new AccountEndpoint(_client);
+
+            string url = _client.EndpointUrl;
+
+            Login();
+
+            //TODO: Remove this
+            Thread.Sleep(100000);
+        }
+
+
+        private async void Login() {
+            //TODO: make this functional
+            OAuth2Endpoint endpoint = new OAuth2Endpoint(_client);
+            string redirectUrl = endpoint.GetAuthorizationUrl(Imgur.API.Enums.OAuth2ResponseType.Token);
+            var token = await endpoint.GetTokenByRefreshTokenAsync(redirectUrl);
+            System.Console.WriteLine(token.AccessToken);
         }
 
         /// <summary>
