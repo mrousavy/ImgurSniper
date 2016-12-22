@@ -27,13 +27,13 @@ To have more overview or control over **ImgurSniper**, you can also install the 
 
 With the UI Version you have access to some extra features:
 
-	* **Automatically upload to Imgur** or **Copy Image to Clipboard**
-	* Enable *Saving snapped Images locally**
-	* **Log in to your Imgur Account** (By uploading to *your* _Imgur Account_, you can upload bigger Images and have them listed on your Profile.)
-	* **Download** and *Install* the _newest ImgurSniper version_ (Will install to Program Files).
-	* **Uninstall** (Completely remove ImgurSniper and every Configs)
-	* **Create Shortcuts** to Desktop or Startmenu
-	* **Launch ImgurSniper**
+- **Automatically upload to Imgur** or **Copy Image to Clipboard**
+- Enable *Saving snapped Images locally**
+- **Log in to your Imgur Account** (By uploading to *your* _Imgur Account_, you can upload bigger Images and have them listed on your Profile.)
+- **Download** and *Install* the _newest ImgurSniper version_ (Will install to Program Files).
+- **Uninstall** (Completely remove ImgurSniper and every Configs)
+- **Create Shortcuts** to Desktop or Startmenu
+- **Launch ImgurSniper**
 	
 <img src="http://i.imgur.com/SMzQqLC.jpg">
 
