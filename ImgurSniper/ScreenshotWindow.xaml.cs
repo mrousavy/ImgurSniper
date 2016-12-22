@@ -63,7 +63,7 @@ namespace ImgurSniper {
                     var brush = (Brush)converter.ConvertFromString("#2196F3");
 
                     toast.Background = brush;
-                    toast.Show("Uploading Image...", TimeSpan.FromSeconds(1.5));
+                    toast.Show("Processing Image...", TimeSpan.FromSeconds(1.5));
 
                     CloseSnap(true, 1500);
                 } else {

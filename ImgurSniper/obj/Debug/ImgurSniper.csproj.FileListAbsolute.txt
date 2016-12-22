@@ -41,3 +41,4 @@ C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj
 C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Debug\ImgurSniper.csproj.GenerateResource.Cache
 C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Debug\ImgurSniper.exe
 C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Debug\ImgurSniper.pdb
+C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Debug\ImgurSniper.csprojResolveAssemblyReference.cache
