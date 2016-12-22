@@ -17,5 +17,8 @@ For precise cropping, there is a display at the _top of your screen_ which will 
 
 When successfully uploaded, you will get a notification and the **Link will be copied to your Clipboard**.
 
+# ImgurSniper UI
+<img src="http://i.imgur.com/SMzQqLC.jpg">
+
 
 ## Thanks for using Imgur Sniper! :)
