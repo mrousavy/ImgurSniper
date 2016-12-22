@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
@@ -8,9 +10,32 @@ namespace ImgurSniper.UI {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
+        private string _path {
+            get {
+                string value = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "ImgurSniper");
+                if(!Directory.Exists(value))
+                    Directory.CreateDirectory(value);
+                return value;
+            }
+        }
+        private string _docPath {
+            get {
+                string value = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper");
+                if(!Directory.Exists(value))
+                    Directory.CreateDirectory(value);
+                return value;
+            }
+        }
+
+        public InstallerHelper helper;
+
+
         public MainWindow() {
             InitializeComponent();
             this.Closing += WindowClosing;
+
+            helper = new InstallerHelper(_path, error_toast, success_toast);
+
             Load();
         }
 
@@ -75,6 +100,47 @@ namespace ImgurSniper.UI {
 
         private void Snipe(object sender, RoutedEventArgs e) {
 
+        }
+        private void Install(object sender, RoutedEventArgs e) {
+            try {
+                helper.Install(sender);
+            } catch(Exception ex) {
+                error_toast.Show("An unknown Error occured!\nShow this to the smart Computer apes: " + ex.Message,
+                    TimeSpan.FromSeconds(5));
+            }
+        }
+        private void Uninstall(object sender, RoutedEventArgs e) {
+            try {
+                //Kill open instances if any
+                foreach(Process p in Process.GetProcessesByName("ImgurSniper")) {
+                    p.Kill();
+                }
+
+                //Remove all files
+                Array.ForEach(Directory.GetFiles(_docPath), File.Delete);
+                Array.ForEach(Directory.GetFiles(_path), File.Delete);
+
+                this.Close();
+            } catch(Exception ex) {
+                error_toast.Show("An unknown Error occured!\nShow this to the smart Computer apes: " + ex.Message,
+                    TimeSpan.FromSeconds(5));
+            }
+        }
+        private void DesktopShortcut(object sender, RoutedEventArgs e) {
+            try {
+                helper.AddToDesktop(sender);
+            } catch(Exception ex) {
+                error_toast.Show("An unknown Error occured!\nShow this to the smart Computer apes: " + ex.Message,
+                    TimeSpan.FromSeconds(5));
+            }
+        }
+        private void StartmenuShortcut(object sender, RoutedEventArgs e) {
+            try {
+                helper.AddToStartmenu(sender);
+            } catch(Exception ex) {
+                error_toast.Show("An unknown Error occured!\nShow this to the smart Computer apes: " + ex.Message,
+                    TimeSpan.FromSeconds(5));
+            }
         }
     }
 }

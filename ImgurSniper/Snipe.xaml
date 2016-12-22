@@ -6,7 +6,7 @@
         xmlns:toasty="clr-namespace:Toast;assembly=Toast"
         xmlns:local="clr-namespace:ImgurSniper" AllowsTransparency="True"
         mc:Ignorable="d" WindowStyle="None" Background="Transparent"
-        Visibility="Visible" ShowInTaskbar="False"
+        Visibility="Visible"
         Title="Snipe a new Image" Height="30" Width="200" Opacity="1">
     <Grid x:Name="grid">
         

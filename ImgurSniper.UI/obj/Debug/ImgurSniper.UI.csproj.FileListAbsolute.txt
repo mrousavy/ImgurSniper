@@ -1,4 +1,6 @@
 C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\bin\Debug\ImgurSniper.UI.exe.config
+C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\obj\Debug\Interop.IWshRuntimeLibrary.dll
+C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\obj\Debug\ImgurSniper.UI.csproj.ResolveComReference.cache
 C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\bin\Debug\ImgurSniper.UI.exe
 C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\bin\Debug\ImgurSniper.UI.pdb
 C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\bin\Debug\MaterialDesignColors.dll
@@ -17,3 +19,4 @@ C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\
 C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\obj\Debug\ImgurSniper.UI.csproj.GenerateResource.Cache
 C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\obj\Debug\ImgurSniper.UI.exe
 C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\obj\Debug\ImgurSniper.UI.pdb
+C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\bin\Debug\Toast.dll

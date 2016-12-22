@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:ImgurSniper.UI" Background="Transparent"
-        mc:Ignorable="d" 
+        xmlns:toasty="clr-namespace:Toast;assembly=Toast"
+        mc:Ignorable="d" MinHeight="400" MinWidth="575" 
         Title="Imgur Sniper" Height="400" Width="575" Icon="Resources/icon.png">
     <md:Card HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignPaper}">
         <Grid x:Name="grid">
@@ -41,9 +42,48 @@
                              Foreground="Gray" Click="SaveImgs_Checkbox">
                     Save snapped Images locally
                 </CheckBox>
+
+                <Label Margin="10" FontSize="15">Create Shortcuts</Label>
+                <Button Margin="15,5,5,0" HorizontalAlignment="Left" Click="DesktopShortcut"
+                        Width="100">
+                    Desktop
+                </Button>
+                <Button Margin="15,5,5,0" HorizontalAlignment="Left" Click="StartmenuShortcut"
+                        Width="100">
+                    Startmenu
+                </Button>
             </StackPanel>
-            <Button HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                    Margin="5" Click="Snipe">Snipe!</Button>
+
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <Button Margin="5" Click="Uninstall">Uninstall</Button>
+                <Button Margin="5" Click="Install">Install</Button>
+                <Button Margin="5" Click="Snipe">Snipe!</Button>
+            </StackPanel>
+
+
+
+            <toasty:Toasty x:Name="success_toast"
+            Height="30"
+            VerticalAlignment="Bottom"
+            Duration="0:0:0:3.3"
+            Message="Whoops! Something went wrong!"
+            FontFamily="Segoe UI"
+            FontWeight="Bold"
+            MessageColor="White"
+            Background="Orange"
+            FontSize="13"/>
+            
+            <toasty:Toasty x:Name="error_toast"
+            Height="30"
+            VerticalAlignment="Bottom"
+            Duration="0:0:0:3.3"
+            Message="Whoops! Something went wrong!"
+            FontFamily="Segoe UI"
+            FontWeight="Bold"
+            MessageColor="White"
+            Background="Orange"
+            FontSize="13"/>
         </Grid>
     </md:Card>
 </Window>

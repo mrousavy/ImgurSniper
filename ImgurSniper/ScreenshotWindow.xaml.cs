@@ -25,6 +25,10 @@ namespace ImgurSniper {
             this.Width = (int)source.Width;
             this.img.Source = source;
 
+            this.Loaded += delegate {
+                this.Activate();
+                this.Focus();
+            };
             //this.Activate();
         }
 
@@ -72,13 +76,16 @@ namespace ImgurSniper {
 
         private void DrawRectangle(object sender, MouseEventArgs e) {
             drag = e.LeftButton == MouseButtonState.Pressed;
+            Point pos = e.GetPosition(this);
+
+            if(!this.IsActive)
+                this.Activate();
 
             //Draw Rectangle
             try {
                 if(drag) {
-
                     //Set Crop Rectangle to Mouse Position
-                    to = e.GetPosition(this);
+                    to = pos;
 
                     //Width (w) and Height (h) of dragged Rectangle
                     double w = Math.Abs(from.X - to.X);
@@ -95,7 +102,7 @@ namespace ImgurSniper {
             }
 
             //Window Cords Display
-            this.coords.Content = "x:" + to.X + " | " + "y:" + to.Y;
+            this.coords.Content = "x:" + pos.X + " | " + "y:" + pos.Y;
         }
 
         /// <summary>
