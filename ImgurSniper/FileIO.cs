@@ -32,6 +32,20 @@ namespace ImgurSniper {
             }
         }
 
+        //Path to Imgur Refresh Token
+        public static string _tokenFile {
+            get {
+                string FilePath = Path.Combine(_path, "Token.imgursnipertoken");
+                return FilePath;
+            }
+        }
+
+        public static bool TokenExists {
+            get {
+                return File.Exists(_tokenFile);
+            }
+        }
+
 
         /// <summary>
         /// Reads ClientID and ClientSecret from Encrypted File and Decryptes it
@@ -50,6 +64,40 @@ namespace ImgurSniper {
             }
 
             return lines;
+        }
+
+
+        public static string ReadRefreshToken() {
+            if(!TokenExists) {
+                return null;
+            }
+
+            string token = File.ReadAllText(_tokenFile);
+
+            token = Cipher.Decrypt(token, _passPhrase);
+
+            return token;
+        }
+
+
+        public static void WriteRefreshToken(string token) {
+            if(!TokenExists) {
+                using(File.Create(_tokenFile)) { }
+            }
+
+            try {
+                string encr_token = Cipher.Encrypt(token, _passPhrase);
+
+                File.WriteAllText(encr_token, _tokenFile);
+            } catch(Exception) {
+                File.Delete(_tokenFile);
+            }
+        }
+
+        public static void DeleteToken() {
+            try {
+                File.Delete(_tokenFile);
+            } catch(Exception) { }
         }
     }
 }

@@ -6,8 +6,8 @@
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:ImgurSniper.UI" Background="Transparent"
         xmlns:toasty="clr-namespace:Toast;assembly=Toast"
-        mc:Ignorable="d" MinHeight="400" MinWidth="575" 
-        Title="Imgur Sniper" Height="400" Width="575" Icon="Resources/icon.png">
+        mc:Ignorable="d" MinHeight="450" MinWidth="575" 
+        Title="Imgur Sniper" Height="450" Width="575" Icon="Resources/icon.png">
 
 
     <md:Card HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignPaper}">
@@ -32,8 +32,8 @@
                    Source="Resources/icon.png"></Image>
             </StackPanel>
 
-            <StackPanel>
-                <Label Margin="10" FontSize="15">After Snapping...</Label>
+            <StackPanel Margin="5">
+                <Label Margin="10,5,5,5" FontSize="15">After Snapping...</Label>
                 <RadioButton GroupName="AfterSnap" Tag="Imgur" IsChecked="True"
                              FontSize="14" Margin="15,0,0,0" x:Name="ImgurRadio" 
                              Foreground="Gray" Click="AfterSnapClick">
@@ -46,13 +46,43 @@
                 </RadioButton>
 
 
-                <Label Margin="10" FontSize="15">When finished...</Label>
+                <Label Margin="10,5,5,5" FontSize="15">When finished...</Label>
                 <CheckBox x:Name="SaveBox" FontSize="14" Margin="15,0,0,0"
                              Foreground="Gray" Click="SaveImgs_Checkbox">
                     Save snapped Images locally
                 </CheckBox>
 
-                <Label Margin="10" FontSize="15">Create Shortcuts</Label>
+
+                <Label Margin="10,5,5,5" FontSize="15"
+                       x:Name="Label_Account">
+                    Imgur Account
+                </Label>
+                <Grid Margin="15,5,5,5">
+                    <StackPanel Orientation="Horizontal" Visibility="Collapsed"
+                                x:Name="Panel_PIN">
+                        <Label Foreground="Gray" FontSize="13"
+                               VerticalAlignment="Center">
+                            PIN:
+                        </Label>
+                        <TextBox Margin="5" MaxLength="20" Width="100" x:Name="Box_PIN"
+                                 VerticalAlignment="Center" TextChanged="Box_PIN_TextChanged">
+                        </TextBox>
+                        <Button Margin="5" IsEnabled="False" x:Name="Btn_PinOk"
+                                VerticalAlignment="Center" Click="PINOk">>
+                        </Button>
+                    </StackPanel>
+
+                    <Button HorizontalAlignment="Left" Visibility="Visible"
+                            x:Name="Btn_SignIn" Click="SignIn">
+                        Sign in
+                    </Button>
+                    <Button HorizontalAlignment="Left" Visibility="Collapsed"
+                            x:Name="Btn_SignOut" Click="SignOut">
+                        Sign out
+                    </Button>
+                </Grid>
+
+                <Label Margin="10,5,5,5" FontSize="15">Create Shortcuts</Label>
                 <Button Margin="15,5,5,0" HorizontalAlignment="Left" Click="DesktopShortcut"
                         Width="100" x:Name="Btn_Startmenu">
                     Desktop

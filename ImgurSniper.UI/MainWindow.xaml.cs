@@ -7,16 +7,19 @@ using System.Windows.Controls;
 using System.Windows.Media.Animation;
 
 namespace ImgurSniper.UI {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window {
+        public InstallerHelper helper;
+
+
+        //Path to Program Files/ImgurSniper Folder
         private string _path {
             get {
                 string value = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "ImgurSniper");
                 return value;
             }
         }
+
+        //Path to Documents/ImgurSniper Folder
         private string _docPath {
             get {
                 string value = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper");
@@ -24,7 +27,26 @@ namespace ImgurSniper.UI {
             }
         }
 
-        public InstallerHelper helper;
+        //Animation Templates
+        private DoubleAnimation _fadeOut {
+            get {
+                DoubleAnimation anim = new DoubleAnimation();
+                anim.From = 1;
+                anim.To = 0;
+                anim.Duration = new Duration(TimeSpan.FromSeconds(0.2));
+                return anim;
+            }
+        }
+        private DoubleAnimation _fadeIn {
+            get {
+                DoubleAnimation anim = new DoubleAnimation();
+                anim.From = 0;
+                anim.To = 1;
+                anim.Duration = new Duration(TimeSpan.FromSeconds(0.2));
+                return anim;
+            }
+        }
+        private ImgurLoginHelper _imgurhelper;
 
 
         public MainWindow() {
@@ -40,6 +62,7 @@ namespace ImgurSniper.UI {
                 Directory.CreateDirectory(_docPath);
 
             helper = new InstallerHelper(_path, error_toast, success_toast, this);
+            _imgurhelper = new ImgurLoginHelper(error_toast, success_toast);
 
             Load();
         }
@@ -51,7 +74,8 @@ namespace ImgurSniper.UI {
         }
 
 
-        private void Load() {
+
+        private async void Load() {
             string[] lines = FileIO.ReadConfig();
 
             for(int i = 0; i < lines.Length; i++) {
@@ -72,6 +96,16 @@ namespace ImgurSniper.UI {
                             break;
                     }
                 } catch(Exception) { }
+            }
+
+            string refreshToken = FileIO.ReadRefreshToken();
+            string name = await _imgurhelper.LoggedInUser(refreshToken);
+
+            if(name != null) {
+                Label_Account.Content = Label_Account.Content as string + " (Logged In as " + name + ")";
+
+                Btn_SignIn.Visibility = Visibility.Collapsed;
+                Btn_SignOut.Visibility = Visibility.Visible;
             }
         }
 
@@ -176,6 +210,80 @@ namespace ImgurSniper.UI {
 
             if(Btn_Uninstall.Tag == null)
                 Btn_Uninstall.IsEnabled = enabled;
+        }
+
+        private void SignIn(object sender, RoutedEventArgs e) {
+            try {
+                _imgurhelper.Authorize();
+
+                DoubleAnimation fadeBtnOut = _fadeOut;
+                fadeBtnOut.Completed += delegate {
+
+                    DoubleAnimation fadePanelIn = _fadeIn;
+                    fadePanelIn.Completed += delegate {
+                        Btn_SignIn.Visibility = Visibility.Collapsed;
+                    };
+                    Panel_PIN.Visibility = Visibility.Visible;
+                    Panel_PIN.BeginAnimation(StackPanel.OpacityProperty, fadePanelIn);
+
+                };
+                Btn_SignIn.BeginAnimation(Button.OpacityProperty, fadeBtnOut);
+            } catch(Exception) { }
+        }
+        private void SignOut(object sender, RoutedEventArgs e) {
+            DoubleAnimation fadeBtnOut = _fadeOut;
+            fadeBtnOut.Completed += delegate {
+                FileIO.DeleteToken();
+
+                DoubleAnimation fadeBtnIn = _fadeIn;
+                fadeBtnIn.Completed += delegate {
+                    Btn_SignOut.Visibility = Visibility.Collapsed;
+
+                    Label_Account.Content = "Imgur Account";
+                };
+                Btn_SignIn.Visibility = Visibility.Visible;
+                Btn_SignIn.BeginAnimation(StackPanel.OpacityProperty, fadeBtnIn);
+
+            };
+            Btn_SignOut.BeginAnimation(Button.OpacityProperty, fadeBtnOut);
+        }
+
+        private async void PINOk(object sender, RoutedEventArgs e) {
+            bool result = await _imgurhelper.Login(Box_PIN.Text);
+
+            if(result) {
+                DoubleAnimation fadePanelOut = _fadeOut;
+                fadePanelOut.Completed += delegate {
+                    DoubleAnimation fadeBtnIn = _fadeIn;
+                    fadeBtnIn.Completed += delegate {
+                        Panel_PIN.Visibility = Visibility.Collapsed;
+                    };
+                    Btn_SignOut.Visibility = Visibility.Visible;
+                    Btn_SignOut.BeginAnimation(StackPanel.OpacityProperty, fadeBtnIn);
+
+                };
+                Panel_PIN.BeginAnimation(Button.OpacityProperty, fadePanelOut);
+
+
+                string refreshToken = FileIO.ReadRefreshToken();
+                string name = await _imgurhelper.LoggedInUser(refreshToken);
+
+                if(name != null) {
+                    Label_Account.Content = Label_Account.Content as string + " (Logged In as " + name + ")";
+
+                    Btn_SignIn.Visibility = Visibility.Collapsed;
+                    Btn_SignOut.Visibility = Visibility.Visible;
+                }
+                Box_PIN.Clear();
+            }
+        }
+
+        private void Box_PIN_TextChanged(object sender, TextChangedEventArgs e) {
+            if(Box_PIN.Text.Length > 0) {
+                Btn_PinOk.IsEnabled = true;
+            } else {
+                Btn_PinOk.IsEnabled = false;
+            }
         }
     }
 }

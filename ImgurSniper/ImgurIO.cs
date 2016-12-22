@@ -1,8 +1,8 @@
 ﻿using Imgur.API.Authentication.Impl;
 using Imgur.API.Endpoints.Impl;
 using Imgur.API.Models;
+using System;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace ImgurSniper {
@@ -26,21 +26,21 @@ namespace ImgurSniper {
         public ImgurIO() {
             _client = new ImgurClient(ClientID, ClientSecret);
 
-            string url = _client.EndpointUrl;
-
-            Login();
-
-            //TODO: Remove this
-            Thread.Sleep(100000);
+            if(FileIO.TokenExists)
+                Login();
         }
 
 
         private async void Login() {
-            //TODO: make this functional
-            OAuth2Endpoint endpoint = new OAuth2Endpoint(_client);
-            string redirectUrl = endpoint.GetAuthorizationUrl(Imgur.API.Enums.OAuth2ResponseType.Token);
-            var token = await endpoint.GetTokenByRefreshTokenAsync(redirectUrl);
-            System.Console.WriteLine(token.AccessToken);
+            try {
+                OAuth2Endpoint endpoint = new OAuth2Endpoint(_client);
+
+                //TODO: Userinput
+                string refreshToken = FileIO.ReadRefreshToken();
+                IOAuth2Token token = await endpoint.GetTokenByRefreshTokenAsync(refreshToken);
+
+                _client.SetOAuth2Token(token);
+            } catch(Exception) { }
         }
 
         /// <summary>
@@ -49,7 +49,8 @@ namespace ImgurSniper {
         /// <param name="image">The Image as byte[]</param>
         /// <returns>The Link to the uploaded Image</returns>
         public async Task<string> Upload(byte[] bimage) {
-            var endpoint = new ImageEndpoint(_client);
+            ImageEndpoint endpoint = new ImageEndpoint(_client);
+
             IImage image;
             using(MemoryStream stream = new MemoryStream(bimage)) {
                 image = await endpoint.UploadImageStreamAsync(stream);

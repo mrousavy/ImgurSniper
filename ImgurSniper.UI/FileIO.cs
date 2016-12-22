@@ -32,6 +32,19 @@ namespace ImgurSniper.UI {
             }
         }
 
+
+        public static string _tokenFile {
+            get {
+                string FilePath = Path.Combine(_path, "Token.imgursnipertoken");
+                return FilePath;
+            }
+        }
+
+        public static bool TokenExists {
+            get {
+                return File.Exists(_tokenFile);
+            }
+        }
         public enum ConfigType { AfterSnipeAction, SaveImages }
 
 
@@ -101,6 +114,43 @@ namespace ImgurSniper.UI {
                 this.ClientID = ClientID;
                 this.ClientSecret = ClientSecret;
             }
+        }
+
+
+
+
+
+        public static string ReadRefreshToken() {
+            if(!TokenExists) {
+                return null;
+            }
+
+            string token = File.ReadAllText(_tokenFile);
+
+            token = Cipher.Decrypt(token, _passPhrase);
+
+            return token;
+        }
+
+
+        public static void WriteRefreshToken(string token) {
+            if(!TokenExists) {
+                using(File.Create(_tokenFile)) { }
+            }
+
+            try {
+                string encr_token = Cipher.Encrypt(token, _passPhrase);
+
+                File.WriteAllText(_tokenFile, encr_token);
+            } catch(Exception) {
+                File.Delete(_tokenFile);
+            }
+        }
+
+        public static void DeleteToken() {
+            try {
+                File.Delete(_tokenFile);
+            } catch(Exception) { }
         }
     }
 }
