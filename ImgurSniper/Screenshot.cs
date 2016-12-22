@@ -4,7 +4,6 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -12,23 +11,18 @@ namespace ImgurSniper {
     class Screenshot {
 
         public static ImageSource getScreenshot() {
-            Size sz = Screen.PrimaryScreen.Bounds.Size;
-            IntPtr hDesk = GetDesktopWindow();
-            IntPtr hSrce = GetWindowDC(hDesk);
-            IntPtr hDest = CreateCompatibleDC(hSrce);
-            IntPtr hBmp = CreateCompatibleBitmap(hSrce, sz.Width, sz.Height);
-            IntPtr hOldBmp = SelectObject(hDest, hBmp);
-            bool b = BitBlt(hDest, 0, 0, sz.Width, sz.Height, hSrce, 0, 0, CopyPixelOperation.SourceCopy | CopyPixelOperation.CaptureBlt);
 
-            Bitmap bmp = Bitmap.FromHbitmap(hBmp);
-            SelectObject(hDest, hOldBmp);
-            DeleteObject(hBmp);
-            DeleteDC(hDest);
-            ReleaseDC(hDesk, hSrce);
+            //Thanks http://stackoverflow.com/users/214375/marcel-gheorghita !
+            Rectangle screen = ScreenshotWindow.screen;
+            Rectangle rect = new Rectangle(screen.X, 0, screen.Width, screen.Height);
+            Bitmap bmp = new Bitmap(rect.Width, rect.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            Graphics g = Graphics.FromImage(bmp);
+            g.CopyFromScreen(rect.Left, rect.Top, 0, 0, bmp.Size, CopyPixelOperation.SourceCopy);
+
 
             byte[] byteImage = ImageToByte(bmp);
-            bmp.Dispose();
 
+            bmp.Dispose();
 
             BitmapImage biImg = new BitmapImage();
             MemoryStream ms = new MemoryStream(byteImage);

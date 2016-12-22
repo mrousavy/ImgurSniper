@@ -17,6 +17,9 @@ For precise cropping, there is a display at the _top of your screen_ which will 
 
 When successfully uploaded, you will get a notification and the **Link will be copied to your Clipboard**.
 
+**Side note:** You may experience _issues_ with Image uploads being _cut or not uploaded_,
+this is because of Imgur's File size limit for not logged in Users. You can easily fix this by _logging in_.
+
 # ImgurSniper UI
 <img src="http://i.imgur.com/SMzQqLC.jpg">
 

@@ -21,7 +21,7 @@ namespace ImgurSniper {
 
             this.Top = SystemParameters.WorkArea.Height - this.Height;
             this.Width = SystemParameters.WorkArea.Width;
-            this.Left = 0;
+            this.Left = ScreenshotWindow.screen.X;
 
             if(!Directory.Exists(_dir)) {
                 Directory.CreateDirectory(_dir);

@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImgurSniper" KeyDown="Cancel" Cursor="Cross" Topmost="True"
         mc:Ignorable="d" AllowsTransparency="False" WindowStyle="None" ResizeMode="NoResize" Background="White"
-        Title="Snipe a Screenshot!" Height="100" Width="100" Top="0" Left="0"
+        Title="Snipe a Screenshot!" Height="100" Width="100" Top="0" Left="0" WindowStartupLocation="Manual"
         MouseDown="StartDrawing" MouseUp="ReleaseRectangle" MouseMove="DrawRectangle">
     <Window.Triggers>
         <EventTrigger RoutedEvent="Window.Loaded">

@@ -12,6 +12,13 @@ namespace ImgurSniper {
     /// Interaction logic for ScreenshotWindow.xaml
     /// </summary>
     public partial class ScreenshotWindow : Window {
+        public static System.Drawing.Rectangle screen {
+            get {
+                System.Windows.Forms.Screen screen = System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position);
+                return screen.Bounds;
+            }
+        }
+
         public byte[] CroppedImage;
         public Point from, to;
         private bool drag = false;
@@ -19,7 +26,8 @@ namespace ImgurSniper {
         public ScreenshotWindow(ImageSource source) {
             InitializeComponent();
 
-            this.Left = 0;
+
+            this.Left = screen.X;
             this.Top = 0;
             this.Height = (int)source.Height;
             this.Width = (int)source.Width;
