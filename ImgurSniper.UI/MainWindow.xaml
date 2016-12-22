@@ -8,6 +8,8 @@
         xmlns:toasty="clr-namespace:Toast;assembly=Toast"
         mc:Ignorable="d" MinHeight="400" MinWidth="575" 
         Title="Imgur Sniper" Height="400" Width="575" Icon="Resources/icon.png">
+
+
     <md:Card HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignPaper}">
         <Grid x:Name="grid">
             <Grid.Triggers>
@@ -22,7 +24,14 @@
                     </BeginStoryboard>
                 </EventTrigger>
             </Grid.Triggers>
-            <Image></Image>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right" VerticalAlignment="Top">
+                <Image Width="100" Margin="10" RenderOptions.BitmapScalingMode="HighQuality"
+                   Source="Resources/mrousavy.png"></Image>
+                <Image Width="30" Margin="10" RenderOptions.BitmapScalingMode="HighQuality"
+                   Source="Resources/icon.png"></Image>
+            </StackPanel>
+
             <StackPanel>
                 <Label Margin="10" FontSize="15">After Snapping...</Label>
                 <RadioButton GroupName="AfterSnap" Tag="Imgur" IsChecked="True"
@@ -45,44 +54,50 @@
 
                 <Label Margin="10" FontSize="15">Create Shortcuts</Label>
                 <Button Margin="15,5,5,0" HorizontalAlignment="Left" Click="DesktopShortcut"
-                        Width="100">
+                        Width="100" x:Name="Btn_Startmenu">
                     Desktop
                 </Button>
                 <Button Margin="15,5,5,0" HorizontalAlignment="Left" Click="StartmenuShortcut"
-                        Width="100">
+                        Width="100" x:Name="Btn_Desktop">
                     Startmenu
                 </Button>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                <Button Margin="5" Click="Uninstall">Uninstall</Button>
-                <Button Margin="5" Click="Install">Install</Button>
-                <Button Margin="5" Click="Snipe">Snipe!</Button>
+                <Button Margin="5" Click="Uninstall" x:Name="Btn_Uninstall">
+                    Uninstall
+                </Button>
+                <Button Margin="5" Click="Install" x:Name="Btn_Install">
+                    Install
+                </Button>
+                <Button Margin="5" Click="Snipe" x:Name="Btn_Snipe">
+                    Snipe!
+                </Button>
             </StackPanel>
 
 
 
-            <toasty:Toasty x:Name="success_toast"
+            <toasty:Toasty x:Name="error_toast"
             Height="30"
             VerticalAlignment="Bottom"
-            Duration="0:0:0:3.3"
+            Duration="0:0:0:2.7"
             Message="Whoops! Something went wrong!"
             FontFamily="Segoe UI"
             FontWeight="Bold"
             MessageColor="White"
             Background="Orange"
             FontSize="13"/>
-            
-            <toasty:Toasty x:Name="error_toast"
+
+            <toasty:Toasty x:Name="success_toast"
             Height="30"
             VerticalAlignment="Bottom"
-            Duration="0:0:0:3.3"
-            Message="Whoops! Something went wrong!"
+            Duration="0:0:0:2.5"
+            Message="Somehow the Message is missing?"
             FontFamily="Segoe UI"
             FontWeight="Bold"
             MessageColor="White"
-            Background="Orange"
+            Background="#2196F3"
             FontSize="13"/>
         </Grid>
     </md:Card>

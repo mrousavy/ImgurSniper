@@ -1,10 +1,12 @@
 ﻿using IWshRuntimeLibrary;
 using Microsoft.Win32;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Net;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Toast;
@@ -14,27 +16,40 @@ namespace ImgurSniper.UI {
 
         private string _path;
         private Toasty _error, _success;
+        private MainWindow invoker;
 
-        public InstallerHelper(string path, Toasty errorToast, Toasty successToast) {
+        private string _docPath {
+            get {
+                string value = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper");
+                if(!Directory.Exists(value))
+                    Directory.CreateDirectory(value);
+                return value;
+            }
+        }
+
+        public InstallerHelper(string path, Toasty errorToast, Toasty successToast, MainWindow invoker) {
             _path = path;
             if(!Directory.Exists(_path))
                 Directory.CreateDirectory(_path);
 
+            this.invoker = invoker;
             _error = errorToast;
             _success = successToast;
         }
 
         public void Install(object senderButton) {
             RemoveOldFiles();
-            Download(_path, senderButton);
+            Download(senderButton);
         }
 
         public void AddToStartmenu(object sender) {
             CreateStartMenu(sender, null);
+            invoker.ChangeButtonState(true);
         }
 
         public void AddToDesktop(object sender) {
             CreateDesktop(sender, null);
+            invoker.ChangeButtonState(true);
         }
 
 
@@ -42,18 +57,22 @@ namespace ImgurSniper.UI {
         /// Download the Kern Messenger Archive from github
         /// </summary>
         /// <param name="path">The path to save the zip to</param>
-        private void Download(string path, object sender) {
-            _path = path;
+        private void Download(object sender) {
+            string file = Path.Combine(_path, "ImgurSniperArchive.zip");
             using(WebClient client = new WebClient()) {
                 client.DownloadFileCompleted += DownloadCompleted;
 
                 client.DownloadFileCompleted += delegate {
                     (sender as Button).Content = "Done!";
                     (sender as Button).IsEnabled = false;
+                    (sender as Button).Tag = new object();
+                    _success.Show("Successfully Installed ImgurSniper!", TimeSpan.FromSeconds(3));
                 };
 
-                client.DownloadFileAsync(new Uri(@"https://github.com/mrousavy/ImgurSniper/raw/master/ImgurSniper/bin/Release/ImgurSniperArchive.zip"),
-                    path);
+                _success.Show("Downloading from github.com/mrousavy/ImgurSniper...", TimeSpan.FromSeconds(2));
+
+                client.DownloadFileAsync(new Uri(@"https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniper/bin/Release/ImgurSniper.zip?raw=true"),
+                    file);
             }
         }
 
@@ -92,6 +111,56 @@ namespace ImgurSniper.UI {
             }
         }
 
+        public async void Uninstall() {
+            _success.Show("Removing ImgurSniper and Cleaning up junk...",
+                TimeSpan.FromSeconds(2.5));
+
+            //Remove Startmenu Shortcut
+            try {
+                string commonStartMenuPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu);
+                string shortcutLocation = Path.Combine(commonStartMenuPath, "ImgurSniper" + ".lnk");
+                System.IO.File.Delete(shortcutLocation);
+            } catch(Exception) { }
+
+            //Remove Desktop Shortcut
+            try {
+                object shDesktop = (object)"Desktop";
+                WshShell shell = new WshShell();
+                string shortcutAddress = (string)shell.SpecialFolders.Item(ref shDesktop) + @"\Imgur Sniper.lnk";
+                System.IO.File.Delete(shortcutAddress);
+            } catch(Exception) { }
+
+
+            try {
+                //Kill open instances if any
+                foreach(Process p in Process.GetProcessesByName("ImgurSniper")) {
+                    p.Kill();
+                }
+
+                await Task.Delay(2495);
+
+                //Remove all files
+                Array.ForEach(Directory.GetFiles(_docPath), System.IO.File.Delete);
+                Array.ForEach(Directory.GetFiles(_path), System.IO.File.Delete);
+
+                //Remove Directories
+                Directory.Delete(_path);
+                Directory.Delete(_docPath);
+
+
+                _success.Show("Sad to see you go! Bye :(",
+                    TimeSpan.FromSeconds(1.5));
+
+                await Task.Delay(1500);
+
+                invoker.ChangeButtonState(true);
+                invoker.Close();
+            } catch(Exception ex) {
+                _error.Show("An unknown Error occured!\nShow this to the smart Computer apes: " + ex.Message,
+                    TimeSpan.FromSeconds(5));
+            }
+        }
+
         /// <summary>
         /// Rename Exe, Start Process and Finish Installer
         /// </summary>
@@ -99,12 +168,15 @@ namespace ImgurSniper.UI {
         private void Finalize(string file) {
             System.IO.File.Delete(Path.Combine(_path, "ImgurSniperArchive.zip"));
             CreateUninstaller();
+
+            invoker.ChangeButtonState(true);
         }
 
 
         private void CreateDesktop(object sender, RoutedEventArgs e) {
             (sender as System.Windows.Controls.Button).Content = "Done!";
             (sender as System.Windows.Controls.Button).IsEnabled = false;
+            (sender as System.Windows.Controls.Button).Tag = new object();
 
             object shDesktop = (object)"Desktop";
             WshShell shell = new WshShell();
@@ -119,14 +191,11 @@ namespace ImgurSniper.UI {
         private void CreateStartMenu(object sender, RoutedEventArgs e) {
             (sender as System.Windows.Controls.Button).Content = "Done!";
             (sender as System.Windows.Controls.Button).IsEnabled = false;
+            (sender as System.Windows.Controls.Button).Tag = new object();
 
             string commonStartMenuPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu);
-            string appStartMenuPath = Path.Combine(commonStartMenuPath, "Programs", "ImgurSniper");
 
-            if(!Directory.Exists(appStartMenuPath))
-                Directory.CreateDirectory(appStartMenuPath);
-
-            string shortcutLocation = Path.Combine(appStartMenuPath, "ImgurSniper" + ".lnk");
+            string shortcutLocation = Path.Combine(commonStartMenuPath, "ImgurSniper" + ".lnk");
             WshShell shell = new WshShell();
             IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutLocation);
 

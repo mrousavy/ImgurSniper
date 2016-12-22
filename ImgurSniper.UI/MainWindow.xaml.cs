@@ -34,7 +34,13 @@ namespace ImgurSniper.UI {
             InitializeComponent();
             this.Closing += WindowClosing;
 
-            helper = new InstallerHelper(_path, error_toast, success_toast);
+            if(!Directory.Exists(_path))
+                Directory.CreateDirectory(_path);
+
+            if(!Directory.Exists(_docPath))
+                Directory.CreateDirectory(_docPath);
+
+            helper = new InstallerHelper(_path, error_toast, success_toast, this);
 
             Load();
         }
@@ -99,9 +105,19 @@ namespace ImgurSniper.UI {
         }
 
         private void Snipe(object sender, RoutedEventArgs e) {
+            string exe = Path.Combine(_path, "ImgurSniper.exe");
 
+            if(File.Exists(exe)) {
+                Process.Start(exe);
+            } else {
+                error_toast.Show("Error, ImgurSniper could not be found on your System!",
+                    TimeSpan.FromSeconds(3));
+            }
         }
+
         private void Install(object sender, RoutedEventArgs e) {
+            ChangeButtonState(false);
+
             try {
                 helper.Install(sender);
             } catch(Exception ex) {
@@ -110,37 +126,51 @@ namespace ImgurSniper.UI {
             }
         }
         private void Uninstall(object sender, RoutedEventArgs e) {
-            try {
-                //Kill open instances if any
-                foreach(Process p in Process.GetProcessesByName("ImgurSniper")) {
-                    p.Kill();
-                }
+            ChangeButtonState(false);
 
-                //Remove all files
-                Array.ForEach(Directory.GetFiles(_docPath), File.Delete);
-                Array.ForEach(Directory.GetFiles(_path), File.Delete);
-
-                this.Close();
-            } catch(Exception ex) {
-                error_toast.Show("An unknown Error occured!\nShow this to the smart Computer apes: " + ex.Message,
-                    TimeSpan.FromSeconds(5));
-            }
+            helper.Uninstall();
         }
         private void DesktopShortcut(object sender, RoutedEventArgs e) {
+            ChangeButtonState(false);
+
             try {
                 helper.AddToDesktop(sender);
+                success_toast.Show("Created Desktop Shortcut!", TimeSpan.FromSeconds(1));
             } catch(Exception ex) {
                 error_toast.Show("An unknown Error occured!\nShow this to the smart Computer apes: " + ex.Message,
                     TimeSpan.FromSeconds(5));
             }
         }
         private void StartmenuShortcut(object sender, RoutedEventArgs e) {
+            ChangeButtonState(false);
+
             try {
                 helper.AddToStartmenu(sender);
+                success_toast.Show("Created Startmenu Shortcut!", TimeSpan.FromSeconds(1));
             } catch(Exception ex) {
                 error_toast.Show("An unknown Error occured!\nShow this to the smart Computer apes: " + ex.Message,
                     TimeSpan.FromSeconds(5));
             }
+        }
+
+        /// <summary>
+        /// Enable or disable Buttons
+        /// </summary>
+        public void ChangeButtonState(bool enabled) {
+            if(Btn_Desktop.Tag == null)
+                Btn_Desktop.IsEnabled = enabled;
+
+            if(Btn_Install.Tag == null)
+                Btn_Install.IsEnabled = enabled;
+
+            if(Btn_Snipe.Tag == null)
+                Btn_Snipe.IsEnabled = enabled;
+
+            if(Btn_Startmenu.Tag == null)
+                Btn_Startmenu.IsEnabled = enabled;
+
+            if(Btn_Uninstall.Tag == null)
+                Btn_Uninstall.IsEnabled = enabled;
         }
     }
 }
