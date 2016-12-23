@@ -88,6 +88,9 @@ namespace ImgurSniper.UI {
                 _error.Show("Could not download ZIP Archive from github.com!",
                     TimeSpan.FromSeconds(5));
             } else {
+                foreach(string tempFile in Directory.GetFiles(_tempPath)) {
+                    System.IO.File.Delete(tempFile);
+                }
 
                 Extract(file, _tempPath);
                 Move(_tempPath, _path);
@@ -119,17 +122,21 @@ namespace ImgurSniper.UI {
         }
 
         private void Move(string from, string to) {
+            try {
+                FileInfo[] infos = new DirectoryInfo(from).GetFiles();
 
-            foreach(FileInfo file in new DirectoryInfo(from).GetFiles()) {
-                string filePath = Path.Combine(to, file.Name);
+                foreach(FileInfo file in infos) {
+                    string filePath = Path.Combine(to, file.Name);
 
-                if(!System.IO.File.Exists(filePath) || file.Extension == ".exe") {
-                    try {
-                        System.IO.File.Move(file.FullName, filePath);
-                    } catch(Exception) { }
+                    if(!System.IO.File.Exists(filePath) || file.Extension == ".exe") {
+                        try {
+                            System.IO.File.Move(file.FullName, filePath);
+                        } catch(Exception) { }
+                    }
                 }
+            } catch(Exception) {
+                _error.Show("Error moving Files, please close all ImgurSniper instances and try again!", TimeSpan.FromSeconds(2));
             }
-
         }
 
         public async void Uninstall() {
@@ -161,16 +168,34 @@ namespace ImgurSniper.UI {
                 await Task.Delay(2495);
 
                 //Remove all files
-                Array.ForEach(Directory.GetFiles(_docPath), System.IO.File.Delete);
-                Array.ForEach(Directory.GetFiles(_path), System.IO.File.Delete);
+                bool notRemoved = false;
+
+                foreach(string filesPrograms in Directory.GetFiles(_path)) {
+                    try {
+                        System.IO.File.Delete(filesPrograms);
+                    } catch(Exception) {
+                        notRemoved = true;
+                    }
+                }
+                foreach(string filesDocuments in Directory.GetFiles(_docPath)) {
+                    try {
+                        System.IO.File.Delete(filesDocuments);
+                    } catch(Exception) {
+                        notRemoved = true;
+                    }
+                }
 
                 //Remove Directories
                 Directory.Delete(_path);
                 Directory.Delete(_docPath);
 
+                if(notRemoved)
+                    _error.Show("Some Files were not successfully removed!",
+                        TimeSpan.FromSeconds(1));
 
                 _success.Show("Sad to see you go! Bye :(",
-                    TimeSpan.FromSeconds(1.5));
+                        TimeSpan.FromSeconds(1.5));
+
 
                 await Task.Delay(1500);
 
@@ -188,6 +213,11 @@ namespace ImgurSniper.UI {
         /// <param name="file">The exe path</param>
         private void Finalize(string file) {
             System.IO.File.Delete(Path.Combine(_path, "ImgurSniperArchive.zip"));
+
+            foreach(string tempFile in Directory.GetFiles(_tempPath)) {
+                System.IO.File.Delete(tempFile);
+            }
+
             Directory.Delete(_tempPath);
             CreateUninstaller();
 

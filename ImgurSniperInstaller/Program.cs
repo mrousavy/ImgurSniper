@@ -16,14 +16,26 @@ namespace ImgurSniperInstaller {
                 Directory.CreateDirectory(ProgramFiles);
 
             try {
+                foreach(string file in Directory.GetFiles(ProgramFiles)) {
+                    Console.WriteLine("Removing " + file + "...");
+                    File.Delete(file);
+                }
+            } catch(Exception ex) {
+                Console.WriteLine(ex.Message);
+                error = true;
+            }
+
+            try {
                 Extract(Properties.Resources.ImgurSniper_UI, ProgramFiles);
-            } catch(Exception) {
+            } catch(Exception ex) {
+                Console.WriteLine(ex.Message);
                 error = true;
             }
 
             try {
                 Process.Start(Path.Combine(ProgramFiles, "ImgurSniper.UI.exe"));
-            } catch(Exception) {
+            } catch(Exception ex) {
+                Console.WriteLine(ex.Message);
                 error = true;
             }
 
