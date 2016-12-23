@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:ImgurSniper.UI" Background="Transparent"
         xmlns:toasty="clr-namespace:Toast;assembly=Toast"
         mc:Ignorable="d" MinHeight="470" MinWidth="575" 
-        Title="Imgur Sniper" Height="470" Width="575" Icon="Resources/icon.png">
+        Title="Imgur Sniper" Height="470" Width="575" Icon="Resources/Logo.png">
 
 
     <!--<md:Card HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignPaper}">-->
@@ -29,7 +29,7 @@
                 <Image Width="100" Margin="10" RenderOptions.BitmapScalingMode="HighQuality"
                    Source="Resources/mrousavy.png"></Image>
                 <Image Width="30" Margin="10" RenderOptions.BitmapScalingMode="HighQuality"
-                   Source="Resources/icon.png"></Image>
+                   Source="Resources/Logo.png"></Image>
             </StackPanel>
 
             <StackPanel Margin="5">

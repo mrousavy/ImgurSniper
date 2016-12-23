@@ -1,12 +1,14 @@
-#<img src="https://github.com/mrousavy/ImgurSniper/raw/master/ImgurSniper/Resources/icon.png" width="42"> ImgurSniper
+#<img src="https://github.com/mrousavy/ImgurSniper/raw/master/ImgurSniper/Resources/Logo.png" width="42"> ImgurSniper
 An alternative to Windows' built in _Snipping Tool_ with **auto Imgur Upload**.
 
 # Downloads
-### [⇩ Imgur Sniper v1.0.1.6 (4.899KB) (UI Version) (Extractor)](https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniperInstaller/bin/Release/ImgurSniperInstaller.exe?raw=true)
+### [⇩ Imgur Sniper v1.0.1.6 (5.589KB) (UI Version) (Extractor)](https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniperInstaller/bin/Release/ImgurSniperInstaller.exe?raw=true)
 
-### [⇩ Imgur Sniper v1.0.1.6 (2.292KB) (UI Version) (Archive)](https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniper.UI/bin/Release/ImgurSniper.UI.zip?raw=true)
+### [⇩ Imgur Sniper v1.0.1.6 (2.407KB) (UI Version) (Archive)](https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniper.UI/bin/Release/ImgurSniper.UI.zip?raw=true)
 
-### [⇩ Imgur Sniper v1.0.1.6 (314KB) (Instant Snipe)](https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniper/bin/Release/ImgurSniper.zip?raw=true)
+### [⇩ Imgur Sniper v1.0.1.6 (374KB) (Instant Snipe)](https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniper/bin/Release/ImgurSniper.zip?raw=true)
+
+Icon by [jinga](http://jinga.at)
 
 # How to use
 Imgur Sniper will automatically activate _Snap mode_ when you start the **ImgurSniper.exe** executable.
@@ -36,7 +38,7 @@ With the UI Version you have access to some extra features:
 - **Create Shortcuts** to Desktop or Startmenu
 - **Launch ImgurSniper**
 	
-<img src="http://i.imgur.com/SMzQqLC.jpg">
+<img src="http://i.imgur.com/A2Z0di1.png">
 
 
 ## Thanks for using Imgur Sniper! :)
