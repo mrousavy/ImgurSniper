@@ -2,9 +2,11 @@
 An alternative to Windows' built in _Snipping Tool_ with **auto Imgur Upload**.
 
 # Downloads
-### [⇩ Imgur Sniper v1.0.1.5 (2.197KB) (UI Version) (Recommended)](https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniper.UI/bin/Release/ImgurSniper.UI.zip?raw=true)
+### [⇩ Imgur Sniper v1.0.1.6 (2.197KB) (UI Version) (Extractor)](https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniperInstaller/bin/Release/ImgurSniperInstaller.exe?raw=true)
 
-### [⇩ Imgur Sniper v1.0.1.5 (337KB) (Instant Snipe)](https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniper/bin/Release/ImgurSniper.zip?raw=true)
+### [⇩ Imgur Sniper v1.0.1.6 (2.197KB) (UI Version) (Archive)](https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniper.UI/bin/Release/ImgurSniper.UI.zip?raw=true)
+
+### [⇩ Imgur Sniper v1.0.1.6 (337KB) (Instant Snipe)](https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniper/bin/Release/ImgurSniper.zip?raw=true)
 
 # How to use
 Imgur Sniper will automatically activate _Snap mode_ when you start the **ImgurSniper.exe** executable.
