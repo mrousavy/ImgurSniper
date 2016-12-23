@@ -15,6 +15,7 @@ namespace ImgurSniper.UI {
     public class InstallerHelper {
 
         private string _path;
+        private string _tempPath;
         private Toasty _error, _success;
         private MainWindow invoker;
 
@@ -29,8 +30,12 @@ namespace ImgurSniper.UI {
 
         public InstallerHelper(string path, Toasty errorToast, Toasty successToast, MainWindow invoker) {
             _path = path;
+            _tempPath = Path.Combine(_path, "TempDownload");
+
             if(!Directory.Exists(_path))
                 Directory.CreateDirectory(_path);
+            if(!Directory.Exists(_tempPath))
+                Directory.CreateDirectory(_tempPath);
 
             this.invoker = invoker;
             _error = errorToast;
@@ -54,7 +59,7 @@ namespace ImgurSniper.UI {
 
 
         /// <summary>
-        /// Download the Kern Messenger Archive from github
+        /// Download the ImgurSniper Archive from github
         /// </summary>
         /// <param name="path">The path to save the zip to</param>
         private void Download(object sender) {
@@ -83,14 +88,16 @@ namespace ImgurSniper.UI {
                 _error.Show("Could not download ZIP Archive from github.com!",
                     TimeSpan.FromSeconds(5));
             } else {
-                Extract(file, _path);
+
+                Extract(file, _tempPath);
+                Move(_tempPath, _path);
                 Finalize(Path.Combine(_path, "ImgurSniper.exe"));
             }
         }
 
 
         /// <summary>
-        /// Remove all old Kern Files
+        /// Remove all old ImgurSniper Files
         /// </summary>
         private void RemoveOldFiles() {
             foreach(string file in Directory.GetFiles(_path)) {
@@ -101,7 +108,7 @@ namespace ImgurSniper.UI {
         }
 
         /// <summary>
-        /// Extract the downloaded Kern Messenger Archive
+        /// Extract the downloaded ImgurSniper Messenger Archive
         /// </summary>
         /// <param name="file">The path of the Archive</param>
         /// <param name="path">The path of the Folder</param>
@@ -109,6 +116,20 @@ namespace ImgurSniper.UI {
             using(ZipArchive archive = new ZipArchive(new FileStream(file, FileMode.Open))) {
                 archive.ExtractToDirectory(path);
             }
+        }
+
+        private void Move(string from, string to) {
+
+            foreach(FileInfo file in new DirectoryInfo(from).GetFiles()) {
+                string filePath = Path.Combine(to, file.Name);
+
+                if(!System.IO.File.Exists(filePath) || file.Extension == ".exe") {
+                    try {
+                        System.IO.File.Move(file.FullName, filePath);
+                    } catch(Exception) { }
+                }
+            }
+
         }
 
         public async void Uninstall() {
@@ -167,6 +188,7 @@ namespace ImgurSniper.UI {
         /// <param name="file">The exe path</param>
         private void Finalize(string file) {
             System.IO.File.Delete(Path.Combine(_path, "ImgurSniperArchive.zip"));
+            Directory.Delete(_tempPath);
             CreateUninstaller();
 
             invoker.ChangeButtonState(true);

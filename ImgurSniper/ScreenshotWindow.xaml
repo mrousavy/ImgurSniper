@@ -20,27 +20,35 @@
         </EventTrigger>
     </Window.Triggers>
 
+        <Grid x:Name="grid">
 
-    <Grid>
-        <Image Name="img" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Fill">
-        </Image>
 
+        <Grid x:Name="SnipperGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Image Name="img" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Fill"/>
+            
+            <Border x:Name="selectionRectangle" Margin="9999"
+                BorderBrush="DarkGray" BorderThickness="1">
+                <Rectangle Fill="Gray" Opacity="0.3"/>
+            </Border>
+        </Grid>
         <Label HorizontalAlignment="Center" VerticalAlignment="Top" Background="Black" Foreground="White" Name="coords" Opacity="0.3">x:0 | y:0</Label>
 
-        <!--Not yet implemented! (TODO: Make magnifying glass with zoom functionality)-->
-        <Border Visibility="Collapsed" Height="70" Width="70" BorderBrush="#FF555555" BorderThickness="2.5,2.5,2.5,3.5" CornerRadius="45,45,45,45" Name="MagnifyingGlass">
-            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="MagnifyedImage">
 
-            </Image>
-        </Border>
+        <Grid x:Name="Magnifyer" Width="70" Height="70" Visibility="Collapsed" Margin="9999">
+        <Ellipse Stroke="Gray" x:Name="MagnifyingEllipse" Width="70" Height="70"
+                 VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Ellipse.Fill>
+                <VisualBrush ViewboxUnits="Absolute" Viewbox="0,0,50,50" x:Name="MagnifyerBrush"
+                             ViewportUnits="RelativeToBoundingBox" Viewport="0,0,1,1"/>
+            </Ellipse.Fill>
+        </Ellipse>
+            <Label FontSize="25" Opacity="0.8" VerticalAlignment="Center" HorizontalAlignment="Center">✛</Label>
+        </Grid>
 
-        <Border x:Name="selectionRectangle" Visibility="Collapsed"
-                BorderBrush="DarkGray" BorderThickness="1">
-            <Rectangle Fill="Gray" Opacity="0.3"></Rectangle>
-        </Border>
 
-        <Border BorderBrush="Red" BorderThickness="2,2,2,2" CornerRadius="2,2,2,2" Name="CropRect" Visibility="Collapsed">
-        </Border>
+        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="MagnifyedImage"/>
+
+
 
         <toasty:Toasty x:Name="toast"
             Height="30"
@@ -52,5 +60,5 @@
             MessageColor="White"
             Background="Orange"
             FontSize="13"/>
-    </Grid>
+        </Grid>
 </Window>

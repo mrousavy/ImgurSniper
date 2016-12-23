@@ -6,12 +6,12 @@
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:ImgurSniper.UI" Background="Transparent"
         xmlns:toasty="clr-namespace:Toast;assembly=Toast"
-        mc:Ignorable="d" MinHeight="450" MinWidth="575" 
-        Title="Imgur Sniper" Height="450" Width="575" Icon="Resources/icon.png">
+        mc:Ignorable="d" MinHeight="470" MinWidth="575" 
+        Title="Imgur Sniper" Height="470" Width="575" Icon="Resources/icon.png">
 
 
-    <md:Card HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignPaper}">
-        <Grid x:Name="grid">
+    <!--<md:Card HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignPaper}">-->
+    <Grid x:Name="grid" Background="{DynamicResource MaterialDesignPaper}">
             <Grid.Triggers>
                 <EventTrigger RoutedEvent="Grid.Loaded">
                     <BeginStoryboard>
@@ -50,6 +50,13 @@
                 <CheckBox x:Name="SaveBox" FontSize="14" Margin="15,0,0,0"
                              Foreground="Gray" Click="SaveImgs_Checkbox">
                     Save snapped Images locally
+                </CheckBox>
+                
+                
+                <Label Margin="10,5,5,5" FontSize="15">Other...</Label>
+                <CheckBox x:Name="MagnifyingGlassBox" FontSize="14" Margin="15,0,0,0"
+                             Foreground="Gray" Click="Magnifying_Checkbox">
+                    Enable Magnifying Glass
                 </CheckBox>
 
 
@@ -130,5 +137,5 @@
             Background="#2196F3"
             FontSize="13"/>
         </Grid>
-    </md:Card>
+    <!--</md:Card>-->
 </Window>

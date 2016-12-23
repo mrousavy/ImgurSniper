@@ -59,10 +59,6 @@ namespace ImgurSniper {
 
             string[] lines = File.ReadAllLines(_config);
 
-            for(int i = 0; i < lines.Length; i++) {
-                lines[i] = Cipher.Decrypt(lines[i], _passPhrase);
-            }
-
             return lines;
         }
 
@@ -77,27 +73,6 @@ namespace ImgurSniper {
             token = Cipher.Decrypt(token, _passPhrase);
 
             return token;
-        }
-
-
-        public static void WriteRefreshToken(string token) {
-            if(!TokenExists) {
-                using(File.Create(_tokenFile)) { }
-            }
-
-            try {
-                string encr_token = Cipher.Encrypt(token, _passPhrase);
-
-                File.WriteAllText(encr_token, _tokenFile);
-            } catch(Exception) {
-                File.Delete(_tokenFile);
-            }
-        }
-
-        public static void DeleteToken() {
-            try {
-                File.Delete(_tokenFile);
-            } catch(Exception) { }
         }
     }
 }

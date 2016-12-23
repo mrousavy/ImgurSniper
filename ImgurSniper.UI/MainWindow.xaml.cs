@@ -64,6 +64,7 @@ namespace ImgurSniper.UI {
             helper = new InstallerHelper(_path, error_toast, success_toast, this);
             _imgurhelper = new ImgurLoginHelper(error_toast, success_toast);
 
+            error_toast.Show("Loading...", TimeSpan.FromSeconds(2));
             Load();
         }
 
@@ -93,6 +94,9 @@ namespace ImgurSniper.UI {
                             break;
                         case "SaveImages":
                             SaveBox.IsChecked = bool.Parse(value);
+                            break;
+                        case "Magnifyer":
+                            MagnifyingGlassBox.IsChecked = bool.Parse(value);
                             break;
                     }
                 } catch(Exception) { }
@@ -139,6 +143,14 @@ namespace ImgurSniper.UI {
             if(box != null) {
                 try {
                     FileIO.SaveConfig(FileIO.ConfigType.SaveImages, box.IsChecked.ToString());
+                } catch(Exception) { }
+            }
+        }
+        private void Magnifying_Checkbox(object sender, RoutedEventArgs e) {
+            CheckBox box = sender as CheckBox;
+            if(box != null) {
+                try {
+                    FileIO.SaveConfig(FileIO.ConfigType.Magnifyer, box.IsChecked.ToString());
                 } catch(Exception) { }
             }
         }

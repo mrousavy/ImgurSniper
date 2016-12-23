@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 
 namespace ImgurSniper.UI {
     public static class FileIO {
@@ -45,7 +46,7 @@ namespace ImgurSniper.UI {
                 return File.Exists(_tokenFile);
             }
         }
-        public enum ConfigType { AfterSnipeAction, SaveImages }
+        public enum ConfigType { AfterSnipeAction, SaveImages, Magnifyer }
 
 
         /// <summary>
@@ -54,32 +55,27 @@ namespace ImgurSniper.UI {
         /// <param name="ClientID">Imgur ClientID</param>
         /// <param name="ClientSecret">Imgur ClientSecret</param>
         public static void SaveConfig(ConfigType type, string content) {
+            new Thread(() => {
+                string[] lines = ReadConfig();
 
-            string[] lines = ReadConfig();
+                bool found = false;
 
-            bool found = false;
+                for(int i = 0; i < lines.Length; i++) {
+                    string[] tmp = lines[i].Split(':');
 
-            for(int i = 0; i < lines.Length; i++) {
-                string[] tmp = lines[i].Split(':');
-
-                if(tmp[0] == type.ToString()) {
-                    lines[i] = tmp[0] + ":" + content;
-                    found = true;
-                    break;
+                    if(tmp[0] == type.ToString()) {
+                        lines[i] = tmp[0] + ":" + content;
+                        found = true;
+                        break;
+                    }
                 }
-            }
 
-            string encr_content = Cipher.Encrypt(type.ToString() + ":" + content, _passPhrase);
-
-            for(int i = 0; i < lines.Length; i++) {
-                lines[i] = Cipher.Encrypt(lines[i], _passPhrase);
-            }
-
-            if(!found) {
-                File.AppendAllLines(_config, new string[] { encr_content });
-            } else {
-                File.WriteAllLines(_config, lines);
-            }
+                if(!found) {
+                    File.AppendAllLines(_config, new string[] { type.ToString() + ":" + content });
+                } else {
+                    File.WriteAllLines(_config, lines);
+                }
+            }).Start();
         }
 
 
@@ -95,29 +91,8 @@ namespace ImgurSniper.UI {
 
             string[] lines = File.ReadAllLines(_config);
 
-            for(int i = 0; i < lines.Length; i++) {
-                lines[i] = Cipher.Decrypt(lines[i], _passPhrase);
-            }
-
             return lines;
         }
-
-
-        /// <summary>
-        /// A Model for handling ClientID and ClientSecret
-        /// </summary>
-        public class ImgurData {
-            public string ClientID { get; set; }
-            public string ClientSecret { get; set; }
-
-            public ImgurData(string ClientID, string ClientSecret) {
-                this.ClientID = ClientID;
-                this.ClientSecret = ClientSecret;
-            }
-        }
-
-
-
 
 
         public static string ReadRefreshToken() {
@@ -134,17 +109,19 @@ namespace ImgurSniper.UI {
 
 
         public static void WriteRefreshToken(string token) {
-            if(!TokenExists) {
-                using(File.Create(_tokenFile)) { }
-            }
+            new Thread(() => {
+                if(!TokenExists) {
+                    using(File.Create(_tokenFile)) { }
+                }
 
-            try {
-                string encr_token = Cipher.Encrypt(token, _passPhrase);
+                try {
+                    string encr_token = Cipher.Encrypt(token, _passPhrase);
 
-                File.WriteAllText(_tokenFile, encr_token);
-            } catch(Exception) {
-                File.Delete(_tokenFile);
-            }
+                    File.WriteAllText(_tokenFile, encr_token);
+                } catch(Exception) {
+                    File.Delete(_tokenFile);
+                }
+            }).Start();
         }
 
         public static void DeleteToken() {

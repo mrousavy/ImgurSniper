@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImgurSniper", "ImgurSniper\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImgurSniper.UI", "ImgurSniper.UI\ImgurSniper.UI.csproj", "{CE496908-66AD-419A-8903-7CA8A8902DC1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImgurSniperInstaller", "ImgurSniperInstaller\ImgurSniperInstaller.csproj", "{A8D3C5A4-1334-45F7-BD0D-24806FFBA6E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{CE496908-66AD-419A-8903-7CA8A8902DC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE496908-66AD-419A-8903-7CA8A8902DC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE496908-66AD-419A-8903-7CA8A8902DC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8D3C5A4-1334-45F7-BD0D-24806FFBA6E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8D3C5A4-1334-45F7-BD0D-24806FFBA6E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8D3C5A4-1334-45F7-BD0D-24806FFBA6E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8D3C5A4-1334-45F7-BD0D-24806FFBA6E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

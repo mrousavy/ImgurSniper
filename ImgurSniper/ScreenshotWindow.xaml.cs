@@ -22,9 +22,12 @@ namespace ImgurSniper {
         public byte[] CroppedImage;
         public Point from, to;
         private bool drag = false;
+        private bool _enableMagnifyer = false;
+
 
         public ScreenshotWindow(ImageSource source) {
             InitializeComponent();
+
 
 
             this.Left = screen.X;
@@ -37,14 +40,38 @@ namespace ImgurSniper {
                 this.Activate();
                 this.Focus();
             };
+
+            VisualBrush b = (VisualBrush)MagnifyingEllipse.Fill;
+            b.Visual = SnipperGrid;
+
+            LoadConfig();
+        }
+
+
+        private void LoadConfig() {
+            try {
+                string[] lines = FileIO.ReadConfig();
+
+                foreach(string line in lines) {
+                    string[] config = line.Split(':');
+
+                    if(config[0] == "Magnifyer") {
+                        _enableMagnifyer = bool.Parse(config[1]);
+
+                        if(_enableMagnifyer)
+                            Magnifyer.Visibility = Visibility.Visible;
+
+                        return;
+                    }
+                }
+            } catch(Exception) {
+                _enableMagnifyer = false;
+            }
         }
 
         private void StartDrawing(object sender, MouseButtonEventArgs e) {
             //Lock the from Point to the Mouse Position when started holding Mouse Button
             from = e.GetPosition(this);
-
-            //selectionRectangle.Margin = new Thickness(from.X, from.Y, this.Width - from.X - 30, this.Height - from.Y - 30);
-            selectionRectangle.Visibility = Visibility.Visible;
         }
 
         private void ReleaseRectangle(object sender, MouseButtonEventArgs e) {
@@ -81,11 +108,23 @@ namespace ImgurSniper {
             }
         }
 
+        public void Magnifier(Point pos) {
+            MagnifyerBrush.Viewbox = new Rect(pos.X - 25, pos.Y - 25, 50, 50);
+
+            double x = pos.X - 35;
+            double y = pos.Y - 80;
+
+            Magnifyer.Margin = new Thickness(x, y, this.Width - x - 70, this.Height - y - 70);
+        }
+
         private void DrawRectangle(object sender, MouseEventArgs e) {
             drag = e.LeftButton == MouseButtonState.Pressed;
             Point pos = e.GetPosition(this);
 
             this.Activate();
+
+            if(_enableMagnifyer)
+                Magnifier(pos);
 
             //Draw Rectangle
             try {

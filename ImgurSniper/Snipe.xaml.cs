@@ -15,6 +15,23 @@ namespace ImgurSniper {
             }
         }
         private ImgurIO _imgur;
+        public bool MagnifyingGlassEnabled {
+            get {
+                try {
+                    string[] lines = FileIO.ReadConfig();
+                    foreach(string line in lines) {
+                        string[] config = line.Split(':');
+
+                        if(config[0] == "Magnifyer") {
+                            return bool.Parse(config[1]);
+                        }
+                    }
+                    return false;
+                } catch(Exception) {
+                    return false;
+                }
+            }
+        }
 
         public Snipe() {
             InitializeComponent();
@@ -58,23 +75,26 @@ namespace ImgurSniper {
                     foreach(string line in lines) {
                         string[] config = line.Split(':');
 
-                        if(config[0] == "SaveImages") {
-                            //Config: Save Image locally?
-                            if(bool.Parse(config[1])) {
-                                long time = DateTime.Now.ToFileTimeUtc();
-                                File.WriteAllBytes(_dir + string.Format("\\Snipe_{0}.png", time), cimg);
-                            }
-                        } else if(config[0] == "AfterSnipeAction") {
-                            //Config: Upload Image to Imgur or Copy to Clipboard?
+                        switch(config[0]) {
+                            case "SaveImages":
+                                //Config: Save Image locally?
+                                if(bool.Parse(config[1])) {
+                                    long time = DateTime.Now.ToFileTimeUtc();
+                                    File.WriteAllBytes(_dir + string.Format("\\Snipe_{0}.png", time), cimg);
+                                }
+                                break;
+                            case "AfterSnipeAction":
+                                //Config: Upload Image to Imgur or Copy to Clipboard?
 
-                            if(config[1] == "Imgur") {
-                                response = await UploadImgur(cimg);
-                                successmessage = "Link to Imgur copied to Clipboard!";
-                            } else {
-                                CopyClipboard(cimg);
-                                response = "Image was copied to Clipboard!";
-                                successmessage = "Image was copied to Clipboard!";
-                            }
+                                if(config[1] == "Imgur") {
+                                    response = await UploadImgur(cimg);
+                                    successmessage = "Link to Imgur copied to Clipboard!";
+                                } else {
+                                    CopyClipboard(cimg);
+                                    response = "Image was copied to Clipboard!";
+                                    successmessage = "Image was copied to Clipboard!";
+                                }
+                                break;
                         }
                     }
                 } catch(Exception) {
