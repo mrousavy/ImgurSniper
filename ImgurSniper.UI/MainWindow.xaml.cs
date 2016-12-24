@@ -113,6 +113,7 @@ namespace ImgurSniper.UI {
             }
         }
 
+
         private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e) {
             e.Cancel = true;
             this.Closing -= WindowClosing;
@@ -128,6 +129,7 @@ namespace ImgurSniper.UI {
 
             grid.BeginAnimation(Grid.OpacityProperty, fadingAnimation);
         }
+
 
         private void AfterSnapClick(object sender, RoutedEventArgs e) {
             RadioButton button = sender as RadioButton;
@@ -146,6 +148,8 @@ namespace ImgurSniper.UI {
                 } catch(Exception) { }
             }
         }
+
+
         private void Magnifying_Checkbox(object sender, RoutedEventArgs e) {
             CheckBox box = sender as CheckBox;
             if(box != null) {

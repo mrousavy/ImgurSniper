@@ -18,7 +18,10 @@ namespace ImgurSniperInstaller {
             try {
                 foreach(string file in Directory.GetFiles(ProgramFiles)) {
                     Console.WriteLine("Removing " + file + "...");
-                    File.Delete(file);
+
+                    //Delete every File except original ImgurSniper.exe
+                    if(!file.EndsWith("ImgurSniper.exe"))
+                        File.Delete(file);
                 }
             } catch(Exception ex) {
                 Console.WriteLine(ex.Message);
