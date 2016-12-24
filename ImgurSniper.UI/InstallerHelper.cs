@@ -186,8 +186,13 @@ namespace ImgurSniper.UI {
                 }
 
                 //Remove Directories
-                Directory.Delete(_path);
-                Directory.Delete(_docPath);
+                try {
+                    Directory.Delete(_path);
+                } catch(Exception) { }
+                try {
+                    Directory.Delete(_docPath);
+                } catch(Exception) { }
+
 
                 if(notRemoved)
                     _error.Show("Some Files were not successfully removed!",
@@ -227,7 +232,7 @@ namespace ImgurSniper.UI {
 
         private void CreateDesktop(object sender, RoutedEventArgs e) {
             if(!System.IO.File.Exists(Path.Combine(_path, "ImgurSniper.exe"))) {
-                _error.Show("Error, ImgurSnipere could not be found on this Machine!", TimeSpan.FromSeconds(2));
+                _error.Show("Error, ImgurSniper could not be found on this Machine!", TimeSpan.FromSeconds(2));
                 return;
             }
 
@@ -235,7 +240,7 @@ namespace ImgurSniper.UI {
             (sender as System.Windows.Controls.Button).IsEnabled = false;
             (sender as System.Windows.Controls.Button).Tag = new object();
 
-            object shDesktop = (object)"Desktop";
+            object shDesktop = "Desktop";
             WshShell shell = new WshShell();
             string shortcutAddress = (string)shell.SpecialFolders.Item(ref shDesktop) + @"\Imgur Sniper.lnk";
             IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutAddress);
@@ -247,7 +252,7 @@ namespace ImgurSniper.UI {
 
         private void CreateStartMenu(object sender, RoutedEventArgs e) {
             if(!System.IO.File.Exists(Path.Combine(_path, "ImgurSniper.exe"))) {
-                _error.Show("Error, ImgurSnipere could not be found on this Machine!", TimeSpan.FromSeconds(2));
+                _error.Show("Error, ImgurSniper could not be found on this Machine!", TimeSpan.FromSeconds(2));
                 return;
             }
 
