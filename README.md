@@ -28,7 +28,8 @@ this is because of Imgur's File size limit for not logged in Users. You can easi
 # Bugs
 #### Scaling
 **Important:** If you have the Windows Scaling option enabled (>100%), _ImgurSniper_ will not work properly. I am currently working on a fix.
-<img src="https://github.com/mrousavy/ImgurSniper/raw/master/Images/WindowsScalingOption.png" width="100">
+
+<img src="https://github.com/mrousavy/ImgurSniper/raw/master/Images/WindowsScalingOption.png" width="450">
 
 # ImgurSniper UI
 To have more overview or control over **ImgurSniper**, you can also install the ImgurSniper.UI version.
