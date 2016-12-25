@@ -65,6 +65,12 @@ namespace ImgurSniper {
                 string response = "Error: Could not Read Config or Upload Image!";
                 string successmessage = "";
 
+                if(!FileIO.TokenExists && cimg.Length >= 10240000) {
+                    toast.Show("Image Size exceeds 10MB, to increase this please Login to Imgur!", TimeSpan.FromSeconds(3));
+                    DelayedClose(3300);
+                    return;
+                }
+
                 try {
                     string[] lines = FileIO.ReadConfig();
                     if(lines.Length < 1) {

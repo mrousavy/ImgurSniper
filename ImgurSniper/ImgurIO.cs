@@ -57,15 +57,5 @@ namespace ImgurSniper {
             }
             return image.Link;
         }
-
-        public class ImgurModel {
-            public ImgurModel(string AccessToken, string RefreshToken) {
-                this.AccessToken = AccessToken;
-                this.RefreshToken = RefreshToken;
-            }
-
-            public string AccessToken { get; set; }
-            public string RefreshToken { get; set; }
-        }
     }
 }

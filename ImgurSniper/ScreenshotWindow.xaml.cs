@@ -21,7 +21,8 @@ namespace ImgurSniper {
 
         public byte[] CroppedImage;
         public Point from, to;
-        private bool drag = false;
+
+        private bool _drag = false;
         private bool _enableMagnifyer = false;
 
 
@@ -89,6 +90,8 @@ namespace ImgurSniper {
                 toast.Show("The Image Width and/or Height is too small!", TimeSpan.FromSeconds(3.3));
             } else {
                 this.Cursor = Cursors.Arrow;
+
+
                 //Crop the Image with current Size
                 bool response = MakeImage(rect);
 
@@ -98,11 +101,13 @@ namespace ImgurSniper {
                     var brush = (Brush)converter.ConvertFromString("#2196F3");
 
                     toast.Background = brush;
-                    toast.Show("Processing Image...", TimeSpan.FromSeconds(1.5));
+                    toast.Show(string.Format("Processing Image ({0}x{1})...", w, h), TimeSpan.FromSeconds(1.5));
 
                     CloseSnap(true, 1500);
                 } else {
                     toast.Show("Whoops, something went wrong!", TimeSpan.FromSeconds(3.3));
+
+                    CloseSnap(false, 1500);
                 }
                 this.IsEnabled = false;
             }
@@ -118,7 +123,7 @@ namespace ImgurSniper {
         }
 
         private void DrawRectangle(object sender, MouseEventArgs e) {
-            drag = e.LeftButton == MouseButtonState.Pressed;
+            _drag = e.LeftButton == MouseButtonState.Pressed;
             Point pos = e.GetPosition(this);
 
             this.Activate();
@@ -128,7 +133,7 @@ namespace ImgurSniper {
 
             //Draw Rectangle
             try {
-                if(drag) {
+                if(_drag) {
                     //Set Crop Rectangle to Mouse Position
                     to = pos;
 
@@ -147,7 +152,7 @@ namespace ImgurSniper {
             }
 
             //Window Cords Display
-            this.coords.Content = "x:" + pos.X + " | " + "y:" + pos.Y;
+            this.coords.Content = "x:" + (int)pos.X + " | " + "y:" + (int)pos.Y;
         }
 
         /// <summary>
@@ -156,7 +161,7 @@ namespace ImgurSniper {
         /// <param name="result">Dialog Result</param>
         /// <param name="delay">Delay in milliseconds to close the window</param>
         private async void CloseSnap(bool result, int delay) {
-            var anim = new DoubleAnimation(0, (Duration)TimeSpan.FromSeconds(0.25));
+            var anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
             anim.Completed += delegate {
                 DialogResult = result;
             };
@@ -165,7 +170,7 @@ namespace ImgurSniper {
 
             //Wait delay (ms) and then begin animation
             await Task.Delay(TimeSpan.FromMilliseconds(delay));
-            this.BeginAnimation(UIElement.OpacityProperty, anim);
+            this.BeginAnimation(OpacityProperty, anim);
         }
 
 
