@@ -25,6 +25,11 @@ When successfully uploaded, you will get a notification and the **Link will be c
 **Side note:** You may experience _issues_ with Image uploads being _cut or not uploaded_,
 this is because of Imgur's File size limit for not logged in Users. You can easily fix this by _logging in_.
 
+# Bugs
+#### Scaling
+**Important:** If you have the Windows Scaling option enabled (>100%), _ImgurSniper_ will not work properly. I am currently working on a fix.
+<img src="https://github.com/mrousavy/ImgurSniper/raw/master/Images/WindowsScalingOption.png" width="100">
+
 # ImgurSniper UI
 To have more overview or control over **ImgurSniper**, you can also install the ImgurSniper.UI version.
 
