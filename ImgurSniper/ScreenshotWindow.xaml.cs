@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 
 namespace ImgurSniper {
     /// <summary>
@@ -84,8 +83,6 @@ namespace ImgurSniper {
             double x = Math.Min(from.X, to.X);
             double y = Math.Min(from.Y, to.Y);
 
-            Int32Rect rect = new Int32Rect((int)x, (int)y, (int)w, (int)h);
-
             if(Math.Abs(to.X - from.X) < 7 || Math.Abs(to.Y - from.Y) < 7) {
                 toast.Show("The Image Width and/or Height is too small!", TimeSpan.FromSeconds(3.3));
             } else {
@@ -93,7 +90,7 @@ namespace ImgurSniper {
 
 
                 //Crop the Image with current Size
-                bool response = MakeImage(rect);
+                bool response = MakeImage((int)x, (int)y, (int)w, (int)h);
 
                 //Was cropping successful?
                 if(response) {
@@ -101,7 +98,7 @@ namespace ImgurSniper {
                     var brush = (Brush)converter.ConvertFromString("#2196F3");
 
                     toast.Background = brush;
-                    toast.Show(string.Format("Processing Image ({0}x{1})...", w, h), TimeSpan.FromSeconds(1.5));
+                    toast.Show(string.Format("Processing Image ({0}x{1})...", (int)w, (int)h), TimeSpan.FromSeconds(1.5));
 
                     CloseSnap(true, 1500);
                 } else {
@@ -174,24 +171,45 @@ namespace ImgurSniper {
         }
 
 
-        private bool MakeImage(Int32Rect area) {
+        private bool MakeImage(int x, int y, int w, int h) {
             try {
-                //Copy Image over
-                BitmapImage src = img.Source as BitmapImage;
-                src.CacheOption = BitmapCacheOption.OnLoad;
+                ////Copy Image over
+                //BitmapImage src = img.Source as BitmapImage;
+                //src.CacheOption = BitmapCacheOption.OnLoad;
 
-                //Crop Image
-                CroppedBitmap croppedImage = new CroppedBitmap(src, area);
+                ////Crop Image
+                //CroppedBitmap croppedImage = new CroppedBitmap(src, area);
 
-                //Save Image
-                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-                encoder.QualityLevel = 100;
-                using(MemoryStream stream = new MemoryStream()) {
-                    encoder.Frames.Add(BitmapFrame.Create(croppedImage));
-                    encoder.Save(stream);
-                    CroppedImage = stream.ToArray();
-                    stream.Close();
+                ////Save Image
+                //JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+                //encoder.QualityLevel = 100;
+                //using(MemoryStream stream = new MemoryStream()) {
+                //    encoder.Frames.Add(BitmapFrame.Create(croppedImage));
+                //    encoder.Save(stream);
+                //    CroppedImage = stream.ToArray();
+                //    stream.Close();
+                //}
+
+
+
+                byte[] bimage = Screenshot.ImageToByte(Screenshot.MediaImageToDrawingImage(img.Source));
+
+                using(MemoryStream stream = new MemoryStream(bimage)) {
+                    System.Drawing.Rectangle cropRect = new System.Drawing.Rectangle(x, y, w, h);
+                    System.Drawing.Bitmap src = System.Drawing.Image.FromStream(stream) as System.Drawing.Bitmap;
+                    System.Drawing.Bitmap target = new System.Drawing.Bitmap(cropRect.Width, cropRect.Height);
+
+                    using(System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(target)) {
+                        g.DrawImage(src, new System.Drawing.Rectangle(0, 0, target.Width, target.Height),
+                                         cropRect,
+                                         System.Drawing.GraphicsUnit.Pixel);
+                    }
+
+                    CroppedImage = Screenshot.ImageToByte(target);
                 }
+
+
+
                 return true;
             } catch(Exception) {
                 return false;
