@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 
 namespace ImgurSniper {
     /// <summary>
@@ -30,8 +28,8 @@ namespace ImgurSniper {
         public ScreenshotWindow(ImageSource source) {
             InitializeComponent();
 
-            this.Left = screen.X;
-            this.Top = screen.Y;
+            this.Left = 0;
+            this.Top = 0;
             this.Height = (int)source.Height;
             this.Width = (int)source.Width;
             this.img.Source = source;
@@ -40,6 +38,9 @@ namespace ImgurSniper {
                 this.Activate();
                 this.Focus();
             };
+
+            System.Drawing.Rectangle rect = System.Windows.Forms.Screen.PrimaryScreen.Bounds;
+            coords.Margin = new Thickness(rect.X / 2, 0, rect.X / 2, 0);
 
             VisualBrush b = (VisualBrush)MagnifyingEllipse.Fill;
             b.Visual = SnipperGrid;
@@ -180,35 +181,6 @@ namespace ImgurSniper {
 
         private bool MakeImage(int x, int y, int w, int h) {
             try {
-                ////Copy Image over
-
-                Stopwatch method1 = new Stopwatch();
-                Stopwatch method2 = new Stopwatch();
-
-                method1.Start();
-
-                BitmapImage bsrc = img.Source as BitmapImage;
-                bsrc.CacheOption = BitmapCacheOption.OnLoad;
-
-                //Crop Image
-                CroppedBitmap croppedImage = new CroppedBitmap(bsrc, new Int32Rect(x, y, w, h));
-
-                //Save Image
-                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-                encoder.QualityLevel = 100;
-                using(MemoryStream stream = new MemoryStream()) {
-                    encoder.Frames.Add(BitmapFrame.Create(croppedImage));
-                    encoder.Save(stream);
-                    CroppedImage = stream.ToArray();
-                    stream.Close();
-                }
-
-                method1.Stop();
-
-
-
-                method2.Start();
-
                 byte[] bimage = Screenshot.ImageToByte(Screenshot.MediaImageToDrawingImage(img.Source));
 
                 using(MemoryStream stream = new MemoryStream(bimage)) {
@@ -224,12 +196,6 @@ namespace ImgurSniper {
 
                     CroppedImage = Screenshot.ImageToByte(target);
                 }
-
-                method2.Stop();
-
-
-                //Method1 faster??
-                Console.WriteLine(method1.ElapsedMilliseconds + " vs " + method2.ElapsedMilliseconds);
 
                 return true;
             } catch(Exception) {

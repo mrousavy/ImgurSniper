@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -11,26 +13,58 @@ namespace ImgurSniper {
         public static ImageSource getScreenshot() {
 
             //Thanks http://stackoverflow.com/users/214375/marcel-gheorghita !
-            Rectangle screen = ScreenshotWindow.screen;
-            Rectangle rect = new Rectangle(screen.X, 0, screen.Width, screen.Height);
-            Bitmap bmp = new Bitmap(rect.Width, rect.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            Graphics g = Graphics.FromImage(bmp);
-            g.CopyFromScreen(rect.Left, rect.Top, 0, 0, bmp.Size, CopyPixelOperation.SourceCopy);
+            //Rectangle screen = ScreenshotWindow.screen;
+            //Rectangle rect = new Rectangle(screen.X, 0, screen.Width, screen.Height);
+            //Bitmap bmp = new Bitmap(rect.Width, rect.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            //Graphics g = Graphics.FromImage(bmp);
+            //g.CopyFromScreen(rect.Left, rect.Top, 0, 0, bmp.Size, CopyPixelOperation.SourceCopy);
 
 
-            byte[] byteImage = ImageToByte(bmp);
+            //byte[] byteImage = ImageToByte(bmp);
 
-            bmp.Dispose();
+            //bmp.Dispose();
 
-            BitmapImage biImg = new BitmapImage();
-            MemoryStream ms = new MemoryStream(byteImage);
-            biImg.BeginInit();
-            biImg.StreamSource = ms;
-            biImg.EndInit();
+            //BitmapImage biImg = new BitmapImage();
+            //MemoryStream ms = new MemoryStream(byteImage);
+            //biImg.BeginInit();
+            //biImg.StreamSource = ms;
+            //biImg.EndInit();
 
-            ImageSource imgSrc = biImg as ImageSource;
+            //ImageSource imgSrc = biImg as ImageSource;
 
-            return imgSrc;
+
+
+
+
+
+
+
+            var left = System.Windows.Forms.Screen.AllScreens.Min(screen => screen.Bounds.X);
+            var top = System.Windows.Forms.Screen.AllScreens.Min(screen => screen.Bounds.Y);
+            var right = System.Windows.Forms.Screen.AllScreens.Max(screen => screen.Bounds.X + screen.Bounds.Width);
+            var bottom = System.Windows.Forms.Screen.AllScreens.Max(screen => screen.Bounds.Y + screen.Bounds.Height);
+            var width = right - left;
+            var height = bottom - top;
+
+            using(var screenBmp = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb)) {
+                using(var bmpGraphics = Graphics.FromImage(screenBmp)) {
+                    bmpGraphics.CopyFromScreen(left, top, 0, 0, new System.Drawing.Size(width, height));
+                    return System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
+                        screenBmp.GetHbitmap(),
+                        IntPtr.Zero,
+                        Int32Rect.Empty,
+                        BitmapSizeOptions.FromEmptyOptions());
+                }
+            }
+
+
+
+
+
+
+
+
+            //return imgSrc;
         }
         public static byte[] ImageToByte(Image img) {
             ImageConverter converter = new ImageConverter();

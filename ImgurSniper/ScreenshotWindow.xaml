@@ -14,7 +14,7 @@
                 <Storyboard Name="FormFade">
                     <DoubleAnimation Name="FormFadeAnimation"
                                      Storyboard.TargetProperty="(Window.Opacity)"
-                                     From="1.0" To="0.7" Duration="0:0:0.25"/>
+                                     From="1" To="0.7" Duration="0:0:0.25"/>
                 </Storyboard>
             </BeginStoryboard>
         </EventTrigger>
@@ -31,7 +31,7 @@
                 <Rectangle Fill="Gray" Opacity="0.3"/>
             </Border>
         </Grid>
-        <Label HorizontalAlignment="Center" VerticalAlignment="Top" Background="Black" Foreground="White" Name="coords" Opacity="0.3">x:0 | y:0</Label>
+        <Label VerticalAlignment="Top" HorizontalAlignment="Center" Background="Black" Foreground="White" Name="coords" Opacity="0.3">x:0 | y:0</Label>
 
 
         <Grid x:Name="Magnifyer" Width="70" Height="70" Visibility="Collapsed" Margin="9999">

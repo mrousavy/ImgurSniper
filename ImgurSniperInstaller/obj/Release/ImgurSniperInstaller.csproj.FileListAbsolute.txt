@@ -15,3 +15,4 @@ C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniperInsta
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniperInstaller\obj\Release\ImgurSniperInstaller.csproj.GenerateResource.Cache
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniperInstaller\obj\Release\ImgurSniperInstaller.exe
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniperInstaller\obj\Release\ImgurSniperInstaller.pdb
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniperInstaller\obj\Release\ImgurSniperInstaller.csprojResolveAssemblyReference.cache

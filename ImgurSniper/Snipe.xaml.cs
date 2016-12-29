@@ -36,6 +36,11 @@ namespace ImgurSniper {
         public Snipe() {
             InitializeComponent();
 
+            //this.Top = SystemParameters.WorkArea.Height - this.Height;
+            //this.Width = SystemParameters.WorkArea.Width;
+            //this.Left = ScreenshotWindow.screen.X;
+
+            //TODO: Debug
             this.Top = SystemParameters.WorkArea.Height - this.Height;
             this.Width = SystemParameters.WorkArea.Width;
             this.Left = ScreenshotWindow.screen.X;
