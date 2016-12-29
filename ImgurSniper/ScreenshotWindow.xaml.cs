@@ -23,13 +23,12 @@ namespace ImgurSniper {
 
         private bool _drag = false;
         private bool _enableMagnifyer = false;
+        private bool _allMonitors = false;
 
 
         public ScreenshotWindow(ImageSource source) {
             InitializeComponent();
 
-            this.Left = 0;
-            this.Top = 0;
             this.Height = (int)source.Height;
             this.Width = (int)source.Width;
             this.img.Source = source;
@@ -50,23 +49,18 @@ namespace ImgurSniper {
 
 
         private void LoadConfig() {
-            try {
-                string[] lines = FileIO.ReadConfig();
+            _enableMagnifyer = Snipe.MagnifyingGlassEnabled;
+            if(_enableMagnifyer)
+                Magnifyer.Visibility = Visibility.Visible;
 
-                foreach(string line in lines) {
-                    string[] config = line.Split(':');
+            _allMonitors = Snipe.AllMonitors;
 
-                    if(config[0] == "Magnifyer") {
-                        _enableMagnifyer = bool.Parse(config[1]);
-
-                        if(_enableMagnifyer)
-                            Magnifyer.Visibility = Visibility.Visible;
-
-                        return;
-                    }
-                }
-            } catch(Exception) {
-                _enableMagnifyer = false;
+            if(_allMonitors) {
+                this.Left = 0;
+                this.Top = 0;
+            } else {
+                this.Left = screen.X;
+                this.Top = screen.Y;
             }
         }
 

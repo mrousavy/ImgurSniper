@@ -15,7 +15,7 @@ namespace ImgurSniper {
             }
         }
         private ImgurIO _imgur;
-        public bool MagnifyingGlassEnabled {
+        public static bool MagnifyingGlassEnabled {
             get {
                 try {
                     string[] lines = FileIO.ReadConfig();
@@ -33,14 +33,31 @@ namespace ImgurSniper {
             }
         }
 
+        public static bool AllMonitors {
+            get {
+                try {
+                    bool all = false;
+
+                    string[] lines = FileIO.ReadConfig();
+                    foreach(string line in lines) {
+                        string[] config = line.Split(':');
+
+                        if(config[0] == "SnipeMonitor") {
+                            all = config[1] == "All";
+                        }
+                    }
+
+                    return all;
+                } catch(Exception) {
+                    return false;
+                }
+            }
+        }
+
         public Snipe() {
             InitializeComponent();
 
-            //this.Top = SystemParameters.WorkArea.Height - this.Height;
-            //this.Width = SystemParameters.WorkArea.Width;
-            //this.Left = ScreenshotWindow.screen.X;
 
-            //TODO: Debug
             this.Top = SystemParameters.WorkArea.Height - this.Height;
             this.Width = SystemParameters.WorkArea.Width;
             this.Left = ScreenshotWindow.screen.X;
@@ -58,7 +75,9 @@ namespace ImgurSniper {
         /// Make Screenshot, Let user Crop, Upload Picture and Copy Link to Clipboard
         /// </summary>
         private async void Crop() {
-            ScreenshotWindow window = new ScreenshotWindow(Screenshot.getScreenshot());
+            string[] lines = FileIO.ReadConfig();
+
+            ScreenshotWindow window = new ScreenshotWindow(Screenshot.getScreenshot(AllMonitors));
             window.ShowDialog();
             this.Topmost = true;
 
@@ -77,7 +96,6 @@ namespace ImgurSniper {
                 }
 
                 try {
-                    string[] lines = FileIO.ReadConfig();
                     if(lines.Length < 1) {
                         response = await UploadImgur(cimg);
                         successmessage = "Link to Imgur copied to Clipboard!";

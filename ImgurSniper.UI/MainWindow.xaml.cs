@@ -98,6 +98,13 @@ namespace ImgurSniper.UI {
                         case "Magnifyer":
                             MagnifyingGlassBox.IsChecked = bool.Parse(value);
                             break;
+                        case "SnipeMonitor":
+                            if(value == "All") {
+                                MultiMonitorRadio.IsChecked = true;
+                            } else {
+                                CurrentMonitorRadio.IsChecked = true;
+                            }
+                            break;
                     }
                 } catch(Exception) { }
             }
@@ -139,6 +146,16 @@ namespace ImgurSniper.UI {
                 } catch(Exception) { }
             }
         }
+
+        private void MonitorsClick(object sender, RoutedEventArgs e) {
+            RadioButton button = sender as RadioButton;
+            if(button != null) {
+                try {
+                    FileIO.SaveConfig(FileIO.ConfigType.SnipeMonitor, button.Tag as string);
+                } catch(Exception) { }
+            }
+        }
+
 
         private void SaveImgs_Checkbox(object sender, RoutedEventArgs e) {
             CheckBox box = sender as CheckBox;

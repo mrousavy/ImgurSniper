@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\Logo.ico</ApplicationIcon>
+    <ApplicationIcon>Logo.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -151,10 +151,10 @@
     <Resource Include="Resources\mrousavy.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Logo.ico" />
+    <Resource Include="Resources\Logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Logo.png" />
+    <Resource Include="Logo.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
