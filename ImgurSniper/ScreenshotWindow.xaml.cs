@@ -28,10 +28,8 @@ namespace ImgurSniper {
         public ScreenshotWindow(ImageSource source) {
             InitializeComponent();
 
-
-
             this.Left = screen.X;
-            this.Top = 0;
+            this.Top = screen.Y;
             this.Height = (int)source.Height;
             this.Width = (int)source.Width;
             this.img.Source = source;
@@ -78,13 +76,14 @@ namespace ImgurSniper {
             to = e.GetPosition(this);
 
             //The Factor for custom Windows Scaling users
-            double factor = PresentationSource.FromVisual(this).CompositionTarget.TransformToDevice.M11;
+            double factorX = PresentationSource.FromVisual(this).CompositionTarget.TransformToDevice.M11;
+            double factorY = PresentationSource.FromVisual(this).CompositionTarget.TransformToDevice.M22;
 
             //Width (w) and Height (h) of dragged Rectangle
-            double w = Math.Abs(from.X - to.X) * factor;
-            double h = Math.Abs(from.Y - to.Y) * factor;
-            double x = Math.Min(from.X, to.X) * factor;
-            double y = Math.Min(from.Y, to.Y) * factor;
+            double w = Math.Abs(from.X - to.X) * factorX;
+            double h = Math.Abs(from.Y - to.Y) * factorY;
+            double x = Math.Min(from.X, to.X) * factorX;
+            double y = Math.Min(from.Y, to.Y) * factorY;
 
             if(Math.Abs(to.X - from.X) < 7 || Math.Abs(to.Y - from.Y) < 7) {
                 toast.Show("The Image Width and/or Height is too small!", TimeSpan.FromSeconds(3.3));

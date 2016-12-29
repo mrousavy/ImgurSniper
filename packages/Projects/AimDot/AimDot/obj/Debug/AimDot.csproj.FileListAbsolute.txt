@@ -1,0 +1,13 @@
+c:\users\marc\documents\visual studio 2015\Projects\AimDot\AimDot\bin\Debug\AimDot.exe
+c:\users\marc\documents\visual studio 2015\Projects\AimDot\AimDot\bin\Debug\AimDot.exe.config
+c:\users\marc\documents\visual studio 2015\Projects\AimDot\AimDot\bin\Debug\AimDot.pdb
+c:\users\marc\documents\visual studio 2015\Projects\AimDot\AimDot\obj\Debug\MainWindow.g.cs
+c:\users\marc\documents\visual studio 2015\Projects\AimDot\AimDot\obj\Debug\App.g.cs
+c:\users\marc\documents\visual studio 2015\Projects\AimDot\AimDot\obj\Debug\AimDot_MarkupCompile.cache
+c:\users\marc\documents\visual studio 2015\Projects\AimDot\AimDot\obj\Debug\AimDot_MarkupCompile.lref
+c:\users\marc\documents\visual studio 2015\Projects\AimDot\AimDot\obj\Debug\MainWindow.baml
+c:\users\marc\documents\visual studio 2015\Projects\AimDot\AimDot\obj\Debug\AimDot.g.resources
+c:\users\marc\documents\visual studio 2015\Projects\AimDot\AimDot\obj\Debug\AimDot.Properties.Resources.resources
+c:\users\marc\documents\visual studio 2015\Projects\AimDot\AimDot\obj\Debug\AimDot.csproj.GenerateResource.Cache
+c:\users\marc\documents\visual studio 2015\Projects\AimDot\AimDot\obj\Debug\AimDot.exe
+c:\users\marc\documents\visual studio 2015\Projects\AimDot\AimDot\obj\Debug\AimDot.pdb
