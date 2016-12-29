@@ -77,11 +77,14 @@ namespace ImgurSniper {
         private void ReleaseRectangle(object sender, MouseButtonEventArgs e) {
             to = e.GetPosition(this);
 
+            //The Factor for custom Windows Scaling users
+            double factor = PresentationSource.FromVisual(this).CompositionTarget.TransformToDevice.M11;
+
             //Width (w) and Height (h) of dragged Rectangle
-            double w = Math.Abs(from.X - to.X);
-            double h = Math.Abs(from.Y - to.Y);
-            double x = Math.Min(from.X, to.X);
-            double y = Math.Min(from.Y, to.Y);
+            double w = Math.Abs(from.X - to.X) * factor;
+            double h = Math.Abs(from.Y - to.Y) * factor;
+            double x = Math.Min(from.X, to.X) * factor;
+            double y = Math.Min(from.Y, to.Y) * factor;
 
             if(Math.Abs(to.X - from.X) < 7 || Math.Abs(to.Y - from.Y) < 7) {
                 toast.Show("The Image Width and/or Height is too small!", TimeSpan.FromSeconds(3.3));
@@ -94,7 +97,7 @@ namespace ImgurSniper {
 
                 //Was cropping successful?
                 if(response) {
-                    var converter = new System.Windows.Media.BrushConverter();
+                    var converter = new BrushConverter();
                     var brush = (Brush)converter.ConvertFromString("#2196F3");
 
                     toast.Background = brush;
@@ -145,11 +148,14 @@ namespace ImgurSniper {
                     selectionRectangle.Margin = new Thickness(left, top, right, bottom);
                 }
             } catch(Exception ex) {
-                toast.Show("An error occured! (Show this to the smart Computer Apes: \"" + ex.Message + "\")", TimeSpan.FromSeconds(3.3));
+                toast.Show(
+                    string.Format("An error occured! (Show this to the smart Computer Apes: \"{0}\")", ex.Message),
+                    TimeSpan.FromSeconds(3.3));
             }
 
             //Window Cords Display
-            this.coords.Content = "x:" + (int)pos.X + " | " + "y:" + (int)pos.Y;
+            this.coords.Content =
+                string.Format("x:{0} | y:{1}", (int)pos.X, (int)pos.Y);
         }
 
         /// <summary>
