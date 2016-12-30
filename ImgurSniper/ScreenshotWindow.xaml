@@ -58,7 +58,7 @@
             FontFamily="Segoe UI"
             FontWeight="Bold"
             MessageColor="White"
-            Background="Orange"
+            Background="#F44336"
             FontSize="13"/>
         </Grid>
 </Window>

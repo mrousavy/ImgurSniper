@@ -77,12 +77,14 @@ namespace ImgurSniper.UI {
 
 
         private async void Load() {
+            PathBox.Text = _docPath;
+
             string[] lines = FileIO.ReadConfig();
 
             for(int i = 0; i < lines.Length; i++) {
                 try {
-                    string property = lines[i].Split(':')[0];
-                    string value = lines[i].Split(':')[1];
+                    string property = lines[i].Split(';')[0];
+                    string value = lines[i].Split(';')[1];
 
                     switch(property) {
                         case "AfterSnipeAction":
@@ -105,6 +107,9 @@ namespace ImgurSniper.UI {
                                 CurrentMonitorRadio.IsChecked = true;
                             }
                             break;
+                        case "Path":
+                            PathBox.Text = value;
+                            break;
                     }
                 } catch(Exception) { }
             }
@@ -117,6 +122,11 @@ namespace ImgurSniper.UI {
 
                 Btn_SignIn.Visibility = Visibility.Collapsed;
                 Btn_SignOut.Visibility = Visibility.Visible;
+            }
+
+
+            if(SaveBox.IsChecked.HasValue) {
+                PathPanel.IsEnabled = (bool)SaveBox.IsChecked;
             }
         }
 
@@ -162,6 +172,10 @@ namespace ImgurSniper.UI {
             if(box != null) {
                 try {
                     FileIO.SaveConfig(FileIO.ConfigType.SaveImages, box.IsChecked.ToString());
+
+                    if(box.IsChecked.HasValue) {
+                        PathPanel.IsEnabled = (bool)box.IsChecked;
+                    }
                 } catch(Exception) { }
             }
         }
@@ -297,12 +311,8 @@ namespace ImgurSniper.UI {
                 };
                 Panel_PIN.BeginAnimation(Button.OpacityProperty, fadePanelOut);
 
-
-                string refreshToken = FileIO.ReadRefreshToken();
-                string name = await _imgurhelper.LoggedInUser(refreshToken);
-
-                if(name != null) {
-                    Label_Account.Content = Label_Account.Content as string + " (Logged In as " + name + ")";
+                if(_imgurhelper.User != null) {
+                    Label_Account.Content = Label_Account.Content as string + " (Logged In as " + _imgurhelper.User + ")";
 
                     Btn_SignIn.Visibility = Visibility.Collapsed;
                     Btn_SignOut.Visibility = Visibility.Visible;
@@ -316,6 +326,36 @@ namespace ImgurSniper.UI {
                 Btn_PinOk.IsEnabled = true;
             } else {
                 Btn_PinOk.IsEnabled = false;
+            }
+        }
+
+        private void PathBox_Submit(object sender, System.Windows.Input.KeyEventArgs e) {
+            if(e.Key == System.Windows.Input.Key.Enter) {
+                SavePath();
+            }
+        }
+
+        private void PathChooser(object sender, RoutedEventArgs e) {
+            System.Windows.Forms.FolderBrowserDialog fbd = new System.Windows.Forms.FolderBrowserDialog();
+
+            if(Directory.Exists(PathBox.Text))
+                fbd.SelectedPath = PathBox.Text;
+
+            fbd.Description = "Select the Path where ImgurSniper should save Images.";
+
+            System.Windows.Forms.DialogResult result = fbd.ShowDialog();
+
+            if(!string.IsNullOrWhiteSpace(fbd.SelectedPath)) {
+                PathBox.Text = fbd.SelectedPath;
+                SavePath();
+            }
+        }
+
+        private void SavePath() {
+            if(Directory.Exists(PathBox.Text)) {
+                FileIO.SaveConfig(FileIO.ConfigType.Path, PathBox.Text);
+            } else {
+                error_toast.Show("The selected Path does not exist!", TimeSpan.FromSeconds(4));
             }
         }
     }

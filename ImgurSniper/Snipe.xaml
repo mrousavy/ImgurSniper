@@ -9,8 +9,8 @@
         Visibility="Visible" ShowInTaskbar="False" WindowStartupLocation="Manual"
         Title="Snipe a new Image" Height="30" Width="200" Opacity="1">
     <Grid x:Name="grid">
-        
-        <toasty:Toasty x:Name = "toast"
+
+        <toasty:Toasty x:Name = "ErrorToast"
                         Height = "30"
                         VerticalAlignment = "Bottom"
                         Duration = "0:0:0:3.3"
@@ -18,7 +18,18 @@
                         FontFamily = "Segoe UI"
                         FontWeight = "Bold"
                         MessageColor = "White"
-                        Background = "Orange"
+                        Background = "#F44336"
+                        FontSize = "13" />
+        
+        <toasty:Toasty x:Name = "SuccessToast"
+                        Height = "30"
+                        VerticalAlignment = "Bottom"
+                        Duration = "0:0:0:3.3"
+                        Message = "Done."
+                        FontFamily = "Segoe UI"
+                        FontWeight = "Bold"
+                        MessageColor = "White"
+                        Background = "#2196F3"
                         FontSize = "13" />
     </Grid>
 </Window>

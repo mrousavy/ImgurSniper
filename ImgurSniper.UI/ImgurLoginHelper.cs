@@ -20,6 +20,8 @@ namespace ImgurSniper.UI {
             }
         }
 
+        public string User { private set; get; }
+
         private ImgurClient _client;
         private OAuth2Endpoint _endpoint;
 
@@ -50,7 +52,8 @@ namespace ImgurSniper.UI {
 
                 FileIO.WriteRefreshToken(token.RefreshToken);
 
-                success.Show("Successfully logged in! Hi, " + token.AccountUsername + "!", TimeSpan.FromSeconds(2));
+                User = token.AccountUsername;
+                success.Show("Successfully logged in! Hi, " + User + "!", TimeSpan.FromSeconds(2));
                 return true;
             } catch(Exception ex) {
                 error.Show("Wrong PIN? Could not login to Imgur! (" + ex.Message + ")", TimeSpan.FromSeconds(2));

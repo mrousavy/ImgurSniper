@@ -24,6 +24,7 @@ namespace ImgurSniper {
         private bool _drag = false;
         private bool _enableMagnifyer = false;
         private bool _allMonitors = false;
+        private string _path = FileIO._path;
 
 
         public ScreenshotWindow(ImageSource source) {
@@ -37,9 +38,6 @@ namespace ImgurSniper {
                 this.Activate();
                 this.Focus();
             };
-
-            System.Drawing.Rectangle rect = System.Windows.Forms.Screen.PrimaryScreen.Bounds;
-            coords.Margin = new Thickness(rect.X / 2, 0, rect.X / 2, 0);
 
             VisualBrush b = (VisualBrush)MagnifyingEllipse.Fill;
             b.Visual = SnipperGrid;
@@ -93,13 +91,7 @@ namespace ImgurSniper {
 
                 //Was cropping successful?
                 if(response) {
-                    var converter = new BrushConverter();
-                    var brush = (Brush)converter.ConvertFromString("#2196F3");
-
-                    toast.Background = brush;
-                    toast.Show(string.Format("Processing Image ({0}x{1})...", (int)w, (int)h), TimeSpan.FromSeconds(1.5));
-
-                    CloseSnap(true, 1500);
+                    CloseSnap(true, 0);
                 } else {
                     toast.Show("Whoops, something went wrong!", TimeSpan.FromSeconds(3.3));
 

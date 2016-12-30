@@ -2,25 +2,20 @@
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 
 namespace ImgurSniper {
     /// <summary>
     /// Interaction logic for Snipe.xaml
     /// </summary>
     public partial class Snipe : Window {
-        private string _dir {
-            get {
-                return FileIO._path;
-            }
-        }
+        private string _dir;
         private ImgurIO _imgur;
         public static bool MagnifyingGlassEnabled {
             get {
                 try {
                     string[] lines = FileIO.ReadConfig();
                     foreach(string line in lines) {
-                        string[] config = line.Split(':');
+                        string[] config = line.Split(';');
 
                         if(config[0] == "Magnifyer") {
                             return bool.Parse(config[1]);
@@ -40,10 +35,11 @@ namespace ImgurSniper {
 
                     string[] lines = FileIO.ReadConfig();
                     foreach(string line in lines) {
-                        string[] config = line.Split(':');
+                        string[] config = line.Split(';');
 
                         if(config[0] == "SnipeMonitor") {
                             all = config[1] == "All";
+                            break;
                         }
                     }
 
@@ -57,6 +53,17 @@ namespace ImgurSniper {
         public Snipe() {
             InitializeComponent();
 
+            _dir = FileIO._path;
+            //Get configured Path
+            string[] lines = FileIO.ReadConfig();
+            foreach(string line in lines) {
+                string[] config = line.Split(';');
+
+                if(config[0] == "Path") {
+                    _dir = config[1];
+                    break;
+                }
+            }
 
             this.Top = SystemParameters.WorkArea.Height - this.Height;
             this.Width = SystemParameters.WorkArea.Width;
@@ -74,7 +81,7 @@ namespace ImgurSniper {
         /// <summary>
         /// Make Screenshot, Let user Crop, Upload Picture and Copy Link to Clipboard
         /// </summary>
-        private async void Crop() {
+        private void Crop() {
             string[] lines = FileIO.ReadConfig();
 
             ScreenshotWindow window = new ScreenshotWindow(Screenshot.getScreenshot(AllMonitors));
@@ -86,23 +93,20 @@ namespace ImgurSniper {
 
                 byte[] cimg = window.CroppedImage;
 
-                string response = "Error: Could not Read Config or Upload Image!";
-                string successmessage = "";
-
                 if(!FileIO.TokenExists && cimg.Length >= 10240000) {
-                    toast.Show("Image Size exceeds 10MB, to increase this please Login to Imgur!", TimeSpan.FromSeconds(3));
+                    ErrorToast.Show("Image Size exceeds 10MB, to increase this please Login to Imgur!", TimeSpan.FromSeconds(3));
                     DelayedClose(3300);
                     return;
                 }
 
+                string KB = string.Format("{0:0.#}", (cimg.Length / 1000d));
+                SuccessToast.Show(string.Format("Processing Image... ({0}KB)", KB), TimeSpan.FromSeconds(1));
+
                 try {
-                    if(lines.Length < 1) {
-                        response = await UploadImgur(cimg);
-                        successmessage = "Link to Imgur copied to Clipboard!";
-                    }
+                    bool Imgur = true;
 
                     foreach(string line in lines) {
-                        string[] config = line.Split(':');
+                        string[] config = line.Split(';');
 
                         switch(config[0]) {
                             case "SaveImages":
@@ -114,36 +118,54 @@ namespace ImgurSniper {
                                 break;
                             case "AfterSnipeAction":
                                 //Config: Upload Image to Imgur or Copy to Clipboard?
-
-                                if(config[1] == "Imgur") {
-                                    response = await UploadImgur(cimg);
-                                    successmessage = "Link to Imgur copied to Clipboard!";
-                                } else {
-                                    CopyClipboard(cimg);
-                                    response = "Image was copied to Clipboard!";
-                                    successmessage = "Image was copied to Clipboard!";
+                                if(config[1] != "Imgur") {
+                                    Imgur = false;
                                 }
                                 break;
                         }
                     }
-                } catch(Exception) {
+
+                    if(Imgur) {
+                        UploadImageToImgur(cimg);
+                    } else {
+                        CopyImageToClipboard(cimg);
+                    }
+
+                } catch(Exception ex) {
                     File.Delete(FileIO._config);
+
+                    ErrorToast.Show(string.Format("An unknown Error occured! (Show this to the Smart Computer Apes: \"{0}\")", ex),
+                        TimeSpan.FromSeconds(3.5));
                 }
 
 
-                if(response.StartsWith("Error:")) {
-                    //Some Error happened, show Error Message (response)
-                    toast.Show(response);
-                } else {
-                    var converter = new BrushConverter();
-                    var brush = (Brush)converter.ConvertFromString("#2196F3");
-                    toast.Background = brush;
-                    toast.Show(successmessage);
-                }
-                DelayedClose(3300);
+                DelayedClose(3500);
             } else {
                 DelayedClose(0);
             }
+        }
+
+
+
+        private async void UploadImageToImgur(byte[] cimg) {
+            string link = await UploadImgur(cimg);
+
+            if(link.StartsWith("http://")) {
+                Clipboard.SetText(link);
+
+                SuccessToast.Show("Link to Imgur copied to Clipboard!",
+                    TimeSpan.FromSeconds(3.5));
+            } else {
+                ErrorToast.Show(string.Format("Error uploading Image to Imgur! ({0})", link),
+                    TimeSpan.FromSeconds(3.5));
+            }
+        }
+
+
+        private void CopyImageToClipboard(byte[] cimg) {
+            CopyClipboard(cimg);
+            SuccessToast.Show("Image was copied to Clipboard!",
+                TimeSpan.FromSeconds(3.5));
         }
 
 

@@ -46,7 +46,7 @@ namespace ImgurSniper.UI {
                 return File.Exists(_tokenFile);
             }
         }
-        public enum ConfigType { AfterSnipeAction, SaveImages, Magnifyer, SnipeMonitor }
+        public enum ConfigType { AfterSnipeAction, SaveImages, Magnifyer, SnipeMonitor, Path }
 
 
         /// <summary>
@@ -61,17 +61,17 @@ namespace ImgurSniper.UI {
                 bool found = false;
 
                 for(int i = 0; i < lines.Length; i++) {
-                    string[] tmp = lines[i].Split(':');
+                    string[] tmp = lines[i].Split(';');
 
                     if(tmp[0] == type.ToString()) {
-                        lines[i] = tmp[0] + ":" + content;
+                        lines[i] = tmp[0] + ";" + content;
                         found = true;
                         break;
                     }
                 }
 
                 if(!found) {
-                    File.AppendAllLines(_config, new string[] { type.ToString() + ":" + content });
+                    File.AppendAllLines(_config, new string[] { type.ToString() + ";" + content });
                 } else {
                     File.WriteAllLines(_config, lines);
                 }
