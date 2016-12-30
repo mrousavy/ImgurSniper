@@ -63,11 +63,21 @@ namespace ImgurSniper {
         }
 
         private void StartDrawing(object sender, MouseButtonEventArgs e) {
+            //Only trigger on Left Mouse Button
+            if(e.ChangedButton != MouseButton.Left)
+                return;
+
+
             //Lock the from Point to the Mouse Position when started holding Mouse Button
             from = e.GetPosition(this);
         }
 
         private void ReleaseRectangle(object sender, MouseButtonEventArgs e) {
+            //Only trigger on Left Mouse Button
+            if(e.ChangedButton != MouseButton.Left)
+                return;
+
+
             to = e.GetPosition(this);
 
             //The Factor for custom Windows Scaling users
