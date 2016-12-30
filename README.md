@@ -2,7 +2,7 @@
 An alternative to Windows' built in _Snipping Tool_ with **auto Imgur Upload** or **Image to Clipboard Copy**.
 
 # Downloads
-### [⇩ Imgur Sniper v1.0.2.2 (5.189KB) (UI Version) (Extractor)](https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniperInstaller/bin/Release/ImgurSniperInstaller.exe?raw=true)
+### [⇩ Imgur Sniper v1.0.2.2 (5.189KB) (UI Version) (Extractor) (Recommended)](https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniperInstaller/bin/Release/ImgurSniperInstaller.exe?raw=true)
 
 #### [⇩ Imgur Sniper v1.0.2.2 (2.408KB) (UI Version) (Archive)](https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniper.UI/bin/Release/ImgurSniper.UI.zip?raw=true)
 
@@ -11,7 +11,7 @@ An alternative to Windows' built in _Snipping Tool_ with **auto Imgur Upload** o
 Icon by [jinga](http://jinga.at)
 
 # Description
-_**ImgurSniper** is a small and lightweight tool that makes sharing Images way easier by instantly uploading them to imgur.com **or** copy them to your Clipboard._
+**ImgurSniper** is a small and lightweight tool that makes sharing Images way easier by instantly uploading them to imgur.com **or** copy them to your Clipboard.
 
 # How to use
 Imgur Sniper will automatically activate _Snap mode_ when you start the **ImgurSniper.exe** executable.
