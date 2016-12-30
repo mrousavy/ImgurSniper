@@ -27,10 +27,6 @@ C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\bin\Debug\ImgurSniper.UI.exe.config
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\bin\Debug\ImgurSniper.UI.exe
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\bin\Debug\ImgurSniper.UI.pdb
-C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\bin\Debug\Imgur.API.dll
-C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\bin\Debug\MaterialDesignColors.dll
-C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\bin\Debug\MaterialDesignThemes.Wpf.dll
-C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\bin\Debug\Toast.dll
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\bin\Debug\Imgur.API.xml
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\bin\Debug\MaterialDesignColors.pdb
@@ -50,3 +46,8 @@ C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\o
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\obj\Debug\ImgurSniper.UI.csproj.GenerateResource.Cache
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\obj\Debug\ImgurSniper.UI.exe
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\obj\Debug\ImgurSniper.UI.pdb
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\obj\Debug\ImgurSniper.UI.csprojResolveAssemblyReference.cache
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\bin\Debug\Imgur.API.dll
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\bin\Debug\MaterialDesignColors.dll
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\bin\Debug\MaterialDesignThemes.Wpf.dll
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\bin\Debug\Newtonsoft.Json.dll
