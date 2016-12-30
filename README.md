@@ -2,11 +2,11 @@
 An alternative to Windows' built in _Snipping Tool_ with **auto Imgur Upload** or **Image to Clipboard Copy**.
 
 # Downloads
-### [⇩ Imgur Sniper v1.0.1.6 (5.589KB) (UI Version) (Extractor)](https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniperInstaller/bin/Release/ImgurSniperInstaller.exe?raw=true)
+### [⇩ Imgur Sniper v1.0.2.2 (5.189KB) (UI Version) (Extractor)](https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniperInstaller/bin/Release/ImgurSniperInstaller.exe?raw=true)
 
-### [⇩ Imgur Sniper v1.0.1.6 (2.407KB) (UI Version) (Archive)](https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniper.UI/bin/Release/ImgurSniper.UI.zip?raw=true)
+### [⇩ Imgur Sniper v1.0.2.2 (2.408KB) (UI Version) (Archive)](https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniper.UI/bin/Release/ImgurSniper.UI.zip?raw=true)
 
-### [⇩ Imgur Sniper v1.0.1.6 (374KB) (Instant Snipe)](https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniper/bin/Release/ImgurSniper.zip?raw=true)
+### [⇩ Imgur Sniper v1.0.2.2 (336KB) (Instant Snipe)](https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniper/bin/Release/ImgurSniper.zip?raw=true)
 
 Icon by [jinga](http://jinga.at)
 
@@ -38,7 +38,7 @@ With the UI Version you have access to some extra features:
 - **Create Shortcuts** to Desktop or Startmenu
 - **Launch ImgurSniper**
 	
-<img src="http://i.imgur.com/A2Z0di1.png">
+<img src="https://github.com/mrousavy/ImgurSniper/blob/1.1/Images/ImgurSniper.UI.png?raw=true">
 
 
 ## Thanks for using Imgur Sniper! :)
