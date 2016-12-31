@@ -50,4 +50,3 @@ C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\b
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\bin\Debug\MaterialDesignColors.dll
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\bin\Debug\MaterialDesignThemes.Wpf.dll
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\bin\Debug\Newtonsoft.Json.dll
-C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\obj\Debug\ImgurSniper.UI.csprojResolveAssemblyReference.cache

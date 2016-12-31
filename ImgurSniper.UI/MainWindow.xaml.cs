@@ -71,7 +71,8 @@ namespace ImgurSniper.UI {
 
         private async void NewToImgur() {
             await Task.Delay(500);
-            success_toast.Show("Hi! You're new to ImgurSniper! Start by clicking \"Install\" first!", TimeSpan.FromSeconds(2));
+            success_toast.Show("Hi! You're new to ImgurSniper! The newest version is being downloaded...", TimeSpan.FromSeconds(2));
+            Install(Btn_Install, null);
         }
 
 
