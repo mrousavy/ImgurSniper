@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
@@ -50,32 +51,55 @@ namespace ImgurSniper {
             }
         }
 
+        Stopwatch speedtest;
+
         public Snipe() {
+            speedtest = new Stopwatch();
+            speedtest.Start();
             InitializeComponent();
 
-            _dir = FileIO._path;
-            //Get configured Path
-            string[] lines = FileIO.ReadConfig();
-            foreach(string line in lines) {
-                string[] config = line.Split(';');
+            Initialize();
 
-                if(config[0] == "Path") {
-                    _dir = config[1];
-                    break;
+            Position();
+
+            this.Loaded += async delegate {
+                //Prevent short flash of Toasts
+                await Task.Delay(500);
+                ErrorToast.Visibility = Visibility.Visible;
+                SuccessToast.Visibility = Visibility.Visible;
+            };
+
+            Crop();
+        }
+
+        //Initialize important Variables
+        private void Initialize() {
+            new System.Threading.Thread(() => {
+                _dir = FileIO._path;
+                //Get configured Path
+                string[] lines = FileIO.ReadConfig();
+                foreach(string line in lines) {
+                    string[] config = line.Split(';');
+
+                    if(config[0] == "Path") {
+                        _dir = config[1];
+                        break;
+                    }
                 }
-            }
 
+                if(!Directory.Exists(_dir)) {
+                    Directory.CreateDirectory(_dir);
+                }
+
+                _imgur = new ImgurIO();
+            }).Start();
+        }
+
+        //Position Window correctly
+        private void Position() {
             this.Top = SystemParameters.WorkArea.Height - this.Height;
             this.Width = SystemParameters.WorkArea.Width;
             this.Left = System.Windows.Forms.Screen.PrimaryScreen.Bounds.X;
-
-            if(!Directory.Exists(_dir)) {
-                Directory.CreateDirectory(_dir);
-            }
-
-            _imgur = new ImgurIO();
-
-            Crop();
         }
 
         /// <summary>
@@ -84,9 +108,8 @@ namespace ImgurSniper {
         private void Crop() {
             string[] lines = FileIO.ReadConfig();
 
-
-            bool AllMonitors = Snipe.AllMonitors;
-            ScreenshotWindow window = new ScreenshotWindow(Screenshot.getScreenshot(AllMonitors), AllMonitors);
+            //TODO:
+            ScreenshotWindow window = new ScreenshotWindow(Snipe.AllMonitors);
             window.ShowDialog();
             this.Topmost = true;
 

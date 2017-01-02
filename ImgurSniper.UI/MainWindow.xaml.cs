@@ -131,7 +131,7 @@ namespace ImgurSniper.UI {
             }
         }
 
-
+        #region Action Listeners
         private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e) {
             e.Cancel = true;
             this.Closing -= WindowClosing;
@@ -240,26 +240,6 @@ namespace ImgurSniper.UI {
             }
         }
 
-        /// <summary>
-        /// Enable or disable Buttons
-        /// </summary>
-        public void ChangeButtonState(bool enabled) {
-            if(Btn_Desktop.Tag == null)
-                Btn_Desktop.IsEnabled = enabled;
-
-            if(Btn_Install.Tag == null)
-                Btn_Install.IsEnabled = enabled;
-
-            if(Btn_Snipe.Tag == null)
-                Btn_Snipe.IsEnabled = enabled;
-
-            if(Btn_Startmenu.Tag == null)
-                Btn_Startmenu.IsEnabled = enabled;
-
-            if(Btn_Uninstall.Tag == null)
-                Btn_Uninstall.IsEnabled = enabled;
-        }
-
         private void SignIn(object sender, RoutedEventArgs e) {
             try {
                 _imgurhelper.Authorize();
@@ -358,6 +338,29 @@ namespace ImgurSniper.UI {
             } else {
                 error_toast.Show("The selected Path does not exist!", TimeSpan.FromSeconds(4));
             }
+        }
+        #endregion
+
+
+
+        /// <summary>
+        /// Enable or disable Buttons
+        /// </summary>
+        public void ChangeButtonState(bool enabled) {
+            if(Btn_Desktop.Tag == null)
+                Btn_Desktop.IsEnabled = enabled;
+
+            if(Btn_Install.Tag == null)
+                Btn_Install.IsEnabled = enabled;
+
+            if(Btn_Snipe.Tag == null)
+                Btn_Snipe.IsEnabled = enabled;
+
+            if(Btn_Startmenu.Tag == null)
+                Btn_Startmenu.IsEnabled = enabled;
+
+            if(Btn_Uninstall.Tag == null)
+                Btn_Uninstall.IsEnabled = enabled;
         }
     }
 }

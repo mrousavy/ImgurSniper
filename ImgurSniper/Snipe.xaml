@@ -10,7 +10,7 @@
         Title="Snipe a new Image" Height="30" Width="200" Opacity="1">
     <Grid x:Name="grid">
 
-        <toasty:Toasty x:Name = "ErrorToast"
+        <toasty:Toasty x:Name = "ErrorToast" Visibility="Collapsed"
                         Height = "30"
                         VerticalAlignment = "Bottom"
                         Duration = "0:0:0:3.3"
@@ -20,8 +20,8 @@
                         MessageColor = "White"
                         Background = "#F44336"
                         FontSize = "13" />
-        
-        <toasty:Toasty x:Name = "SuccessToast"
+
+        <toasty:Toasty x:Name = "SuccessToast" Visibility="Collapsed"
                         Height = "30"
                         VerticalAlignment = "Bottom"
                         Duration = "0:0:0:3.3"

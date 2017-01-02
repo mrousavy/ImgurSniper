@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -35,70 +34,62 @@ namespace ImgurSniper {
 
         private bool _drag = false;
         private bool _enableMagnifyer = false;
-        private bool _allMonitors = false;
         private string _path = FileIO._path;
 
 
-        public ScreenshotWindow(ImageSource source, bool AllMonitors) {
+        public ScreenshotWindow(bool AllMonitors) {
             InitializeComponent();
 
-            if(AllMonitors) {
-                System.Drawing.Rectangle allScreens = ScreenshotWindow.allScreens;
-                this.Left = allScreens.Left;
-                this.Top = allScreens.Top;
-            } else {
-                System.Drawing.Rectangle screen = ScreenshotWindow.screen;
-                this.Left = screen.Left;
-                this.Top = screen.Top;
-            }
-
-            this.Height = (int)source.Height;
-            this.Width = (int)source.Width;
-            this.img.Source = source;
+            Position(AllMonitors);
+            LoadConfig();
 
             this.Loaded += delegate {
                 this.Activate();
                 this.Focus();
             };
-
-            VisualBrush b = (VisualBrush)MagnifyingEllipse.Fill;
-            b.Visual = SnipperGrid;
-
-            LoadConfig();
         }
 
+        //Position Window correctly
+        private void Position(bool AllMonitors) {
+            System.Drawing.Rectangle size;
 
+            if(AllMonitors) {
+                size = allScreens;
+            } else {
+                size = screen;
+            }
+
+            this.Left = size.Left;
+            this.Top = size.Top;
+            this.Height = size.Height;
+            this.Width = size.Width;
+        }
+
+        //Load from config File (ImgurSniper.UI)
         private void LoadConfig() {
             _enableMagnifyer = Snipe.MagnifyingGlassEnabled;
-            if(_enableMagnifyer)
+            if(_enableMagnifyer) {
                 Magnifyer.Visibility = Visibility.Visible;
-
-            _allMonitors = Snipe.AllMonitors;
-
-            if(_allMonitors) {
-                this.Left = 0;
-                this.Top = 0;
-            } else {
-                this.Left = screen.X;
-                this.Top = screen.Y;
+                VisualBrush b = (VisualBrush)MagnifyingEllipse.Fill;
+                b.Visual = SnipperGrid;
             }
         }
 
+        //MouseDown Event
         private void StartDrawing(object sender, MouseButtonEventArgs e) {
             //Only trigger on Left Mouse Button
             if(e.ChangedButton != MouseButton.Left)
                 return;
 
-
             //Lock the from Point to the Mouse Position when started holding Mouse Button
             from = e.GetPosition(this);
         }
 
+        //MouseUp Event
         private void ReleaseRectangle(object sender, MouseButtonEventArgs e) {
             //Only trigger on Left Mouse Button
             if(e.ChangedButton != MouseButton.Left)
                 return;
-
 
             to = e.GetPosition(this);
 
@@ -117,7 +108,6 @@ namespace ImgurSniper {
             } else {
                 this.Cursor = Cursors.Arrow;
 
-
                 //Crop the Image with current Size
                 bool response = MakeImage((int)x, (int)y, (int)w, (int)h);
 
@@ -133,15 +123,7 @@ namespace ImgurSniper {
             }
         }
 
-        public void Magnifier(Point pos) {
-            MagnifyerBrush.Viewbox = new Rect(pos.X - 25, pos.Y - 25, 50, 50);
-
-            double x = pos.X - 35;
-            double y = pos.Y - 80;
-
-            Magnifyer.Margin = new Thickness(x, y, this.Width - x - 70, this.Height - y - 70);
-        }
-
+        //Mouse Move event
         private void DrawRectangle(object sender, MouseEventArgs e) {
             _drag = e.LeftButton == MouseButtonState.Pressed;
             Point pos = e.GetPosition(this);
@@ -178,6 +160,16 @@ namespace ImgurSniper {
                 string.Format("x:{0} | y:{1}", (int)pos.X, (int)pos.Y);
         }
 
+        //Set Magnifyer Position
+        public void Magnifier(Point pos) {
+            MagnifyerBrush.Viewbox = new Rect(pos.X - 25, pos.Y - 25, 50, 50);
+
+            double x = pos.X - 35;
+            double y = pos.Y - 80;
+
+            Magnifyer.Margin = new Thickness(x, y, this.Width - x - 70, this.Height - y - 70);
+        }
+
         /// <summary>
         /// Close Window with fade out animation
         /// </summary>
@@ -188,40 +180,26 @@ namespace ImgurSniper {
             anim.Completed += delegate {
                 DialogResult = result;
             };
-            anim.From = 0.7;
-            anim.To = 1;
+            anim.From = this.Opacity;
+            anim.To = 0;
 
             //Wait delay (ms) and then begin animation
             await Task.Delay(TimeSpan.FromMilliseconds(delay));
             this.BeginAnimation(OpacityProperty, anim);
         }
 
-
+        //"Crop" Rectangle
         private bool MakeImage(int x, int y, int w, int h) {
             try {
-                byte[] bimage = Screenshot.ImageToByte(Screenshot.MediaImageToDrawingImage(img.Source));
-
-                using(MemoryStream stream = new MemoryStream(bimage)) {
-                    System.Drawing.Rectangle cropRect = new System.Drawing.Rectangle(x, y, w, h);
-                    System.Drawing.Bitmap src = System.Drawing.Image.FromStream(stream) as System.Drawing.Bitmap;
-                    System.Drawing.Bitmap target = new System.Drawing.Bitmap(cropRect.Width, cropRect.Height);
-
-                    using(System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(target)) {
-                        g.DrawImage(src, new System.Drawing.Rectangle(0, 0, target.Width, target.Height),
-                                         cropRect,
-                                         System.Drawing.GraphicsUnit.Pixel);
-                    }
-
-                    CroppedImage = Screenshot.ImageToByte(target);
-                }
-
+                ImageSource source = Screenshot.getScreenshot(new System.Drawing.Rectangle(x, y, w, h), false);
+                CroppedImage = Screenshot.ImageToByte(Screenshot.MediaImageToDrawingImage(source));
                 return true;
             } catch(Exception) {
                 return false;
             }
         }
 
-
+        //Escape Key closes Window
         private void Cancel(object sender, KeyEventArgs e) {
             if(e.Key == Key.Escape) {
                 CloseSnap(false, 0);

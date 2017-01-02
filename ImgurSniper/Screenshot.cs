@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Media;
@@ -10,14 +10,22 @@ using System.Windows.Media.Imaging;
 namespace ImgurSniper {
     class Screenshot {
 
-        public static ImageSource getScreenshot(bool AllMonitors) {
-            if(!AllMonitors) {
+        public static ImageSource getScreenshot(Rectangle coordinates, bool method) {
+            int left = coordinates.Left;
+            int top = coordinates.Top;
+            int width = coordinates.Width;
+            int height = coordinates.Height;
+
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
+            //TODO: Choose faster one (Probably else Block)
+            if(method) {
                 //Thanks http://stackoverflow.com/users/214375/marcel-gheorghita !
-                Rectangle screen = ScreenshotWindow.screen;
-                Rectangle rect = new Rectangle(screen.X, screen.Y, screen.Width, screen.Height);
-                Bitmap bmp = new Bitmap(rect.Width, rect.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+                Bitmap bmp = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
                 Graphics g = Graphics.FromImage(bmp);
-                g.CopyFromScreen(rect.Left, rect.Top, 0, 0, bmp.Size, CopyPixelOperation.SourceCopy);
+                g.CopyFromScreen(left, top, 0, 0, bmp.Size, CopyPixelOperation.SourceCopy);
 
 
                 byte[] byteImage = ImageToByte(bmp);
@@ -31,15 +39,13 @@ namespace ImgurSniper {
                 biImg.EndInit();
 
                 ImageSource imgSrc = biImg as ImageSource;
+
+                sw.Stop();
+                MessageBox.Show(sw.ElapsedMilliseconds + method.ToString());
+
                 return imgSrc;
             } else {
                 //Thanks http://stackoverflow.com/users/183367/julien-lebosquain !
-                var left = System.Windows.Forms.Screen.AllScreens.Min(screen => screen.Bounds.X);
-                var top = System.Windows.Forms.Screen.AllScreens.Min(screen => screen.Bounds.Y);
-                var right = System.Windows.Forms.Screen.AllScreens.Max(screen => screen.Bounds.X + screen.Bounds.Width);
-                var bottom = System.Windows.Forms.Screen.AllScreens.Max(screen => screen.Bounds.Y + screen.Bounds.Height);
-                var width = right - left;
-                var height = bottom - top;
 
                 using(var screenBmp = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb)) {
                     using(var bmpGraphics = Graphics.FromImage(screenBmp)) {
@@ -54,6 +60,9 @@ namespace ImgurSniper {
                             BitmapSizeOptions.FromEmptyOptions());
 
                         DeleteObject(hBitmap);
+
+                        sw.Stop();
+                        MessageBox.Show(sw.ElapsedMilliseconds + method.ToString());
 
                         return ret;
                     }

@@ -5,25 +5,26 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImgurSniper" KeyDown="Cancel" Cursor="Cross" Topmost="True"
-        mc:Ignorable="d" AllowsTransparency="False" WindowStyle="None" ResizeMode="NoResize" Background="White"
-        Title="Snipe a Screenshot!" Height="100" Width="100" Top="0" Left="0" WindowStartupLocation="Manual"
+        mc:Ignorable="d" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize" Background="Transparent"
+        Title="Snipe a Screenshot!" Height="100" Width="100" WindowStartupLocation="Manual"
         MouseDown="StartDrawing" MouseUp="ReleaseRectangle" MouseMove="DrawRectangle">
-    <Window.Triggers>
-        <EventTrigger RoutedEvent="Window.Loaded">
-            <BeginStoryboard>
-                <Storyboard Name="FormFade">
-                    <DoubleAnimation Name="FormFadeAnimation"
-                                     Storyboard.TargetProperty="(Window.Opacity)"
-                                     From="1" To="0.7" Duration="0:0:0.25"/>
-                </Storyboard>
-            </BeginStoryboard>
-        </EventTrigger>
-    </Window.Triggers>
 
-        <Grid x:Name="grid">
+        <Grid>
 
+        <Grid x:Name="ContentGrid" Background="White">
+            <Grid.Triggers>
+                <EventTrigger RoutedEvent="Grid.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard Name="FormFade">
+                            <DoubleAnimation Name="FormFadeAnimation"
+                                     Storyboard.TargetProperty="(Grid.Opacity)"
+                                     From="0" To="0.3" Duration="0:0:0.25"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Grid.Triggers>
 
-        <Grid x:Name="SnipperGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid x:Name="SnipperGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Image Name="img" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Fill"/>
             
             <Border x:Name="selectionRectangle" Margin="9999"
@@ -48,8 +49,8 @@
 
         <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="MagnifyedImage"/>
 
-
-
+        </Grid>
+            
         <toasty:Toasty x:Name="toast"
             Height="30"
             VerticalAlignment="Bottom"
