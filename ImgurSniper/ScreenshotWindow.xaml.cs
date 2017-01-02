@@ -95,15 +95,11 @@ namespace ImgurSniper {
 
             to = e.GetPosition(this);
 
-            //The Factor for custom Windows Scaling users
-            double factorX = PresentationSource.FromVisual(this).CompositionTarget.TransformToDevice.M11;
-            double factorY = PresentationSource.FromVisual(this).CompositionTarget.TransformToDevice.M22;
-
             //Width (w) and Height (h) of dragged Rectangle
-            double w = Math.Abs(from.X - to.X) * factorX;
-            double h = Math.Abs(from.Y - to.Y) * factorY;
-            double x = Math.Min(from.X, to.X) * factorX;
-            double y = Math.Min(from.Y, to.Y) * factorY;
+            int toX = (int)Math.Max(from.X, to.X);
+            int toY = (int)Math.Max(from.Y, to.Y);
+            int fromX = (int)Math.Min(from.X, to.X);
+            int fromY = (int)Math.Min(from.Y, to.Y);
 
             if(Math.Abs(to.X - from.X) < 7 || Math.Abs(to.Y - from.Y) < 7) {
                 toast.Show("The Image Width and/or Height is too small!", TimeSpan.FromSeconds(3.3));
@@ -111,7 +107,7 @@ namespace ImgurSniper {
                 this.Cursor = Cursors.Arrow;
 
                 //Was cropping successful?
-                Complete((int)x, (int)y, (int)w, (int)h);
+                Complete(fromX, fromY, toX, toY);
 
                 this.IsEnabled = false;
             }
@@ -179,11 +175,11 @@ namespace ImgurSniper {
         }
 
         //Fade out window and shoot cropped screenshot
-        private void Complete(int x, int y, int w, int h) {
+        private void Complete(int fromX, int fromY, int toX, int toY) {
             var anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
 
             anim.Completed += delegate {
-                Crop(x, y, w, h);
+                Crop(fromX, fromY, toX, toY);
             };
 
             anim.From = ContentGrid.Opacity;
@@ -193,8 +189,20 @@ namespace ImgurSniper {
         }
 
         //Make Image from custom Coords
-        private void Crop(int x, int y, int w, int h) {
-            bool result = MakeImage(x, y, w, h);
+        private void Crop(int fromX, int fromY, int toX, int toY) {
+            //Point to screen for Users with different DPI
+            Point xy = this.PointToScreen(new Point(fromX, fromY));
+            fromX = (int)xy.X;
+            fromY = (int)xy.Y;
+            Point wh = this.PointToScreen(new Point(toX, toY));
+            toX = (int)wh.X;
+            toY = (int)wh.Y;
+
+            int w = toX - fromX;
+            int h = toY - fromY;
+
+            //Assuming from Point is already top left and not bottom right
+            bool result = MakeImage(new System.Drawing.Rectangle(fromX, fromY, w, h));
 
             if(!result) {
                 toast.Show("Whoops, something went wrong!", TimeSpan.FromSeconds(3.3));
@@ -204,14 +212,29 @@ namespace ImgurSniper {
             }
         }
 
-        //"Crop" Rectangle
-        private bool MakeImage(int x, int y, int w, int h) {
+        //Play Camera Shutter Sound
+        private void PlayShutter() {
             try {
-                ImageSource source = Screenshot.getScreenshot(new System.Drawing.Rectangle(x, y, w, h));
+                MediaPlayer player = new MediaPlayer();
+                player.Volume = 30;
+
+                string path = System.IO.Path.Combine(FileIO._programFiles, "Resources\\Camera_Shutter.wav");
+
+                player.Open(new Uri(path));
+                player.Play();
+            } catch(Exception) { }
+        }
+
+        //"Crop" Rectangle
+        private bool MakeImage(System.Drawing.Rectangle size) {
+            try {
+                ImageSource source = Screenshot.getScreenshot(size);
 
                 System.IO.MemoryStream stream = new System.IO.MemoryStream();
                 Screenshot.MediaImageToDrawingImage(source).Save(stream, System.Drawing.Imaging.ImageFormat.Png);
                 CroppedImage = stream.ToArray();
+
+                PlayShutter();
 
                 return true;
             } catch(Exception) {

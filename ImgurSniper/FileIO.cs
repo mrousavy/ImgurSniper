@@ -19,6 +19,12 @@ namespace ImgurSniper {
                 return Path.Combine(Documents, "ImgurSniper");
             }
         }
+        public static string _programFiles {
+            get {
+                string ProgramFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+                return Path.Combine(ProgramFiles, "ImgurSniper");
+            }
+        }
         private static string _passPhrase {
             get {
                 return "ImgurSniper v" + _fileVersion + " User-Login File_PassPhrase :)";
