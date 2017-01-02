@@ -67,7 +67,7 @@ namespace ImgurSniper {
 
             this.Top = SystemParameters.WorkArea.Height - this.Height;
             this.Width = SystemParameters.WorkArea.Width;
-            this.Left = ScreenshotWindow.screen.X;
+            this.Left = System.Windows.Forms.Screen.PrimaryScreen.Bounds.X;
 
             if(!Directory.Exists(_dir)) {
                 Directory.CreateDirectory(_dir);
@@ -84,7 +84,9 @@ namespace ImgurSniper {
         private void Crop() {
             string[] lines = FileIO.ReadConfig();
 
-            ScreenshotWindow window = new ScreenshotWindow(Screenshot.getScreenshot(AllMonitors));
+
+            bool AllMonitors = Snipe.AllMonitors;
+            ScreenshotWindow window = new ScreenshotWindow(Screenshot.getScreenshot(AllMonitors), AllMonitors);
             window.ShowDialog();
             this.Topmost = true;
 

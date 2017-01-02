@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
+//TODO: Fix for different Resolution users
 namespace ImgurSniper {
     /// <summary>
     /// Interaction logic for ScreenshotWindow.xaml
@@ -18,6 +19,17 @@ namespace ImgurSniper {
             }
         }
 
+        public static System.Drawing.Rectangle allScreens {
+            get {
+                return new System.Drawing.Rectangle(
+                    (int)SystemParameters.VirtualScreenLeft,
+                    (int)SystemParameters.VirtualScreenTop,
+                    (int)SystemParameters.VirtualScreenWidth,
+                    (int)SystemParameters.VirtualScreenHeight);
+
+
+            }
+        }
         public byte[] CroppedImage;
         public Point from, to;
 
@@ -27,8 +39,18 @@ namespace ImgurSniper {
         private string _path = FileIO._path;
 
 
-        public ScreenshotWindow(ImageSource source) {
+        public ScreenshotWindow(ImageSource source, bool AllMonitors) {
             InitializeComponent();
+
+            if(AllMonitors) {
+                System.Drawing.Rectangle allScreens = ScreenshotWindow.allScreens;
+                this.Left = allScreens.Left;
+                this.Top = allScreens.Top;
+            } else {
+                System.Drawing.Rectangle screen = ScreenshotWindow.screen;
+                this.Left = screen.Left;
+                this.Top = screen.Top;
+            }
 
             this.Height = (int)source.Height;
             this.Width = (int)source.Width;

@@ -14,7 +14,7 @@ namespace ImgurSniper {
             if(!AllMonitors) {
                 //Thanks http://stackoverflow.com/users/214375/marcel-gheorghita !
                 Rectangle screen = ScreenshotWindow.screen;
-                Rectangle rect = new Rectangle(screen.X, 0, screen.Width, screen.Height);
+                Rectangle rect = new Rectangle(screen.X, screen.Y, screen.Width, screen.Height);
                 Bitmap bmp = new Bitmap(rect.Width, rect.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
                 Graphics g = Graphics.FromImage(bmp);
                 g.CopyFromScreen(rect.Left, rect.Top, 0, 0, bmp.Size, CopyPixelOperation.SourceCopy);
