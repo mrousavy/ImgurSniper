@@ -29,7 +29,7 @@ this is because of Imgur's File size limit for not logged in Users. You can easi
 ### Windows Scaling
 **Disable the Windows Scaling feature if you have multiple Monitors**, as **ImgurSniper** is not yet fully DPI Optimized. I am trying to fix this...
 
-<img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/Images/WindowsScalingOption.png" width="200">
+<img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/Images/WindowsScalingOption.png" width="400">
 
 # ImgurSniper UI
 To have more overview or control over **ImgurSniper**, you can also install the ImgurSniper.UI version.
