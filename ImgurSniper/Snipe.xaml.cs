@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,6 +10,8 @@ namespace ImgurSniper {
     public partial class Snipe : Window {
         private string _dir;
         private ImgurIO _imgur;
+
+        //Value whether Magnifying Glass should be enabled or not
         public static bool MagnifyingGlassEnabled {
             get {
                 try {
@@ -29,6 +30,7 @@ namespace ImgurSniper {
             }
         }
 
+        //Value whether ImgurSniper should strech over all screens or not
         public static bool AllMonitors {
             get {
                 try {
@@ -51,11 +53,7 @@ namespace ImgurSniper {
             }
         }
 
-        Stopwatch speedtest;
-
         public Snipe() {
-            speedtest = new Stopwatch();
-            speedtest.Start();
             InitializeComponent();
 
             Initialize();
@@ -102,13 +100,10 @@ namespace ImgurSniper {
             this.Left = System.Windows.Forms.Screen.PrimaryScreen.Bounds.X;
         }
 
-        /// <summary>
-        /// Make Screenshot, Let user Crop, Upload Picture and Copy Link to Clipboard
-        /// </summary>
+        //Make Screenshot, Let user Crop, Upload Picture and Copy Link to Clipboard
         private void Crop() {
             string[] lines = FileIO.ReadConfig();
 
-            //TODO:
             ScreenshotWindow window = new ScreenshotWindow(Snipe.AllMonitors);
             window.ShowDialog();
             this.Topmost = true;
@@ -124,7 +119,7 @@ namespace ImgurSniper {
                     return;
                 }
 
-                string KB = string.Format("{0:0.#}", (cimg.Length / 1000d));
+                string KB = string.Format("{0:0.#}", (cimg.Length / 1024d));
                 SuccessToast.Show(string.Format("Processing Image... ({0}KB)", KB), TimeSpan.FromSeconds(1));
 
                 try {
@@ -163,15 +158,13 @@ namespace ImgurSniper {
                         TimeSpan.FromSeconds(3.5));
                 }
 
-
                 DelayedClose(3500);
             } else {
                 DelayedClose(0);
             }
         }
 
-
-
+        //Upload byte[] to imgur and give user a response
         private async void UploadImageToImgur(byte[] cimg) {
             string link = await UploadImgur(cimg);
 
@@ -186,18 +179,14 @@ namespace ImgurSniper {
             }
         }
 
-
+        //Copy the Byte[] to the Clipboard
         private void CopyImageToClipboard(byte[] cimg) {
             CopyClipboard(cimg);
             SuccessToast.Show("Image was copied to Clipboard!",
                 TimeSpan.FromSeconds(3.5));
         }
 
-
-        /// <summary>
-        /// Upload Image to Imgur
-        /// </summary>
-        /// <returns>Imgur URL</returns>
+        //Upload Image to Imgur and returns URL to Imgur
         private async Task<string> UploadImgur(byte[] cimg) {
             string response = await _imgur.Upload(cimg);
 
@@ -207,7 +196,7 @@ namespace ImgurSniper {
             return response;
         }
 
-
+        //Parse byte[] to Image and write to Clipboard
         private void CopyClipboard(byte[] cimg) {
             //Parse byte[] to Images
             var image = new System.Windows.Media.Imaging.BitmapImage();
@@ -226,6 +215,7 @@ namespace ImgurSniper {
             Clipboard.SetImage(image);
         }
 
+        //Close Window with short delay
         private async void DelayedClose(int Delay) {
             await Task.Delay(TimeSpan.FromMilliseconds(Delay));
             this.Close();

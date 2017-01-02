@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -10,62 +9,28 @@ using System.Windows.Media.Imaging;
 namespace ImgurSniper {
     class Screenshot {
 
-        public static ImageSource getScreenshot(Rectangle coordinates, bool method) {
+        public static ImageSource getScreenshot(Rectangle coordinates) {
             int left = coordinates.Left;
             int top = coordinates.Top;
             int width = coordinates.Width;
             int height = coordinates.Height;
 
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
+            //Thanks http://stackoverflow.com/users/183367/julien-lebosquain !
+            using(var screenBmp = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb)) {
+                using(var bmpGraphics = Graphics.FromImage(screenBmp)) {
+                    bmpGraphics.CopyFromScreen(left, top, 0, 0, new System.Drawing.Size(width, height));
 
-            //TODO: Choose faster one (Probably else Block)
-            if(method) {
-                //Thanks http://stackoverflow.com/users/214375/marcel-gheorghita !
+                    IntPtr hBitmap = screenBmp.GetHbitmap();
 
-                Bitmap bmp = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-                Graphics g = Graphics.FromImage(bmp);
-                g.CopyFromScreen(left, top, 0, 0, bmp.Size, CopyPixelOperation.SourceCopy);
+                    BitmapSource ret = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
+                        hBitmap,
+                        IntPtr.Zero,
+                        Int32Rect.Empty,
+                        BitmapSizeOptions.FromEmptyOptions());
 
+                    DeleteObject(hBitmap);
 
-                byte[] byteImage = ImageToByte(bmp);
-
-                bmp.Dispose();
-
-                BitmapImage biImg = new BitmapImage();
-                MemoryStream ms = new MemoryStream(byteImage);
-                biImg.BeginInit();
-                biImg.StreamSource = ms;
-                biImg.EndInit();
-
-                ImageSource imgSrc = biImg as ImageSource;
-
-                sw.Stop();
-                MessageBox.Show(sw.ElapsedMilliseconds + method.ToString());
-
-                return imgSrc;
-            } else {
-                //Thanks http://stackoverflow.com/users/183367/julien-lebosquain !
-
-                using(var screenBmp = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb)) {
-                    using(var bmpGraphics = Graphics.FromImage(screenBmp)) {
-                        bmpGraphics.CopyFromScreen(left, top, 0, 0, new System.Drawing.Size(width, height));
-
-                        IntPtr hBitmap = screenBmp.GetHbitmap();
-
-                        BitmapSource ret = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
-                            hBitmap,
-                            IntPtr.Zero,
-                            Int32Rect.Empty,
-                            BitmapSizeOptions.FromEmptyOptions());
-
-                        DeleteObject(hBitmap);
-
-                        sw.Stop();
-                        MessageBox.Show(sw.ElapsedMilliseconds + method.ToString());
-
-                        return ret;
-                    }
+                    return ret;
                 }
             }
         }

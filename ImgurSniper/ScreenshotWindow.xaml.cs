@@ -11,6 +11,8 @@ namespace ImgurSniper {
     /// Interaction logic for ScreenshotWindow.xaml
     /// </summary>
     public partial class ScreenshotWindow : Window {
+
+        //Size of current Mouse Location screen
         public static System.Drawing.Rectangle screen {
             get {
                 System.Windows.Forms.Screen screen = System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position);
@@ -18,6 +20,7 @@ namespace ImgurSniper {
             }
         }
 
+        //Size of whole Screen Array
         public static System.Drawing.Rectangle allScreens {
             get {
                 return new System.Drawing.Rectangle(
@@ -25,10 +28,9 @@ namespace ImgurSniper {
                     (int)SystemParameters.VirtualScreenTop,
                     (int)SystemParameters.VirtualScreenWidth,
                     (int)SystemParameters.VirtualScreenHeight);
-
-
             }
         }
+
         public byte[] CroppedImage;
         public Point from, to;
 
@@ -108,17 +110,9 @@ namespace ImgurSniper {
             } else {
                 this.Cursor = Cursors.Arrow;
 
-                //Crop the Image with current Size
-                bool response = MakeImage((int)x, (int)y, (int)w, (int)h);
-
                 //Was cropping successful?
-                if(response) {
-                    CloseSnap(true, 0);
-                } else {
-                    toast.Show("Whoops, something went wrong!", TimeSpan.FromSeconds(3.3));
+                Complete((int)x, (int)y, (int)w, (int)h);
 
-                    CloseSnap(false, 1500);
-                }
                 this.IsEnabled = false;
             }
         }
@@ -170,29 +164,55 @@ namespace ImgurSniper {
             Magnifyer.Margin = new Thickness(x, y, this.Width - x - 70, this.Height - y - 70);
         }
 
-        /// <summary>
-        /// Close Window with fade out animation
-        /// </summary>
-        /// <param name="result">Dialog Result</param>
-        /// <param name="delay">Delay in milliseconds to close the window</param>
+        //Close Window with fade out animation
         private async void CloseSnap(bool result, int delay) {
             var anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
             anim.Completed += delegate {
                 DialogResult = result;
             };
-            anim.From = this.Opacity;
+            anim.From = ContentGrid.Opacity;
             anim.To = 0;
 
             //Wait delay (ms) and then begin animation
             await Task.Delay(TimeSpan.FromMilliseconds(delay));
-            this.BeginAnimation(OpacityProperty, anim);
+            ContentGrid.BeginAnimation(OpacityProperty, anim);
+        }
+
+        //Fade out window and shoot cropped screenshot
+        private void Complete(int x, int y, int w, int h) {
+            var anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
+
+            anim.Completed += delegate {
+                Crop(x, y, w, h);
+            };
+
+            anim.From = ContentGrid.Opacity;
+            anim.To = 0;
+
+            ContentGrid.BeginAnimation(OpacityProperty, anim);
+        }
+
+        //Make Image from custom Coords
+        private void Crop(int x, int y, int w, int h) {
+            bool result = MakeImage(x, y, w, h);
+
+            if(!result) {
+                toast.Show("Whoops, something went wrong!", TimeSpan.FromSeconds(3.3));
+                CloseSnap(false, 1500);
+            } else {
+                DialogResult = true;
+            }
         }
 
         //"Crop" Rectangle
         private bool MakeImage(int x, int y, int w, int h) {
             try {
-                ImageSource source = Screenshot.getScreenshot(new System.Drawing.Rectangle(x, y, w, h), false);
-                CroppedImage = Screenshot.ImageToByte(Screenshot.MediaImageToDrawingImage(source));
+                ImageSource source = Screenshot.getScreenshot(new System.Drawing.Rectangle(x, y, w, h));
+
+                System.IO.MemoryStream stream = new System.IO.MemoryStream();
+                Screenshot.MediaImageToDrawingImage(source).Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                CroppedImage = stream.ToArray();
+
                 return true;
             } catch(Exception) {
                 return false;
