@@ -25,12 +25,6 @@ When successfully uploaded, you will get a notification once the **Link is copie
 **Side note:** You may experience _issues_ with Image uploads being _cut or not uploaded_,
 this is because of Imgur's File size limit for not logged in Users. You can easily fix this by _logging in_.
 
-# Bugs
-### Windows Scaling
-**Disable the Windows Scaling feature if you have multiple Monitors**, as **ImgurSniper** is not yet fully DPI Optimized. I am trying to fix this...
-
-<img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/Images/WindowsScalingOption.png" width="400">
-
 # ImgurSniper UI
 To have more overview or control over **ImgurSniper**, you can also install the ImgurSniper.UI version.
 
@@ -47,6 +41,12 @@ With the UI Version you have access to some extra features:
 - **Launch ImgurSniper**
 	
 <img src="https://github.com/mrousavy/ImgurSniper/blob/1.1/Images/ImgurSniper.UI.png?raw=true">
+
+# Bugs
+### Windows Scaling
+**Disable the Windows Scaling feature if you have multiple Monitors**, as **ImgurSniper** is not yet fully DPI Optimized. I am trying to fix this...
+
+<img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/Images/WindowsScalingOption.png" width="400">
 
 
 ## Thanks for using Imgur Sniper! :)
