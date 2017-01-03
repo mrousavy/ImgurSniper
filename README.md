@@ -22,6 +22,8 @@ The Screen will darken so you definetly will notice when _Snap mode_ is entered.
 In _Snap mode_ you are able to **draw/crop a Rectangle** which will crop the content once released and automatically upload it to Imgur or copy to your Clipboard.
 When successfully uploaded, you will get a notification once the **Link is copied to your Clipboard**.
 
+<img src="http://i.imgur.com/KPvclly.gif">
+
 **Side note:** You may experience _issues_ with Image uploads being _cut or not uploaded_,
 this is because of Imgur's File size limit for not logged in Users. You can easily fix this by _logging in_.
 
