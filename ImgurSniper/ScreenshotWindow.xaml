@@ -10,7 +10,7 @@
         MouseDown="StartDrawing" MouseUp="ReleaseRectangle" MouseMove="DrawRectangle">
 
     <Grid>
-        <Grid x:Name="ContentGrid" Opacity="0.3" Background="White">
+        <Grid x:Name="ContentGrid" Opacity="0.3" Background="Black">
             <Grid.Triggers>
                 <EventTrigger RoutedEvent="Grid.Loaded">
                     <BeginStoryboard>

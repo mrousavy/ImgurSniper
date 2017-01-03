@@ -52,6 +52,7 @@ namespace ImgurSniper.UI {
         public MainWindow() {
             InitializeComponent();
             this.Closing += WindowClosing;
+            Application.Current.DispatcherUnhandledException += ShowExceptionToast;
 
             if(!Directory.Exists(_path)) {
                 Directory.CreateDirectory(_path);
@@ -68,6 +69,9 @@ namespace ImgurSniper.UI {
             Load();
         }
 
+        private void ShowExceptionToast(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
+            error_toast.Show(string.Format("An unknown Error occured! More Info: \"{0}\"", e.Exception.Message), TimeSpan.FromSeconds(5));
+        }
 
         private async void NewToImgur() {
             await Task.Delay(500);

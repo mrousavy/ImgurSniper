@@ -34,8 +34,19 @@ namespace ImgurSniper.UI {
 
             if(!Directory.Exists(_path))
                 Directory.CreateDirectory(_path);
-            if(!Directory.Exists(_tempPath))
-                Directory.CreateDirectory(_tempPath);
+
+            try {
+                if(Directory.Exists(_tempPath)) {
+                    Directory.Delete(_tempPath, true);
+                }
+            } catch(Exception) { }
+            Directory.CreateDirectory(_tempPath);
+
+            if(System.IO.File.Exists(Path.Combine(_path, "ImgurSniperArchive.zip"))) {
+                try {
+                    System.IO.File.Delete(Path.Combine(_path, "ImgurSniperArchive.zip"));
+                } catch(Exception) { }
+            }
 
             this.invoker = invoker;
             _error = errorToast;
@@ -88,9 +99,15 @@ namespace ImgurSniper.UI {
                 _error.Show("Could not download ZIP Archive from github.com!",
                     TimeSpan.FromSeconds(5));
             } else {
-                foreach(string tempFile in Directory.GetFiles(_tempPath)) {
-                    System.IO.File.Delete(tempFile);
-                }
+                try {
+                    foreach(string tempFile in Directory.GetFiles(_tempPath)) {
+                        System.IO.File.Delete(tempFile);
+                    }
+                } catch(Exception) { }
+                try {
+                    Directory.Delete(_tempPath, true);
+                } catch(Exception) { }
+                Directory.CreateDirectory(_tempPath);
 
                 Extract(file, _tempPath);
                 Move(_tempPath, _path);
@@ -239,10 +256,12 @@ namespace ImgurSniper.UI {
         /// </summary>
         /// <param name="file">The exe path</param>
         private void Finalize(string file) {
-            System.IO.File.Delete(Path.Combine(_path, "ImgurSniperArchive.zip"));
+            try {
+                System.IO.File.Delete(Path.Combine(_path, "ImgurSniperArchive.zip"));
 
-            Directory.Delete(_tempPath, true);
-            CreateUninstaller();
+                Directory.Delete(_tempPath, true);
+                CreateUninstaller();
+            } catch(Exception) { }
 
             invoker.ChangeButtonState(true);
         }
@@ -253,19 +272,33 @@ namespace ImgurSniper.UI {
                 _error.Show("Error, ImgurSniper could not be found on this Machine!", TimeSpan.FromSeconds(2));
                 return;
             }
-
-            (sender as System.Windows.Controls.Button).Content = "Done!";
-            (sender as System.Windows.Controls.Button).IsEnabled = false;
-            (sender as System.Windows.Controls.Button).Tag = new object();
+            if(!System.IO.File.Exists(Path.Combine(_path, "ImgurSniper.UI.exe"))) {
+                _error.Show("Error, ImgurSniper.UI could not be found on this Machine!", TimeSpan.FromSeconds(2));
+                return;
+            }
 
             object shDesktop = "Desktop";
             WshShell shell = new WshShell();
+
             string shortcutAddress = (string)shell.SpecialFolders.Item(ref shDesktop) + @"\Imgur Sniper.lnk";
             IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutAddress);
             shortcut.Description = "Instant Snipe an Image!";
             shortcut.WorkingDirectory = _path;
             shortcut.TargetPath = Path.Combine(_path, "ImgurSniper.exe");
             shortcut.Save();
+
+
+            string shortcutAddressUI = (string)shell.SpecialFolders.Item(ref shDesktop) + @"\Imgur Sniper UI.lnk";
+            IWshShortcut shortcutUI = (IWshShortcut)shell.CreateShortcut(shortcutAddressUI);
+            shortcutUI.Description = "ImgurSniper UI Control Panel";
+            shortcutUI.WorkingDirectory = _path;
+            shortcutUI.TargetPath = Path.Combine(_path, "ImgurSniper.UI.exe");
+            shortcutUI.Save();
+
+
+            (sender as System.Windows.Controls.Button).Content = "Done!";
+            (sender as System.Windows.Controls.Button).IsEnabled = false;
+            (sender as System.Windows.Controls.Button).Tag = new object();
         }
 
         private void CreateStartMenu(object sender, RoutedEventArgs e) {
@@ -273,10 +306,10 @@ namespace ImgurSniper.UI {
                 _error.Show("Error, ImgurSniper could not be found on this Machine!", TimeSpan.FromSeconds(2));
                 return;
             }
-
-            (sender as System.Windows.Controls.Button).Content = "Done!";
-            (sender as System.Windows.Controls.Button).IsEnabled = false;
-            (sender as System.Windows.Controls.Button).Tag = new object();
+            if(!System.IO.File.Exists(Path.Combine(_path, "ImgurSniper.UI.exe"))) {
+                _error.Show("Error, ImgurSniper.UI could not be found on this Machine!", TimeSpan.FromSeconds(2));
+                return;
+            }
 
             string commonStartMenuPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu);
 
@@ -288,45 +321,61 @@ namespace ImgurSniper.UI {
             shortcut.WorkingDirectory = _path;
             shortcut.TargetPath = Path.Combine(_path, "ImgurSniper.exe");
             shortcut.Save();
+
+
+            string shortcutLocationUI = Path.Combine(commonStartMenuPath, "ImgurSniper.UI" + ".lnk");
+            WshShell shellUI = new WshShell();
+            IWshShortcut shortcutUI = (IWshShortcut)shell.CreateShortcut(shortcutLocationUI);
+
+            shortcutUI.Description = "ImgurSniper UI Control Panel";
+            shortcutUI.WorkingDirectory = _path;
+            shortcutUI.TargetPath = Path.Combine(_path, "ImgurSniper.UI.exe");
+            shortcutUI.Save();
+
+            (sender as System.Windows.Controls.Button).Content = "Done!";
+            (sender as System.Windows.Controls.Button).IsEnabled = false;
+            (sender as System.Windows.Controls.Button).Tag = new object();
         }
 
         private void CreateUninstaller() {
-            using(RegistryKey parent = Registry.LocalMachine.OpenSubKey(
-                         @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall", true)) {
-                if(parent == null) {
-                    return;
-                }
-                try {
-                    RegistryKey key = null;
-
-                    try {
-                        string appName = "ImgurSniper";
-
-                        key = parent.CreateSubKey(appName);
-
-                        Assembly asm = GetType().Assembly;
-                        Version v = asm.GetName().Version;
-                        string exe = "\"" + asm.CodeBase.Substring(8).Replace("/", "\\\\") + "\"";
-
-                        key.SetValue("DisplayName", "ImgurSniper");
-                        key.SetValue("ApplicationVersion", v.ToString());
-                        key.SetValue("Publisher", "mrousavy");
-                        key.SetValue("DisplayIcon", exe);
-                        key.SetValue("DisplayVersion", v.ToString(2));
-                        key.SetValue("URLInfoAbout", "http://www.github.com/mrousavy/ImgurSniper");
-                        key.SetValue("Contact", "");
-                        key.SetValue("InstallDate", DateTime.Now.ToString("yyyyMMdd"));
-                        key.SetValue("UninstallString", exe + " /uninstallprompt");
-                    } finally {
-                        if(key != null) {
-                            key.Close();
-                        }
+            try {
+                using(RegistryKey parent = Registry.LocalMachine.OpenSubKey(
+                             @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall", true)) {
+                    if(parent == null) {
+                        return;
                     }
-                } catch(Exception) {
-                    _error.Show("Could not create Uninstaller for ImgurSniper! You will have to remove the Files manually (from " + _path + ")",
-                        TimeSpan.FromSeconds(5));
+                    try {
+                        RegistryKey key = null;
+
+                        try {
+                            string appName = "ImgurSniper";
+
+                            key = parent.CreateSubKey(appName);
+
+                            Assembly asm = GetType().Assembly;
+                            Version v = asm.GetName().Version;
+                            string exe = "\"" + asm.CodeBase.Substring(8).Replace("/", "\\\\") + "\"";
+
+                            key.SetValue("DisplayName", "ImgurSniper");
+                            key.SetValue("ApplicationVersion", v.ToString());
+                            key.SetValue("Publisher", "mrousavy");
+                            key.SetValue("DisplayIcon", exe);
+                            key.SetValue("DisplayVersion", v.ToString(2));
+                            key.SetValue("URLInfoAbout", "http://www.github.com/mrousavy/ImgurSniper");
+                            key.SetValue("Contact", "");
+                            key.SetValue("InstallDate", DateTime.Now.ToString("yyyyMMdd"));
+                            key.SetValue("UninstallString", exe + " /uninstall");
+                        } finally {
+                            if(key != null) {
+                                key.Close();
+                            }
+                        }
+                    } catch(Exception) {
+                        _error.Show("Could not create Uninstaller for ImgurSniper! You will have to remove the Files manually (from " + _path + ")",
+                            TimeSpan.FromSeconds(5));
+                    }
                 }
-            }
+            } catch(Exception) { }
         }
     }
 }
