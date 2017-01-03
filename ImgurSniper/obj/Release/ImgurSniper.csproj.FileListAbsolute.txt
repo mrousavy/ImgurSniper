@@ -44,3 +44,5 @@ C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Release\ImgurSniper.exe
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Release\ImgurSniper.pdb
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\bin\Release\Resources\Camera_Shutter.wav
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Release\ImgurSniper.csprojResolveAssemblyReference.cache
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\bin\Release\Resources\Blop.wav

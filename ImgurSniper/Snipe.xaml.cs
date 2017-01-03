@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 
 namespace ImgurSniper {
     /// <summary>
@@ -170,6 +171,7 @@ namespace ImgurSniper {
 
             if(link.StartsWith("http://")) {
                 Clipboard.SetText(link);
+                PlayBlop();
 
                 SuccessToast.Show("Link to Imgur copied to Clipboard!",
                     TimeSpan.FromSeconds(3.5));
@@ -219,6 +221,19 @@ namespace ImgurSniper {
         private async void DelayedClose(int Delay) {
             await Task.Delay(TimeSpan.FromMilliseconds(Delay));
             this.Close();
+        }
+
+        //Play the Blop Success Sound
+        private void PlayBlop() {
+            try {
+                MediaPlayer player = new MediaPlayer();
+                player.Volume = 30;
+
+                string path = Path.Combine(FileIO._programFiles, "Resources\\Blop.wav");
+
+                player.Open(new Uri(path));
+                player.Play();
+            } catch(Exception) { }
         }
     }
 }
