@@ -10,44 +10,47 @@
         MouseDown="StartDrawing" MouseUp="ReleaseRectangle" MouseMove="DrawRectangle">
 
     <Grid>
-        <Grid x:Name="ContentGrid" Opacity="0.3" Background="Black">
-            <Grid.Triggers>
-                <EventTrigger RoutedEvent="Grid.Loaded">
-                    <BeginStoryboard>
-                        <Storyboard Name="FadeIn">
-                            <DoubleAnimation Name="FadeInAnimation"
-                                     Storyboard.TargetProperty="(Grid.Opacity)"
-                                     From="0" To="0.3" Duration="0:0:0.25"/>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </Grid.Triggers>
-
-            <Grid x:Name="SnipperGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Image Name="img" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Fill"/>
-            
+        <Grid x:Name="grid">
             <Border x:Name="selectionRectangle" Margin="9999"
                 BorderBrush="DarkGray" BorderThickness="1">
                 <Rectangle Fill="Gray" Opacity="0.3"/>
             </Border>
-        </Grid>
-            <Label VerticalAlignment="Top" HorizontalAlignment="Center" Background="Black" Foreground="White" Name="coords" Opacity="0.3">x:0 | y:0</Label>
-            <Grid x:Name="Magnifyer" Width="70" Height="70" Visibility="Collapsed" Margin="9999">
-        <Ellipse Stroke="Gray" x:Name="MagnifyingEllipse" Width="70" Height="70"
+
+            <Grid x:Name="ContentGrid" Opacity="0.3" Background="Black">
+                <Grid.Triggers>
+                    <EventTrigger RoutedEvent="Grid.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard Name="FadeIn">
+                                <DoubleAnimation Name="FadeInAnimation"
+                                     Storyboard.TargetProperty="(Grid.Opacity)"
+                                     From="0" To="0.3" Duration="0:0:0.25"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Grid.Triggers>
+
+                <Grid x:Name="SnipperGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Image Name="img" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Fill"/>
+
+                </Grid>
+                <Label VerticalAlignment="Top" HorizontalAlignment="Center" Background="Black" Foreground="White" Name="coords" Opacity="0.3">x:0 | y:0</Label>
+                <Grid x:Name="Magnifyer" Width="70" Height="70" Visibility="Collapsed" Margin="9999">
+                    <Ellipse Stroke="Gray" x:Name="MagnifyingEllipse" Width="70" Height="70"
                  VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Ellipse.Fill>
-                <VisualBrush ViewboxUnits="Absolute" Viewbox="0,0,50,50" x:Name="MagnifyerBrush"
+                        <Ellipse.Fill>
+                            <VisualBrush ViewboxUnits="Absolute" Viewbox="0,0,50,50" x:Name="MagnifyerBrush"
                              ViewportUnits="RelativeToBoundingBox" Viewport="0,0,1,1"/>
-            </Ellipse.Fill>
-        </Ellipse>
-            <Label FontSize="25" Opacity="0.8" VerticalAlignment="Center" HorizontalAlignment="Center">✛</Label>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <Label FontSize="25" Opacity="0.8" VerticalAlignment="Center" HorizontalAlignment="Center">✛</Label>
+                </Grid>
+
+
+                <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="MagnifyedImage"/>
+
+            </Grid>
         </Grid>
 
-
-        <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="MagnifyedImage"/>
-
-        </Grid>
-            
         <toasty:Toasty x:Name="toast"
             Height="30"
             VerticalAlignment="Bottom"

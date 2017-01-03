@@ -182,10 +182,10 @@ namespace ImgurSniper {
                 Crop(fromX, fromY, toX, toY);
             };
 
-            anim.From = ContentGrid.Opacity;
+            anim.From = grid.Opacity;
             anim.To = 0;
 
-            ContentGrid.BeginAnimation(OpacityProperty, anim);
+            grid.BeginAnimation(OpacityProperty, anim);
         }
 
         //Make Image from custom Coords
