@@ -36,6 +36,7 @@ With the UI Version you have access to some extra features:
 - Enable a **Magnifying Glass** for precise cropping
 - Choose between launching **ImgurSniper** on _Current Screen_ or _All Screens at once_
 - **Download** and **Install** the _newest ImgurSniper version_ (Will install to Program Files)
+- **Repair** ImgurSniper, in case you messed up the Config Files or it won't start anymore.
 - **Uninstall** (Completely remove ImgurSniper and every Configs)
 - **Create Shortcuts** to Desktop or Startmenu
 - **Launch ImgurSniper**
