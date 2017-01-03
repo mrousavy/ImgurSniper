@@ -1,0 +1,5 @@
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\bin\Debug\Cleanup.exe.config
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\bin\Debug\Cleanup.exe
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\bin\Debug\Cleanup.pdb
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\obj\Debug\Cleanup.exe
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\obj\Debug\Cleanup.pdb

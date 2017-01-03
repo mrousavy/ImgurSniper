@@ -108,6 +108,13 @@ namespace ImgurSniper.UI {
                     System.IO.File.Delete(file);
                 } catch(Exception) { }
             }
+
+            foreach(string directory in Directory.GetDirectories(_path)) {
+                try {
+                    if(!directory.Contains("Temp"))
+                        Directory.Delete(directory, true);
+                } catch(Exception) { }
+            }
         }
 
         /// <summary>
@@ -177,7 +184,7 @@ namespace ImgurSniper.UI {
                     p.Kill();
                 }
 
-                await Task.Delay(2495);
+                await Task.Delay(2500);
 
                 //Remove all files
                 bool notRemoved = false;
@@ -199,10 +206,10 @@ namespace ImgurSniper.UI {
 
                 //Remove Directories
                 try {
-                    Directory.Delete(_path);
+                    Directory.Delete(_path, true);
                 } catch(Exception) { }
                 try {
-                    Directory.Delete(_docPath);
+                    Directory.Delete(_docPath, true);
                 } catch(Exception) { }
 
 
@@ -213,6 +220,9 @@ namespace ImgurSniper.UI {
                 _success.Show("Sad to see you go! Bye :(",
                         TimeSpan.FromSeconds(1.5));
 
+                string path = Path.Combine(Path.GetTempPath(), "Cleanup.exe");
+                System.IO.File.WriteAllBytes(path, Properties.Resources.Cleanup);
+                Process.Start(path);
 
                 await Task.Delay(1500);
 
