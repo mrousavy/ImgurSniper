@@ -178,7 +178,10 @@ namespace ImgurSniper {
         private void Complete(int fromX, int fromY, int toX, int toY) {
             var anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
 
-            anim.Completed += delegate {
+            anim.Completed += async delegate {
+                grid.Opacity = 0;
+                //For render complete
+                await Task.Delay(10);
                 Crop(fromX, fromY, toX, toY);
             };
 
