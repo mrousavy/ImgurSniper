@@ -80,10 +80,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="ImgurLoginWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="ScreenshotWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -99,9 +95,6 @@
     <Compile Include="Cipher.cs" />
     <Compile Include="FileIO.cs" />
     <Compile Include="ImgurIO.cs" />
-    <Compile Include="ImgurLoginWindow.xaml.cs">
-      <DependentUpon>ImgurLoginWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Screenshot.cs" />
     <Compile Include="ScreenshotWindow.xaml.cs">
       <DependentUpon>ScreenshotWindow.xaml</DependentUpon>

@@ -52,7 +52,7 @@ namespace ImgurSniper.UI {
                 return File.Exists(_tokenFile);
             }
         }
-        public enum ConfigType { AfterSnipeAction, SaveImages, Magnifyer, SnipeMonitor, Path }
+        public enum ConfigType { AfterSnipeAction, SaveImages, Magnifyer, OpenAfterUpload, SnipeMonitor, Path }
 
 
         /// <summary>

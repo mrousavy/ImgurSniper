@@ -198,6 +198,15 @@ namespace ImgurSniper.UI {
             }
         }
 
+        private void OpenAfterUpload_Checkbox(object sender, RoutedEventArgs e) {
+            CheckBox box = sender as CheckBox;
+            if(box != null) {
+                try {
+                    FileIO.SaveConfig(FileIO.ConfigType.OpenAfterUpload, box.IsChecked.ToString());
+                } catch(Exception) { }
+            }
+        }
+
         private void Snipe(object sender, RoutedEventArgs e) {
             string exe = Path.Combine(_path, "ImgurSniper.exe");
 

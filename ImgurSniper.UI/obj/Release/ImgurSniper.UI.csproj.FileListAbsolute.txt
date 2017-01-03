@@ -51,4 +51,3 @@ C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\o
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\obj\Release\ImgurSniper.UI.csproj.GenerateResource.Cache
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\obj\Release\ImgurSniper.UI.exe
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\obj\Release\ImgurSniper.UI.pdb
-C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper.UI\obj\Release\ImgurSniper.UI.csprojResolveAssemblyReference.cache

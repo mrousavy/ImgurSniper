@@ -54,6 +54,26 @@ namespace ImgurSniper {
             }
         }
 
+        //Value whether ImgurSniper should open the uploaded Image after successfully uploading
+        public static bool OpenAfterUpload {
+            get {
+                try {
+                    string[] lines = FileIO.ReadConfig();
+                    foreach(string line in lines) {
+                        string[] config = line.Split(';');
+
+                        if(config[0] == "OpenAfterUpload") {
+                            return bool.Parse(config[1]);
+                        }
+                    }
+
+                    return false;
+                } catch(Exception) {
+                    return false;
+                }
+            }
+        }
+
         public Snipe() {
             InitializeComponent();
 
@@ -173,11 +193,14 @@ namespace ImgurSniper {
                 Clipboard.SetText(link);
                 PlayBlop();
 
+                if(OpenAfterUpload)
+                    System.Diagnostics.Process.Start(link);
+
                 SuccessToast.Show("Link to Imgur copied to Clipboard!",
-                    TimeSpan.FromSeconds(3.5));
+                    TimeSpan.FromSeconds(5));
             } else {
                 ErrorToast.Show(string.Format("Error uploading Image to Imgur! ({0})", link),
-                    TimeSpan.FromSeconds(3.5));
+                    TimeSpan.FromSeconds(5));
             }
         }
 
