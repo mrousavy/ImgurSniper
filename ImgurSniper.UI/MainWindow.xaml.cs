@@ -125,6 +125,9 @@ namespace ImgurSniper.UI {
                 Btn_SignOut.Visibility = Visibility.Visible;
             }
 
+            if(FileIO.CheckFileIntegrity()) {
+                Btn_Install.Content = "Re-Install";
+            }
 
             if(SaveBox.IsChecked.HasValue) {
                 PathPanel.IsEnabled = (bool)SaveBox.IsChecked;
@@ -201,7 +204,20 @@ namespace ImgurSniper.UI {
                     TimeSpan.FromSeconds(3));
             }
         }
+        private async void Repair(object sender, RoutedEventArgs e) {
+            ChangeButtonState(false);
 
+            try {
+                FileIO.WipeUserData();
+                success_toast.Show("Repaired ImgurSniper. Please restart ImgurSniper to complete!", TimeSpan.FromSeconds(3));
+
+                await Task.Delay(3000);
+                this.Close();
+            } catch(Exception ex) {
+                error_toast.Show("An unknown Error occured!\nShow this to the smart Computer apes: " + ex.Message,
+                    TimeSpan.FromSeconds(5));
+            }
+        }
         private void Install(object sender, RoutedEventArgs e) {
             ChangeButtonState(false);
 
@@ -343,15 +359,25 @@ namespace ImgurSniper.UI {
 
 
 
-        /// <summary>
-        /// Enable or disable Buttons
-        /// </summary>
+        //Enable or disable Buttons
         public void ChangeButtonState(bool enabled) {
             if(Btn_Desktop.Tag == null)
                 Btn_Desktop.IsEnabled = enabled;
 
             if(Btn_Install.Tag == null)
                 Btn_Install.IsEnabled = enabled;
+
+            if(Btn_PinOk.Tag == null)
+                Btn_PinOk.IsEnabled = enabled;
+
+            if(Btn_Repair.Tag == null)
+                Btn_Repair.IsEnabled = enabled;
+
+            if(Btn_SignIn.Tag == null)
+                Btn_SignIn.IsEnabled = enabled;
+
+            if(Btn_SignOut.Tag == null)
+                Btn_SignOut.IsEnabled = enabled;
 
             if(Btn_Snipe.Tag == null)
                 Btn_Snipe.IsEnabled = enabled;

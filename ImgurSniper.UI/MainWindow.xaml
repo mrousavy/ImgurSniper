@@ -126,6 +126,9 @@
 
 		<StackPanel Orientation="Horizontal"
 						HorizontalAlignment="Right" VerticalAlignment="Bottom">
+			<Button Margin="5" Click="Repair" x:Name="Btn_Repair">
+				Repair
+			</Button>
 			<Button Margin="5" Click="Uninstall" x:Name="Btn_Uninstall">
 					Uninstall
 				</Button>

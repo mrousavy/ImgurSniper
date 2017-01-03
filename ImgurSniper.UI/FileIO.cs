@@ -20,6 +20,12 @@ namespace ImgurSniper.UI {
                 return Path.Combine(Documents, "ImgurSniper");
             }
         }
+        public static string _programFiles {
+            get {
+                string ProgramFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+                return Path.Combine(ProgramFiles, "ImgurSniper");
+            }
+        }
 
         private static string _config {
             get {
@@ -76,6 +82,27 @@ namespace ImgurSniper.UI {
                     File.WriteAllLines(_config, lines);
                 }
             }).Start();
+        }
+
+
+        //Check if all ImgurSniper Binaries are Installed
+        public static bool CheckFileIntegrity() {
+            try {
+                bool ret = (
+                    File.Exists(_programFiles + "\\ImgurSniper.exe") &&
+                    File.Exists(_programFiles + "\\Imgur.API.dll") &&
+                    File.Exists(_programFiles + "\\Newtonsoft.Json.dll") &&
+                    File.Exists(_programFiles + "\\Toast.dll") &&
+                    File.Exists(_programFiles + "\\Resources\\Camera_Shutter.wav"));
+
+                return ret;
+            } catch(Exception) {
+                return false;
+            }
+        }
+
+        public static void WipeUserData() {
+            Directory.Delete(_path, true);
         }
 
 

@@ -123,7 +123,8 @@ namespace ImgurSniper.UI {
 
         private void Move(string from, string to) {
             try {
-                FileInfo[] infos = new DirectoryInfo(from).GetFiles();
+                DirectoryInfo info = new DirectoryInfo(from);
+                FileInfo[] infos = info.GetFiles();
 
                 foreach(FileInfo file in infos) {
                     string filePath = Path.Combine(to, file.Name);
@@ -131,6 +132,17 @@ namespace ImgurSniper.UI {
                     if(!System.IO.File.Exists(filePath) || file.Extension == ".exe") {
                         try {
                             System.IO.File.Move(file.FullName, filePath);
+                        } catch(Exception) { }
+                    }
+                }
+
+                DirectoryInfo[] dirInfos = info.GetDirectories();
+                foreach(DirectoryInfo dirInfo in dirInfos) {
+                    string dirPath = Path.Combine(to, dirInfo.Name);
+
+                    if(!Directory.Exists(dirPath)) {
+                        try {
+                            Directory.Move(dirInfo.FullName, Path.Combine(to, dirPath));
                         } catch(Exception) { }
                     }
                 }
@@ -219,11 +231,7 @@ namespace ImgurSniper.UI {
         private void Finalize(string file) {
             System.IO.File.Delete(Path.Combine(_path, "ImgurSniperArchive.zip"));
 
-            foreach(string tempFile in Directory.GetFiles(_tempPath)) {
-                System.IO.File.Delete(tempFile);
-            }
-
-            Directory.Delete(_tempPath);
+            Directory.Delete(_tempPath, true);
             CreateUninstaller();
 
             invoker.ChangeButtonState(true);
