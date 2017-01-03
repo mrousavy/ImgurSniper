@@ -105,6 +105,9 @@ namespace ImgurSniper.UI {
                         case "Magnifyer":
                             MagnifyingGlassBox.IsChecked = bool.Parse(value);
                             break;
+                        case "OpenAfterUpload":
+                            OpenAfterUploadBox.IsChecked = bool.Parse(value);
+                            break;
                         case "SnipeMonitor":
                             if(value == "All") {
                                 MultiMonitorRadio.IsChecked = true;
