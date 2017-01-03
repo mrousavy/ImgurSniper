@@ -181,7 +181,8 @@ namespace ImgurSniper {
             anim.Completed += async delegate {
                 grid.Opacity = 0;
                 //For render complete
-                await Task.Delay(10);
+                await Task.Delay(50);
+
                 Crop(fromX, fromY, toX, toY);
             };
 
