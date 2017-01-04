@@ -3,3 +3,8 @@ C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\bin\Rele
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\bin\Release\Cleanup.pdb
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\obj\Release\Cleanup.exe
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\obj\Release\Cleanup.pdb
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\bin\Release\Cleanup.exe.manifest
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\bin\Release\Cleanup.application
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\obj\Release\Cleanup.TrustInfo.xml
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\obj\Release\Cleanup.exe.manifest
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\obj\Release\Cleanup.application

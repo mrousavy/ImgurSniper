@@ -2,11 +2,11 @@
 An alternative to Windows' built in _Snipping Tool_ with **auto Imgur Upload** or **Image to Clipboard Copy** for even faster Image sharing.
 
 # Downloads
-### [⇩ Imgur Sniper v1.0.2.3 (5.197KB) (UI Version) (Extractor) (Recommended)](https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniperInstaller/bin/Release/ImgurSniperInstaller.exe?raw=true)
+### [⇩ Imgur Sniper v1.0.2.3 (5.197KB) (UI Version) (Extractor) (Recommended)](https://github.com/mrousavy/ImgurSniper/blob/master/Download/ImgurSniperInstaller.exe?raw=true)
 
-#### [⇩ Imgur Sniper v1.0.2.3 (2.412KB) (UI Version) (Archive)](https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniper.UI/bin/Release/ImgurSniper.UI.zip?raw=true)
+#### [⇩ Imgur Sniper v1.0.2.3 (2.412KB) (UI Version) (Archive)](https://github.com/mrousavy/ImgurSniper/blob/master/Download/ImgurSniper.UI.zip?raw=true)
 
-#### [⇩ Imgur Sniper v1.0.2.3 (625KB) (Instant Snipe)](https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniper/bin/Release/ImgurSniper.zip?raw=true)
+#### [⇩ Imgur Sniper v1.0.2.3 (625KB) (Instant Snipe)](https://github.com/mrousavy/ImgurSniper/blob/master/Download/ImgurSniper.zip?raw=true)
 
 Icon by [jinga](http://jinga.at)
 

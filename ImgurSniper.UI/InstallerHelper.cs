@@ -87,7 +87,7 @@ namespace ImgurSniper.UI {
 
                 _success.Show("Downloading from github.com/mrousavy/ImgurSniper...", TimeSpan.FromSeconds(2));
 
-                client.DownloadFileAsync(new Uri(@"https://github.com/mrousavy/ImgurSniper/blob/master/ImgurSniper/bin/Release/ImgurSniper.zip?raw=true"),
+                client.DownloadFileAsync(new Uri(@"https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.zip?raw=true"),
                     file);
             }
         }

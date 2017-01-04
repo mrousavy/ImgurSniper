@@ -1,6 +1,10 @@
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\bin\Debug\Cleanup.exe.config
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\bin\Debug\Cleanup.exe
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\bin\Debug\Cleanup.pdb
-C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\obj\Debug\Cleanup.csprojResolveAssemblyReference.cache
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\obj\Debug\Cleanup.exe
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\obj\Debug\Cleanup.pdb
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\bin\Debug\Cleanup.exe.manifest
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\bin\Debug\Cleanup.application
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\obj\Debug\Cleanup.TrustInfo.xml
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\obj\Debug\Cleanup.exe.manifest
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\obj\Debug\Cleanup.application

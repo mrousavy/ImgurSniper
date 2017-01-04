@@ -8,7 +8,6 @@ C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\bin\
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\bin\Debug\Toast.dll
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\bin\Debug\Imgur.API.xml
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\bin\Debug\Newtonsoft.Json.xml
-C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Debug\ImgurSniper.csprojResolveAssemblyReference.cache
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Debug\ScreenshotWindow.g.cs
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Debug\Snipe.g.cs
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Debug\App.g.cs
@@ -21,3 +20,9 @@ C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Debug\ImgurSniper.csproj.GenerateResource.Cache
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Debug\ImgurSniper.exe
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Debug\ImgurSniper.pdb
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\bin\Debug\Toast.pdb
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\bin\Debug\ImgurSniper.exe.manifest
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\bin\Debug\ImgurSniper.application
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Debug\ImgurSniper.TrustInfo.xml
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Debug\ImgurSniper.exe.manifest
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Debug\ImgurSniper.application

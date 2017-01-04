@@ -43,4 +43,9 @@ C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Release\ImgurSniper.pdb
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\bin\Release\Resources\Camera_Shutter.wav
 C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\bin\Release\Resources\Blop.wav
-C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Release\ImgurSniper.csprojResolveAssemblyReference.cache
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\bin\Release\Toast.pdb
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\bin\Release\ImgurSniper.exe.manifest
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\bin\Release\ImgurSniper.application
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Release\ImgurSniper.TrustInfo.xml
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Release\ImgurSniper.exe.manifest
+C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniper\obj\Release\ImgurSniper.application
