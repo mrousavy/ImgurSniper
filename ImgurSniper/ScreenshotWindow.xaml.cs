@@ -31,6 +31,8 @@ namespace ImgurSniper {
             }
         }
 
+        public static RoutedCommand SelectAllCmd = new RoutedCommand();
+
         public byte[] CroppedImage;
         public Point from, to;
 
@@ -44,6 +46,7 @@ namespace ImgurSniper {
 
             Position(AllMonitors);
             LoadConfig();
+            SelectAllCmd.InputGestures.Add(new KeyGesture(Key.A, ModifierKeys.Control));
 
             this.Loaded += delegate {
                 this.Activate();
@@ -94,23 +97,7 @@ namespace ImgurSniper {
                 return;
 
             to = e.GetPosition(this);
-
-            //Width (w) and Height (h) of dragged Rectangle
-            int toX = (int)Math.Max(from.X, to.X);
-            int toY = (int)Math.Max(from.Y, to.Y);
-            int fromX = (int)Math.Min(from.X, to.X);
-            int fromY = (int)Math.Min(from.Y, to.Y);
-
-            if(Math.Abs(to.X - from.X) < 7 || Math.Abs(to.Y - from.Y) < 7) {
-                toast.Show("The Image Width and/or Height is too small!", TimeSpan.FromSeconds(3.3));
-            } else {
-                this.Cursor = Cursors.Arrow;
-
-                //Was cropping successful?
-                Complete(fromX, fromY, toX, toY);
-
-                this.IsEnabled = false;
-            }
+            FinishRectangle();
         }
 
         //Mouse Move event
@@ -149,6 +136,27 @@ namespace ImgurSniper {
             this.coords.Content =
                 string.Format("x:{0} | y:{1}", (int)pos.X, (int)pos.Y);
         }
+
+        //Finish drawing Rectangle
+        private void FinishRectangle() {
+            //Width (w) and Height (h) of dragged Rectangle
+            int toX = (int)Math.Max(from.X, to.X);
+            int toY = (int)Math.Max(from.Y, to.Y);
+            int fromX = (int)Math.Min(from.X, to.X);
+            int fromY = (int)Math.Min(from.Y, to.Y);
+
+            if(Math.Abs(to.X - from.X) < 7 || Math.Abs(to.Y - from.Y) < 7) {
+                toast.Show("The Image Width and/or Height is too small!", TimeSpan.FromSeconds(3.3));
+            } else {
+                this.Cursor = Cursors.Arrow;
+
+                //Was cropping successful?
+                Complete(fromX, fromY, toX, toY);
+
+                this.IsEnabled = false;
+            }
+        }
+
 
         //Set Magnifyer Position
         public void Magnifier(Point pos) {
@@ -247,10 +255,18 @@ namespace ImgurSniper {
         }
 
         //Escape Key closes Window
-        private void Cancel(object sender, KeyEventArgs e) {
+        private void KeyEvent(object sender, KeyEventArgs e) {
             if(e.Key == Key.Escape) {
                 CloseSnap(false, 0);
             }
+        }
+
+        private void SelectAllCmdExecuted(object sender, ExecutedRoutedEventArgs e) {
+            selectionRectangle.Margin = new Thickness(0);
+
+            from = new Point(this.Left, this.Top);
+            to = new Point(this.Width, this.Height);
+            FinishRectangle();
         }
     }
 }

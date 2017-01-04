@@ -4,10 +4,14 @@
         xmlns:toasty="clr-namespace:Toast;assembly=Toast"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ImgurSniper" KeyDown="Cancel" Cursor="Cross" Topmost="True"
+        xmlns:local="clr-namespace:ImgurSniper" KeyDown="KeyEvent" Cursor="Cross" Topmost="True"
         mc:Ignorable="d" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize" Background="Transparent"
         Title="Snipe a Screenshot!" Height="100" Width="100" WindowStartupLocation="Manual"
         MouseDown="StartDrawing" MouseUp="ReleaseRectangle" MouseMove="DrawRectangle">
+    <Window.CommandBindings>
+        <CommandBinding Command="SelectAll" Executed="SelectAllCmdExecuted" />
+    </Window.CommandBindings>
+
 
     <Grid>
         <Grid x:Name="grid">
