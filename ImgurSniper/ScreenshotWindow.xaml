@@ -16,7 +16,8 @@
     <Grid>
         <Grid x:Name="grid">
             <Border x:Name="selectionRectangle" Margin="9999"
-                BorderBrush="DarkGray" BorderThickness="1">
+                BorderBrush="DarkGray" BorderThickness="1"
+                    >
                 <Rectangle Fill="Gray" Opacity="0.3"/>
             </Border>
 

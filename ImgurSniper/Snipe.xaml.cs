@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -74,6 +75,8 @@ namespace ImgurSniper {
             }
         }
 
+        ManualResetEvent resetEvent = new ManualResetEvent(false);
+
         public Snipe() {
             InitializeComponent();
 
@@ -122,7 +125,7 @@ namespace ImgurSniper {
         }
 
         //Make Screenshot, Let user Crop, Upload Picture and Copy Link to Clipboard
-        private void Crop() {
+        private async void Crop() {
             string[] lines = FileIO.ReadConfig();
 
             ScreenshotWindow window = new ScreenshotWindow(Snipe.AllMonitors);
@@ -135,13 +138,10 @@ namespace ImgurSniper {
                 byte[] cimg = window.CroppedImage;
 
                 if(!FileIO.TokenExists && cimg.Length >= 10240000) {
-                    ErrorToast.Show("Image Size exceeds 10MB, to increase this please Login to Imgur!", TimeSpan.FromSeconds(3));
-                    DelayedClose(3300);
+                    await ErrorToast.ShowAsync("Image Size exceeds 10MB, to increase this please Login to Imgur!", TimeSpan.FromSeconds(3));
                     return;
                 }
 
-                string KB = string.Format("{0:0.#}", (cimg.Length / 1024d));
-                SuccessToast.Show(string.Format("Processing Image... ({0}KB)", KB), TimeSpan.FromSeconds(1));
 
                 try {
                     bool Imgur = true;
@@ -167,7 +167,10 @@ namespace ImgurSniper {
                     }
 
                     if(Imgur) {
-                        UploadImageToImgur(cimg);
+                        string KB = string.Format("{0:0.#}", (cimg.Length / 1024d));
+                        SuccessToast.Show(string.Format("Uploading Image... ({0} KB)", KB), TimeSpan.FromDays(10));
+
+                        await UploadImageToImgur(cimg);
                     } else {
                         CopyImageToClipboard(cimg);
                     }
@@ -178,15 +181,12 @@ namespace ImgurSniper {
                     ErrorToast.Show(string.Format("An unknown Error occured! (Show this to the Smart Computer Apes: \"{0}\")", ex),
                         TimeSpan.FromSeconds(3.5));
                 }
-
-                DelayedClose(3500);
-            } else {
-                DelayedClose(0);
             }
+            DelayedClose(0);
         }
 
         //Upload byte[] to imgur and give user a response
-        private async void UploadImageToImgur(byte[] cimg) {
+        private async Task UploadImageToImgur(byte[] cimg) {
             string link = await UploadImgur(cimg);
 
             if(link.StartsWith("http://")) {
@@ -196,10 +196,10 @@ namespace ImgurSniper {
                 if(OpenAfterUpload)
                     System.Diagnostics.Process.Start(link);
 
-                SuccessToast.Show("Link to Imgur copied to Clipboard!",
+                await SuccessToast.ShowAsync("Link to Imgur copied to Clipboard!",
                     TimeSpan.FromSeconds(5));
             } else {
-                ErrorToast.Show(string.Format("Error uploading Image to Imgur! ({0})", link),
+                await ErrorToast.ShowAsync(string.Format("Error uploading Image to Imgur! ({0})", link),
                     TimeSpan.FromSeconds(5));
             }
         }

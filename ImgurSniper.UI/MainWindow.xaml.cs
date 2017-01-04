@@ -225,9 +225,7 @@ namespace ImgurSniper.UI {
 
             try {
                 FileIO.WipeUserData();
-                success_toast.Show("Repaired ImgurSniper. Please restart ImgurSniper to complete!", TimeSpan.FromSeconds(3));
-
-                await Task.Delay(3000);
+                await success_toast.ShowAsync("Repaired ImgurSniper. Please restart ImgurSniper to complete!", TimeSpan.FromSeconds(3));
                 this.Close();
             } catch(Exception ex) {
                 error_toast.Show("An unknown Error occured!\nShow this to the smart Computer apes: " + ex.Message,
