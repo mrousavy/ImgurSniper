@@ -1,6 +1,0 @@
-C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniperCleanup\bin\Debug\ImgurSniperCleanup.exe.config
-C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniperCleanup\bin\Debug\ImgurSniperCleanup.exe
-C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniperCleanup\bin\Debug\ImgurSniperCleanup.pdb
-C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniperCleanup\obj\Debug\ImgurSniperCleanup.csprojResolveAssemblyReference.cache
-C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniperCleanup\obj\Debug\ImgurSniperCleanup.exe
-C:\Users\Marc\Documents\Visual Studio 2015\Projects\ImgurSniper\ImgurSniperCleanup\obj\Debug\ImgurSniperCleanup.pdb
