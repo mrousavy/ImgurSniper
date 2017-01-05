@@ -132,9 +132,9 @@ namespace ImgurSniper {
                     TimeSpan.FromSeconds(3.3));
             }
 
-            //Window Cords Display
-            this.coords.Content =
-                string.Format("x:{0} | y:{1}", (int)pos.X, (int)pos.Y);
+            //Window Cords Display (Disabled for Performance reasons
+            //this.coords.Content =
+            //    string.Format("x:{0} | y:{1}", (int)pos.X, (int)pos.Y);
         }
 
         //Finish drawing Rectangle

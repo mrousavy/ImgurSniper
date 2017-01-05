@@ -38,7 +38,7 @@
                     <Image Name="img" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Fill"/>
 
                 </Grid>
-                <Label VerticalAlignment="Top" HorizontalAlignment="Center" Background="Black" Foreground="White" Name="coords" Opacity="0.3">x:0 | y:0</Label>
+                <!--<Label VerticalAlignment="Top" HorizontalAlignment="Center" Background="Black" Foreground="White" Name="coords" Opacity="0.3">x:0 | y:0</Label>-->
                 <Grid x:Name="Magnifyer" Width="70" Height="70" Visibility="Collapsed" Margin="9999">
                     <Ellipse Stroke="Gray" x:Name="MagnifyingEllipse" Width="70" Height="70"
                  VerticalAlignment="Center" HorizontalAlignment="Center">
