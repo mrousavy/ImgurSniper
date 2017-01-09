@@ -80,6 +80,10 @@ namespace ImgurSniper {
         public Snipe() {
             InitializeComponent();
 
+            Initialize();
+
+            Position();
+
             this.Loaded += async delegate {
                 //Prevent short flash of Toasts
                 await Task.Delay(500);
@@ -106,11 +110,6 @@ namespace ImgurSniper {
             if(instantUpload && image != null) {
                 InstantUpload(image);
             } else {
-                Initialize();
-
-                Position();
-
-
                 Crop();
             }
         }
@@ -123,25 +122,23 @@ namespace ImgurSniper {
 
         //Initialize important Variables
         private void Initialize() {
-            new Thread(() => {
-                _dir = FileIO._path;
-                //Get configured Path
-                string[] lines = FileIO.ReadConfig();
-                foreach(string line in lines) {
-                    string[] config = line.Split(';');
+            _dir = FileIO._path;
+            //Get configured Path
+            string[] lines = FileIO.ReadConfig();
+            foreach(string line in lines) {
+                string[] config = line.Split(';');
 
-                    if(config[0] == "Path") {
-                        _dir = config[1];
-                        break;
-                    }
+                if(config[0] == "Path") {
+                    _dir = config[1];
+                    break;
                 }
+            }
 
-                if(!Directory.Exists(_dir)) {
-                    Directory.CreateDirectory(_dir);
-                }
+            if(!Directory.Exists(_dir)) {
+                Directory.CreateDirectory(_dir);
+            }
 
-                _imgur = new ImgurIO();
-            }).Start();
+            _imgur = new ImgurIO();
         }
 
         //Position Window correctly
