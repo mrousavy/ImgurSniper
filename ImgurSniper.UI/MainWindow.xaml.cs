@@ -410,6 +410,9 @@ namespace ImgurSniper.UI {
             if(Btn_Startmenu.Tag == null)
                 Btn_Startmenu.IsEnabled = enabled;
 
+            if(Btn_Context.Tag == null)
+                Btn_Context.IsEnabled = enabled;
+
             if(Btn_Uninstall.Tag == null)
                 Btn_Uninstall.IsEnabled = enabled;
         }
