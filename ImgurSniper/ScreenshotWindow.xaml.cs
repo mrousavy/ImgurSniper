@@ -31,8 +31,6 @@ namespace ImgurSniper {
             }
         }
 
-        public static RoutedCommand SelectAllCmd = new RoutedCommand();
-
         public byte[] CroppedImage;
         public Point from, to;
 
@@ -42,15 +40,28 @@ namespace ImgurSniper {
 
 
         public ScreenshotWindow(bool AllMonitors) {
+            this.Topmost = true;
             InitializeComponent();
+            this.Topmost = true;
 
             Position(AllMonitors);
             LoadConfig();
-            SelectAllCmd.InputGestures.Add(new KeyGesture(Key.A, ModifierKeys.Control));
+
 
             this.Loaded += delegate {
                 this.Activate();
                 this.Focus();
+                this.Topmost = true;
+
+                HotKey escapeHotKey = new HotKey(ModifierKeys.None, Key.Escape, this);
+                escapeHotKey.HotKeyPressed += delegate {
+                    CloseSnap(false, 0);
+                };
+
+                HotKey ctrlAHotKey = new HotKey(ModifierKeys.Control, Key.A, this);
+                ctrlAHotKey.HotKeyPressed += delegate {
+                    SelectAllCmd();
+                };
             };
         }
 
@@ -254,14 +265,7 @@ namespace ImgurSniper {
             }
         }
 
-        //Escape Key closes Window
-        private void KeyEvent(object sender, KeyEventArgs e) {
-            if(e.Key == Key.Escape) {
-                CloseSnap(false, 0);
-            }
-        }
-
-        private void SelectAllCmdExecuted(object sender, ExecutedRoutedEventArgs e) {
+        private void SelectAllCmd() {
             selectionRectangle.Margin = new Thickness(0);
 
             from = new Point(0, 0);
