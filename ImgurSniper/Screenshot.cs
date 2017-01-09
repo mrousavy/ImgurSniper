@@ -10,15 +10,15 @@ namespace ImgurSniper {
     class Screenshot {
 
         public static ImageSource getScreenshot(Rectangle coordinates) {
-            int left = coordinates.Left;
-            int top = coordinates.Top;
+            System.Drawing.Point start = new System.Drawing.Point(coordinates.Left, coordinates.Top);
+
             int width = coordinates.Width;
             int height = coordinates.Height;
 
             //Thanks http://stackoverflow.com/users/183367/julien-lebosquain !
             using(var screenBmp = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb)) {
                 using(var bmpGraphics = Graphics.FromImage(screenBmp)) {
-                    bmpGraphics.CopyFromScreen(left, top, 0, 0, new System.Drawing.Size(width, height));
+                    bmpGraphics.CopyFromScreen(start, System.Drawing.Point.Empty, new System.Drawing.Size(width, height));
 
                     IntPtr hBitmap = screenBmp.GetHbitmap();
 

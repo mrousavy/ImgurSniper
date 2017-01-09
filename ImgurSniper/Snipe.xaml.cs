@@ -96,7 +96,7 @@ namespace ImgurSniper {
 
         //Initialize important Variables
         private void Initialize() {
-            new System.Threading.Thread(() => {
+            new Thread(() => {
                 _dir = FileIO._path;
                 //Get configured Path
                 string[] lines = FileIO.ReadConfig();

@@ -23,11 +23,7 @@ namespace ImgurSniper {
         //Size of whole Screen Array
         public static System.Drawing.Rectangle allScreens {
             get {
-                return new System.Drawing.Rectangle(
-                    (int)SystemParameters.VirtualScreenLeft,
-                    (int)SystemParameters.VirtualScreenTop,
-                    (int)SystemParameters.VirtualScreenWidth,
-                    (int)SystemParameters.VirtualScreenHeight);
+                return System.Windows.Forms.SystemInformation.VirtualScreen;
             }
         }
 
