@@ -115,7 +115,12 @@ namespace ImgurSniper {
         }
 
         private async void InstantUpload(string path) {
-            await UploadImageToImgur(File.ReadAllBytes(path));
+            byte[] byteImg = File.ReadAllBytes(path);
+
+            string KB = string.Format("{0:0.#}", (byteImg.Length / 1024d));
+            SuccessToast.Show(string.Format("Uploading Image... ({0} KB)", KB), TimeSpan.FromDays(10));
+
+            await UploadImageToImgur(byteImg);
 
             DelayedClose(0);
         }
@@ -161,7 +166,7 @@ namespace ImgurSniper {
 
                 byte[] cimg = window.CroppedImage;
 
-                if(!FileIO.TokenExists && cimg.Length >= 10240000) {
+                if(cimg.Length >= 10240000 && !FileIO.TokenExists) {
                     await ErrorToast.ShowAsync("Image Size exceeds 10MB, to increase this please Login to Imgur!", TimeSpan.FromSeconds(3));
                     return;
                 }
