@@ -348,8 +348,12 @@ namespace ImgurSniper.UI {
                 return;
             }
 
-            using(RegistryKey key = Registry.ClassesRoot.CreateSubKey(@"*\shell\Upload Image to Imgur\command"))
-                key.SetValue(string.Empty, "\"" + path + "\" upload %1");
+            using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"*\shell\Upload Image to Imgur\command")) {
+                baseKey.SetValue("Icon", path);
+                using(RegistryKey key = baseKey.CreateSubKey("command")) {
+                    key.SetValue(string.Empty, "\"" + path + "\" upload \"%1\"");
+                }
+            }
 
             (sender as System.Windows.Controls.Button).Content = "Done!";
             (sender as System.Windows.Controls.Button).IsEnabled = false;
