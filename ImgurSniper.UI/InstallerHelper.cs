@@ -68,6 +68,11 @@ namespace ImgurSniper.UI {
             invoker.ChangeButtonState(true);
         }
 
+        public void AddToContextMenu(object sender) {
+            CreateContextMenu(sender, null);
+            invoker.ChangeButtonState(true);
+        }
+
 
         /// <summary>
         /// Download the ImgurSniper Archive from github
@@ -331,6 +336,20 @@ namespace ImgurSniper.UI {
             shortcutUI.WorkingDirectory = _path;
             shortcutUI.TargetPath = Path.Combine(_path, "ImgurSniper.UI.exe");
             shortcutUI.Save();
+
+            (sender as System.Windows.Controls.Button).Content = "Done!";
+            (sender as System.Windows.Controls.Button).IsEnabled = false;
+            (sender as System.Windows.Controls.Button).Tag = new object();
+        }
+        private void CreateContextMenu(object sender, RoutedEventArgs e) {
+            string path = Path.Combine(_path, "ImgurSniper.exe");
+            if(!System.IO.File.Exists(path)) {
+                _error.Show("Error, ImgurSniper could not be found on this Machine!", TimeSpan.FromSeconds(2));
+                return;
+            }
+
+            using(RegistryKey key = Registry.ClassesRoot.CreateSubKey(@"*\shell\Upload Image to Imgur\command"))
+                key.SetValue(string.Empty, "\"" + path + "\" upload %1");
 
             (sender as System.Windows.Controls.Button).Content = "Done!";
             (sender as System.Windows.Controls.Button).IsEnabled = false;

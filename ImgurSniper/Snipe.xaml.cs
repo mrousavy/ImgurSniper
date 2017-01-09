@@ -80,10 +80,6 @@ namespace ImgurSniper {
         public Snipe() {
             InitializeComponent();
 
-            Initialize();
-
-            Position();
-
             this.Loaded += async delegate {
                 //Prevent short flash of Toasts
                 await Task.Delay(500);
@@ -91,7 +87,38 @@ namespace ImgurSniper {
                 SuccessToast.Visibility = Visibility.Visible;
             };
 
-            Crop();
+            Start();
+        }
+
+        private void Start() {
+            string[] args = Environment.GetCommandLineArgs();
+            bool instantUpload = false;
+            string image = null;
+
+            foreach(string arg in args) {
+                if(arg.ToLower().Contains("upload"))
+                    instantUpload = true;
+
+                if(File.Exists(arg))
+                    image = arg;
+            }
+
+            if(instantUpload && image != null) {
+                InstantUpload(image);
+            } else {
+                Initialize();
+
+                Position();
+
+
+                Crop();
+            }
+        }
+
+        private async void InstantUpload(string path) {
+            await UploadImageToImgur(File.ReadAllBytes(path));
+
+            DelayedClose(0);
         }
 
         //Initialize important Variables

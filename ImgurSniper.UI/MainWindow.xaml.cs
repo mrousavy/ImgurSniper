@@ -269,6 +269,17 @@ namespace ImgurSniper.UI {
                     TimeSpan.FromSeconds(5));
             }
         }
+        private void ContextMenuShortcut(object sender, RoutedEventArgs e) {
+            ChangeButtonState(false);
+
+            try {
+                helper.AddToContextMenu(sender);
+                success_toast.Show("Created Context Menu Shortcut!", TimeSpan.FromSeconds(1));
+            } catch(Exception ex) {
+                error_toast.Show("An unknown Error occured!\nShow this to the smart Computer apes: " + ex.Message,
+                    TimeSpan.FromSeconds(5));
+            }
+        }
 
         private void SignIn(object sender, RoutedEventArgs e) {
             try {

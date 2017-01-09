@@ -108,6 +108,10 @@
 						Width="100" x:Name="Btn_Desktop">
 					Startmenu
 				</Button>
+				<Button Margin="15,5,5,0" HorizontalAlignment="Left" Click="ContextMenuShortcut"
+						Width="100" x:Name="Btn_Context">
+					Context
+				</Button>
 
 
 				<Label Margin="10,5,5,5" FontSize="15">Where to snipe</Label>
