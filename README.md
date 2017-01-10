@@ -8,6 +8,8 @@ An alternative to Windows' built in _Snipping Tool_ with **auto Imgur Upload** o
 
 #### [⇩ Imgur Sniper v1.0.2.6 (619 KB) (Instant Snipe)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.zip?raw=true)
 
+#### [View all Releases](https://github.com/mrousavy/ImgurSniper/releases)
+
 Icon by [jinga](http://jinga.at)
 
 # Description
