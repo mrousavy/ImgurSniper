@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -98,8 +97,6 @@ namespace ImgurSniper {
             }
         }
 
-        ManualResetEvent resetEvent = new ManualResetEvent(false);
-
         public Snipe() {
             InitializeComponent();
 
@@ -158,7 +155,7 @@ namespace ImgurSniper {
                 DelayedClose(0);
             } else {
                 await ErrorToast.ShowAsync("Error, File is non supported Image Type!", TimeSpan.FromSeconds(5));
-                return;
+                DelayedClose(0);
             }
         }
 
