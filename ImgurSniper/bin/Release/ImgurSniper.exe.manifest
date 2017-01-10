@@ -62,7 +62,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Xph/NHoKJFxFsoClDyWvEGQQELDVuG3/BldSr4Gz6MM=</dsig:DigestValue>
+        <dsig:DigestValue>q/bugSEg5uQwSCICUeunmIgvNqrLg8WWmRV5C9UWsSA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -79,14 +79,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Toast.dll" size="14336">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Toast.dll" size="14848">
       <assemblyIdentity name="Toast" version="1.0.0.1" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ppA839Q4YsYm/0t/FW9dhu0zLado9WadggqOlpyhAcM=</dsig:DigestValue>
+        <dsig:DigestValue>Ep/QXmMqZxT+TJrsMeVg31xaR0MmiJUZ/Q8JqOpZBhw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

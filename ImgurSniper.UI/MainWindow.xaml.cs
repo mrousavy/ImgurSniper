@@ -130,6 +130,7 @@ namespace ImgurSniper.UI {
             }
 
             string refreshToken = FileIO.ReadRefreshToken();
+            //name = null if refreshToken = null or any error occured in Login
             string name = await _imgurhelper.LoggedInUser(refreshToken);
 
             if(name != null) {

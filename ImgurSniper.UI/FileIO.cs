@@ -127,11 +127,18 @@ namespace ImgurSniper.UI {
                 return null;
             }
 
-            string token = File.ReadAllText(_tokenFile);
+            try {
+                string token = File.ReadAllText(_tokenFile);
 
-            token = Cipher.Decrypt(token, _passPhrase);
+                token = Cipher.Decrypt(token, _passPhrase);
 
-            return token;
+                return token;
+            } catch(Exception) {
+                try {
+                    File.Delete(_tokenFile);
+                } catch(Exception) { }
+                return null;
+            }
         }
 
 
