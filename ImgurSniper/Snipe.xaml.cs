@@ -135,6 +135,8 @@ namespace ImgurSniper {
         }
 
         private async void InstantUpload(string path) {
+            await Task.Delay(550);
+
             string lpath = path.ToLower();
             if(lpath.EndsWith(".jpeg") ||
                 lpath.EndsWith(".jpg") ||
@@ -151,12 +153,10 @@ namespace ImgurSniper {
                 SuccessToast.Show($"Uploading Image... ({KB} KB)", TimeSpan.FromDays(10));
 
                 await UploadImageToImgur(byteImg);
-
-                DelayedClose(0);
             } else {
                 await ErrorToast.ShowAsync("Error, File is non supported Image Type!", TimeSpan.FromSeconds(5));
-                DelayedClose(0);
             }
+            DelayedClose(0);
         }
 
         //Initialize important Variables

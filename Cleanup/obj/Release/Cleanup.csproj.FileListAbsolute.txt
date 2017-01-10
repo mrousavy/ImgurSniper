@@ -1,0 +1,11 @@
+C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\bin\Release\Cleanup.exe.config
+C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\bin\Release\Cleanup.exe.manifest
+C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\bin\Release\Cleanup.application
+C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\bin\Release\Cleanup.exe
+C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\bin\Release\Cleanup.pdb
+C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\obj\Release\Cleanup.csprojResolveAssemblyReference.cache
+C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\obj\Release\Cleanup.TrustInfo.xml
+C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\obj\Release\Cleanup.exe.manifest
+C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\obj\Release\Cleanup.application
+C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\obj\Release\Cleanup.exe
+C:\Users\b4dpi\Documents\Visual Studio 2015\Projects\ImgurSniper\Cleanup\obj\Release\Cleanup.pdb
