@@ -138,14 +138,28 @@ namespace ImgurSniper {
         }
 
         private async void InstantUpload(string path) {
-            byte[] byteImg = File.ReadAllBytes(path);
+            string lpath = path.ToLower();
+            if(lpath.EndsWith(".jpeg") ||
+                lpath.EndsWith(".jpg") ||
+                lpath.EndsWith(".png") ||
+                lpath.EndsWith(".gif") ||
+                lpath.EndsWith(".apng") ||
+                lpath.EndsWith(".tiff") ||
+                lpath.EndsWith(".xcf") ||
+                lpath.EndsWith(".pdf")) {
 
-            string KB = string.Format("{0:0.#}", (byteImg.Length / 1024d));
-            SuccessToast.Show(string.Format("Uploading Image... ({0} KB)", KB), TimeSpan.FromDays(10));
+                byte[] byteImg = File.ReadAllBytes(path);
 
-            await UploadImageToImgur(byteImg);
+                string KB = $"{(byteImg.Length / 1024d):0.#}";
+                SuccessToast.Show($"Uploading Image... ({KB} KB)", TimeSpan.FromDays(10));
 
-            DelayedClose(0);
+                await UploadImageToImgur(byteImg);
+
+                DelayedClose(0);
+            } else {
+                await ErrorToast.ShowAsync("Error, File is non supported Image Type!", TimeSpan.FromSeconds(5));
+                return;
+            }
         }
 
         //Initialize important Variables
