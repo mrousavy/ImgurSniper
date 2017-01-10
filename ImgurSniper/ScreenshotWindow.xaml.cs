@@ -250,7 +250,11 @@ namespace ImgurSniper {
                 ImageSource source = Screenshot.getScreenshot(size);
 
                 System.IO.MemoryStream stream = new System.IO.MemoryStream();
-                Screenshot.MediaImageToDrawingImage(source).Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+
+                Screenshot.MediaImageToDrawingImage(source)
+                    .Save(stream,
+                        Snipe.UsePNG ? System.Drawing.Imaging.ImageFormat.Png : System.Drawing.Imaging.ImageFormat.Jpeg);
+
                 CroppedImage = stream.ToArray();
 
                 PlayShutter();

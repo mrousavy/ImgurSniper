@@ -70,7 +70,7 @@ namespace ImgurSniper.UI {
         }
 
         private void ShowExceptionToast(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
-            error_toast.Show(string.Format("An unknown Error occured! More Info: \"{0}\"", e.Exception.Message), TimeSpan.FromSeconds(5));
+            error_toast.Show($"An unknown Error occured! More Info: \"{e.Exception.Message}\"", TimeSpan.FromSeconds(5));
         }
 
         private async void NewToImgur() {
@@ -113,6 +113,13 @@ namespace ImgurSniper.UI {
                                 MultiMonitorRadio.IsChecked = true;
                             } else {
                                 CurrentMonitorRadio.IsChecked = true;
+                            }
+                            break;
+                        case "ImageFormat":
+                            if(value == "PNG") {
+                                PngRadio.IsChecked = true;
+                            } else {
+                                JpegRadio.IsChecked = true;
                             }
                             break;
                         case "Path":
@@ -173,6 +180,14 @@ namespace ImgurSniper.UI {
             if(button != null) {
                 try {
                     FileIO.SaveConfig(FileIO.ConfigType.SnipeMonitor, button.Tag as string);
+                } catch(Exception) { }
+            }
+        }
+        private void ImgFormatClick(object sender, RoutedEventArgs e) {
+            RadioButton button = sender as RadioButton;
+            if(button != null) {
+                try {
+                    FileIO.SaveConfig(FileIO.ConfigType.ImageFormat, button.Tag as string);
                 } catch(Exception) { }
             }
         }
@@ -344,11 +359,7 @@ namespace ImgurSniper.UI {
         }
 
         private void Box_PIN_TextChanged(object sender, TextChangedEventArgs e) {
-            if(Box_PIN.Text.Length > 0) {
-                Btn_PinOk.IsEnabled = true;
-            } else {
-                Btn_PinOk.IsEnabled = false;
-            }
+            Btn_PinOk.IsEnabled = Box_PIN.Text.Length > 0;
         }
 
         private void PathBox_Submit(object sender, System.Windows.Input.KeyEventArgs e) {

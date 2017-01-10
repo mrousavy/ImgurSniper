@@ -55,6 +55,29 @@ namespace ImgurSniper {
             }
         }
 
+        //Value whether ImgurSniper should use PNG Image Format
+        public static bool UsePNG {
+            get {
+                try {
+                    bool png = false;
+
+                    string[] lines = FileIO.ReadConfig();
+                    foreach(string line in lines) {
+                        string[] config = line.Split(';');
+
+                        if(config[0] == "ImageFormat") {
+                            png = config[1] == "PNG";
+                            break;
+                        }
+                    }
+
+                    return png;
+                } catch(Exception) {
+                    return false;
+                }
+            }
+        }
+
         //Value whether ImgurSniper should open the uploaded Image after successfully uploading
         public static bool OpenAfterUpload {
             get {
@@ -183,7 +206,8 @@ namespace ImgurSniper {
                                 //Config: Save Image locally?
                                 if(bool.Parse(config[1])) {
                                     long time = DateTime.Now.ToFileTimeUtc();
-                                    File.WriteAllBytes(_dir + string.Format("\\Snipe_{0}.png", time), cimg);
+                                    string extension = UsePNG ? ".png" : ".jpeg";
+                                    File.WriteAllBytes(_dir + $"\\Snipe_{time}{extension}", cimg);
                                 }
                                 break;
                             case "AfterSnipeAction":
@@ -196,8 +220,8 @@ namespace ImgurSniper {
                     }
 
                     if(Imgur) {
-                        string KB = string.Format("{0:0.#}", (cimg.Length / 1024d));
-                        SuccessToast.Show(string.Format("Uploading Image... ({0} KB)", KB), TimeSpan.FromDays(10));
+                        string KB = $"{(cimg.Length / 1024d):0.#}";
+                        SuccessToast.Show($"Uploading Image... ({KB} KB)", TimeSpan.FromDays(10));
 
                         await UploadImageToImgur(cimg);
                     } else {
@@ -207,7 +231,7 @@ namespace ImgurSniper {
                 } catch(Exception ex) {
                     File.Delete(FileIO._config);
 
-                    ErrorToast.Show(string.Format("An unknown Error occured! (Show this to the Smart Computer Apes: \"{0}\")", ex),
+                    ErrorToast.Show($"An unknown Error occured! (Show this to the Smart Computer Apes: \"{ex}\")",
                         TimeSpan.FromSeconds(3.5));
                 }
             }
@@ -228,7 +252,7 @@ namespace ImgurSniper {
                 await SuccessToast.ShowAsync("Link to Imgur copied to Clipboard!",
                     TimeSpan.FromSeconds(5));
             } else {
-                await ErrorToast.ShowAsync(string.Format("Error uploading Image to Imgur! ({0})", link),
+                await ErrorToast.ShowAsync($"Error uploading Image to Imgur! ({link})",
                     TimeSpan.FromSeconds(5));
             }
         }
