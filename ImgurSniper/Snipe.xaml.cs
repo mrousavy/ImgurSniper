@@ -98,6 +98,7 @@ namespace ImgurSniper {
         }
 
         public Snipe() {
+            this.ShowActivated = false;
             InitializeComponent();
 
             Initialize();

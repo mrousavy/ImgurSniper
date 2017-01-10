@@ -36,18 +36,16 @@ namespace ImgurSniper {
 
 
         public ScreenshotWindow(bool AllMonitors) {
-            this.Topmost = true;
+            this.ShowActivated = false;
+
             InitializeComponent();
-            this.Topmost = true;
 
             Position(AllMonitors);
             LoadConfig();
 
 
             this.Loaded += delegate {
-                this.Activate();
-                this.Focus();
-                this.Topmost = true;
+                this.CaptureMouse();
 
                 HotKey escapeHotKey = new HotKey(ModifierKeys.None, Key.Escape, this);
                 escapeHotKey.HotKeyPressed += delegate {
@@ -112,7 +110,7 @@ namespace ImgurSniper {
             _drag = e.LeftButton == MouseButtonState.Pressed;
             Point pos = e.GetPosition(this);
 
-            this.Activate();
+            //this.Activate();
 
             if(_enableMagnifyer)
                 Magnifier(pos);
