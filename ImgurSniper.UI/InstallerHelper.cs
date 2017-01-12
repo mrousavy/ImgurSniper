@@ -201,13 +201,7 @@ namespace ImgurSniper.UI {
 
 
             try {
-                using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"jpegfile\shell")) {
-                    baseKey.DeleteSubKeyTree("Upload Image to Imgur");
-                }
-                using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"pngfile\shell")) {
-                    baseKey.DeleteSubKeyTree("Upload Image to Imgur");
-                }
-                using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"giffile\shell")) {
+                using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"*\shell")) {
                     baseKey.DeleteSubKeyTree("Upload Image to Imgur");
                 }
             } catch(Exception) { }
@@ -361,20 +355,9 @@ namespace ImgurSniper.UI {
                 return;
             }
 
-            using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"jpegfile\shell\Upload Image to Imgur")) {
+            using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"*\shell\ImgurSniperUpload")) {
                 baseKey.SetValue("Icon", path);
-                using(RegistryKey key = baseKey.CreateSubKey("command")) {
-                    key.SetValue(string.Empty, "\"" + path + "\" upload \"%1\"");
-                }
-            }
-            using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"pngfile\shell\Upload Image to Imgur")) {
-                baseKey.SetValue("Icon", path);
-                using(RegistryKey key = baseKey.CreateSubKey("command")) {
-                    key.SetValue(string.Empty, "\"" + path + "\" upload \"%1\"");
-                }
-            }
-            using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"giffile\shell\Upload Image to Imgur")) {
-                baseKey.SetValue("Icon", path);
+                baseKey.SetValue(string.Empty, "Upload Image to Imgur");
                 using(RegistryKey key = baseKey.CreateSubKey("command")) {
                     key.SetValue(string.Empty, "\"" + path + "\" upload \"%1\"");
                 }
