@@ -201,6 +201,19 @@ namespace ImgurSniper.UI {
 
 
             try {
+                using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"jpegfile\shell")) {
+                    baseKey.DeleteSubKeyTree("Upload Image to Imgur");
+                }
+                using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"pngfile\shell")) {
+                    baseKey.DeleteSubKeyTree("Upload Image to Imgur");
+                }
+                using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"giffile\shell")) {
+                    baseKey.DeleteSubKeyTree("Upload Image to Imgur");
+                }
+            } catch(Exception) { }
+
+
+            try {
                 //Kill open instances if any
                 foreach(Process p in Process.GetProcessesByName("ImgurSniper")) {
                     p.Kill();
@@ -348,7 +361,19 @@ namespace ImgurSniper.UI {
                 return;
             }
 
-            using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"*\shell\Upload Image to Imgur")) {
+            using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"jpegfile\shell\Upload Image to Imgur")) {
+                baseKey.SetValue("Icon", path);
+                using(RegistryKey key = baseKey.CreateSubKey("command")) {
+                    key.SetValue(string.Empty, "\"" + path + "\" upload \"%1\"");
+                }
+            }
+            using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"pngfile\shell\Upload Image to Imgur")) {
+                baseKey.SetValue("Icon", path);
+                using(RegistryKey key = baseKey.CreateSubKey("command")) {
+                    key.SetValue(string.Empty, "\"" + path + "\" upload \"%1\"");
+                }
+            }
+            using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"giffile\shell\Upload Image to Imgur")) {
                 baseKey.SetValue("Icon", path);
                 using(RegistryKey key = baseKey.CreateSubKey("command")) {
                     key.SetValue(string.Empty, "\"" + path + "\" upload \"%1\"");
@@ -389,9 +414,7 @@ namespace ImgurSniper.UI {
                             key.SetValue("InstallDate", DateTime.Now.ToString("yyyyMMdd"));
                             key.SetValue("UninstallString", exe + " /uninstall");
                         } finally {
-                            if(key != null) {
-                                key.Close();
-                            }
+                            key?.Close();
                         }
                     } catch(Exception) {
                         _error.Show("Could not create Uninstaller for ImgurSniper! You will have to remove the Files manually (from " + _path + ")",

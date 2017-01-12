@@ -77,7 +77,7 @@
     <ManifestCertificateThumbprint>03AF4C6833C60EC68FBFE15A27ED7DCAF71D87A7</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>mrousavy.pfx</ManifestKeyFile>
+    <ManifestKeyFile>Resources\mrousavy.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
@@ -166,13 +166,13 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.manifest" />
-    <None Include="mrousavy.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Resources\mrousavy.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
