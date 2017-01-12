@@ -201,8 +201,8 @@ namespace ImgurSniper.UI {
 
 
             try {
-                using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"*\shell")) {
-                    baseKey.DeleteSubKeyTree("Upload Image to Imgur");
+                using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"image\shell")) {
+                    baseKey.DeleteSubKeyTree("ImgurSniperUpload");
                 }
             } catch(Exception) { }
 
@@ -355,7 +355,7 @@ namespace ImgurSniper.UI {
                 return;
             }
 
-            using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"*\shell\ImgurSniperUpload")) {
+            using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"image\shell\ImgurSniperUpload")) {
                 baseKey.SetValue("Icon", path);
                 baseKey.SetValue(string.Empty, "Upload Image to Imgur");
                 using(RegistryKey key = baseKey.CreateSubKey("command")) {
