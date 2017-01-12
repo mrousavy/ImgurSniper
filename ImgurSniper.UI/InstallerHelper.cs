@@ -355,7 +355,7 @@ namespace ImgurSniper.UI {
                 return;
             }
 
-            using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"image\shell\ImgurSniperUpload")) {
+            using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"*\shell\ImgurSniperUpload")) {
                 baseKey.SetValue("Icon", path);
                 baseKey.SetValue(string.Empty, "Upload Image to Imgur");
                 using(RegistryKey key = baseKey.CreateSubKey("command")) {
