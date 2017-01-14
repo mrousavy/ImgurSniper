@@ -10,6 +10,7 @@ An alternative to Windows' built in _Snipping Tool_ with **auto Imgur Upload** o
 
 #### [View all Releases](https://github.com/mrousavy/ImgurSniper/releases)
 
+
 Icon by [jinga](http://jinga.at)
 
 # Description
