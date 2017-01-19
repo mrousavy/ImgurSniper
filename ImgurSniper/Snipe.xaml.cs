@@ -110,8 +110,10 @@ namespace ImgurSniper {
             Position();
 
             System.Windows.Application.Current.Exit += delegate {
+                _nicon.Icon = null;
                 _nicon.Visible = false;
                 _nicon.Dispose();
+                _nicon = null;
             };
 
             this.Loaded += async delegate {
@@ -161,8 +163,9 @@ namespace ImgurSniper {
 
             _nicon = new NotifyIcon();
             _nicon.Text = "Click or Press Ctrl + Shift + I to Snipe a new Image!";
-            _nicon.Click += delegate {
-                Crop(false);
+            _nicon.MouseClick += (object sender, System.Windows.Forms.MouseEventArgs e) => {
+                if(e.Button == MouseButtons.Left)
+                    Crop(false);
             };
             _nicon.Icon = Properties.Resources.Logo;
             _nicon.ContextMenu = menu;
