@@ -105,6 +105,9 @@ namespace ImgurSniper.UI {
                         case "Magnifyer":
                             MagnifyingGlassBox.IsChecked = bool.Parse(value);
                             break;
+                        case "RunOnBoot":
+                            RunOnBoot.IsChecked = bool.Parse(value);
+                            break;
                         case "OpenAfterUpload":
                             OpenAfterUploadBox.IsChecked = bool.Parse(value);
                             break;
@@ -222,6 +225,17 @@ namespace ImgurSniper.UI {
             if(box != null) {
                 try {
                     FileIO.SaveConfig(FileIO.ConfigType.OpenAfterUpload, box.IsChecked.ToString());
+                } catch(Exception) { }
+            }
+        }
+
+        private void RunOnBoot_Checkbox(object sender, RoutedEventArgs e) {
+            CheckBox box = sender as CheckBox;
+            if(box != null) {
+                try {
+                    FileIO.SaveConfig(FileIO.ConfigType.RunOnBoot, box.IsChecked.ToString());
+
+                    helper.Autostart(box.IsChecked);
                 } catch(Exception) { }
             }
         }

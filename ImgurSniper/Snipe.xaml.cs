@@ -2,7 +2,10 @@
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
+using System.Windows.Input;
 using System.Windows.Media;
+using Clipboard = System.Windows.Clipboard;
 
 namespace ImgurSniper {
     /// <summary>
@@ -117,10 +120,15 @@ namespace ImgurSniper {
 
         private void Start() {
             string[] args = Environment.GetCommandLineArgs();
-            bool instantUpload = false;
+            bool instantUpload = false, autostart = false;
             string image = null;
 
             foreach(string arg in args) {
+                if(arg.ToLower().Contains("autostart")) {
+                    autostart = true;
+                    break;
+                }
+
                 if(arg.ToLower().Contains("upload"))
                     instantUpload = true;
 
@@ -128,10 +136,26 @@ namespace ImgurSniper {
                     image = arg;
             }
 
-            if(instantUpload && image != null) {
+            if(autostart) {
+                this.Visibility = Visibility.Hidden;
+
+                NotifyIcon nicon = new NotifyIcon();
+                nicon.Text = "Click or Press {Ctrl + Shift + I} to Snipe a new Image!";
+                nicon.Click += delegate {
+                    Crop(false);
+                };
+                nicon.Icon = System.Drawing.Icon.FromHandle(Properties.Resources.Logo.GetHicon());
+                nicon.Visible = true;
+
+                HotKey hk = new HotKey(ModifierKeys.Control | ModifierKeys.Shift, Key.I, this);
+                hk.HotKeyPressed += delegate {
+                    Crop(false);
+                };
+
+            } else if(instantUpload && image != null) {
                 InstantUpload(image);
             } else {
-                Crop();
+                Crop(true);
             }
         }
 
@@ -189,7 +213,7 @@ namespace ImgurSniper {
         }
 
         //Make Screenshot, Let user Crop, Upload Picture and Copy Link to Clipboard
-        private async void Crop() {
+        private async void Crop(bool CloseOnFinish) {
             string[] lines = FileIO.ReadConfig();
 
             ScreenshotWindow window = new ScreenshotWindow(Snipe.AllMonitors);
@@ -247,7 +271,11 @@ namespace ImgurSniper {
                         TimeSpan.FromSeconds(3.5));
                 }
             }
-            DelayedClose(0);
+
+            if(CloseOnFinish)
+                DelayedClose(0);
+            else
+                this.Visibility = Visibility.Hidden;
         }
 
         //Upload byte[] to imgur and give user a response

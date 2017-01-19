@@ -69,6 +69,10 @@
 							 Foreground="Gray" Click="OpenAfterUpload_Checkbox">
 					Open Image in Browser after Upload
 				</CheckBox>
+				<CheckBox x:Name="RunOnBoot" FontSize="14" Margin="15,0,0,0"
+							 Foreground="Gray" Click="RunOnBoot_Checkbox">
+					Start ImgurSniper when my PC starts
+				</CheckBox>
 
 				<Label Margin="10,5,5,5" FontSize="15"
 					   x:Name="Label_Account">
