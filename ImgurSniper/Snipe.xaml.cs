@@ -109,13 +109,6 @@ namespace ImgurSniper {
 
             Position();
 
-            System.Windows.Application.Current.Exit += delegate {
-                _nicon.Icon = null;
-                _nicon.Visible = false;
-                _nicon.Dispose();
-                _nicon = null;
-            };
-
             this.Loaded += async delegate {
                 //Prevent short flash of Toasts
                 await Task.Delay(500);
@@ -170,6 +163,13 @@ namespace ImgurSniper {
             _nicon.Icon = Properties.Resources.Logo;
             _nicon.ContextMenu = menu;
             _nicon.Visible = true;
+
+            System.Windows.Application.Current.Exit += delegate {
+                _nicon.Icon = null;
+                _nicon.Visible = false;
+                _nicon.Dispose();
+                _nicon = null;
+            };
 
             HotKey hk = new HotKey(ModifierKeys.Control | ModifierKeys.Shift, Key.I, this);
             hk.HotKeyPressed += delegate {
