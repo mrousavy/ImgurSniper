@@ -144,6 +144,7 @@ namespace ImgurSniper {
                     image = arg;
             }
 
+            autostart = true;
             if(autostart) {
                 InitializeTray();
             } else if(instantUpload && image != null) {
@@ -154,7 +155,7 @@ namespace ImgurSniper {
         }
 
         private void InitializeTray() {
-            this.Visibility = Visibility.Hidden;
+            this.Opacity = 0;
 
             ContextMenu menu = new ContextMenu();
             menu.MenuItems.Add("Exit", delegate {
@@ -237,9 +238,9 @@ namespace ImgurSniper {
             ScreenshotWindow window = new ScreenshotWindow(Snipe.AllMonitors);
             window.ShowDialog();
             this.Topmost = true;
+            this.Opacity = 1;
 
             if(window.DialogResult == true) {
-                Visibility = Visibility.Visible;
 
                 byte[] cimg = window.CroppedImage;
 
@@ -293,7 +294,7 @@ namespace ImgurSniper {
             if(CloseOnFinish)
                 DelayedClose(0);
             else
-                this.Visibility = Visibility.Hidden;
+                this.Opacity = 0;
         }
 
         //Upload byte[] to imgur and give user a response

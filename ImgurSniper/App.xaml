@@ -2,7 +2,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:ImgurSniper"
-             StartupUri="Snipe.xaml">
+             StartupUri="Snipe.xaml"
+             DispatcherUnhandledException="ImgurSniperException">
     <Application.Resources>
          
     </Application.Resources>
