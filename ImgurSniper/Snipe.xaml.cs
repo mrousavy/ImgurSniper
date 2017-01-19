@@ -144,7 +144,6 @@ namespace ImgurSniper {
                     image = arg;
             }
 
-            autostart = true;
             if(autostart) {
                 InitializeTray();
             } else if(instantUpload && image != null) {
