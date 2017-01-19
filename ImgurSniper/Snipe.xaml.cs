@@ -14,6 +14,7 @@ namespace ImgurSniper {
     public partial class Snipe : Window {
         private string _dir;
         private ImgurIO _imgur;
+        private NotifyIcon _nicon;
 
         //Value whether Magnifying Glass should be enabled or not
         public static bool MagnifyingGlassEnabled {
@@ -108,6 +109,11 @@ namespace ImgurSniper {
 
             Position();
 
+            System.Windows.Application.Current.Exit += delegate {
+                _nicon.Visible = false;
+                _nicon.Dispose();
+            };
+
             this.Loaded += async delegate {
                 //Prevent short flash of Toasts
                 await Task.Delay(500);
@@ -137,26 +143,35 @@ namespace ImgurSniper {
             }
 
             if(autostart) {
-                this.Visibility = Visibility.Hidden;
-
-                NotifyIcon nicon = new NotifyIcon();
-                nicon.Text = "Click or Press {Ctrl + Shift + I} to Snipe a new Image!";
-                nicon.Click += delegate {
-                    Crop(false);
-                };
-                nicon.Icon = System.Drawing.Icon.FromHandle(Properties.Resources.Logo.GetHicon());
-                nicon.Visible = true;
-
-                HotKey hk = new HotKey(ModifierKeys.Control | ModifierKeys.Shift, Key.I, this);
-                hk.HotKeyPressed += delegate {
-                    Crop(false);
-                };
-
+                InitializeTray();
             } else if(instantUpload && image != null) {
                 InstantUpload(image);
             } else {
                 Crop(true);
             }
+        }
+
+        private void InitializeTray() {
+            this.Visibility = Visibility.Hidden;
+
+            ContextMenu menu = new ContextMenu();
+            menu.MenuItems.Add("Exit", delegate {
+                System.Windows.Application.Current.Shutdown();
+            });
+
+            _nicon = new NotifyIcon();
+            _nicon.Text = "Click or Press Ctrl + Shift + I to Snipe a new Image!";
+            _nicon.Click += delegate {
+                Crop(false);
+            };
+            _nicon.Icon = Properties.Resources.Logo;
+            _nicon.ContextMenu = menu;
+            _nicon.Visible = true;
+
+            HotKey hk = new HotKey(ModifierKeys.Control | ModifierKeys.Shift, Key.I, this);
+            hk.HotKeyPressed += delegate {
+                Crop(false);
+            };
         }
 
         private async void InstantUpload(string path) {

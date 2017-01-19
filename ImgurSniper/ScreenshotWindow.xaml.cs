@@ -46,6 +46,8 @@ namespace ImgurSniper {
 
             this.Loaded += delegate {
                 this.CaptureMouse();
+                this.BringIntoView();
+                this.Activate();
 
                 HotKey escapeHotKey = new HotKey(ModifierKeys.None, Key.Escape, this);
                 escapeHotKey.HotKeyPressed += delegate {
