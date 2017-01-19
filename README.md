@@ -39,11 +39,14 @@ With the UI Version you have access to some extra features:
 - Enable **Saving snapped Images locally** with a custom Save Path
 - **Log in to your Imgur Account** (By uploading to **your** _Imgur Account_, you can upload bigger Images and have them listed on your Profile.)
 - Enable a **Magnifying Glass** for precise cropping
+- Open Image on Imgur in **Browser** after uploading
+- Automatically start **ImgurSniper** on PC startup
 - Choose between launching **ImgurSniper** on _Current Screen_ or _All Screens at once_
+- Choose between uploading Images as **PNG Format** for higher quality, or **JPEG Format** for faster uploads
 - **Download** and **Install** the _newest ImgurSniper version_ (Will install to Program Files)
 - **Repair** ImgurSniper, in case you messed up the Config Files or it won't start anymore.
 - **Uninstall** (Completely remove ImgurSniper and every Configs)
-- **Create Shortcuts** to Desktop or Startmenu
+- **Create Shortcuts** to Desktop, Startmenu and Context Menu
 - **Launch ImgurSniper**
 	
 <img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/Images/ImgurSniper.UI.png">
