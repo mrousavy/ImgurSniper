@@ -79,8 +79,6 @@ namespace ImgurSniper.UI {
             Install(Btn_Install, null);
         }
 
-
-
         private async void Load() {
             PathBox.Text = _docPath;
 
@@ -130,6 +128,20 @@ namespace ImgurSniper.UI {
                             break;
                     }
                 } catch(Exception) { }
+            }
+
+            //Run proecess if not running
+            try {
+                if(RunOnBoot.IsChecked == true) {
+                    if(Process.GetProcessesByName("ImgurSniper").Length < 1) {
+                        Process start = new Process();
+                        start.StartInfo.FileName = _path + "\\ImgurSniper.exe";
+                        start.StartInfo.Arguments = " -autostart";
+                        start.Start();
+                    }
+                }
+            } catch(Exception) {
+                error_toast.Show("ImgurSniper Tray Service is not running!", TimeSpan.FromSeconds(2));
             }
 
             string refreshToken = FileIO.ReadRefreshToken();

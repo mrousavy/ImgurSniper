@@ -348,6 +348,7 @@ namespace ImgurSniper.UI {
             (sender as System.Windows.Controls.Button).IsEnabled = false;
             (sender as System.Windows.Controls.Button).Tag = new object();
         }
+
         private void CreateContextMenu(object sender, RoutedEventArgs e) {
             string path = Path.Combine(_path, "ImgurSniper.exe");
             if(!System.IO.File.Exists(path)) {
