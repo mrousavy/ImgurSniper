@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using Point = System.Windows.Point;
 
 //TODO: Fix for different Resolution users
 namespace ImgurSniper {
@@ -21,11 +23,7 @@ namespace ImgurSniper {
         }
 
         //Size of whole Screen Array
-        public static System.Drawing.Rectangle allScreens {
-            get {
-                return System.Windows.Forms.SystemInformation.VirtualScreen;
-            }
-        }
+        public static System.Drawing.Rectangle allScreens => System.Windows.Forms.SystemInformation.VirtualScreen;
 
         public byte[] CroppedImage;
         public Point from, to;
@@ -50,24 +48,22 @@ namespace ImgurSniper {
                 HotKey escapeHotKey = new HotKey(ModifierKeys.None, Key.Escape, this);
                 escapeHotKey.HotKeyPressed += delegate {
                     CloseSnap(false, 0);
+                    escapeHotKey.Dispose();
+                    escapeHotKey = null;
                 };
 
                 HotKey ctrlAHotKey = new HotKey(ModifierKeys.Control, Key.A, this);
                 ctrlAHotKey.HotKeyPressed += delegate {
                     SelectAllCmd();
+                    ctrlAHotKey.Dispose();
+                    ctrlAHotKey = null;
                 };
             };
         }
 
         //Position Window correctly
         private void Position(bool AllMonitors) {
-            System.Drawing.Rectangle size;
-
-            if(AllMonitors) {
-                size = allScreens;
-            } else {
-                size = screen;
-            }
+            Rectangle size = AllMonitors ? allScreens : screen;
 
             this.Left = size.Left;
             this.Top = size.Top;
@@ -133,7 +129,7 @@ namespace ImgurSniper {
                 }
             } catch(Exception ex) {
                 toast.Show(
-                    string.Format("An error occured! (Show this to the smart Computer Apes: \"{0}\")", ex.Message),
+                    $"An error occured! (Show this to the smart Computer Apes: \"{ex.Message}\")",
                     TimeSpan.FromSeconds(3.3));
             }
 
@@ -175,9 +171,11 @@ namespace ImgurSniper {
 
         //Close Window with fade out animation
         private async void CloseSnap(bool result, int delay) {
-            var anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
+            DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
             anim.Completed += delegate {
-                DialogResult = result;
+                try {
+                    DialogResult = result;
+                } catch(Exception) { }
             };
             anim.From = ContentGrid.Opacity;
             anim.To = 0;
@@ -189,7 +187,7 @@ namespace ImgurSniper {
 
         //Fade out window and shoot cropped screenshot
         private void Complete(int fromX, int fromY, int toX, int toY) {
-            var anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
+            DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
 
             anim.Completed += async delegate {
                 grid.Opacity = 0;
@@ -230,7 +228,7 @@ namespace ImgurSniper {
         }
 
         //Play Camera Shutter Sound
-        private void PlayShutter() {
+        private static void PlayShutter() {
             try {
                 MediaPlayer player = new MediaPlayer();
                 player.Volume = 30;
@@ -239,7 +237,9 @@ namespace ImgurSniper {
 
                 player.Open(new Uri(path));
                 player.Play();
-            } catch(Exception) { }
+            } catch(Exception) {
+                // ignored
+            }
         }
 
         //"Crop" Rectangle
