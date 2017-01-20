@@ -147,7 +147,7 @@ namespace ImgurSniper {
         }
 
         private void InitializeTray() {
-            this.Opacity = 0;
+            this.Visibility = Visibility.Collapsed;
 
             ContextMenu menu = new ContextMenu();
             menu.MenuItems.Add("Exit", delegate {
@@ -237,7 +237,7 @@ namespace ImgurSniper {
             ScreenshotWindow window = new ScreenshotWindow(Snipe.AllMonitors);
             window.ShowDialog();
             this.Topmost = true;
-            this.Opacity = 1;
+            this.Visibility = Visibility.Visible;
 
             if(window.DialogResult == true) {
 
@@ -293,7 +293,7 @@ namespace ImgurSniper {
             if(CloseOnFinish)
                 DelayedClose(0);
             else
-                this.Opacity = 0;
+                this.Visibility = Visibility.Collapsed;
         }
 
         //Upload byte[] to imgur and give user a response
