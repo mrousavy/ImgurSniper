@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
@@ -150,6 +151,11 @@ namespace ImgurSniper {
             this.Visibility = Visibility.Collapsed;
 
             ContextMenu menu = new ContextMenu();
+            menu.MenuItems.Add("Settings", delegate {
+                try {
+                    Process.Start(FileIO._programFiles + "\\ImgurSniper.UI.exe");
+                } catch(Exception) { }
+            });
             menu.MenuItems.Add("Exit", delegate {
                 System.Windows.Application.Current.Shutdown();
             });

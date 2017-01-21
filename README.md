@@ -2,11 +2,11 @@
 An alternative to Windows' built in _Snipping Tool_ with **auto Imgur Upload** or **Image to Clipboard Copy** for even faster Image sharing.
 
 # Downloads
-### [⇩ Imgur Sniper v1.0.2.7 (5.012 KB) (UI Version) (Extractor) (Recommended)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperInstaller.exe?raw=true)
+### [⇩ Imgur Sniper v1.0.2.8 (5.013 KB) (UI Version) (Extractor) (Recommended)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperInstaller.exe?raw=true)
 
-#### [⇩ Imgur Sniper v1.0.2.7 (2.320 KB) (UI Version) (Archive)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.UI.zip?raw=true)
+#### [⇩ Imgur Sniper v1.0.2.8 (2.321 KB) (UI Version) (Archive)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.UI.zip?raw=true)
 
-#### [⇩ Imgur Sniper v1.0.2.7 (673 KB) (Instant Snipe)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.zip?raw=true)
+#### [⇩ Imgur Sniper v1.0.2.8 (673 KB) (Instant Snipe)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.zip?raw=true)
 
 #### [View all Releases](https://github.com/mrousavy/ImgurSniper/releases)
 
@@ -41,6 +41,7 @@ With the UI Version you have access to some extra features:
 - Enable a **Magnifying Glass** for precise cropping
 - Open Image on Imgur in **Browser** after uploading
 - Automatically start **ImgurSniper** on PC startup
+- Open **ImgurSniper** with a click on the Tray Icon, or by pressing _Ctrl + Shift + I_ (when Autostart is enabled)
 - Choose between launching **ImgurSniper** on _Current Screen_ or _All Screens at once_
 - Choose between uploading Images as **PNG Format** for higher quality, or **JPEG Format** for faster uploads
 - **Download** and **Install** the _newest ImgurSniper version_ (Will install to Program Files)
