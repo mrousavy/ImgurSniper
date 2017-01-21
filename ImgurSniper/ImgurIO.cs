@@ -54,8 +54,8 @@ namespace ImgurSniper {
             IImage image;
             using(MemoryStream stream = new MemoryStream(bimage)) {
                 image = await endpoint.UploadImageStreamAsync(stream, null,
-                    "https://mrousavy.github.io/ImgurSniper/ Snap",
-                    "Snapped with ImgurSniper (https://mrousavy.github.io/ImgurSniper/");
+                    "Uploaded with ImgurSniper",
+                    "https://mrousavy.github.io/ImgurSniper/");
             }
             return image.Link;
         }
