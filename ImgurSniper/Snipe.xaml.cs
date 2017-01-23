@@ -154,21 +154,24 @@ namespace ImgurSniper {
             menu.MenuItems.Add("Settings", delegate {
                 try {
                     Process.Start(FileIO._programFiles + "\\ImgurSniper.UI.exe");
-                } catch(Exception) { }
+                } catch(Exception) {
+                    // ignored
+                }
             });
             menu.MenuItems.Add("Exit", delegate {
                 System.Windows.Application.Current.Shutdown();
             });
 
-            _nicon = new NotifyIcon();
-            _nicon.Text = "Click or Press Ctrl + Shift + I to Snipe a new Image!";
+            _nicon = new NotifyIcon {
+                Text = "Click or Press Ctrl + Shift + I to Snipe a new Image!",
+                Icon = Properties.Resources.Logo,
+                ContextMenu = menu,
+                Visible = true
+            };
             _nicon.MouseClick += (object sender, System.Windows.Forms.MouseEventArgs e) => {
                 if(e.Button == MouseButtons.Left)
                     Crop(false);
             };
-            _nicon.Icon = Properties.Resources.Logo;
-            _nicon.ContextMenu = menu;
-            _nicon.Visible = true;
 
             System.Windows.Application.Current.Exit += delegate {
                 _nicon.Icon = null;
@@ -178,9 +181,14 @@ namespace ImgurSniper {
             };
 
             HotKey hk = new HotKey(ModifierKeys.Control | ModifierKeys.Shift, Key.I, this);
-            hk.HotKeyPressed += delegate {
-                Crop(false);
-            };
+            hk.HotKeyPressed += CtrlShiftI;
+        }
+
+
+        private void CtrlShiftI(HotKey h) {
+            h.HotKeyPressed -= CtrlShiftI;
+            Crop(false);
+            h.HotKeyPressed += CtrlShiftI;
         }
 
         private async void InstantUpload(string path) {
