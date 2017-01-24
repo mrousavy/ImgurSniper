@@ -1,6 +1,8 @@
 #<img src="https://github.com/mrousavy/ImgurSniper/raw/master/Images/Logo.png" width="42"> ImgurSniper
 An alternative to Windows' built in _Snipping Tool_ with **auto Imgur Upload** or **Image to Clipboard Copy** for even faster Image sharing.
 
+[![Code Triagers Badge](https://www.codetriage.com/mrousavy/imgursniper/badges/users.svg)](https://www.codetriage.com/mrousavy/imgursniper)
+
 # Downloads
 ### [⇩ Imgur Sniper v1.0.2.8 (5.013 KB) (UI Version) (Extractor) (Recommended)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperInstaller.exe?raw=true)
 
