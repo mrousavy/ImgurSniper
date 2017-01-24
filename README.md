@@ -42,7 +42,7 @@ With the UI Version you have access to some extra features:
 - Enable a **Magnifying Glass** for precise cropping
 - Open Image on Imgur in **Browser** after uploading
 - Automatically start **ImgurSniper** on PC startup
-- Open **ImgurSniper** with a click on the Tray Icon, or by pressing _Ctrl + Shift + I_ (when Autostart is enabled)
+- Open **ImgurSniper** with a click on the Tray Icon, or by pressing _Ctrl + Shift + X_ or _Print Screen_ (when Autostart is enabled)
 - Choose between launching **ImgurSniper** on _Current Screen_ or _All Screens at once_
 - Choose between uploading Images as **PNG Format** for higher quality, or **JPEG Format** for faster uploads
 - **Download** and **Install** the _newest ImgurSniper version_ (Will install to Program Files)
