@@ -54,6 +54,8 @@ namespace ImgurSniper {
                     image = arg;
             }
 
+            //DEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEBUG
+            autostart = true;
             if(autostart) {
                 InitializeTray();
             } else if(instantUpload && image != null) {
@@ -86,7 +88,7 @@ namespace ImgurSniper {
                 Icon = Properties.Resources.Logo,
                 ContextMenu = menu,
                 Visible = true,
-                Text = $"Click or Press " + (usePrint ? "Print" : "Ctrl + Shift + " + sKey) + " to Snipe a new Image!"
+                Text = $"Click or Press " + (usePrint ? "the Print Key" : "Ctrl + Shift + " + sKey) + " to Snipe a new Image!"
             };
 
             _nicon.MouseClick += (sender, e) => {
@@ -102,7 +104,7 @@ namespace ImgurSniper {
             };
 
 
-            HotKey hk = usePrint ? new HotKey(ModifierKeys.None, Key.Print, this) : new HotKey(ModifierKeys.Control | ModifierKeys.Shift, sKey, this);
+            HotKey hk = usePrint ? new HotKey(ModifierKeys.None, Key.PrintScreen, this) : new HotKey(ModifierKeys.Control | ModifierKeys.Shift, sKey, this);
             hk.HotKeyPressed += OpenFromShortcut;
         }
 

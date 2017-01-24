@@ -84,10 +84,10 @@ namespace ImgurSniper.UI {
 
             string[] lines = FileIO.ReadConfig();
 
-            for(int i = 0; i < lines.Length; i++) {
+            foreach(string line in lines) {
                 try {
-                    string property = lines[i].Split(';')[0];
-                    string value = lines[i].Split(';')[1];
+                    string property = line.Split(';')[0];
+                    string value = line.Split(';')[1];
 
                     switch(property) {
                         case "AfterSnipeAction":

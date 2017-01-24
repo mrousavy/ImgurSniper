@@ -129,9 +129,10 @@ namespace ImgurSniper.UI {
 
 
         private void KillTasks() {
-            List<Process> processes = new List<Process>(Process.GetProcesses().Where(p => p.ProcessName.Contains("ImgurSniper") && p != Process.GetCurrentProcess()));
+            List<Process> processes = new List<Process>(Process.GetProcesses().Where(p => p.ProcessName.Contains("ImgurSniper")));
             foreach(Process p in processes) {
-                p.Kill();
+                if(p.ProcessName != Process.GetCurrentProcess().ProcessName)
+                    p.Kill();
             }
         }
 
