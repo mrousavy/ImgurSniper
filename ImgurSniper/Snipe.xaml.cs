@@ -19,7 +19,6 @@ namespace ImgurSniper {
 
 
         public Snipe() {
-            this.ShowActivated = false;
             InitializeComponent();
 
             Initialize();
@@ -90,7 +89,6 @@ namespace ImgurSniper {
             menu.MenuItems.Add("Exit", delegate {
                 System.Windows.Application.Current.Shutdown();
             });
-            menu.MenuItems[1].PerformSelect();
 
             _nicon = new NotifyIcon {
                 Icon = Properties.Resources.Logo,
