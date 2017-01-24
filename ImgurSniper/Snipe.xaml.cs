@@ -301,8 +301,7 @@ namespace ImgurSniper {
         //Play the Blop Success Sound
         private void PlayBlop() {
             try {
-                MediaPlayer player = new MediaPlayer();
-                player.Volume = 30;
+                MediaPlayer player = new MediaPlayer { Volume = 30 };
 
                 string path = Path.Combine(FileIO._programFiles, "Resources\\Blop.wav");
 
