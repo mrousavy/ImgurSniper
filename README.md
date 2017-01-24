@@ -23,6 +23,7 @@ The Screen will darken so you definetly will notice when _Snap mode_ is entered.
 **[ESC]**.
 
 In _Snap mode_ you are able to **draw/crop a Rectangle** which will crop the content once released and automatically upload it to Imgur or copy to your Clipboard.
+To quickly upload a **Screenshot from a Window**, just **right click the Window**.
 When successfully uploaded, you will get a notification once the **Link is copied to your Clipboard**.
 
 <img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/Images/ImgurSniper_Demo.gif">

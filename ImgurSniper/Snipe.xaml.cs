@@ -54,8 +54,6 @@ namespace ImgurSniper {
                     image = arg;
             }
 
-            //DEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEBUG
-            autostart = true;
             if(autostart) {
                 InitializeTray();
             } else if(instantUpload && image != null) {
@@ -103,9 +101,14 @@ namespace ImgurSniper {
                 _nicon = null;
             };
 
-
-            HotKey hk = usePrint ? new HotKey(ModifierKeys.None, Key.PrintScreen, this) : new HotKey(ModifierKeys.Control | ModifierKeys.Shift, sKey, this);
-            hk.HotKeyPressed += OpenFromShortcut;
+            try {
+                HotKey hk = usePrint
+                    ? new HotKey(ModifierKeys.None, Key.PrintScreen, this)
+                    : new HotKey(ModifierKeys.Control | ModifierKeys.Shift, sKey, this);
+                hk.HotKeyPressed += OpenFromShortcut;
+            } catch(Exception) {
+                //ignored
+            }
         }
 
         //Open Snipe by Shortcut (Ctrl + Shift + I or Print)
@@ -133,7 +136,7 @@ namespace ImgurSniper {
                 string KB = $"{(byteImg.Length / 1024d):0.#}";
                 SuccessToast.Show($"Uploading Image... ({KB} KB)", TimeSpan.FromDays(10));
 
-                await UploadImageToImgur(byteImg);
+                await UploadImageToImgur(byteImg, "");
             } else {
                 await ErrorToast.ShowAsync("Error, File is non supported Image Type!", TimeSpan.FromSeconds(5));
             }
@@ -215,7 +218,7 @@ namespace ImgurSniper {
                         string KB = $"{(cimg.Length / 1024d):0.#}";
                         SuccessToast.Show($"Uploading Image... ({KB} KB)", TimeSpan.FromDays(10));
 
-                        await UploadImageToImgur(cimg);
+                        await UploadImageToImgur(cimg, window.HwndName);
                     } else {
                         CopyImageToClipboard(cimg);
                     }
@@ -235,15 +238,15 @@ namespace ImgurSniper {
         }
 
         //Upload byte[] to imgur and give user a response
-        private async Task UploadImageToImgur(byte[] cimg) {
-            string link = await UploadImgur(cimg);
+        private async Task UploadImageToImgur(byte[] cimg, string WindowName) {
+            string link = await UploadImgur(cimg, WindowName);
 
             if(link.StartsWith("http://")) {
                 Clipboard.SetText(link);
                 PlayBlop();
 
                 if(FileIO.OpenAfterUpload)
-                    System.Diagnostics.Process.Start(link);
+                    Process.Start(link);
 
                 await SuccessToast.ShowAsync("Link to Imgur copied to Clipboard!",
                     TimeSpan.FromSeconds(5));
@@ -261,8 +264,8 @@ namespace ImgurSniper {
         }
 
         //Upload Image to Imgur and returns URL to Imgur
-        private async Task<string> UploadImgur(byte[] cimg) {
-            string response = await _imgur.Upload(cimg);
+        private async Task<string> UploadImgur(byte[] cimg, string WindowName) {
+            string response = await _imgur.Upload(cimg, WindowName);
 
             //Copy Link to Clipboard
             Clipboard.SetText(response);

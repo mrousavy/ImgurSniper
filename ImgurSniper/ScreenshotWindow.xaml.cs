@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -27,6 +29,7 @@ namespace ImgurSniper {
 
         public byte[] CroppedImage;
         public Point from, to;
+        public string HwndName;
 
         private bool _drag = false;
         private bool _enableMagnifyer = false;
@@ -83,12 +86,59 @@ namespace ImgurSniper {
 
         //MouseDown Event
         private void StartDrawing(object sender, MouseButtonEventArgs e) {
-            //Only trigger on Left Mouse Button
-            if(e.ChangedButton != MouseButton.Left)
-                return;
+            if(e.ChangedButton == MouseButton.Right) {
+                RightClick(e.GetPosition(this));
+            } else if(e.ChangedButton == MouseButton.Left) {
+                //Lock the from Point to the Mouse Position when started holding Mouse Button
+                from = e.GetPosition(this);
+            }
+        }
 
-            //Lock the from Point to the Mouse Position when started holding Mouse Button
-            from = e.GetPosition(this);
+
+        private RECT GetHwndFromCursor(IntPtr ptr) {
+            if(ptr == IntPtr.Zero)
+                throw new Exception();
+
+            //Get Size of Window under Mouse Cursor
+            RECT WindowSize = new RECT();
+            GetWindowRect(ptr, ref WindowSize);
+
+            return WindowSize;
+        }
+
+        private void RightClick(Point CursorPos) {
+            this.Cursor = Cursors.Hand;
+
+            DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
+
+            anim.Completed += async delegate {
+                grid.Opacity = 0;
+                //For render complete
+                await Task.Delay(50);
+
+                System.Drawing.Point point = new System.Drawing.Point((int)CursorPos.X, (int)CursorPos.Y);
+                //Get Window from Mouse Cursor Pos
+                IntPtr ptr = WindowFromPoint(point);
+                RECT hwnd = GetHwndFromCursor(ptr);
+
+                const int nChars = 256;
+                StringBuilder Buff = new StringBuilder(nChars);
+                if(GetWindowText(ptr, Buff, nChars) > 0) {
+                    HwndName = Buff.ToString();
+                }
+
+                int fromX = hwnd.Left;
+                int fromY = hwnd.Top;
+                int toX = hwnd.Right;
+                int toY = hwnd.Bottom;
+
+                Crop(fromX, fromY, toX, toY);
+            };
+
+            anim.From = grid.Opacity;
+            anim.To = 0;
+
+            grid.BeginAnimation(OpacityProperty, anim);
         }
 
         //MouseUp Event
@@ -175,7 +225,9 @@ namespace ImgurSniper {
             anim.Completed += delegate {
                 try {
                     DialogResult = result;
-                } catch(Exception) { }
+                } catch(Exception) {
+                    // ignored
+                }
             };
             anim.From = ContentGrid.Opacity;
             anim.To = 0;
@@ -230,8 +282,7 @@ namespace ImgurSniper {
         //Play Camera Shutter Sound
         private static void PlayShutter() {
             try {
-                MediaPlayer player = new MediaPlayer();
-                player.Volume = 30;
+                MediaPlayer player = new MediaPlayer { Volume = 30 };
 
                 string path = System.IO.Path.Combine(FileIO._programFiles, "Resources\\Camera_Shutter.wav");
 
@@ -243,7 +294,7 @@ namespace ImgurSniper {
         }
 
         //"Crop" Rectangle
-        private bool MakeImage(System.Drawing.Rectangle size) {
+        private bool MakeImage(Rectangle size) {
             try {
                 ImageSource source = Screenshot.getScreenshot(size);
 
@@ -270,5 +321,28 @@ namespace ImgurSniper {
             to = new Point(this.Width, this.Height);
             FinishRectangle();
         }
+
+
+        #region P/Invokes
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, out uint ProcessId);
+
+        [DllImport("user32.dll")]
+        static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
+
+        [DllImport("user32.dll")]
+        static extern IntPtr WindowFromPoint(System.Drawing.Point p);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool GetWindowRect(IntPtr hWnd, ref RECT lpRect);
+        [StructLayout(LayoutKind.Sequential)]
+        private struct RECT {
+            public int Left;
+            public int Top;
+            public int Right;
+            public int Bottom;
+        }
+        #endregion
     }
 }

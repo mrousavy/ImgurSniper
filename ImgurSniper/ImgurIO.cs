@@ -48,13 +48,16 @@ namespace ImgurSniper {
         /// </summary>
         /// <param name="image">The Image as byte[]</param>
         /// <returns>The Link to the uploaded Image</returns>
-        public async Task<string> Upload(byte[] bimage) {
+        public async Task<string> Upload(byte[] bimage, string WindowName) {
             ImageEndpoint endpoint = new ImageEndpoint(_client);
 
             IImage image;
             using(MemoryStream stream = new MemoryStream(bimage)) {
+                string title = string.IsNullOrWhiteSpace(WindowName) ?
+                    "Uploaded with ImgurSniper" :
+                    $"{WindowName} (Uploaded with ImgurSniper)";
                 image = await endpoint.UploadImageStreamAsync(stream, null,
-                    "Uploaded with ImgurSniper",
+                    title,
                     "https://mrousavy.github.io/ImgurSniper/");
             }
             return image.Link;
