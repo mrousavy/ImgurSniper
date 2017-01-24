@@ -93,6 +93,17 @@ namespace ImgurSniper {
             }
         }
 
+        private WinAPI.User32.RECT GetHwndFromCursor(IntPtr ptr) {
+            if(ptr == IntPtr.Zero)
+                throw new Exception();
+
+            //Get Size of Window under Mouse Cursor
+            WinAPI.User32.RECT WindowSize = new WinAPI.User32.RECT();
+            WinAPI.User32.GetWindowRect(ptr, ref WindowSize);
+
+            return WindowSize;
+        }
+
         private void RightClick(Point CursorPos) {
             this.Cursor = Cursors.Hand;
 
@@ -106,6 +117,7 @@ namespace ImgurSniper {
                 System.Drawing.Point point = new System.Drawing.Point((int)CursorPos.X, (int)CursorPos.Y);
                 //Get Window from Mouse Cursor Pos
                 IntPtr ptr = WinAPI.User32.WindowFromPoint(point);
+                WinAPI.User32.RECT hwnd = GetHwndFromCursor(ptr);
 
                 const int nChars = 256;
                 StringBuilder buff = new StringBuilder(nChars);
@@ -113,15 +125,12 @@ namespace ImgurSniper {
                     HwndName = buff.ToString();
                 }
 
-                //Assuming from Point is already top left and not bottom right
-                bool result = MakeImageFromWindow(ptr);
+                int fromX = hwnd.Left;
+                int fromY = hwnd.Top;
+                int toX = hwnd.Right;
+                int toY = hwnd.Bottom;
 
-                if(!result) {
-                    toast.Show("Whoops, something went wrong!", TimeSpan.FromSeconds(3.3));
-                    CloseSnap(false, 1500);
-                } else {
-                    DialogResult = true;
-                }
+                Crop(fromX, fromY, toX, toY);
             };
 
             anim.From = grid.Opacity;
@@ -303,26 +312,6 @@ namespace ImgurSniper {
             }
         }
 
-        //"Crop" Rectangle
-        private bool MakeImageFromWindow(IntPtr handle) {
-            try {
-                Image img = WinAPI.CaptureWindow(handle);
-
-                System.IO.MemoryStream stream = new System.IO.MemoryStream();
-
-                img.Save(stream,
-                        FileIO.UsePNG ? System.Drawing.Imaging.ImageFormat.Png : System.Drawing.Imaging.ImageFormat.Jpeg);
-
-                CroppedImage = stream.ToArray();
-
-                PlayShutter();
-
-                return true;
-            } catch(Exception) {
-                return false;
-            }
-        }
-
         private void SelectAllCmd() {
             selectionRectangle.Margin = new Thickness(0);
 
@@ -331,27 +320,5 @@ namespace ImgurSniper {
             FinishRectangle();
         }
 
-
-        #region P/Invokes
-        //[DllImport("user32.dll")]
-        //public static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, out uint ProcessId);
-
-        //[DllImport("user32.dll")]
-        //static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
-
-        //[DllImport("user32.dll")]
-        //static extern IntPtr WindowFromPoint(System.Drawing.Point p);
-
-        //[DllImport("user32.dll", SetLastError = true)]
-        //[return: MarshalAs(UnmanagedType.Bool)]
-        //static extern bool GetWindowRect(IntPtr hWnd, ref RECT lpRect);
-        //[StructLayout(LayoutKind.Sequential)]
-        //private struct RECT {
-        //    public int Left;
-        //    public int Top;
-        //    public int Right;
-        //    public int Bottom;
-        //}
-        #endregion
     }
 }

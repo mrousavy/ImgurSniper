@@ -11,8 +11,8 @@ namespace ImgurSniper {
             // get the size
             User32.RECT windowRect = new User32.RECT();
             User32.GetWindowRect(handle, ref windowRect);
-            int width = windowRect.right - windowRect.left;
-            int height = windowRect.bottom - windowRect.top;
+            int width = windowRect.Right - windowRect.Left;
+            int height = windowRect.Bottom - windowRect.Top;
             // create a device context we can copy to
             IntPtr hdcDest = GDI32.CreateCompatibleDC(hdcSrc);
             // create a bitmap we can copy it to,
@@ -64,10 +64,10 @@ namespace ImgurSniper {
         public class User32 {
             [StructLayout(LayoutKind.Sequential)]
             public struct RECT {
-                public int left;
-                public int top;
-                public int right;
-                public int bottom;
+                public int Left;
+                public int Top;
+                public int Right;
+                public int Bottom;
             }
             [DllImport("user32.dll")]
             public static extern IntPtr GetDesktopWindow();

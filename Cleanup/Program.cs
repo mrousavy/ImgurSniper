@@ -24,7 +24,7 @@ namespace Cleanup {
             Console.WriteLine("Waiting for all ImgurSniper instances to exit...");
 
             while(Process.GetProcesses().Where(process =>
-            process.ProcessName.Contains("ImgurSniper") && !process.ProcessName.Contains("ImgurSniperCleanup.exe")).Count() > 0)
+            process.ProcessName.Contains("ImgurSniper")).Count() > 0)
                 Thread.Sleep(100);
 
             if(Directory.Exists(_path)) {

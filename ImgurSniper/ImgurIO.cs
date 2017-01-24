@@ -35,12 +35,13 @@ namespace ImgurSniper {
             try {
                 OAuth2Endpoint endpoint = new OAuth2Endpoint(_client);
 
-                //TODO: Userinput
                 string refreshToken = FileIO.ReadRefreshToken();
                 IOAuth2Token token = await endpoint.GetTokenByRefreshTokenAsync(refreshToken);
 
                 _client.SetOAuth2Token(token);
-            } catch(Exception) { }
+            } catch(Exception) {
+                // ignored
+            }
         }
 
         /// <summary>
