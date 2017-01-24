@@ -16,7 +16,7 @@
                 <Rectangle Fill="Gray" Opacity="0.3"/>
             </Border>
 
-            <Grid x:Name="ContentGrid" Opacity="0.3" Background="Black">
+            <Grid x:Name="ContentGrid" Opacity="0" Background="Black">
                 <Grid.Triggers>
                     <EventTrigger RoutedEvent="Grid.Loaded">
                         <BeginStoryboard>
@@ -60,6 +60,7 @@
             FontWeight="Bold"
             MessageColor="White"
             Background="#F44336"
-            FontSize="13"/>
+            FontSize="13"
+            Visibility="Collapsed"/>
         </Grid>
 </Window>

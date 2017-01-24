@@ -28,7 +28,7 @@ namespace ImgurSniper {
 
             this.Loaded += async delegate {
                 //Prevent short flash of Toasts
-                await Task.Delay(500);
+                await Task.Delay(100);
                 ErrorToast.Visibility = Visibility.Visible;
                 SuccessToast.Visibility = Visibility.Visible;
             };
@@ -59,7 +59,7 @@ namespace ImgurSniper {
             } else if(instantUpload && image != null) {
                 InstantUpload(image);
             } else {
-                Crop(true);
+                Crop(true, false);
             }
         }
 
@@ -68,6 +68,16 @@ namespace ImgurSniper {
 
             Key sKey = FileIO.ShortcutKey;
             bool usePrint = FileIO.UsePrint;
+
+            HotKey hk = null;
+            try {
+                hk = usePrint
+                     ? new HotKey(ModifierKeys.None, Key.PrintScreen, this)
+                     : new HotKey(ModifierKeys.Control | ModifierKeys.Shift, sKey, this);
+                hk.HotKeyPressed += OpenFromShortcut;
+            } catch(Exception) {
+                //ignored
+            }
 
             ContextMenu menu = new ContextMenu();
             menu.MenuItems.Add("Settings", delegate {
@@ -88,10 +98,12 @@ namespace ImgurSniper {
                 Visible = true,
                 Text = $"Click or Press " + (usePrint ? "the Print Key" : "Ctrl + Shift + " + sKey) + " to Snipe a new Image!"
             };
-
             _nicon.MouseClick += (sender, e) => {
                 if(e.Button == MouseButtons.Left)
-                    Crop(false);
+                    if(hk == null)
+                        Crop(false, true);
+                    else
+                        OpenFromShortcut(hk);
             };
 
             System.Windows.Application.Current.Exit += delegate {
@@ -100,21 +112,12 @@ namespace ImgurSniper {
                 _nicon.Dispose();
                 _nicon = null;
             };
-
-            try {
-                HotKey hk = usePrint
-                    ? new HotKey(ModifierKeys.None, Key.PrintScreen, this)
-                    : new HotKey(ModifierKeys.Control | ModifierKeys.Shift, sKey, this);
-                hk.HotKeyPressed += OpenFromShortcut;
-            } catch(Exception) {
-                //ignored
-            }
         }
 
         //Open Snipe by Shortcut (Ctrl + Shift + I or Print)
         private void OpenFromShortcut(HotKey h) {
             h.HotKeyPressed -= OpenFromShortcut;
-            Crop(false);
+            Crop(false, false);
             h.HotKeyPressed += OpenFromShortcut;
         }
 
@@ -172,13 +175,14 @@ namespace ImgurSniper {
         }
 
         //Make Screenshot, Let user Crop, Upload Picture and Copy Link to Clipboard
-        private async void Crop(bool CloseOnFinish) {
+        private async void Crop(bool CloseOnFinish, bool FocusNewWindow) {
             string[] lines = FileIO.ReadConfig();
 
-            ScreenshotWindow window = new ScreenshotWindow(FileIO.AllMonitors);
+            ScreenshotWindow window = new ScreenshotWindow(FileIO.AllMonitors, FocusNewWindow);
             window.ShowDialog();
-            this.Topmost = true;
-            this.Visibility = Visibility.Visible;
+
+            //this.Visibility = Visibility.Visible;
+            //this.Topmost = true;
 
             if(window.DialogResult == true) {
 

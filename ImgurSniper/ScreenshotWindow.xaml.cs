@@ -35,7 +35,7 @@ namespace ImgurSniper {
         private string _path = FileIO._path;
 
 
-        public ScreenshotWindow(bool AllMonitors) {
+        public ScreenshotWindow(bool AllMonitors, bool Focus) {
             this.ShowActivated = false;
 
             InitializeComponent();
@@ -44,8 +44,13 @@ namespace ImgurSniper {
             LoadConfig();
 
 
-            this.Loaded += delegate {
+            this.Loaded += async delegate {
                 this.CaptureMouse();
+
+                if(Focus) {
+                    this.Activate();
+                    this.Focus();
+                }
 
                 HotKey escapeHotKey = new HotKey(ModifierKeys.None, Key.Escape, this);
                 escapeHotKey.HotKeyPressed += delegate {
@@ -60,6 +65,10 @@ namespace ImgurSniper {
                     ctrlAHotKey.Dispose();
                     ctrlAHotKey = null;
                 };
+
+                //Prevent short flash of Toast
+                await Task.Delay(100);
+                toast.Visibility = Visibility.Visible;
             };
         }
 
