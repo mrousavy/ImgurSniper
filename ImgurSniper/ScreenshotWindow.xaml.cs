@@ -73,7 +73,7 @@ namespace ImgurSniper {
 
         //Load from config File (ImgurSniper.UI)
         private void LoadConfig() {
-            _enableMagnifyer = Snipe.MagnifyingGlassEnabled;
+            _enableMagnifyer = FileIO.MagnifyingGlassEnabled;
             if(_enableMagnifyer) {
                 Magnifyer.Visibility = Visibility.Visible;
                 VisualBrush b = (VisualBrush)MagnifyingEllipse.Fill;
@@ -251,7 +251,7 @@ namespace ImgurSniper {
 
                 Screenshot.MediaImageToDrawingImage(source)
                     .Save(stream,
-                        Snipe.UsePNG ? System.Drawing.Imaging.ImageFormat.Png : System.Drawing.Imaging.ImageFormat.Jpeg);
+                        FileIO.UsePNG ? System.Drawing.Imaging.ImageFormat.Png : System.Drawing.Imaging.ImageFormat.Jpeg);
 
                 CroppedImage = stream.ToArray();
 

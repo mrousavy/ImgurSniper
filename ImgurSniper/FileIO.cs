@@ -2,9 +2,133 @@
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Windows.Input;
 
 namespace ImgurSniper {
     public static class FileIO {
+
+        //Value whether Magnifying Glass should be enabled or not
+        public static bool MagnifyingGlassEnabled {
+            get {
+                try {
+                    string[] lines = FileIO.ReadConfig();
+                    foreach(string line in lines) {
+                        string[] config = line.Split(';');
+
+                        if(config[0] == "Magnifyer") {
+                            return bool.Parse(config[1]);
+                        }
+                    }
+                    return false;
+                } catch(Exception) {
+                    return false;
+                }
+            }
+        }
+
+        //Value whether ImgurSniper should strech over all screens or not
+        public static bool AllMonitors {
+            get {
+                try {
+                    bool all = false;
+
+                    string[] lines = FileIO.ReadConfig();
+                    foreach(string line in lines) {
+                        string[] config = line.Split(';');
+
+                        if(config[0] == "SnipeMonitor") {
+                            all = config[1] == "All";
+                            break;
+                        }
+                    }
+
+                    return all;
+                } catch(Exception) {
+                    return false;
+                }
+            }
+        }
+
+        //Value whether ImgurSniper should use PNG Image Format
+        public static bool UsePNG {
+            get {
+                try {
+                    bool png = false;
+
+                    string[] lines = FileIO.ReadConfig();
+                    foreach(string line in lines) {
+                        string[] config = line.Split(';');
+
+                        if(config[0] == "ImageFormat") {
+                            png = config[1] == "PNG";
+                            break;
+                        }
+                    }
+
+                    return png;
+                } catch(Exception) {
+                    return false;
+                }
+            }
+        }
+
+        //Value whether ImgurSniper should open the uploaded Image after successfully uploading
+        public static bool OpenAfterUpload {
+            get {
+                try {
+                    string[] lines = FileIO.ReadConfig();
+                    foreach(string line in lines) {
+                        string[] config = line.Split(';');
+
+                        if(config[0] == "OpenAfterUpload") {
+                            return bool.Parse(config[1]);
+                        }
+                    }
+
+                    return false;
+                } catch(Exception) {
+                    return false;
+                }
+            }
+        }
+        //Key for ImgurSniper Shortcut
+        public static Key ShortcutKey {
+            get {
+                try {
+                    string[] lines = FileIO.ReadConfig();
+                    foreach(string line in lines) {
+                        string[] config = line.Split(';');
+
+                        if(config[0] == "ShortcutKey") {
+                            return (Key)Enum.Parse(typeof(Key), config[1]);
+                        }
+                    }
+
+                    return Key.X;
+                } catch(Exception) {
+                    return Key.X;
+                }
+            }
+        }
+        //Use PrintKey for ImgurSniper Shortcut?
+        public static bool UsePrint {
+            get {
+                try {
+                    string[] lines = FileIO.ReadConfig();
+                    foreach(string line in lines) {
+                        string[] config = line.Split(';');
+
+                        if(config[0] == "UsePrint") {
+                            return bool.Parse(config[1]);
+                        }
+                    }
+
+                    return false;
+                } catch(Exception) {
+                    return false;
+                }
+            }
+        }
 
         public static string _fileVersion {
             get {

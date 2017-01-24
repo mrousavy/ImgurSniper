@@ -17,90 +17,6 @@ namespace ImgurSniper {
         private ImgurIO _imgur;
         private NotifyIcon _nicon;
 
-        //Value whether Magnifying Glass should be enabled or not
-        public static bool MagnifyingGlassEnabled {
-            get {
-                try {
-                    string[] lines = FileIO.ReadConfig();
-                    foreach(string line in lines) {
-                        string[] config = line.Split(';');
-
-                        if(config[0] == "Magnifyer") {
-                            return bool.Parse(config[1]);
-                        }
-                    }
-                    return false;
-                } catch(Exception) {
-                    return false;
-                }
-            }
-        }
-
-        //Value whether ImgurSniper should strech over all screens or not
-        public static bool AllMonitors {
-            get {
-                try {
-                    bool all = false;
-
-                    string[] lines = FileIO.ReadConfig();
-                    foreach(string line in lines) {
-                        string[] config = line.Split(';');
-
-                        if(config[0] == "SnipeMonitor") {
-                            all = config[1] == "All";
-                            break;
-                        }
-                    }
-
-                    return all;
-                } catch(Exception) {
-                    return false;
-                }
-            }
-        }
-
-        //Value whether ImgurSniper should use PNG Image Format
-        public static bool UsePNG {
-            get {
-                try {
-                    bool png = false;
-
-                    string[] lines = FileIO.ReadConfig();
-                    foreach(string line in lines) {
-                        string[] config = line.Split(';');
-
-                        if(config[0] == "ImageFormat") {
-                            png = config[1] == "PNG";
-                            break;
-                        }
-                    }
-
-                    return png;
-                } catch(Exception) {
-                    return false;
-                }
-            }
-        }
-
-        //Value whether ImgurSniper should open the uploaded Image after successfully uploading
-        public static bool OpenAfterUpload {
-            get {
-                try {
-                    string[] lines = FileIO.ReadConfig();
-                    foreach(string line in lines) {
-                        string[] config = line.Split(';');
-
-                        if(config[0] == "OpenAfterUpload") {
-                            return bool.Parse(config[1]);
-                        }
-                    }
-
-                    return false;
-                } catch(Exception) {
-                    return false;
-                }
-            }
-        }
 
         public Snipe() {
             this.ShowActivated = false;
@@ -150,6 +66,9 @@ namespace ImgurSniper {
         private void InitializeTray() {
             this.Visibility = Visibility.Collapsed;
 
+            Key sKey = FileIO.ShortcutKey;
+            bool usePrint = FileIO.UsePrint;
+
             ContextMenu menu = new ContextMenu();
             menu.MenuItems.Add("Settings", delegate {
                 try {
@@ -161,14 +80,16 @@ namespace ImgurSniper {
             menu.MenuItems.Add("Exit", delegate {
                 System.Windows.Application.Current.Shutdown();
             });
+            menu.MenuItems[1].PerformSelect();
 
             _nicon = new NotifyIcon {
-                Text = "Click or Press Ctrl + Shift + I to Snipe a new Image!",
                 Icon = Properties.Resources.Logo,
                 ContextMenu = menu,
-                Visible = true
+                Visible = true,
+                Text = $"Click or Press " + (usePrint ? "Print" : "Ctrl + Shift + " + sKey) + " to Snipe a new Image!"
             };
-            _nicon.MouseClick += (object sender, System.Windows.Forms.MouseEventArgs e) => {
+
+            _nicon.MouseClick += (sender, e) => {
                 if(e.Button == MouseButtons.Left)
                     Crop(false);
             };
@@ -180,15 +101,16 @@ namespace ImgurSniper {
                 _nicon = null;
             };
 
-            HotKey hk = new HotKey(ModifierKeys.Control | ModifierKeys.Shift, Key.I, this);
-            hk.HotKeyPressed += CtrlShiftI;
+
+            HotKey hk = usePrint ? new HotKey(ModifierKeys.None, Key.Print, this) : new HotKey(ModifierKeys.Control | ModifierKeys.Shift, sKey, this);
+            hk.HotKeyPressed += OpenFromShortcut;
         }
 
-
-        private void CtrlShiftI(HotKey h) {
-            h.HotKeyPressed -= CtrlShiftI;
+        //Open Snipe by Shortcut (Ctrl + Shift + I or Print)
+        private void OpenFromShortcut(HotKey h) {
+            h.HotKeyPressed -= OpenFromShortcut;
             Crop(false);
-            h.HotKeyPressed += CtrlShiftI;
+            h.HotKeyPressed += OpenFromShortcut;
         }
 
         private async void InstantUpload(string path) {
@@ -248,7 +170,7 @@ namespace ImgurSniper {
         private async void Crop(bool CloseOnFinish) {
             string[] lines = FileIO.ReadConfig();
 
-            ScreenshotWindow window = new ScreenshotWindow(Snipe.AllMonitors);
+            ScreenshotWindow window = new ScreenshotWindow(FileIO.AllMonitors);
             window.ShowDialog();
             this.Topmost = true;
             this.Visibility = Visibility.Visible;
@@ -274,7 +196,7 @@ namespace ImgurSniper {
                                 //Config: Save Image locally?
                                 if(bool.Parse(config[1])) {
                                     long time = DateTime.Now.ToFileTimeUtc();
-                                    string extension = UsePNG ? ".png" : ".jpeg";
+                                    string extension = FileIO.UsePNG ? ".png" : ".jpeg";
                                     File.WriteAllBytes(_dir + $"\\Snipe_{time}{extension}", cimg);
                                 }
                                 break;
@@ -318,7 +240,7 @@ namespace ImgurSniper {
                 Clipboard.SetText(link);
                 PlayBlop();
 
-                if(OpenAfterUpload)
+                if(FileIO.OpenAfterUpload)
                     System.Diagnostics.Process.Start(link);
 
                 await SuccessToast.ShowAsync("Link to Imgur copied to Clipboard!",

@@ -106,6 +106,9 @@ namespace ImgurSniper.UI {
                         case "RunOnBoot":
                             RunOnBoot.IsChecked = bool.Parse(value);
                             break;
+                        case "UsePrint":
+                            PrintKeyBox.IsChecked = bool.Parse(value);
+                            break;
                         case "OpenAfterUpload":
                             OpenAfterUploadBox.IsChecked = bool.Parse(value);
                             break;
@@ -134,9 +137,12 @@ namespace ImgurSniper.UI {
             try {
                 if(RunOnBoot.IsChecked == true) {
                     if(Process.GetProcessesByName("ImgurSniper").Length < 1) {
-                        Process start = new Process();
-                        start.StartInfo.FileName = _path + "\\ImgurSniper.exe";
-                        start.StartInfo.Arguments = " -autostart";
+                        Process start = new Process {
+                            StartInfo = {
+                                FileName = _path + "\\ImgurSniper.exe",
+                                Arguments = " -autostart"
+                            }
+                        };
                         start.Start();
                     }
                 }
@@ -248,6 +254,15 @@ namespace ImgurSniper.UI {
                     FileIO.SaveConfig(FileIO.ConfigType.RunOnBoot, box.IsChecked.ToString());
 
                     helper.Autostart(box.IsChecked);
+                } catch(Exception) { }
+            }
+        }
+
+        private void PrintKeyBox_Click(object sender, RoutedEventArgs e) {
+            CheckBox box = sender as CheckBox;
+            if(box != null) {
+                try {
+                    FileIO.SaveConfig(FileIO.ConfigType.UsePrint, box.IsChecked.ToString());
                 } catch(Exception) { }
             }
         }

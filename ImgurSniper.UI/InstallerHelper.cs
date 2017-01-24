@@ -1,9 +1,11 @@
 ﻿using IWshRuntimeLibrary;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -39,13 +41,17 @@ namespace ImgurSniper.UI {
                 if(Directory.Exists(_tempPath)) {
                     Directory.Delete(_tempPath, true);
                 }
-            } catch(Exception) { }
+            } catch(Exception) {
+                // ignored
+            }
             Directory.CreateDirectory(_tempPath);
 
             if(System.IO.File.Exists(Path.Combine(_path, "ImgurSniperArchive.zip"))) {
                 try {
                     System.IO.File.Delete(Path.Combine(_path, "ImgurSniperArchive.zip"));
-                } catch(Exception) { }
+                } catch(Exception) {
+                    // ignored
+                }
             }
 
             this.invoker = invoker;
@@ -54,6 +60,7 @@ namespace ImgurSniper.UI {
         }
 
         public void Install(object senderButton) {
+            KillTasks();
             RemoveOldFiles();
             Download(senderButton);
         }
@@ -121,6 +128,13 @@ namespace ImgurSniper.UI {
         }
 
 
+        private void KillTasks() {
+            List<Process> processes = new List<Process>(Process.GetProcesses().Where(p => p.ProcessName.Contains("ImgurSniper") && p != Process.GetCurrentProcess()));
+            foreach(Process p in processes) {
+                p.Kill();
+            }
+        }
+
         /// <summary>
         /// Remove all old ImgurSniper Files
         /// </summary>
@@ -128,14 +142,18 @@ namespace ImgurSniper.UI {
             foreach(string file in Directory.GetFiles(_path)) {
                 try {
                     System.IO.File.Delete(file);
-                } catch(Exception) { }
+                } catch(Exception) {
+                    // ignored
+                }
             }
 
             foreach(string directory in Directory.GetDirectories(_path)) {
                 try {
                     if(!directory.Contains("Temp"))
                         Directory.Delete(directory, true);
-                } catch(Exception) { }
+                } catch(Exception) {
+                    // ignored
+                }
             }
         }
 
@@ -208,10 +226,7 @@ namespace ImgurSniper.UI {
 
 
             try {
-                //Kill open instances if any
-                foreach(Process p in Process.GetProcessesByName("ImgurSniper")) {
-                    p.Kill();
-                }
+                KillTasks();
 
                 await Task.Delay(2500);
 
