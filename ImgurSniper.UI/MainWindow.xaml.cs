@@ -56,6 +56,9 @@ namespace ImgurSniper.UI {
 
             if(!Directory.Exists(_path)) {
                 Directory.CreateDirectory(_path);
+            }
+
+            if(!File.Exists(Path.Combine(_path, "ImgurSniper.exe"))) {
                 NewToImgur();
             }
 
