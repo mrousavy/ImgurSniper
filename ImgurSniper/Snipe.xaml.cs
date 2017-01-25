@@ -37,7 +37,7 @@ namespace ImgurSniper {
 
         private void Start() {
             string[] args = Environment.GetCommandLineArgs();
-            bool instantUpload = false, autostart = false;
+            bool autostart = false;
             string image = null;
 
             foreach(string arg in args) {
@@ -46,16 +46,13 @@ namespace ImgurSniper {
                     break;
                 }
 
-                if(arg.ToLower().Contains("upload"))
-                    instantUpload = true;
-
                 if(File.Exists(arg))
                     image = arg;
             }
 
             if(autostart) {
                 InitializeTray();
-            } else if(instantUpload && image != null) {
+            } else if(image != null) {
                 InstantUpload(image);
             } else {
                 Crop(true, false);
@@ -306,7 +303,8 @@ namespace ImgurSniper {
         //Close Window with short delay
         private async void DelayedClose(int Delay) {
             await Task.Delay(TimeSpan.FromMilliseconds(Delay));
-            this.Close();
+            //this.Close();
+            System.Windows.Application.Current.Shutdown(0);
         }
 
         //Play the Blop Success Sound

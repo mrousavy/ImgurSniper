@@ -214,7 +214,6 @@ namespace ImgurSniper.UI {
             }
         }
 
-
         private void SaveImgs_Checkbox(object sender, RoutedEventArgs e) {
             CheckBox box = sender as CheckBox;
             if(box != null) {
@@ -252,6 +251,25 @@ namespace ImgurSniper.UI {
             if(box != null) {
                 try {
                     FileIO.SaveConfig(FileIO.ConfigType.RunOnBoot, box.IsChecked.ToString());
+
+
+                    //Run proecess if not running
+                    try {
+                        if(RunOnBoot.IsChecked == true) {
+                            if(Process.GetProcessesByName("ImgurSniper").Length < 1) {
+                                Process start = new Process {
+                                    StartInfo = {
+                                FileName = _path + "\\ImgurSniper.exe",
+                                Arguments = " -autostart"
+                            }
+                                };
+                                start.Start();
+                            }
+                        }
+                    } catch(Exception) {
+                        error_toast.Show("ImgurSniper Tray Service is not running!", TimeSpan.FromSeconds(2));
+                    }
+
 
                     helper.Autostart(box.IsChecked);
                 } catch(Exception) { }

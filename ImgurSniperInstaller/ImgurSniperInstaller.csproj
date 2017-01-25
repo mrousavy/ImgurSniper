@@ -81,7 +81,7 @@
     <None Include="App.config" />
     <None Include="app.manifest" />
     <None Include="mrousavy.pfx" />
-    <None Include="Resources\ImgurSniper.UI.zip" />
+    <Resource Include="Resources\ImgurSniper.UI.zip" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
