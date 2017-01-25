@@ -37,7 +37,7 @@ namespace ImgurSniper {
 
         private void Start() {
             string[] args = Environment.GetCommandLineArgs();
-            bool autostart = false;
+            bool upload = false, autostart = false;
             string image = null;
 
             foreach(string arg in args) {
@@ -46,13 +46,16 @@ namespace ImgurSniper {
                     break;
                 }
 
+                if(arg.ToLower().Contains("upload"))
+                    upload = true;
+
                 if(File.Exists(arg))
                     image = arg;
             }
 
             if(autostart) {
                 InitializeTray();
-            } else if(image != null) {
+            } else if(upload && image != null) {
                 InstantUpload(image);
             } else {
                 Crop(true, false);
