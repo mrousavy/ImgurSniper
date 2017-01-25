@@ -179,8 +179,7 @@ namespace ImgurSniper {
             ScreenshotWindow window = new ScreenshotWindow(FileIO.AllMonitors, FocusNewWindow);
             window.ShowDialog();
 
-            //this.Visibility = Visibility.Visible;
-            //this.Topmost = true;
+            this.Visibility = Visibility.Visible;
 
             if(window.DialogResult == true) {
 
@@ -233,10 +232,14 @@ namespace ImgurSniper {
                 }
             }
 
-            if(CloseOnFinish)
-                DelayedClose(0);
-            else
-                this.Visibility = Visibility.Collapsed;
+            try {
+                if(CloseOnFinish)
+                    DelayedClose(0);
+                else
+                    this.Visibility = Visibility.Collapsed;
+            } catch(Exception) {
+                System.Windows.Application.Current.Shutdown();
+            }
         }
 
         //Upload byte[] to imgur and give user a response
@@ -247,14 +250,20 @@ namespace ImgurSniper {
                 Clipboard.SetText(link);
                 PlayBlop();
 
-                if(FileIO.OpenAfterUpload)
-                    Process.Start(link);
+                //Catch internal toast exceptions & process start exception
+                try {
+                    if(FileIO.OpenAfterUpload)
+                        Process.Start(link);
 
-                await SuccessToast.ShowAsync("Link to Imgur copied to Clipboard!",
-                    TimeSpan.FromSeconds(5));
+                    await SuccessToast.ShowAsync("Link to Imgur copied to Clipboard!",
+                        TimeSpan.FromSeconds(5));
+                } catch(Exception) { }
             } else {
-                await ErrorToast.ShowAsync($"Error uploading Image to Imgur! ({link})",
+                //Catch internal toast exceptions
+                try {
+                    await ErrorToast.ShowAsync($"Error uploading Image to Imgur! ({link})",
                     TimeSpan.FromSeconds(5));
+                } catch(Exception) { }
             }
         }
 
