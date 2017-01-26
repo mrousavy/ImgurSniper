@@ -178,6 +178,7 @@ namespace ImgurSniper {
 
             this.Visibility = Visibility.Visible;
             this.BringIntoView();
+            this.TopMost = true;
 
             ScreenshotWindow window = new ScreenshotWindow(FileIO.AllMonitors, FocusNewWindow);
             window.ShowDialog();
