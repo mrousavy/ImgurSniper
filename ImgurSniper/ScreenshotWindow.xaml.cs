@@ -45,6 +45,7 @@ namespace ImgurSniper {
 
             this.Loaded += async delegate {
                 this.CaptureMouse();
+                this.Topmost = true;
 
                 if(Focus) {
                     this.Activate();
