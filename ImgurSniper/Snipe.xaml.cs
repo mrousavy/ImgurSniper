@@ -63,7 +63,7 @@ namespace ImgurSniper {
         }
 
         private void InitializeTray() {
-            this.Visibility = Visibility.Collapsed;
+            this.Visibility = Visibility.Hidden;
 
             Key sKey = FileIO.ShortcutKey;
             bool usePrint = FileIO.UsePrint;
@@ -176,10 +176,11 @@ namespace ImgurSniper {
         private async void Crop(bool CloseOnFinish, bool FocusNewWindow) {
             string[] lines = FileIO.ReadConfig();
 
+            this.Visibility = Visibility.Visible;
+            this.BringIntoView();
+
             ScreenshotWindow window = new ScreenshotWindow(FileIO.AllMonitors, FocusNewWindow);
             window.ShowDialog();
-
-            this.Visibility = Visibility.Visible;
 
             if(window.DialogResult == true) {
 
@@ -236,7 +237,7 @@ namespace ImgurSniper {
                 if(CloseOnFinish)
                     DelayedClose(0);
                 else
-                    this.Visibility = Visibility.Collapsed;
+                    this.Visibility = Visibility.Hidden;
             } catch(Exception) {
                 System.Windows.Application.Current.Shutdown();
             }

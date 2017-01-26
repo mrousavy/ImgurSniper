@@ -43,7 +43,6 @@ namespace ImgurSniper {
             Position(AllMonitors);
             LoadConfig();
 
-
             this.Loaded += async delegate {
                 this.CaptureMouse();
 
