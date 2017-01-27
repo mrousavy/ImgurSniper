@@ -59,7 +59,7 @@ namespace ImgurSniper {
                     $"{WindowName}  -  (Uploaded with ImgurSniper)";
                 image = await endpoint.UploadImageStreamAsync(stream, null,
                     title,
-                    "https://mrousavy.github.io/ImgurSniper/");
+                    "https://mrousavy.github.io/ImgurSniper");
             }
             return image.Link;
         }

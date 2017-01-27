@@ -25,7 +25,6 @@ namespace ImgurSniper {
                 }
             }
         }
-
         //Value whether ImgurSniper should strech over all screens or not
         public static bool AllMonitors {
             get {
@@ -48,7 +47,6 @@ namespace ImgurSniper {
                 }
             }
         }
-
         //Value whether ImgurSniper should use PNG Image Format
         public static bool UsePNG {
             get {
@@ -71,8 +69,7 @@ namespace ImgurSniper {
                 }
             }
         }
-
-        //Value whether ImgurSniper should open the uploaded Image after successfully uploading
+        //Value whether ImgurSniper should open the uploaded Image in Browser after upload
         public static bool OpenAfterUpload {
             get {
                 try {
@@ -129,6 +126,86 @@ namespace ImgurSniper {
                 }
             }
         }
+        //The Path where images should be saved (if enabled)
+        public static string SaveImagesPath {
+            get {
+                try {
+                    string[] lines = FileIO.ReadConfig();
+                    foreach(string line in lines) {
+                        string[] config = line.Split(';');
+
+                        if(config[0] == "Path") {
+                            return config[1];
+                        }
+                    }
+
+                    return "";
+                } catch(Exception) {
+                    return "";
+                }
+            }
+        }
+        //Value wether Images should be saved or not
+        public static bool SaveImages {
+            get {
+                try {
+                    string[] lines = FileIO.ReadConfig();
+                    foreach(string line in lines) {
+                        string[] config = line.Split(';');
+
+                        if(config[0] == "SaveImages") {
+                            return bool.Parse(config[1]);
+                        }
+                    }
+
+                    return false;
+                } catch(Exception) {
+                    return false;
+                }
+            }
+        }
+        //Value wether run ImgurSniper as a Background Task on Boot or not
+        public static bool RunOnBoot {
+            get {
+                try {
+                    string[] lines = FileIO.ReadConfig();
+                    foreach(string line in lines) {
+                        string[] config = line.Split(';');
+
+                        if(config[0] == "RunOnBoot") {
+                            return bool.Parse(config[1]);
+                        }
+                    }
+
+                    return true;
+                } catch(Exception) {
+                    return true;
+                }
+            }
+        }
+        //Value wether upload Images to Imgur or copy to Clipboard
+        public static bool ImgurOnUpload {
+            get {
+                try {
+                    string[] lines = FileIO.ReadConfig();
+                    foreach(string line in lines) {
+                        string[] config = line.Split(';');
+
+                        if(config[0] == "AfterSnipeAction") {
+                            if(config[1] == "Clipboard")
+                                return false;
+                            else
+                                return true;
+                        }
+                    }
+
+                    return true;
+                } catch(Exception) {
+                    return true;
+                }
+            }
+        }
+
 
         public static string _fileVersion {
             get {
@@ -145,8 +222,9 @@ namespace ImgurSniper {
         }
         public static string _programFiles {
             get {
-                string ProgramFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
-                return Path.Combine(ProgramFiles, "ImgurSniper");
+                //string ProgramFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+                //ProgramFiles = Path.Combine(ProgramFiles, "ImgurSniper");
+                return AppDomain.CurrentDomain.BaseDirectory;
             }
         }
         private static string _passPhrase {

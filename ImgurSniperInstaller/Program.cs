@@ -10,10 +10,11 @@ namespace ImgurSniperInstaller {
 
             bool error = false;
 
-            string ProgramFiles = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "ImgurSniper");
+            //string InstallDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "ImgurSniper");
+            string InstallDir = AppDomain.CurrentDomain.BaseDirectory;
 
-            if(!Directory.Exists(ProgramFiles))
-                Directory.CreateDirectory(ProgramFiles);
+            if(!Directory.Exists(InstallDir))
+                Directory.CreateDirectory(InstallDir);
 
             try {
                 foreach(string file in Directory.GetFiles(ProgramFiles)) {
