@@ -4,7 +4,7 @@ An alternative to Windows' built in _Snipping Tool_ with **auto Imgur Upload** o
 [![Code Triagers Badge](https://www.codetriage.com/mrousavy/imgursniper/badges/users.svg)](https://www.codetriage.com/mrousavy/imgursniper)
 
 # Downloads
-### [⇩ Imgur Sniper v1.0.2.9 (3.066 KB) (Full Setup) (Recommended)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperInstaller.exe?raw=true)
+### [⇩ Imgur Sniper v1.0.2.9 (3.066 KB) (Full Setup) (Recommended)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperSetup.zip?raw=true)
 
 #### [⇩ Imgur Sniper v1.0.2.9 (2.322 KB) (UI Version) (Archive)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.UI.zip?raw=true)
 
