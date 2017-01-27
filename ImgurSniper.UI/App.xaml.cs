@@ -10,7 +10,7 @@ namespace ImgurSniper.UI {
 
         public App() : base() {
             this.DispatcherUnhandledException += (object sender, DispatcherUnhandledExceptionEventArgs e) => {
-                if(MessageBox.Show($"An unknown Error occured in ImgurSniper.UI!\nImgurSniper has to shut down!\n\n({e.Exception.Message})",
+                if(MessageBox.Show($"An unknown Error occured in ImgurSniper.UI!\nImgurSniper has to shut down!\nWould you like to see a detailed Exception Info?\n\n({e.Exception.Message})",
                     "ImgurSniper Error",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Error) == MessageBoxResult.Yes) {
