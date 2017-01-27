@@ -4,11 +4,11 @@ An alternative to Windows' built in _Snipping Tool_ with **auto Imgur Upload** o
 [![Code Triagers Badge](https://www.codetriage.com/mrousavy/imgursniper/badges/users.svg)](https://www.codetriage.com/mrousavy/imgursniper)
 
 # Downloads
-### [⇩ Imgur Sniper v1.0.2.8 (5.013 KB) (UI Version) (Extractor) (Recommended)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperInstaller.exe?raw=true)
+### [⇩ Imgur Sniper v1.0.2.9 (3.066 KB) (Full Setup) (Recommended)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperInstaller.exe?raw=true)
 
-#### [⇩ Imgur Sniper v1.0.2.8 (2.321 KB) (UI Version) (Archive)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.UI.zip?raw=true)
+#### [⇩ Imgur Sniper v1.0.2.9 (2.322 KB) (UI Version) (Archive)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.UI.zip?raw=true)
 
-#### [⇩ Imgur Sniper v1.0.2.8 (673 KB) (Instant Snipe)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.zip?raw=true)
+#### [⇩ Imgur Sniper v1.0.2.9 (675 KB) (Instant Snipe)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.zip?raw=true)
 
 #### [View all Releases](https://github.com/mrousavy/ImgurSniper/releases)
 
