@@ -9,9 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImgurSniper.UI", "ImgurSnip
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cleanup", "Cleanup\Cleanup.csproj", "{98225C44-F760-4A53-AB5C-062875AF7D1F}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ImgurSniperSetup", "ImgurSniperSetup\ImgurSniperSetup.vdproj", "{7C288FE6-D7F7-463C-B29C-57DA9145D922}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddToContextMenu", "AddToContextMenu\AddToContextMenu.csproj", "{82FEAF8B-BEB8-4C5A-B694-D0B708844843}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ImgurSniperSetup", "ImgurSniperSetup\ImgurSniperSetup.vdproj", "{B012628C-2D4D-48A0-A760-70AD715AA1BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,12 +31,12 @@ Global
 		{98225C44-F760-4A53-AB5C-062875AF7D1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98225C44-F760-4A53-AB5C-062875AF7D1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98225C44-F760-4A53-AB5C-062875AF7D1F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7C288FE6-D7F7-463C-B29C-57DA9145D922}.Debug|Any CPU.ActiveCfg = Debug
-		{7C288FE6-D7F7-463C-B29C-57DA9145D922}.Release|Any CPU.ActiveCfg = Release
 		{82FEAF8B-BEB8-4C5A-B694-D0B708844843}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{82FEAF8B-BEB8-4C5A-B694-D0B708844843}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82FEAF8B-BEB8-4C5A-B694-D0B708844843}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82FEAF8B-BEB8-4C5A-B694-D0B708844843}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B012628C-2D4D-48A0-A760-70AD715AA1BC}.Debug|Any CPU.ActiveCfg = Debug
+		{B012628C-2D4D-48A0-A760-70AD715AA1BC}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

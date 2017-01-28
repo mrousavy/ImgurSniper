@@ -162,14 +162,18 @@ namespace ImgurSniper.UI {
         //}
 
         public void Autostart(bool? boxIsChecked) {
-            string path = Path.Combine(_path, "ImgurSniper.exe -autostart");
+            try {
+                string path = Path.Combine(_path, "ImgurSniper.exe -autostart");
 
-            using(RegistryKey baseKey = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run")) {
-                if(boxIsChecked == true) {
-                    baseKey.SetValue("ImgurSniper", path);
-                } else {
-                    baseKey.DeleteValue("ImgurSniper");
+                using(RegistryKey baseKey = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run")) {
+                    if(boxIsChecked == true) {
+                        baseKey.SetValue("ImgurSniper", path);
+                    } else {
+                        baseKey.DeleteValue("ImgurSniper");
+                    }
                 }
+            } catch(Exception) {
+                //Not authorized
             }
         }
 

@@ -87,7 +87,7 @@ namespace ImgurSniper.UI {
                 bool ImgurAfterSnipe = FileIO.ImgurAfterSnipe;
 
                 //Path to Saved Images
-                PathBox.Text = string.IsNullOrWhiteSpace(SaveImagesPath) ? SaveImagesPath : _docPath;
+                PathBox.Text = string.IsNullOrWhiteSpace(SaveImagesPath) ? _docPath : SaveImagesPath;
 
                 //PNG or JPEG
                 if(UsePNG)
@@ -102,7 +102,7 @@ namespace ImgurSniper.UI {
                     CurrentMonitorRadio.IsChecked = true;
 
                 //Open Image in Browser after upload
-                OpenAfterUploadBox.IsChecked = AllMonitors;
+                OpenAfterUploadBox.IsChecked = OpenAfterUpload;
 
                 //Use Print Key instead of default Shortcut
                 PrintKeyBox.IsChecked = UsePrint;
