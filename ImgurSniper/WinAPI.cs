@@ -35,6 +35,9 @@ namespace ImgurSniper {
         }
 
 
+        [DllImport("user32.dll")]
+        public static extern int GetSystemMetrics(SystemMetric smIndex);
+
         /// <summary>
         /// Helper class containing Gdi32 API functions
         /// </summary>

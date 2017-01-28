@@ -51,19 +51,16 @@ namespace ImgurSniper {
         public static bool UsePNG {
             get {
                 try {
-                    bool png = false;
-
                     string[] lines = FileIO.ReadConfig();
                     foreach(string line in lines) {
                         string[] config = line.Split(';');
 
                         if(config[0] == "ImageFormat") {
-                            png = config[1] == "PNG";
-                            break;
+                            return config[1] == "PNG";
                         }
                     }
 
-                    return png;
+                    return false;
                 } catch(Exception) {
                     return false;
                 }

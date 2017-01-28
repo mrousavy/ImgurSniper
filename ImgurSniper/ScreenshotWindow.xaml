@@ -7,13 +7,12 @@
         xmlns:local="clr-namespace:ImgurSniper" Cursor="Cross" Topmost="True" Background="Transparent"
         ShowActivated="False" Focusable="False"
         mc:Ignorable="d" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize"
-        Title="Snipe a Screenshot!" Height="100" Width="100" WindowStartupLocation="Manual"
+        Title="Snipe a Screenshot!" WindowStartupLocation="Manual"
         MouseDown="StartDrawing" MouseUp="ReleaseRectangle" MouseMove="DrawRectangle">
     <Grid>
         <Grid x:Name="grid">
             <Border x:Name="selectionRectangle" Margin="9999"
-                BorderBrush="DarkGray" BorderThickness="1"
-                    >
+                BorderBrush="DarkGray" BorderThickness="1">
                 <Rectangle Fill="Gray" Opacity="0.3"/>
             </Border>
 
@@ -46,9 +45,7 @@
                     <Label FontSize="25" Opacity="0.8" VerticalAlignment="Center" HorizontalAlignment="Center">✛</Label>
                 </Grid>
 
-
                 <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="MagnifyedImage"/>
-
             </Grid>
         </Grid>
 
@@ -63,5 +60,5 @@
             Background="#F44336"
             FontSize="13"
             Visibility="Collapsed"/>
-        </Grid>
+    </Grid>
 </Window>

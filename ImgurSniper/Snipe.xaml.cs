@@ -169,7 +169,7 @@ namespace ImgurSniper {
         private void Position() {
             this.Top = SystemParameters.WorkArea.Height - this.Height;
             this.Width = SystemParameters.WorkArea.Width;
-            this.Left = System.Windows.Forms.Screen.PrimaryScreen.Bounds.X;
+            this.Left = Screen.PrimaryScreen.Bounds.X;
         }
 
         //Make Screenshot, Let user Crop, Upload Picture and Copy Link to Clipboard
@@ -224,6 +224,8 @@ namespace ImgurSniper {
                         await UploadImageToImgur(cimg, window.HwndName);
                     } else {
                         CopyImageToClipboard(cimg);
+
+                        SuccessToast.Show($"Image was copied to your Clipboard!", TimeSpan.FromDays(10));
                     }
 
                 } catch(Exception ex) {

@@ -16,7 +16,7 @@ namespace ImgurSniper {
     public partial class ScreenshotWindow : Window {
 
         //Size of current Mouse Location screen
-        public static System.Drawing.Rectangle screen {
+        public static Rectangle screen {
             get {
                 System.Windows.Forms.Screen screen = System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position);
                 return screen.Bounds;
@@ -24,7 +24,7 @@ namespace ImgurSniper {
         }
 
         //Size of whole Screen Array
-        public static System.Drawing.Rectangle allScreens => System.Windows.Forms.SystemInformation.VirtualScreen;
+        public static Rectangle allScreens => System.Windows.Forms.SystemInformation.VirtualScreen;
 
         public byte[] CroppedImage;
         public Point from, to;
@@ -78,8 +78,8 @@ namespace ImgurSniper {
 
             this.Left = size.Left;
             this.Top = size.Top;
-            this.Height = size.Height;
-            this.Width = size.Width;
+            //this.Width = size.Width;
+            //this.Height = size.Height;
         }
 
         //Load from config File (ImgurSniper.UI)
@@ -95,7 +95,8 @@ namespace ImgurSniper {
         //MouseDown Event
         private void StartDrawing(object sender, MouseButtonEventArgs e) {
             if(e.ChangedButton == MouseButton.Right) {
-                RightClick(e.GetPosition(this));
+                //!!Not yet fully implemented
+                //RightClick(e.GetPosition(this));
             } else if(e.ChangedButton == MouseButton.Left) {
                 //Lock the from Point to the Mouse Position when started holding Mouse Button
                 from = e.GetPosition(this);
@@ -161,38 +162,31 @@ namespace ImgurSniper {
         //Mouse Move event
         private void DrawRectangle(object sender, MouseEventArgs e) {
             _drag = e.LeftButton == MouseButtonState.Pressed;
-            Point pos = e.GetPosition(this);
 
             //this.Activate();
 
-            if(_enableMagnifyer)
-                Magnifier(pos);
+            //if(_enableMagnifyer)
+            //    Magnifier(pos);
 
             //Draw Rectangle
-            try {
-                if(_drag) {
-                    //Set Crop Rectangle to Mouse Position
-                    to = pos;
+            if(_drag) {
+                //Set Crop Rectangle to Mouse Position
+                to = e.GetPosition(this);
 
-                    //Width (w) and Height (h) of dragged Rectangle
-                    double w = Math.Abs(from.X - to.X);
-                    double h = Math.Abs(from.Y - to.Y);
-                    double left = Math.Min(from.X, to.X);
-                    double top = Math.Min(from.Y, to.Y);
-                    double right = this.Width - left - w;
-                    double bottom = this.Height - top - h;
+                //Width (w) and Height (h) of dragged Rectangle
+                double w = Math.Abs(from.X - to.X);
+                double h = Math.Abs(from.Y - to.Y);
+                double left = Math.Min(from.X, to.X);
+                double top = Math.Min(from.Y, to.Y);
+                double right = this.Width - left - w;
+                double bottom = this.Height - top - h;
 
-                    selectionRectangle.Margin = new Thickness(left, top, right, bottom);
-                }
-            } catch(Exception ex) {
-                toast.Show(
-                    $"An error occured! (Show this to the smart Computer Apes: \"{ex.Message}\")",
-                    TimeSpan.FromSeconds(3.3));
+                selectionRectangle.Margin = new Thickness(left, top, right, bottom);
             }
 
-            //Window Cords Display (Disabled for Performance reasons
+            //Window Cords Display (Disabled for Performance reasons)
             //this.coords.Content =
-            //    string.Format("x:{0} | y:{1}", (int)pos.X, (int)pos.Y);
+            //    $"x:{(int)pos.X} | y:{(int)pos.Y}";
         }
 
         //Finish drawing Rectangle
@@ -328,6 +322,5 @@ namespace ImgurSniper {
             to = new Point(this.Width, this.Height);
             FinishRectangle();
         }
-
     }
 }
