@@ -78,8 +78,8 @@ namespace ImgurSniper {
 
             this.Left = size.Left;
             this.Top = size.Top;
-            //this.Width = size.Width;
-            //this.Height = size.Height;
+            this.Width = size.Width;
+            this.Height = size.Height;
         }
 
         //Load from config File (ImgurSniper.UI)
@@ -96,42 +96,45 @@ namespace ImgurSniper {
         private void StartDrawing(object sender, MouseButtonEventArgs e) {
             if(e.ChangedButton == MouseButton.Right) {
                 //!!Not yet fully implemented
-                //RightClick(e.GetPosition(this));
+                RightClick();
             } else if(e.ChangedButton == MouseButton.Left) {
                 //Lock the from Point to the Mouse Position when started holding Mouse Button
                 from = e.GetPosition(this);
             }
         }
 
-        private WinAPI.User32.RECT GetHwndFromCursor(IntPtr ptr) {
-            if(ptr == IntPtr.Zero)
-                throw new Exception();
-
-            //Get Size of Window under Mouse Cursor
-            WinAPI.User32.RECT WindowSize = new WinAPI.User32.RECT();
-            WinAPI.User32.GetWindowRect(ptr, ref WindowSize);
+        private Rectangle GetRectFromHandle(IntPtr whandle) {
+            Rectangle WindowSize;
+            WindowSize = WinAPI.GetWindowRectangle(whandle);
 
             return WindowSize;
         }
 
-        private void RightClick(Point CursorPos) {
+        //Perform Right click -> Screenshot Window on cursor pos
+        private void RightClick() {
             this.Cursor = Cursors.Hand;
 
             DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
 
             anim.Completed += async delegate {
-                grid.Opacity = 0;
-                //For render complete
-                await Task.Delay(50);
+                this.Topmost = false;
+                this.Opacity = 0;
 
-                System.Drawing.Point point = new System.Drawing.Point((int)CursorPos.X, (int)CursorPos.Y);
-                //Get Window from Mouse Cursor Pos
-                IntPtr ptr = WinAPI.User32.WindowFromPoint(point);
-                WinAPI.User32.RECT hwnd = GetHwndFromCursor(ptr);
+                //For render complete
+                await Task.Delay(250);
+
+                WinAPI.POINT point;
+                WinAPI.User32.GetCursorPos(out point);
+                IntPtr whandle = WinAPI.User32.WindowFromPoint(point);
+
+                WinAPI.User32.SetForegroundWindow(whandle);
+                WinAPI.User32.SetActiveWindow(whandle);
+
+                Rectangle hwnd = GetRectFromHandle(whandle);
 
                 const int nChars = 256;
                 StringBuilder buff = new StringBuilder(nChars);
-                if(WinAPI.User32.GetWindowText(ptr, buff, nChars) > 0) {
+                if(WinAPI.User32.GetWindowText(whandle, buff, nChars) > 0) {
                     HwndName = buff.ToString();
                 }
 
@@ -186,7 +189,7 @@ namespace ImgurSniper {
 
             //Window Cords Display (Disabled for Performance reasons)
             //this.coords.Content =
-            //    $"x:{(int)pos.X} | y:{(int)pos.Y}";
+            //    $"x:{(int)e.GetPosition(this).X} | y:{(int)e.GetPosition(this).Y}";
         }
 
         //Finish drawing Rectangle

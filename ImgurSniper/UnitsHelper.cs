@@ -6,13 +6,47 @@ namespace ImgurSniper {
 
         public static double DpiX {
             get {
+                Matrix transformToDevice;
+                using(var source = new HwndSource(new HwndSourceParameters()))
+                    transformToDevice = source.CompositionTarget.TransformToDevice;
+                double M11 = transformToDevice.M11;
 
+                double DpiX = M11 * 96;
+                return DpiX;
             }
         }
 
         public static double DpiY {
             get {
+                Matrix transformToDevice;
+                using(var source = new HwndSource(new HwndSourceParameters()))
+                    transformToDevice = source.CompositionTarget.TransformToDevice;
+                double M22 = transformToDevice.M22;
 
+                double DpiY = M22 * 96;
+                return DpiY;
+            }
+        }
+
+        public static double DpiXScale {
+            get {
+                Matrix transformToDevice;
+                using(var source = new HwndSource(new HwndSourceParameters()))
+                    transformToDevice = source.CompositionTarget.TransformToDevice;
+                double M11 = transformToDevice.M11;
+
+                return M11;
+            }
+        }
+
+        public static double DpiYScale {
+            get {
+                Matrix transformToDevice;
+                using(var source = new HwndSource(new HwndSourceParameters()))
+                    transformToDevice = source.CompositionTarget.TransformToDevice;
+                double M22 = transformToDevice.M22;
+
+                return M22;
             }
         }
 
@@ -33,7 +67,7 @@ namespace ImgurSniper {
 
             RECT PointsSize;
 
-            //72 and 96 are default values
+            //For 72 points per [dumb american unit] with default of 96 DPI
             PointsSize.Left = PixelSize.Left * 72 / DpiX;
             PointsSize.Top = PixelSize.Top * 72 / DpiY;
             PointsSize.Width = PixelSize.Width * 72 / DpiX;
@@ -59,7 +93,7 @@ namespace ImgurSniper {
 
             RECT PixelSize;
 
-            //72 and 96 are default values
+            //For 72 points per [dumb american unit] with default of 96 DPI
             PixelSize.Left = PointsSize.Left * DpiX / 72;
             PixelSize.Top = PointsSize.Top * DpiY / 72;
             PixelSize.Width = PointsSize.Width * DpiX / 72;
@@ -73,9 +107,10 @@ namespace ImgurSniper {
         /// </summary>
         /// <param name="UnscaledPointX">The unscaled Point (X)</param>
         /// <returns>The scaled Point (X)</returns>
-        public double ScaleX(double UnscaledPointX) {
+        public static double ScaleX(double UnscaledPointX) {
             double ScaledPointX = UnscaledPointX;
 
+            ScaledPointX = UnscaledPointX * DpiX / 72;
 
             return ScaledPointX;
         }
@@ -85,9 +120,10 @@ namespace ImgurSniper {
         /// </summary>
         /// <param name="UnscaledPointX">The unscaled Point (Y)</param>
         /// <returns>The scaled Point (Y)</returns>
-        public double ScaleY(double UnscaledPointY) {
-            double ScaledPointY = UnscaledPointX;
+        public static double ScaleY(double UnscaledPointY) {
+            double ScaledPointY = UnscaledPointY;
 
+            ScaledPointY = UnscaledPointY * DpiY / 72;
 
             return ScaledPointY;
         }

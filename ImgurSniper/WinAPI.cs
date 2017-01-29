@@ -5,44 +5,92 @@ using System.Text;
 
 namespace ImgurSniper {
     class WinAPI {
-        public static Image CaptureWindow(IntPtr handle) {
-            // get te hDC of the target window
-            IntPtr hdcSrc = User32.GetWindowDC(handle);
-            // get the size
-            User32.RECT windowRect = new User32.RECT();
-            User32.GetWindowRect(handle, ref windowRect);
-            int width = windowRect.Right - windowRect.Left;
-            int height = windowRect.Bottom - windowRect.Top;
-            // create a device context we can copy to
-            IntPtr hdcDest = GDI32.CreateCompatibleDC(hdcSrc);
-            // create a bitmap we can copy it to,
-            // using GetDeviceCaps to get the width/height
-            IntPtr hBitmap = GDI32.CreateCompatibleBitmap(hdcSrc, width, height);
-            // select the bitmap object
-            IntPtr hOld = GDI32.SelectObject(hdcDest, hBitmap);
-            // bitblt over
-            GDI32.BitBlt(hdcDest, 0, 0, width, height, hdcSrc, 0, 0, GDI32.SRCCOPY);
-            // restore selection
-            GDI32.SelectObject(hdcDest, hOld);
-            // clean up 
-            GDI32.DeleteDC(hdcDest);
-            User32.ReleaseDC(handle, hdcSrc);
-            // get a .NET image object for it
-            Image img = Image.FromHbitmap(hBitmap);
-            // free up the Bitmap object
-            GDI32.DeleteObject(hBitmap);
-            return img;
+
+        public static Rectangle GetWindowRectangle(IntPtr handle) {
+            Rectangle rect = Rectangle.Empty;
+
+            if(IsDWMEnabled()) {
+                Rectangle tempRect;
+
+                if(GetExtendedFrameBounds(handle, out tempRect)) {
+                    rect = tempRect;
+                }
+            }
+
+            if(rect.IsEmpty) {
+                rect = GetWindowRect(handle);
+            }
+
+            if(Environment.OSVersion.Version.Major < 10 && User32.IsZoomed(handle)) {
+                rect = MaximizedWindowFix(handle, rect);
+            }
+
+            return rect;
         }
 
+        public static Rectangle MaximizedWindowFix(IntPtr handle, Rectangle windowRect) {
+            Size size;
 
-        [DllImport("user32.dll")]
-        public static extern int GetSystemMetrics(SystemMetric smIndex);
+            if(GetBorderSize(handle, out size)) {
+                windowRect = new Rectangle(windowRect.X + size.Width, windowRect.Y + size.Height, windowRect.Width - (size.Width * 2), windowRect.Height - (size.Height * 2));
+            }
+
+            return windowRect;
+        }
+
+        public static bool IsDWMEnabled() {
+            return Environment.OSVersion.Version.Major >= 6 && dwmapi.DwmIsCompositionEnabled();
+        }
+
+        public static Rectangle GetWindowRect(IntPtr handle) {
+            RECT rect;
+            User32.GetWindowRect(handle, out rect);
+            return rect;
+        }
+
+        public static bool GetExtendedFrameBounds(IntPtr handle, out Rectangle rectangle) {
+            RECT rect;
+            int result = dwmapi.DwmGetWindowAttribute(handle, (int)DwmWindowAttribute.ExtendedFrameBounds, out rect, Marshal.SizeOf(typeof(RECT)));
+            rectangle = rect;
+            return result == 0;
+        }
+
+        public static bool GetBorderSize(IntPtr handle, out Size size) {
+            WINDOWINFO wi = new WINDOWINFO();
+
+            bool result = User32.GetWindowInfo(handle, ref wi);
+
+            if(result) {
+                size = new Size((int)wi.cxWindowBorders, (int)wi.cyWindowBorders);
+            } else {
+                size = Size.Empty;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Helper class containing dwmapi API functions
+        /// </summary>
+        public static class dwmapi {
+            [DllImport("dwmapi.dll")]
+            public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out RECT pvAttribute, int cbAttribute);
+
+            [DllImport("dwmapi.dll")]
+            public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out bool pvAttribute, int cbAttribute);
+
+            [DllImport("dwmapi.dll")]
+            public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out int pvAttribute, int cbAttribute);
+
+
+            [DllImport("dwmapi.dll", PreserveSig = false)]
+            public static extern bool DwmIsCompositionEnabled();
+        }
 
         /// <summary>
         /// Helper class containing Gdi32 API functions
         /// </summary>
-        public class GDI32 {
-
+        public static class GDI32 {
             public const int SRCCOPY = 0x00CC0020; // BitBlt dwRop parameter
             [DllImport("gdi32.dll")]
             public static extern bool BitBlt(IntPtr hObject, int nXDest, int nYDest,
@@ -64,30 +112,208 @@ namespace ImgurSniper {
         /// <summary>
         /// Helper class containing User32 API functions
         /// </summary>
-        public class User32 {
-            [StructLayout(LayoutKind.Sequential)]
-            public struct RECT {
-                public int Left;
-                public int Top;
-                public int Right;
-                public int Bottom;
-            }
+        public static class User32 {
+            [DllImport("user32.dll")]
+            public static extern IntPtr GetWindow(IntPtr hWnd, GetWindowConstants wCmd);
+
+            [DllImport("user32.dll")]
+            public static extern IntPtr SetActiveWindow(IntPtr hWnd);
+
+            [DllImport("user32.dll")]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+            [DllImport("user32.dll")]
+            public static extern bool BringWindowToTop(IntPtr hWnd);
+
+            [DllImport("user32.dll")]
+            public static extern IntPtr WindowFromPoint(POINT point);
+
+            [DllImport("user32.dll")]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool GetWindowInfo(IntPtr hwnd, ref WINDOWINFO pwi);
+
+            [DllImport("user32.dll")]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool IsZoomed(IntPtr hWnd);
+
+            [DllImport("user32.dll")]
+            public static extern int GetSystemMetrics(SystemMetric smIndex);
+
+            [DllImport("user32.dll")]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool GetCursorPos(out POINT lpPoint);
+
             [DllImport("user32.dll")]
             public static extern IntPtr GetDesktopWindow();
+
             [DllImport("user32.dll")]
             public static extern IntPtr GetWindowDC(IntPtr hWnd);
+
             [DllImport("user32.dll")]
             public static extern IntPtr ReleaseDC(IntPtr hWnd, IntPtr hDC);
+
             [DllImport("user32.dll")]
-            public static extern IntPtr GetWindowRect(IntPtr hWnd, ref RECT rect);
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+
             [DllImport("user32.dll")]
             public static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, out uint ProcessId);
 
             [DllImport("user32.dll")]
             public static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
-
-            [DllImport("user32.dll")]
-            public static extern IntPtr WindowFromPoint(System.Drawing.Point p);
         }
+
+        #region Custom Definitions
+        public enum GetWindowConstants : uint {
+            GW_HWNDFIRST = 0,
+            GW_HWNDLAST = 1,
+            GW_HWNDNEXT = 2,
+            GW_HWNDPREV = 3,
+            GW_OWNER = 4,
+            GW_CHILD = 5,
+            GW_ENABLEDPOPUP = 6,
+            GW_MAX = 6
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct WINDOWINFO {
+            public uint cbSize;
+            public RECT rcWindow;
+            public RECT rcClient;
+            public uint dwStyle;
+            public uint dwExStyle;
+            public uint dwWindowStatus;
+            public uint cxWindowBorders;
+            public uint cyWindowBorders;
+            public ushort atomWindowType;
+            public ushort wCreatorVersion;
+
+            public WINDOWINFO(bool? filler) : this() // Allows automatic initialization of "cbSize" with "new WINDOWINFO(null/true/false)".
+            {
+                cbSize = (uint)Marshal.SizeOf(typeof(WINDOWINFO));
+            }
+        }
+
+        [Flags]
+        public enum DwmWindowAttribute {
+            NCRenderingEnabled = 1,
+            NCRenderingPolicy,
+            TransitionsForceDisabled,
+            AllowNCPaint,
+            CaptionButtonBounds,
+            NonClientRtlLayout,
+            ForceIconicRepresentation,
+            Flip3DPolicy,
+            ExtendedFrameBounds,
+            HasIconicBitmap,
+            DisallowPeek,
+            ExcludedFromPeek,
+            Cloak,
+            Cloaked,
+            FreezeRepresentation,
+            Last
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct RECT {
+            public int Left, Top, Right, Bottom;
+
+            public RECT(int left, int top, int right, int bottom) {
+                Left = left;
+                Top = top;
+                Right = right;
+                Bottom = bottom;
+            }
+
+            public RECT(Rectangle r) : this(r.Left, r.Top, r.Right, r.Bottom) {
+            }
+
+            public int X {
+                get { return Left; }
+                set { Right -= Left - value; Left = value; }
+            }
+
+            public int Y {
+                get { return Top; }
+                set { Bottom -= Top - value; Top = value; }
+            }
+
+            public int Width {
+                get { return Right - Left; }
+                set { Right = value + Left; }
+            }
+
+            public int Height {
+                get { return Bottom - Top; }
+                set { Bottom = value + Top; }
+            }
+
+            public Point Location {
+                get { return new Point(Left, Top); }
+                set { X = value.X; Y = value.Y; }
+            }
+
+            public Size Size {
+                get { return new Size(Width, Height); }
+                set { Width = value.Width; Height = value.Height; }
+            }
+
+            public static implicit operator Rectangle(RECT r) {
+                return new Rectangle(r.Left, r.Top, r.Width, r.Height);
+            }
+
+            public static implicit operator RECT(Rectangle r) {
+                return new RECT(r);
+            }
+
+            public static bool operator ==(RECT r1, RECT r2) {
+                return r1.Equals(r2);
+            }
+
+            public static bool operator !=(RECT r1, RECT r2) {
+                return !r1.Equals(r2);
+            }
+
+            public bool Equals(RECT r) {
+                return r.Left == Left && r.Top == Top && r.Right == Right && r.Bottom == Bottom;
+            }
+
+            public override bool Equals(object obj) {
+                if(obj is RECT) {
+                    return Equals((RECT)obj);
+                }
+
+                if(obj is Rectangle) {
+                    return Equals(new RECT((Rectangle)obj));
+                }
+
+                return false;
+            }
+
+            public override int GetHashCode() {
+                return ((Rectangle)this).GetHashCode();
+            }
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct POINT {
+            public int X;
+            public int Y;
+
+            public POINT(int x, int y) {
+                X = x;
+                Y = y;
+            }
+
+            public static explicit operator Point(POINT p) {
+                return new Point(p.X, p.Y);
+            }
+
+            public static explicit operator POINT(Point p) {
+                return new POINT(p.X, p.Y);
+            }
+        }
+        #endregion
     }
 }

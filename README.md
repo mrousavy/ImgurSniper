@@ -1,65 +1,43 @@
 #<img src="https://github.com/mrousavy/ImgurSniper/raw/master/Images/Logo.png" width="42"> ImgurSniper
-An alternative to Windows' built in _Snipping Tool_ with **auto Imgur Upload** or **Image to Clipboard Copy** for even faster Image sharing.
+**ImgurSniper** is a small and lightweight tool that is designed to make **sharing Images** way **easier and faster** by instantly uploading them to [imgur](http://www.imgur.com)!
 
 [![Code Triagers Badge](https://www.codetriage.com/mrousavy/imgursniper/badges/users.svg)](https://www.codetriage.com/mrousavy/imgursniper)
 
 # Downloads
 ### [⇩ Imgur Sniper v1.0.2.9 (3.066 KB) (Full Setup) (Recommended)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperSetup.zip?raw=true)
 
-#### [⇩ Imgur Sniper v1.0.2.9 (2.322 KB) (UI Version) (Archive)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.UI.zip?raw=true)
-
-#### [⇩ Imgur Sniper v1.0.2.9 (675 KB) (Instant Snipe)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.zip?raw=true)
+#### [⇩ Imgur Sniper v1.0.2.9 (2.322 KB) (Archive)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.zip?raw=true)
 
 #### [View all Releases](https://github.com/mrousavy/ImgurSniper/releases)
 
 
 Icon by [jinga](http://jinga.at)
 
-# Description
-**ImgurSniper** is a small and lightweight tool that makes sharing Images way easier by instantly uploading them to imgur.com **or** copy them to your Clipboard.
-
 # How to use
-Imgur Sniper will automatically activate _Snap mode_ when you start the **ImgurSniper.exe** executable.
-You can also enter [UI Mode](https://github.com/mrousavy/ImgurSniper#imgursniper-ui) by starting the **ImgurSniper.UI.exe**, which will give you more options.
-The Screen will darken so you definetly will notice when _Snap mode_ is entered. To exit _Snap mode_, you have to press
-**[ESC]**.
+Press _Ctrl + Shift + X_ or _Print Screen_ (depending on your Preferences) to start **ImgurSniper** Snap Mode!
+**Easily capture and share a moment** by drawing a Rectangle with your _Mouse_ to automatically upload it to [Imgur](http://www.imgur.com)!
+You can now **share the Link** that has been **copied to your Clipboard** with everyone!
 
-In _Snap mode_ you are able to **draw/crop a Rectangle** which will crop the content once released and automatically upload it to Imgur or copy to your Clipboard.
-To quickly upload a **Screenshot from a Window**, just **right click the Window**.
-When successfully uploaded, you will get a notification once the **Link is copied to your Clipboard**.
+(To change the behavior of **ImgurSniper**, right-click the _Icon in your Tray_ and click **Settings**)
 
 <img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/Images/ImgurSniper_Demo.gif">
 
-**Side note:** You may experience _issues_ with Image uploads being _cut or not uploaded_,
-this is because of Imgur's File size limit for not logged in Users. You can easily fix this by _logging in_.
+# Features
 
-# ImgurSniper UI
-To have more overview or control over **ImgurSniper**, you can also install the ImgurSniper.UI version.
-
-With the UI Version you have access to some extra features:
-
-- Choose between **Automatically upload to Imgur** or **Copy Image to Clipboard**
-- Enable **Saving snapped Images locally** with a custom Save Path
+- **Draw a Rectangle** with your Mouse to make a Screenshot and **upload the cropped area to Imgur** or copy to **Clipboard**!
+- **Right-Click** a window in _Snap Mode_ to quickly share a **Screenshot of that Window**
+- Press **Ctrl + A** to make a Screenshot of **all connected Screens**!
+- Save snapped Images locally
 - **Log in to your Imgur Account** (By uploading to **your** _Imgur Account_, you can upload bigger Images and have them listed on your Profile.)
-- Enable a **Magnifying Glass** for precise cropping
+- (Not yet implemented) Try the **Magnifying Glass** for precise cropping
 - Open Image on Imgur in **Browser** after uploading
 - Automatically start **ImgurSniper** on PC startup
 - Open **ImgurSniper** with a click on the Tray Icon, or by pressing _Ctrl + Shift + X_ or _Print Screen_ (when Autostart is enabled)
-- Choose between launching **ImgurSniper** on _Current Screen_ or _All Screens at once_
-- Choose between uploading Images as **PNG Format** for higher quality, or **JPEG Format** for faster uploads
-- **Download** and **Install** the _newest ImgurSniper version_ (Will install to Program Files)
+- Launch **ImgurSniper** on the _Current Screen_ or _All Screens at once_
+- Upload your Images as **PNG Format** for higher quality, or **JPEG Format** for faster uploads
 - **Repair** ImgurSniper, in case you messed up the Config Files or it won't start anymore.
-- **Uninstall** (Completely remove ImgurSniper and every Configs)
-- **Create Shortcuts** to Desktop, Startmenu and Context Menu
-- **Launch ImgurSniper**
 	
+### Settings
 <img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/Images/ImgurSniper.UI.png">
-
-# Bugs
-### Windows Scaling
-**Disable the Windows Scaling feature if you have multiple Monitors**, as **ImgurSniper** is not yet fully DPI Optimized. I am trying to fix this...
-
-<img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/Images/WindowsScalingOption.png" width="400">
-
 
 ## Thanks for using Imgur Sniper! :)
