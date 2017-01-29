@@ -29,7 +29,7 @@ namespace ImgurSniper {
         public static bool AllMonitors {
             get {
                 try {
-                    bool all = false;
+                    bool all = true;
 
                     string[] lines = FileIO.ReadConfig();
                     foreach(string line in lines) {
