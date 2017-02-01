@@ -57,15 +57,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\english.Designer.cs">
+    <Compile Include="Properties\strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>english.resx</DependentUpon>
+      <DependentUpon>strings.resx</DependentUpon>
     </Compile>
-    <Compile Include="Properties\german.Designer.cs">
+    <Compile Include="Properties\strings.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>german.resx</DependentUpon>
+      <DependentUpon>strings.de.resx</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -76,13 +76,13 @@
     <None Include="mrousavy.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\english.resx">
+    <EmbeddedResource Include="Properties\strings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>english.Designer.cs</LastGenOutput>
+      <LastGenOutput>strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\german.resx">
+    <EmbeddedResource Include="Properties\strings.de.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>german.Designer.cs</LastGenOutput>
+      <LastGenOutput>strings.de.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

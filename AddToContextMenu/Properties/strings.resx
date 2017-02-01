@@ -118,9 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="addContextMenu" xml:space="preserve">
-    <value>ImgurSniper erfolgreich zum Kontextmenü hinzugefügt!</value>
+    <value>Successfully added ImgurSniper to Context Menu!</value>
   </data>
   <data name="errorContext" xml:space="preserve">
-    <value>\n\nFehler: Konnte nicht zum Kontextmenü hinzugefügt werden!</value>
+    <value>Error: Could not add to Context Menu</value>
   </data>
 </root>
