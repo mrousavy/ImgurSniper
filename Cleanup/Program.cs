@@ -9,13 +9,8 @@ using System.Linq;
 namespace Cleanup {
 
     class Program {
-        public static string _programFiles {
-            get {
-                //string ProgramFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
-                //ProgramFiles = Path.Combine(ProgramFiles, "ImgurSniper");
-                return AppDomain.CurrentDomain.BaseDirectory;
-            }
-        }
+        public static string _programFiles => AppDomain.CurrentDomain.BaseDirectory;
+
         private static string _docPath {
             get {
                 string value = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper");
@@ -33,7 +28,7 @@ namespace Cleanup {
                 string commonStartMenuPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu);
                 string shortcutLocation = Path.Combine(commonStartMenuPath, "ImgurSniper" + ".lnk");
                 System.IO.File.Delete(shortcutLocation);
-            } catch(Exception) { }
+            } catch { }
 
             //Remove Desktop Shortcut
             try {
@@ -41,15 +36,23 @@ namespace Cleanup {
                 WshShell shell = new WshShell();
                 string shortcutAddress = (string)shell.SpecialFolders.Item(ref shDesktop) + @"\Imgur Sniper.lnk";
                 System.IO.File.Delete(shortcutAddress);
-            } catch(Exception) { }
+            } catch { }
 
 
             try {
                 using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"image\shell")) {
                     baseKey.DeleteSubKeyTree("ImgurSniperUpload");
                 }
-            } catch(Exception) { }
+            } catch { }
 
+
+            try {
+                using(
+                    RegistryKey baseKey =
+                        Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run")) {
+                    baseKey.DeleteValue("ImgurSniper");
+                }
+            } catch { }
 
             try {
                 KillTasks();
@@ -60,14 +63,14 @@ namespace Cleanup {
                 foreach(string filesPrograms in Directory.GetFiles(_programFiles)) {
                     try {
                         System.IO.File.Delete(filesPrograms);
-                    } catch(Exception) {
+                    } catch {
                         notRemoved = true;
                     }
                 }
                 foreach(string filesDocuments in Directory.GetFiles(_docPath)) {
                     try {
                         System.IO.File.Delete(filesDocuments);
-                    } catch(Exception) {
+                    } catch {
                         notRemoved = true;
                     }
                 }
@@ -75,10 +78,10 @@ namespace Cleanup {
                 //Remove Directories
                 try {
                     Directory.Delete(_programFiles, true);
-                } catch(Exception) { }
+                } catch { }
                 try {
                     Directory.Delete(_docPath, true);
-                } catch(Exception) { }
+                } catch { }
 
 
                 if(notRemoved)
@@ -116,7 +119,7 @@ namespace Cleanup {
                     if(p.ProcessName != Process.GetCurrentProcess().ProcessName)
                         p.Kill();
                 }
-            } catch(Exception) { }
+            } catch { }
         }
     }
 }

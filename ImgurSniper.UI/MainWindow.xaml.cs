@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
@@ -10,12 +11,7 @@ namespace ImgurSniper.UI {
         public InstallerHelper helper;
 
         //Path to Program Files/ImgurSniper Folder
-        private string _path {
-            get {
-                //string value = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "ImgurSniper");
-                return AppDomain.CurrentDomain.BaseDirectory;
-            }
-        }
+        private string _path => AppDomain.CurrentDomain.BaseDirectory;
 
         //Path to Documents/ImgurSniper Folder
         private string _docPath {
@@ -124,7 +120,7 @@ namespace ImgurSniper.UI {
                     ImgurRadio.IsChecked = true;
                 else
                     ClipboardRadio.IsChecked = true;
-            } catch(Exception) { }
+            } catch { }
             #endregion
 
             //Run proecess if not running
@@ -140,7 +136,7 @@ namespace ImgurSniper.UI {
                         start.Start();
                     }
                 }
-            } catch(Exception) {
+            } catch {
                 error_toast.Show("ImgurSniper Tray Service is not running!", TimeSpan.FromSeconds(2));
             }
 
@@ -181,7 +177,7 @@ namespace ImgurSniper.UI {
             if(button != null) {
                 try {
                     FileIO.SaveConfig(FileIO.ConfigType.AfterSnipeAction, button.Tag as string);
-                } catch(Exception) { }
+                } catch { }
             }
         }
         private void MonitorsClick(object sender, RoutedEventArgs e) {
@@ -189,7 +185,7 @@ namespace ImgurSniper.UI {
             if(button != null) {
                 try {
                     FileIO.SaveConfig(FileIO.ConfigType.SnipeMonitor, button.Tag as string);
-                } catch(Exception) { }
+                } catch { }
             }
         }
         private void ImgFormatClick(object sender, RoutedEventArgs e) {
@@ -197,7 +193,7 @@ namespace ImgurSniper.UI {
             if(button != null) {
                 try {
                     FileIO.SaveConfig(FileIO.ConfigType.ImageFormat, button.Tag as string);
-                } catch(Exception) { }
+                } catch { }
             }
         }
         private void SaveImgs_Checkbox(object sender, RoutedEventArgs e) {
@@ -209,7 +205,7 @@ namespace ImgurSniper.UI {
                     if(box.IsChecked.HasValue) {
                         PathPanel.IsEnabled = (bool)box.IsChecked;
                     }
-                } catch(Exception) { }
+                } catch { }
             }
         }
         private void Magnifying_Checkbox(object sender, RoutedEventArgs e) {
@@ -217,7 +213,7 @@ namespace ImgurSniper.UI {
             if(box != null) {
                 try {
                     FileIO.SaveConfig(FileIO.ConfigType.Magnifyer, box.IsChecked.ToString());
-                } catch(Exception) { }
+                } catch { }
             }
         }
         private void OpenAfterUpload_Checkbox(object sender, RoutedEventArgs e) {
@@ -225,7 +221,7 @@ namespace ImgurSniper.UI {
             if(box != null) {
                 try {
                     FileIO.SaveConfig(FileIO.ConfigType.OpenAfterUpload, box.IsChecked.ToString());
-                } catch(Exception) { }
+                } catch { }
             }
         }
         private void RunOnBoot_Checkbox(object sender, RoutedEventArgs e) {
@@ -248,13 +244,13 @@ namespace ImgurSniper.UI {
                                 start.Start();
                             }
                         }
-                    } catch(Exception) {
+                    } catch {
                         error_toast.Show("ImgurSniper Tray Service is not running!", TimeSpan.FromSeconds(2));
                     }
 
 
                     helper.Autostart(box.IsChecked);
-                } catch(Exception) { }
+                } catch { }
             }
         }
         private void PrintKeyBox_Click(object sender, RoutedEventArgs e) {
@@ -262,14 +258,22 @@ namespace ImgurSniper.UI {
             if(box != null) {
                 try {
                     FileIO.SaveConfig(FileIO.ConfigType.UsePrint, box.IsChecked.ToString());
-                } catch(Exception) { }
+                } catch { }
             }
         }
-        private void Snipe(object sender, RoutedEventArgs e) {
+        private async void Snipe(object sender, RoutedEventArgs e) {
             string exe = Path.Combine(_path, "ImgurSniper.exe");
 
             if(File.Exists(exe)) {
-                Process.Start(exe);
+                Process snipeProc = new Process { StartInfo = new ProcessStartInfo(exe) };
+                snipeProc.Start();
+
+                this.Visibility = Visibility.Hidden;
+
+                await Task.Delay(500);
+                snipeProc.WaitForExit();
+
+                this.Visibility = Visibility.Visible;
             } else {
                 error_toast.Show("Error, ImgurSniper could not be found on your System!",
                     TimeSpan.FromSeconds(3));
@@ -308,7 +312,7 @@ namespace ImgurSniper.UI {
 
                 };
                 Btn_SignIn.BeginAnimation(Button.OpacityProperty, fadeBtnOut);
-            } catch(Exception) { }
+            } catch { }
         }
         private void SignOut(object sender, RoutedEventArgs e) {
             DoubleAnimation fadeBtnOut = _fadeOut;

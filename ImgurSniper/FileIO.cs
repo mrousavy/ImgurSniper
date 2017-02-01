@@ -20,7 +20,7 @@ namespace ImgurSniper {
                         }
                     }
                     return false;
-                } catch(Exception) {
+                } catch {
                     return false;
                 }
             }
@@ -42,7 +42,7 @@ namespace ImgurSniper {
                     }
 
                     return all;
-                } catch(Exception) {
+                } catch {
                     return false;
                 }
             }
@@ -61,7 +61,7 @@ namespace ImgurSniper {
                     }
 
                     return false;
-                } catch(Exception) {
+                } catch {
                     return false;
                 }
             }
@@ -80,7 +80,7 @@ namespace ImgurSniper {
                     }
 
                     return false;
-                } catch(Exception) {
+                } catch {
                     return false;
                 }
             }
@@ -99,7 +99,7 @@ namespace ImgurSniper {
                     }
 
                     return Key.X;
-                } catch(Exception) {
+                } catch {
                     return Key.X;
                 }
             }
@@ -118,7 +118,7 @@ namespace ImgurSniper {
                     }
 
                     return false;
-                } catch(Exception) {
+                } catch {
                     return false;
                 }
             }
@@ -137,7 +137,7 @@ namespace ImgurSniper {
                     }
 
                     return "";
-                } catch(Exception) {
+                } catch {
                     return "";
                 }
             }
@@ -156,7 +156,7 @@ namespace ImgurSniper {
                     }
 
                     return false;
-                } catch(Exception) {
+                } catch {
                     return false;
                 }
             }
@@ -175,7 +175,7 @@ namespace ImgurSniper {
                     }
 
                     return true;
-                } catch(Exception) {
+                } catch {
                     return true;
                 }
             }
@@ -197,7 +197,7 @@ namespace ImgurSniper {
                     }
 
                     return true;
-                } catch(Exception) {
+                } catch {
                     return true;
                 }
             }

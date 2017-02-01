@@ -1,7 +1,6 @@
 ﻿using Imgur.API.Authentication.Impl;
 using Imgur.API.Endpoints.Impl;
 using Imgur.API.Models;
-using System;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -39,7 +38,7 @@ namespace ImgurSniper {
                 IOAuth2Token token = await endpoint.GetTokenByRefreshTokenAsync(refreshToken);
 
                 _client.SetOAuth2Token(token);
-            } catch(Exception) {
+            } catch {
                 // ignored
             }
         }

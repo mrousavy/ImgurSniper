@@ -20,7 +20,7 @@ namespace ImgurSniper.UI {
                         }
                     }
                     return false;
-                } catch(Exception) {
+                } catch {
                     return false;
                 }
             }
@@ -42,7 +42,7 @@ namespace ImgurSniper.UI {
                     }
 
                     return all;
-                } catch(Exception) {
+                } catch {
                     return false;
                 }
             }
@@ -64,7 +64,7 @@ namespace ImgurSniper.UI {
                     }
 
                     return png;
-                } catch(Exception) {
+                } catch {
                     return false;
                 }
             }
@@ -83,7 +83,7 @@ namespace ImgurSniper.UI {
                     }
 
                     return false;
-                } catch(Exception) {
+                } catch {
                     return false;
                 }
             }
@@ -102,7 +102,7 @@ namespace ImgurSniper.UI {
                     }
 
                     return System.Windows.Input.Key.X;
-                } catch(Exception) {
+                } catch {
                     return System.Windows.Input.Key.X;
                 }
             }
@@ -121,7 +121,7 @@ namespace ImgurSniper.UI {
                     }
 
                     return false;
-                } catch(Exception) {
+                } catch {
                     return false;
                 }
             }
@@ -140,7 +140,7 @@ namespace ImgurSniper.UI {
                     }
 
                     return "";
-                } catch(Exception) {
+                } catch {
                     return "";
                 }
             }
@@ -159,7 +159,7 @@ namespace ImgurSniper.UI {
                     }
 
                     return false;
-                } catch(Exception) {
+                } catch {
                     return false;
                 }
             }
@@ -178,7 +178,7 @@ namespace ImgurSniper.UI {
                     }
 
                     return true;
-                } catch(Exception) {
+                } catch {
                     return true;
                 }
             }
@@ -200,7 +200,7 @@ namespace ImgurSniper.UI {
                     }
 
                     return true;
-                } catch(Exception) {
+                } catch {
                     return true;
                 }
             }
@@ -219,7 +219,7 @@ namespace ImgurSniper.UI {
                     }
 
                     return false;
-                } catch(Exception) {
+                } catch {
                     return false;
                 }
             }
@@ -336,10 +336,10 @@ namespace ImgurSniper.UI {
                 token = Cipher.Decrypt(token, _passPhrase);
 
                 return token;
-            } catch(Exception) {
+            } catch {
                 try {
                     File.Delete(_tokenFile);
-                } catch(Exception) { }
+                } catch { }
                 return null;
             }
         }
@@ -355,7 +355,7 @@ namespace ImgurSniper.UI {
                     string encr_token = Cipher.Encrypt(token, _passPhrase);
 
                     File.WriteAllText(_tokenFile, encr_token);
-                } catch(Exception) {
+                } catch {
                     File.Delete(_tokenFile);
                 }
             }).Start();
@@ -364,7 +364,7 @@ namespace ImgurSniper.UI {
         public static void DeleteToken() {
             try {
                 File.Delete(_tokenFile);
-            } catch(Exception) { }
+            } catch { }
         }
     }
 }

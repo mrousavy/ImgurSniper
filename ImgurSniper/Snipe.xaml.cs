@@ -74,7 +74,7 @@ namespace ImgurSniper {
                      ? new HotKey(ModifierKeys.None, Key.PrintScreen, this)
                      : new HotKey(ModifierKeys.Control | ModifierKeys.Shift, sKey, this);
                 hk.HotKeyPressed += OpenFromShortcut;
-            } catch(Exception) {
+            } catch {
                 //ignored
             }
 
@@ -82,7 +82,7 @@ namespace ImgurSniper {
             menu.MenuItems.Add("Settings", delegate {
                 try {
                     Process.Start(FileIO._programFiles + "\\ImgurSniper.UI.exe");
-                } catch(Exception) {
+                } catch {
                     // ignored
                 }
             });
@@ -241,7 +241,7 @@ namespace ImgurSniper {
                     DelayedClose(0);
                 else
                     this.Visibility = Visibility.Hidden;
-            } catch(Exception) {
+            } catch {
                 System.Windows.Application.Current.Shutdown();
             }
         }
@@ -261,13 +261,13 @@ namespace ImgurSniper {
 
                     await SuccessToast.ShowAsync("Link to Imgur copied to Clipboard!",
                         TimeSpan.FromSeconds(5));
-                } catch(Exception) { }
+                } catch { }
             } else {
                 //Catch internal toast exceptions
                 try {
                     await ErrorToast.ShowAsync($"Error uploading Image to Imgur! ({link})",
                     TimeSpan.FromSeconds(5));
-                } catch(Exception) { }
+                } catch { }
             }
         }
 
@@ -323,7 +323,7 @@ namespace ImgurSniper {
 
                 player.Open(new Uri(path));
                 player.Play();
-            } catch(Exception) { }
+            } catch { }
         }
     }
 }

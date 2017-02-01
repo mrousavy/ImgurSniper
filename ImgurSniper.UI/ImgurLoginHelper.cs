@@ -67,7 +67,7 @@ namespace ImgurSniper.UI {
             try {
                 IOAuth2Token token = await _endpoint.GetTokenByRefreshTokenAsync(refreshToken);
                 username = token.AccountUsername;
-            } catch(Exception) { }
+            } catch { }
 
             return username;
         }

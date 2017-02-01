@@ -229,7 +229,7 @@ namespace ImgurSniper {
             anim.Completed += delegate {
                 try {
                     DialogResult = result;
-                } catch(Exception) {
+                } catch {
                     // ignored
                 }
             };
@@ -292,7 +292,7 @@ namespace ImgurSniper {
 
                 player.Open(new Uri(path));
                 player.Play();
-            } catch(Exception) {
+            } catch {
                 // ignored
             }
         }
@@ -313,7 +313,7 @@ namespace ImgurSniper {
                 PlayShutter();
 
                 return true;
-            } catch(Exception) {
+            } catch {
                 return false;
             }
         }

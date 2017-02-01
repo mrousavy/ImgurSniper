@@ -32,7 +32,7 @@ namespace ImgurSniper.UI {
             _path = path;
             try {
                 SHGetKnownFolderPath(KnownFolder.Downloads, 0, IntPtr.Zero, out _downloads);
-            } catch(Exception) { }
+            } catch { }
 
             this.invoker = invoker;
             _error = errorToast;
@@ -153,12 +153,12 @@ namespace ImgurSniper.UI {
         //                } finally {
         //                    key?.Close();
         //                }
-        //            } catch(Exception) {
+        //            } catch  {
         //                _error.Show("Could not create Uninstaller for ImgurSniper! You will have to remove the Files manually (from " + _path + ")",
         //                    TimeSpan.FromSeconds(5));
         //            }
         //        }
-        //    } catch(Exception) { }
+        //    } catch  { }
         //}
 
         public void Autostart(bool? boxIsChecked) {
@@ -172,7 +172,7 @@ namespace ImgurSniper.UI {
                         baseKey.DeleteValue("ImgurSniper");
                     }
                 }
-            } catch(Exception) {
+            } catch {
                 //Not authorized
             }
         }
