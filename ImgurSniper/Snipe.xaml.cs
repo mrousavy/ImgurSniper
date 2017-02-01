@@ -81,11 +81,12 @@ namespace ImgurSniper {
             ContextMenu menu = new ContextMenu();
             menu.MenuItems.Add("Settings", delegate {
                 try {
-                    Process.Start(FileIO._programFiles + "\\ImgurSniper.UI.exe");
+                    Process.Start(Path.Combine(FileIO._programFiles, "ImgurSniper.UI.exe"));
                 } catch {
                     // ignored
                 }
             });
+
             menu.MenuItems.Add("Exit", delegate {
                 System.Windows.Application.Current.Shutdown();
             });
@@ -146,16 +147,9 @@ namespace ImgurSniper {
 
         //Initialize important Variables
         private void Initialize() {
-            _dir = FileIO._path;
-            //Get configured Path
-            string[] lines = FileIO.ReadConfig();
-            foreach(string line in lines) {
-                string[] config = line.Split(';');
-
-                if(config[0] == "Path") {
-                    _dir = config[1];
-                    break;
-                }
+            _dir = FileIO.SaveImagesPath;
+            if(string.IsNullOrWhiteSpace(_dir)) {
+                _dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper");
             }
 
             if(!Directory.Exists(_dir)) {
@@ -174,8 +168,6 @@ namespace ImgurSniper {
 
         //Make Screenshot, Let user Crop, Upload Picture and Copy Link to Clipboard
         private async void Crop(bool CloseOnFinish, bool FocusNewWindow) {
-            string[] lines = FileIO.ReadConfig();
-
             this.Visibility = Visibility.Visible;
             this.BringIntoView();
             this.Topmost = true;
@@ -192,32 +184,16 @@ namespace ImgurSniper {
                     return;
                 }
 
-
                 try {
-                    bool Imgur = true;
-
-                    foreach(string line in lines) {
-                        string[] config = line.Split(';');
-
-                        switch(config[0]) {
-                            case "SaveImages":
-                                //Config: Save Image locally?
-                                if(bool.Parse(config[1])) {
-                                    long time = DateTime.Now.ToFileTimeUtc();
-                                    string extension = FileIO.UsePNG ? ".png" : ".jpeg";
-                                    File.WriteAllBytes(_dir + $"\\Snipe_{time}{extension}", cimg);
-                                }
-                                break;
-                            case "AfterSnipeAction":
-                                //Config: Upload Image to Imgur or Copy to Clipboard?
-                                if(config[1] != "Imgur") {
-                                    Imgur = false;
-                                }
-                                break;
-                        }
+                    //Config: Save Image locally?
+                    if(Properties.Settings.Default.SaveImages) {
+                        long time = DateTime.Now.ToFileTimeUtc();
+                        string extension = FileIO.UsePNG ? ".png" : ".jpeg";
+                        File.WriteAllBytes(_dir + $"\\Snipe_{time}{extension}", cimg);
                     }
 
-                    if(Imgur) {
+                    //Config: Upload Image to Imgur or Copy to Clipboard?
+                    if(Properties.Settings.Default.ImgurAfterSnipe) {
                         string KB = $"{(cimg.Length / 1024d):0.#}";
                         SuccessToast.Show($"Uploading Image... ({KB} KB)", TimeSpan.FromDays(10));
 
@@ -229,8 +205,6 @@ namespace ImgurSniper {
                     }
 
                 } catch(Exception ex) {
-                    File.Delete(FileIO._config);
-
                     ErrorToast.Show($"An unknown Error occured! (Show this to the Smart Computer Apes: \"{ex}\")",
                         TimeSpan.FromSeconds(3.5));
                 }

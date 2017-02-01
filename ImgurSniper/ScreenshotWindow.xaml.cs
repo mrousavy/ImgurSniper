@@ -18,7 +18,7 @@ namespace ImgurSniper {
         //Size of current Mouse Location screen
         public static Rectangle screen {
             get {
-                System.Windows.Forms.Screen screen = System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position);
+                var screen = System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position);
                 return screen.Bounds;
             }
         }
@@ -32,7 +32,6 @@ namespace ImgurSniper {
 
         private bool _drag = false;
         private bool _enableMagnifyer = false;
-        private string _path = FileIO._path;
 
 
         public ScreenshotWindow(bool AllMonitors, bool Focus) {
@@ -162,7 +161,7 @@ namespace ImgurSniper {
             FinishRectangle();
         }
 
-        //Mouse Move event
+        //Mouse Move event (Commented out as much as possible for best Performance)
         private void DrawRectangle(object sender, MouseEventArgs e) {
             _drag = e.LeftButton == MouseButtonState.Pressed;
 

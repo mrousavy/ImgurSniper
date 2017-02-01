@@ -224,6 +224,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.5"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.5 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.5"
+                    }
+                }
             }
         }
         "Release"
@@ -248,6 +256,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.5"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.5 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.5"
+                    }
+                }
             }
         }
     }
@@ -602,15 +618,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ImgurSniper"
-        "ProductCode" = "8:{0596DEA1-06C6-481D-AA95-D3D54554B2C8}"
-        "PackageCode" = "8:{C659FB79-BBF5-4E85-B862-767D23D8A09E}"
+        "ProductCode" = "8:{CFB6D5F4-DD1F-414C-912D-2E5302BC2252}"
+        "PackageCode" = "8:{C73784BD-376C-4BA2-8E62-D90062926553}"
         "UpgradeCode" = "8:{92522F6A-ED07-4D68-A8DB-8C766884DD1F}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.3"
+        "ProductVersion" = "8:1.0.31"
         "Manufacturer" = "8:mrousavy"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
