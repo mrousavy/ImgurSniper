@@ -54,8 +54,8 @@ namespace ImgurSniper {
             IImage image;
             using(MemoryStream stream = new MemoryStream(bimage)) {
                 string title = string.IsNullOrWhiteSpace(WindowName) ?
-                    "Uploaded with ImgurSniper" :
-                    $"{WindowName}  -  (Uploaded with ImgurSniper)";
+                    Properties.strings.uploadTitle :
+                    $"{WindowName}  -  (" + Properties.strings.uploadTitle + ")";
                 image = await endpoint.UploadImageStreamAsync(stream, null,
                     title,
                     "https://mrousavy.github.io/ImgurSniper");
