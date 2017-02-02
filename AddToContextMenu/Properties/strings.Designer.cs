@@ -70,7 +70,7 @@ namespace AddToContextMenu.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error: Could not add to Context Menu.
+        ///   Looks up a localized string similar to \n\nError: Could not add to Context Menu.
         /// </summary>
         internal static string errorContext {
             get {

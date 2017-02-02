@@ -121,6 +121,6 @@
     <value>Successfully added ImgurSniper to Context Menu!</value>
   </data>
   <data name="errorContext" xml:space="preserve">
-    <value>Error: Could not add to Context Menu</value>
+    <value>\n\nError: Could not add to Context Menu</value>
   </data>
 </root>

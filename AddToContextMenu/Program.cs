@@ -21,7 +21,7 @@ namespace AddToContextMenu {
 
                 Console.Write(Properties.strings.addContextMenu);
             } catch {
-                Console.Write("\n\n" + Properties.strings.errorContext);
+                Console.Write(Properties.strings.errorContext);
                 Console.ReadKey();
             }
         }

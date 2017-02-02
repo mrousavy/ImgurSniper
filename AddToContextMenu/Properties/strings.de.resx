@@ -121,6 +121,6 @@
     <value>ImgurSniper erfolgreich zum Kontextmenü hinzugefügt!</value>
   </data>
   <data name="errorContext" xml:space="preserve">
-    <value>Fehler: Konnte nicht zum Kontextmenü hinzugefügt werden!</value>
+    <value>\n\nFehler: Konnte nicht zum Kontextmenü hinzugefügt werden!</value>
   </data>
 </root>
