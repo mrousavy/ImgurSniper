@@ -117,13 +117,61 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="clickorpress" xml:space="preserve">
+    <value>Click or Press</value>
+  </data>
+  <data name="ctrlShiftShortcut" xml:space="preserve">
+    <value>Ctrl + Shift + {0}</value>
+  </data>
   <data name="error" xml:space="preserve">
-    <value>An unknown Error occured in ImgurSniper.UI!\nImgurSniper has to shut down!\nWould you like to see a detailed Exception Info?</value>
+    <value>An unknown Error occured in ImgurSniper.UI!\nImgurSniper has to shut down!\nWould you like to see a detailed Exception Info? ({0})</value>
+  </data>
+  <data name="errorFileType" xml:space="preserve">
+    <value>Error, File is non supported Image Type!</value>
+  </data>
+  <data name="exit" xml:space="preserve">
+    <value>Exit</value>
   </data>
   <data name="hotkeyInUse" xml:space="preserve">
     <value>Hotkey already in use</value>
   </data>
+  <data name="imgclipboard" xml:space="preserve">
+    <value>Image was copied to your Clipboard!</value>
+  </data>
+  <data name="imgSize" xml:space="preserve">
+    <value>The Image Width and/or Height is too small!</value>
+  </data>
+  <data name="imgToBig" xml:space="preserve">
+    <value>Image Size exceeds 10MB, to increase this please Login to Imgur!</value>
+  </data>
+  <data name="linkclipboard" xml:space="preserve">
+    <value>Link to Imgur copied to your Clipboard!</value>
+  </data>
+  <data name="msg" xml:space="preserve">
+    <value>Message: {0}\n\n</value>
+  </data>
+  <data name="otherErrorMsg" xml:space="preserve">
+    <value>An unknown Error occured! (Show this to the Smart Computer Apes: {0})</value>
+  </data>
+  <data name="printKeyShortcut" xml:space="preserve">
+    <value>the Print Key</value>
+  </data>
+  <data name="settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="toSnipeNew" xml:space="preserve">
+    <value>to Snipe a new Image</value>
+  </data>
+  <data name="uploading" xml:space="preserve">
+    <value>Uploading Image... ({0} KB)</value>
+  </data>
+  <data name="uploadingError" xml:space="preserve">
+    <value>Error uploading Image to Imgur! ({0})</value>
+  </data>
   <data name="uploadTitle" xml:space="preserve">
     <value>Upload with ImgurSniper</value>
+  </data>
+  <data name="whoops" xml:space="preserve">
+    <value>Whoops, something went wrong!</value>
   </data>
 </root>

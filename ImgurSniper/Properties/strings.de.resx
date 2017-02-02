@@ -117,13 +117,61 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="clickorpress" xml:space="preserve">
+    <value>Drücken oder Klicken Sie </value>
+  </data>
+  <data name="ctrlShiftShortcut" xml:space="preserve">
+    <value>Ctrl + Shift + {0}</value>
+  </data>
   <data name="error" xml:space="preserve">
-    <value>Ein unbekannter Fehler in ImgurSniper.UI ist aufgetreten!\nImgurSniper wurde beendet!\nMöchten Sie detaillierte Informationen über die Fehlermeldung erhalten?</value>
+    <value>Ein unbekannter Fehler in ImgurSniper.UI ist aufgetreten!\nImgurSniper wurde beendet!\nMöchten Sie detaillierte Informationen über die Fehlermeldung erhalten? ({0})</value>
+  </data>
+  <data name="errorFileType" xml:space="preserve">
+    <value>Fehler, Datei ist eine nicht unterstützte Bild-Datei</value>
+  </data>
+  <data name="exit" xml:space="preserve">
+    <value>Verlassen</value>
   </data>
   <data name="hotkeyInUse" xml:space="preserve">
     <value>Hotkey ist schon in Verwendung</value>
   </data>
+  <data name="imgclipboard" xml:space="preserve">
+    <value>Screenshot wurde in die Zwischenablage kopiert!</value>
+  </data>
+  <data name="imgSize" xml:space="preserve">
+    <value>Die Breite und/oder Höhe des Bildes ist zu klein!</value>
+  </data>
+  <data name="imgToBig" xml:space="preserve">
+    <value>Bildgröße ist über 10 MB, melden Sie sich mit ihrem Imgur Account an um solch große Bilder hochzuladen zu können</value>
+  </data>
+  <data name="linkclipboard" xml:space="preserve">
+    <value>Link zum Bild wurde in die Zwischenablage kopiert.</value>
+  </data>
+  <data name="msg" xml:space="preserve">
+    <value>Nachricht: {0}\n\n</value>
+  </data>
+  <data name="otherErrorMsg" xml:space="preserve">
+    <value>EIn unbekannter Fehler ist aufgetreten!\nDetaillierte Fehlermeldung: {0}</value>
+  </data>
+  <data name="printKeyShortcut" xml:space="preserve">
+    <value>die Drucken-Taste</value>
+  </data>
+  <data name="settings" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
+  <data name="toSnipeNew" xml:space="preserve">
+    <value>um einen neuen Screenshot zu erstellen.</value>
+  </data>
+  <data name="uploading" xml:space="preserve">
+    <value>Bild wird hochgeladen... ({0} KB)</value>
+  </data>
+  <data name="uploadingError" xml:space="preserve">
+    <value>Beim hochladen ist ein Fehler aufgetreten! ({0})</value>
+  </data>
   <data name="uploadTitle" xml:space="preserve">
     <value>Hochgeladen mit ImgurSniper</value>
+  </data>
+  <data name="whoops" xml:space="preserve">
+    <value>Ups, etwas ist schiefgelaufen!</value>
   </data>
 </root>

@@ -99,5 +99,4 @@
         SM_CONVERTABLESLATEMODE = 0x2003,
         SM_SYSTEMDOCKED = 0x2004,
     }
-
 }
