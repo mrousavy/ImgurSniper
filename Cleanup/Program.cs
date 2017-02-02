@@ -105,10 +105,10 @@ namespace Cleanup {
 
                 Console.WriteLine(Properties.strings.byeMSG);
 
-                Console.Write("\n\n" + Properties.strings.continueMSG);
+                Console.Write(Properties.strings.continueMSG);
                 Console.ReadKey();
             } catch(Exception ex) {
-                Console.WriteLine(Properties.strings.error + ex.Message);
+                Console.WriteLine(string.Format(Properties.strings.error, ex.Message));
             }
         }
 

@@ -136,9 +136,9 @@
     <value>Sad to see you go! Bye :(</value>
   </data>
   <data name="continueMSG" xml:space="preserve">
-    <value>Press any key to continue</value>
+    <value>\n\nPress any key to continue</value>
   </data>
   <data name="error" xml:space="preserve">
-    <value>An unknown Error occured!\nShow this to the smart Computer apes: </value>
+    <value>An unknown Error occured!\nShow this to the smart Computer apes: {0}</value>
   </data>
 </root>

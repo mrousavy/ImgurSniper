@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="uninstallTitle" xml:space="preserve">
-    <value>ImgurSniper Deinstallieren</value>
+    <value>ImgurSniper deinstallieren</value>
   </data>
   <data name="wrongUninstall" xml:space="preserve">
     <value>Manche Dateien wurden nicht erfolgreich gelöscht!</value>
   </data>
   <data name="closeInstance" xml:space="preserve">
-    <value>Warte, dass ImgurSniper beendet wird...</value>
+    <value>Warte darauf, dass ImgurSniper beendet wird...</value>
   </data>
   <data name="cleanUserData" xml:space="preserve">
     <value>Entfernt Benutzer Dateien...</value>
@@ -136,9 +136,9 @@
     <value>Schade, dass du gehst! Bye :(</value>
   </data>
   <data name="continueMSG" xml:space="preserve">
-    <value>Drücke eine Taste zum Fortfahren.</value>
+    <value>\n\nDrücken Sie eine Taste zum Fortfahren.</value>
   </data>
   <data name="error" xml:space="preserve">
-    <value>EIn unbekannter Fehler ist aufgetreten!\nDetaillierte Fehlermeldung: </value>
+    <value>Ein unbekannter Fehler ist aufgetreten!\nDetaillierte Fehlermeldung: {0}</value>
   </data>
 </root>

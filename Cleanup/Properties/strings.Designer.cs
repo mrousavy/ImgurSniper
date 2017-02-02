@@ -97,7 +97,7 @@ namespace Cleanup.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Press any key to continue.
+        ///   Looks up a localized string similar to \n\nPress any key to continue.
         /// </summary>
         internal static string continueMSG {
             get {
@@ -106,7 +106,7 @@ namespace Cleanup.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An unknown Error occured!\nShow this to the smart Computer apes: .
+        ///   Looks up a localized string similar to An unknown Error occured!\nShow this to the smart Computer apes: {0}.
         /// </summary>
         internal static string error {
             get {
