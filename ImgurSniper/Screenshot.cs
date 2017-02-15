@@ -16,7 +16,7 @@ namespace ImgurSniper {
             int height = coordinates.Height;
 
             //Thanks http://stackoverflow.com/users/183367/julien-lebosquain!        --System.Drawing.Imaging.PixelFormat.Format32bppArgb
-            using(var screenBmp = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format64bppPArgb)) {
+            using(var screenBmp = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppRgb)) {
                 using(var bmpGraphics = Graphics.FromImage(screenBmp)) {
                     bmpGraphics.CopyFromScreen(start, System.Drawing.Point.Empty, new System.Drawing.Size(width, height));
 
