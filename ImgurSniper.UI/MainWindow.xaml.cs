@@ -22,21 +22,23 @@ namespace ImgurSniper.UI {
         }
 
         //Animation Templates
-        private DoubleAnimation _fadeOut {
+        private static DoubleAnimation FadeOut {
             get {
-                DoubleAnimation anim = new DoubleAnimation();
-                anim.From = 1;
-                anim.To = 0;
-                anim.Duration = new Duration(TimeSpan.FromSeconds(0.2));
+                DoubleAnimation anim = new DoubleAnimation {
+                    From = 1,
+                    To = 0,
+                    Duration = new Duration(TimeSpan.FromSeconds(0.2))
+                };
                 return anim;
             }
         }
-        private DoubleAnimation _fadeIn {
+        private static DoubleAnimation FadeIn {
             get {
-                DoubleAnimation anim = new DoubleAnimation();
-                anim.From = 0;
-                anim.To = 1;
-                anim.Duration = new Duration(TimeSpan.FromSeconds(0.2));
+                DoubleAnimation anim = new DoubleAnimation {
+                    From = 0,
+                    To = 1,
+                    Duration = new Duration(TimeSpan.FromSeconds(0.2))
+                };
                 return anim;
             }
         }
@@ -300,10 +302,10 @@ namespace ImgurSniper.UI {
             try {
                 _imgurhelper.Authorize();
 
-                DoubleAnimation fadeBtnOut = _fadeOut;
+                DoubleAnimation fadeBtnOut = FadeOut;
                 fadeBtnOut.Completed += delegate {
 
-                    DoubleAnimation fadePanelIn = _fadeIn;
+                    DoubleAnimation fadePanelIn = FadeIn;
                     fadePanelIn.Completed += delegate {
                         Btn_SignIn.Visibility = Visibility.Collapsed;
                     };
@@ -315,11 +317,11 @@ namespace ImgurSniper.UI {
             } catch { }
         }
         private void SignOut(object sender, RoutedEventArgs e) {
-            DoubleAnimation fadeBtnOut = _fadeOut;
+            DoubleAnimation fadeBtnOut = FadeOut;
             fadeBtnOut.Completed += delegate {
                 FileIO.DeleteToken();
 
-                DoubleAnimation fadeBtnIn = _fadeIn;
+                DoubleAnimation fadeBtnIn = FadeIn;
                 fadeBtnIn.Completed += delegate {
                     Btn_SignOut.Visibility = Visibility.Collapsed;
 
@@ -335,9 +337,9 @@ namespace ImgurSniper.UI {
             bool result = await _imgurhelper.Login(Box_PIN.Text);
 
             if(result) {
-                DoubleAnimation fadePanelOut = _fadeOut;
+                DoubleAnimation fadePanelOut = FadeOut;
                 fadePanelOut.Completed += delegate {
-                    DoubleAnimation fadeBtnIn = _fadeIn;
+                    DoubleAnimation fadeBtnIn = FadeIn;
                     fadeBtnIn.Completed += delegate {
                         Panel_PIN.Visibility = Visibility.Collapsed;
                     };
@@ -405,9 +407,6 @@ namespace ImgurSniper.UI {
 
             if(Btn_Snipe.Tag == null)
                 Btn_Snipe.IsEnabled = enabled;
-
-            if(Btn_Uninstall.Tag == null)
-                Btn_Uninstall.IsEnabled = enabled;
         }
     }
 }

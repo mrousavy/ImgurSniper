@@ -10,7 +10,7 @@ namespace ImgurSniper.UI {
         public static bool MagnifyingGlassEnabled {
             get {
                 try {
-                    return (bool)Properties.Settings.Default.MagnifyingGlassEnabled;
+                    return (bool)Settings.Default.MagnifyingGlassEnabled;
                 } catch {
                     return false;
                 }
@@ -20,7 +20,7 @@ namespace ImgurSniper.UI {
         public static bool AllMonitors {
             get {
                 try {
-                    return (bool)Properties.Settings.Default.AllMonitors;
+                    return (bool)Settings.Default.AllMonitors;
                 } catch {
                     return true;
                 }
@@ -30,7 +30,7 @@ namespace ImgurSniper.UI {
         public static bool UsePNG {
             get {
                 try {
-                    return (bool)Properties.Settings.Default.UsePNG;
+                    return (bool)Settings.Default.UsePNG;
                 } catch {
                     return false;
                 }
@@ -40,7 +40,7 @@ namespace ImgurSniper.UI {
         public static bool OpenAfterUpload {
             get {
                 try {
-                    return (bool)Properties.Settings.Default.OpenAfterUpload;
+                    return (bool)Settings.Default.OpenAfterUpload;
                 } catch {
                     return true;
                 }
@@ -52,7 +52,7 @@ namespace ImgurSniper.UI {
                 try {
                     return (System.Windows.Input.Key)Enum.Parse(
                         typeof(System.Windows.Input.Key),
-                        ((char)Properties.Settings.Default.ShortcutKey).ToString());
+                        (Settings.Default.ShortcutKey).ToString());
                 } catch {
                     return System.Windows.Input.Key.X;
                 }
@@ -62,7 +62,7 @@ namespace ImgurSniper.UI {
         public static bool UsePrint {
             get {
                 try {
-                    return (bool)Properties.Settings.Default.UsePrint;
+                    return Settings.Default.UsePrint;
                 } catch {
                     return false;
                 }
@@ -72,12 +72,9 @@ namespace ImgurSniper.UI {
         public static string SaveImagesPath {
             get {
                 try {
-                    string path = Properties.Settings.Default.SaveImagesPath;
+                    string path = Settings.Default.SaveImagesPath;
 
-                    if(string.IsNullOrWhiteSpace(path))
-                        return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper Images");
-                    else
-                        return path;
+                    return string.IsNullOrWhiteSpace(path) ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper Images") : path;
                 } catch {
                     return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper Images");
                 }
@@ -87,7 +84,7 @@ namespace ImgurSniper.UI {
         public static bool SaveImages {
             get {
                 try {
-                    return (bool)Properties.Settings.Default.SaveImages;
+                    return (bool)Settings.Default.SaveImages;
                 } catch {
                     return false;
                 }
@@ -97,7 +94,7 @@ namespace ImgurSniper.UI {
         public static bool RunOnBoot {
             get {
                 try {
-                    return (bool)Properties.Settings.Default.RunOnBoot;
+                    return (bool)Settings.Default.RunOnBoot;
                 } catch {
                     return true;
                 }
@@ -107,7 +104,7 @@ namespace ImgurSniper.UI {
         public static bool ImgurAfterSnipe {
             get {
                 try {
-                    return (bool)Properties.Settings.Default.ImgurAfterSnipe;
+                    return (bool)Settings.Default.ImgurAfterSnipe;
                 } catch {
                     return true;
                 }
@@ -117,7 +114,7 @@ namespace ImgurSniper.UI {
         public static bool IsInContextMenu {
             get {
                 try {
-                    return Properties.Settings.Default.IsInContextMenu;
+                    return Settings.Default.IsInContextMenu;
                 } catch {
                     return false;
                 }
@@ -134,24 +131,20 @@ namespace ImgurSniper.UI {
         }
 
         //Salt for Cipher Encryption
-        private static string _passPhrase {
-            get {
-                return "ImgurSniper v" + _fileVersion + " User-Login File_PassPhrase :)";
-            }
-        }
+        private static string _passPhrase => "ImgurSniper v" + _fileVersion + " User-Login File_PassPhrase :)";
 
         //Config Keys
         public enum ConfigType { UsePNG, MagnifyingGlassEnabled, AllMonitors, OpenAfterUpload, ShortcutKey, UsePrint, SaveImages, RunOnBoot, ImgurAfterSnipe, IsInContextMenu, SaveImagesPath }
 
         //Saves a value in User Settings
         public static void SaveConfig(ConfigType type, object content) {
-            Properties.Settings.Default[type.ToString()] = content;
-            Properties.Settings.Default.Save();
+            Settings.Default[type.ToString()] = content;
+            Settings.Default.Save();
         }
 
         //Resets User Settings
         public static void WipeUserData() {
-            Properties.Settings.Default.Reset();
+            Settings.Default.Reset();
         }
 
         #region Imgur Account

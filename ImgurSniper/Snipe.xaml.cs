@@ -185,14 +185,14 @@ namespace ImgurSniper {
 
                 try {
                     //Config: Save Image locally?
-                    if(Properties.Settings.Default.SaveImages) {
+                    if(Settings.Default.SaveImages) {
                         long time = DateTime.Now.ToFileTimeUtc();
                         string extension = FileIO.UsePNG ? ".png" : ".jpeg";
                         File.WriteAllBytes(_dir + $"\\Snipe_{time}{extension}", cimg);
                     }
 
                     //Config: Upload Image to Imgur or Copy to Clipboard?
-                    if(Properties.Settings.Default.ImgurAfterSnipe) {
+                    if(Settings.Default.ImgurAfterSnipe) {
                         string KB = $"{(cimg.Length / 1024d):0.#}";
                         SuccessToast.Show(string.Format(Properties.strings.uploading, KB), TimeSpan.FromDays(10));
 
@@ -204,8 +204,6 @@ namespace ImgurSniper {
                     }
 
                 } catch(Exception ex) {
-                    File.Delete(FileIO._config);
-
                     ErrorToast.Show(string.Format(Properties.strings.otherErrorMsg, ex),
                         TimeSpan.FromSeconds(3.5));
                 }
