@@ -13,12 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddToContextMenu", "AddToCo
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ImgurSniperSetup", "ImgurSniperSetup\ImgurSniperSetup.vdproj", "{B012628C-2D4D-48A0-A760-70AD715AA1BC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedSettings", "SharedSettings", "{1AA22458-DD56-4160-B575-058AFB67DB1E}"
-	ProjectSection(SolutionItems) = preProject
-		SharedSettingsFiles\Settings.Designer.cs = SharedSettingsFiles\Settings.Designer.cs
-		SharedSettingsFiles\Settings.settings = SharedSettingsFiles\Settings.settings
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -69,7 +69,7 @@ namespace ImgurSniper.UI {
 
             if(!FileIO.IsInContextMenu) {
                 helper.AddToContextMenu();
-                FileIO.SaveConfig(FileIO.ConfigType.IsInContextMenu, true);
+                FileIO.IsInContextMenu = true;
             }
 
             #region Read Config
@@ -178,7 +178,7 @@ namespace ImgurSniper.UI {
             RadioButton button = sender as RadioButton;
             if(button != null) {
                 try {
-                    FileIO.SaveConfig(FileIO.ConfigType.ImgurAfterSnipe, button.Tag as string == "Imgur" ? true : false);
+                    FileIO.ImgurAfterSnipe = button.Tag as string == "Imgur";
                 } catch { }
             }
         }
@@ -186,7 +186,7 @@ namespace ImgurSniper.UI {
             RadioButton button = sender as RadioButton;
             if(button != null) {
                 try {
-                    FileIO.SaveConfig(FileIO.ConfigType.AllMonitors, button.Tag as string == "All" ? true : false);
+                    FileIO.AllMonitors = button.Tag as string == "All";
                 } catch { }
             }
         }
@@ -194,7 +194,7 @@ namespace ImgurSniper.UI {
             RadioButton button = sender as RadioButton;
             if(button != null) {
                 try {
-                    FileIO.SaveConfig(FileIO.ConfigType.UsePNG, button.Tag as string == "PNG" ? true : false);
+                    FileIO.UsePNG = button.Tag as string == "PNG";
                 } catch { }
             }
         }
@@ -202,7 +202,7 @@ namespace ImgurSniper.UI {
             CheckBox box = sender as CheckBox;
             if(box != null) {
                 try {
-                    FileIO.SaveConfig(FileIO.ConfigType.SaveImages, (bool)box.IsChecked);
+                    FileIO.SaveImages = box.IsChecked == true;
 
                     if(box.IsChecked.HasValue) {
                         PathPanel.IsEnabled = (bool)box.IsChecked;
@@ -214,7 +214,7 @@ namespace ImgurSniper.UI {
             CheckBox box = sender as CheckBox;
             if(box != null) {
                 try {
-                    FileIO.SaveConfig(FileIO.ConfigType.MagnifyingGlassEnabled, (bool)box.IsChecked);
+                    FileIO.MagnifyingGlassEnabled = box.IsChecked == true;
                 } catch { }
             }
         }
@@ -222,7 +222,7 @@ namespace ImgurSniper.UI {
             CheckBox box = sender as CheckBox;
             if(box != null) {
                 try {
-                    FileIO.SaveConfig(FileIO.ConfigType.OpenAfterUpload, (bool)box.IsChecked);
+                    FileIO.OpenAfterUpload = box.IsChecked == true;
                 } catch { }
             }
         }
@@ -230,7 +230,7 @@ namespace ImgurSniper.UI {
             CheckBox box = sender as CheckBox;
             if(box != null) {
                 try {
-                    FileIO.SaveConfig(FileIO.ConfigType.RunOnBoot, (bool)box.IsChecked);
+                    FileIO.RunOnBoot = box.IsChecked == true;
 
 
                     //Run proecess if not running
@@ -259,7 +259,7 @@ namespace ImgurSniper.UI {
             CheckBox box = sender as CheckBox;
             if(box != null) {
                 try {
-                    FileIO.SaveConfig(FileIO.ConfigType.UsePrint, (bool)box.IsChecked);
+                    FileIO.UsePrint = box.IsChecked == true;
                 } catch { }
             }
         }
@@ -383,7 +383,7 @@ namespace ImgurSniper.UI {
         }
         private void SavePath() {
             if(Directory.Exists(PathBox.Text)) {
-                FileIO.SaveConfig(FileIO.ConfigType.SaveImagesPath, PathBox.Text);
+                FileIO.SaveImagesPath = PathBox.Text;
             } else {
                 error_toast.Show("The selected Path does not exist!", TimeSpan.FromSeconds(4));
             }

@@ -130,7 +130,7 @@
     <value>Fehler, Datei ist eine nicht unterstützte Bild-Datei</value>
   </data>
   <data name="exit" xml:space="preserve">
-    <value>Verlassen</value>
+    <value>Beenden</value>
   </data>
   <data name="hotkeyInUse" xml:space="preserve">
     <value>Hotkey ist schon in Verwendung</value>
@@ -172,6 +172,6 @@
     <value>Hochgeladen mit ImgurSniper</value>
   </data>
   <data name="whoops" xml:space="preserve">
-    <value>Ups, etwas ist schiefgelaufen!</value>
+    <value>Whoops, etwas ist schiefgelaufen!</value>
   </data>
 </root>
