@@ -146,9 +146,6 @@
 			<Button Margin="5" Click="Repair" x:Name="Btn_Repair">
 				Repair
 			</Button>
-			<Button Margin="5" Click="Uninstall" x:Name="Btn_Uninstall">
-				Uninstall
-			</Button>
 			<Button Margin="5" Click="Snipe" x:Name="Btn_Snipe">
 					Snipe!
 				</Button>
