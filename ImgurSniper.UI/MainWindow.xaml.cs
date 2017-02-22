@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using str = ImgurSniper.UI.Properties.strings;
 
 namespace ImgurSniper.UI {
     public partial class MainWindow : Window {
@@ -16,6 +17,7 @@ namespace ImgurSniper.UI {
         //Path to Documents/ImgurSniper Folder
         private string _docPath {
             get {
+
                 string value = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper");
                 return value;
             }
@@ -59,7 +61,7 @@ namespace ImgurSniper.UI {
             helper = new InstallerHelper(_path, error_toast, success_toast, this);
             _imgurhelper = new ImgurLoginHelper(error_toast, success_toast);
 
-            error_toast.Show("Loading...", TimeSpan.FromSeconds(2));
+            error_toast.Show(str.loading, TimeSpan.FromSeconds(2));
             Load();
         }
 
@@ -139,7 +141,7 @@ namespace ImgurSniper.UI {
                     }
                 }
             } catch {
-                error_toast.Show("ImgurSniper Tray Service is not running!", TimeSpan.FromSeconds(2));
+                error_toast.Show(str.trayServiceNotRunning, TimeSpan.FromSeconds(2));
             }
 
             string refreshToken = FileIO.ReadRefreshToken();
@@ -147,7 +149,7 @@ namespace ImgurSniper.UI {
             string name = await _imgurhelper.LoggedInUser(refreshToken);
 
             if(name != null) {
-                Label_Account.Content = Label_Account.Content as string + " (Logged In as " + name + ")";
+                Label_Account.Content = string.Format(str.imgurAccSignedIn, name);
 
                 Btn_SignIn.Visibility = Visibility.Collapsed;
                 Btn_SignOut.Visibility = Visibility.Visible;
@@ -247,7 +249,7 @@ namespace ImgurSniper.UI {
                             }
                         }
                     } catch {
-                        error_toast.Show("ImgurSniper Tray Service is not running!", TimeSpan.FromSeconds(2));
+                        error_toast.Show(str.trayServiceNotRunning, TimeSpan.FromSeconds(2));
                     }
 
 
@@ -277,7 +279,7 @@ namespace ImgurSniper.UI {
 
                 this.Visibility = Visibility.Visible;
             } else {
-                error_toast.Show("Error, ImgurSniper could not be found on your System!",
+                error_toast.Show(str.imgurSniperNotFound,
                     TimeSpan.FromSeconds(3));
             }
         }
@@ -286,10 +288,10 @@ namespace ImgurSniper.UI {
 
             try {
                 FileIO.WipeUserData();
-                await success_toast.ShowAsync("Repaired ImgurSniper. Please restart ImgurSniper to complete!", TimeSpan.FromSeconds(3));
+                await success_toast.ShowAsync(str.repairedImgurSniper, TimeSpan.FromSeconds(3));
                 this.Close();
             } catch(Exception ex) {
-                error_toast.Show("An unknown Error occured!\nShow this to the smart Computer apes: " + ex.Message,
+                error_toast.Show(string.Format(str.unknownError, ex.Message),
                     TimeSpan.FromSeconds(5));
             }
         }
@@ -350,7 +352,7 @@ namespace ImgurSniper.UI {
                 Panel_PIN.BeginAnimation(Button.OpacityProperty, fadePanelOut);
 
                 if(_imgurhelper.User != null) {
-                    Label_Account.Content = Label_Account.Content as string + " (Logged In as " + _imgurhelper.User + ")";
+                    Label_Account.Content = string.Format(str.imgurAccSignedIn, _imgurhelper.User);
 
                     Btn_SignIn.Visibility = Visibility.Collapsed;
                     Btn_SignOut.Visibility = Visibility.Visible;
@@ -372,7 +374,7 @@ namespace ImgurSniper.UI {
             if(Directory.Exists(PathBox.Text))
                 fbd.SelectedPath = PathBox.Text;
 
-            fbd.Description = "Select the Path where ImgurSniper should save Images.";
+            fbd.Description = str.selectPath;
 
             System.Windows.Forms.DialogResult result = fbd.ShowDialog();
 
@@ -385,7 +387,7 @@ namespace ImgurSniper.UI {
             if(Directory.Exists(PathBox.Text)) {
                 FileIO.SaveImagesPath = PathBox.Text;
             } else {
-                error_toast.Show("The selected Path does not exist!", TimeSpan.FromSeconds(4));
+                error_toast.Show(str.pathNotExist, TimeSpan.FromSeconds(4));
             }
         }
         #endregion

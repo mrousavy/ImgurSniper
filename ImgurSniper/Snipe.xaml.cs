@@ -94,7 +94,8 @@ namespace ImgurSniper {
                 Icon = Properties.Resources.Logo,
                 ContextMenu = menu,
                 Visible = true,
-                Text = Properties.strings.clickorpress + (usePrint ? Properties.strings.printKeyShortcut : string.Format(Properties.strings.ctrlShiftShortcut, sKey)) + Properties.strings.toSnipeNew
+                Text = Properties.strings.clickorpress +
+                    (usePrint ? Properties.strings.printKeyShortcut : string.Format(Properties.strings.ctrlShiftShortcut, sKey)) + Properties.strings.toSnipeNew
             };
             _nicon.MouseClick += (sender, e) => {
                 if(e.Button == MouseButtons.Left)

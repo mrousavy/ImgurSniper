@@ -117,61 +117,103 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="clickorpress" xml:space="preserve">
-    <value>Klicken/Drücken Sie </value>
+  <data name="afterSnapping" xml:space="preserve">
+    <value>Nach Snappen...</value>
   </data>
-  <data name="ctrlShiftShortcut" xml:space="preserve">
-    <value>Ctrl + Shift + {0}</value>
+  <data name="allMonitor" xml:space="preserve">
+    <value>Alle Bildschirme</value>
   </data>
-  <data name="error" xml:space="preserve">
-    <value>Ein unbekannter Fehler in ImgurSniper.UI ist aufgetreten!\nImgurSniper wurde beendet!\nMöchten Sie detaillierte Informationen über die Fehlermeldung erhalten? ({0})</value>
+  <data name="autoUploadImgur" xml:space="preserve">
+    <value>Automatisch zu Imgur hochladen</value>
   </data>
-  <data name="errorFileType" xml:space="preserve">
-    <value>Fehler, Datei ist eine nicht unterstützte Bild-Datei</value>
+  <data name="copyClipboard" xml:space="preserve">
+    <value>Bild in die Zwischenablage kopieren</value>
   </data>
-  <data name="exit" xml:space="preserve">
-    <value>Beenden</value>
+  <data name="curMonitor" xml:space="preserve">
+    <value>Derzeitiger Bildschirm</value>
   </data>
-  <data name="hotkeyInUse" xml:space="preserve">
-    <value>Hotkey ist schon in Verwendung</value>
+  <data name="enMagnifying" xml:space="preserve">
+    <value>Lupe aktivieren</value>
   </data>
-  <data name="imgclipboard" xml:space="preserve">
-    <value>Screenshot wurde in die Zwischenablage kopiert!</value>
+  <data name="imgFormat" xml:space="preserve">
+    <value>Bild Format</value>
   </data>
-  <data name="imgSize" xml:space="preserve">
-    <value>Die Breite und/oder Höhe des Bildes ist zu klein!</value>
+  <data name="imgurAcc" xml:space="preserve">
+    <value>Imgur Account</value>
   </data>
-  <data name="imgToBig" xml:space="preserve">
-    <value>Bildgröße ist über 10 MB, melden Sie sich mit ihrem Imgur Account an um solch große Bilder hochzuladen zu können</value>
+  <data name="imgurAccSignedIn" xml:space="preserve">
+    <value>Imgur Account (angemeldet als {0})</value>
   </data>
-  <data name="linkclipboard" xml:space="preserve">
-    <value>Link zum Bild wurde in die Zwischenablage kopiert.</value>
+  <data name="imgurSniperNotFound" xml:space="preserve">
+    <value>Fehler, ImgurSniper wurde auf Ihrem System nicht gefunden!</value>
   </data>
-  <data name="msg" xml:space="preserve">
-    <value>Nachricht: {0}\n\n</value>
+  <data name="loading" xml:space="preserve">
+    <value>Lädt...</value>
   </data>
-  <data name="otherErrorMsg" xml:space="preserve">
-    <value>EIn unbekannter Fehler ist aufgetreten!\nDetaillierte Fehlermeldung: {0}</value>
+  <data name="notOnlyMouse" xml:space="preserve">
+    <value>ImgurSniper auf allen Bildschirmen öffnen</value>
   </data>
-  <data name="printKeyShortcut" xml:space="preserve">
-    <value>die Drucken-Taste</value>
+  <data name="onlyMouse" xml:space="preserve">
+    <value>ImgurSniper auf dem Bildschirm öffnen wo sich die Maus befindet.</value>
   </data>
-  <data name="settings" xml:space="preserve">
-    <value>Einstellungen</value>
+  <data name="openBrowser" xml:space="preserve">
+    <value>Nach upload, Bild im Browser öffnen</value>
   </data>
-  <data name="toSnipeNew" xml:space="preserve">
-    <value> für ImgurSniper</value>
+  <data name="other" xml:space="preserve">
+    <value>Anderes:</value>
   </data>
-  <data name="uploading" xml:space="preserve">
-    <value>Bild wird hochgeladen... ({0} KB)</value>
+  <data name="path" xml:space="preserve">
+    <value>Pfad:</value>
   </data>
-  <data name="uploadingError" xml:space="preserve">
-    <value>Beim hochladen ist ein Fehler aufgetreten! ({0})</value>
+  <data name="pathNotExist" xml:space="preserve">
+    <value>Der ausgefählte Pfad existiert nicht!</value>
   </data>
-  <data name="uploadTitle" xml:space="preserve">
-    <value>Hochgeladen mit ImgurSniper</value>
+  <data name="repair" xml:space="preserve">
+    <value>Reparieren</value>
   </data>
-  <data name="whoops" xml:space="preserve">
-    <value>Whoops, etwas ist schiefgelaufen!</value>
+  <data name="repairedImgurSniper" xml:space="preserve">
+    <value>ImgurSniper wurde erfolgreich repariert, bitte starte neu um abzuschließen!</value>
+  </data>
+  <data name="saveLocally" xml:space="preserve">
+    <value>Bild lokal abspeichern</value>
+  </data>
+  <data name="selectPath" xml:space="preserve">
+    <value>Wähle den Pfad aus, wo ImgurSniper Bilder speichern soll.</value>
+  </data>
+  <data name="singIn" xml:space="preserve">
+    <value>Anmelden</value>
+  </data>
+  <data name="singOut" xml:space="preserve">
+    <value>Abmelden</value>
+  </data>
+  <data name="snipe" xml:space="preserve">
+    <value>Snipe!</value>
+  </data>
+  <data name="startWhenPC" xml:space="preserve">
+    <value>ImgurSniper mit meinem Computer starten</value>
+  </data>
+  <data name="title" xml:space="preserve">
+    <value>Imgur Sniper Einstellungen</value>
+  </data>
+  <data name="trayServiceNotRunning" xml:space="preserve">
+    <value>ImgurSniper Hintergrundservice ist nicht gestartet!</value>
+  </data>
+  <data name="unknownError" xml:space="preserve">
+    <value>Ein unbekannter Fehler ist aufgetreten!\r\nZeige dies den klugen Computer Affen: {0}</value>
+  </data>
+  <data name="useJPEG" xml:space="preserve">
+    <value>.JPEG Format für Uploads benutzen (Niedrigere Qualität, Schneller)</value>
+  </data>
+  <data name="usePNG" xml:space="preserve">
+    <value>.PNG Format für Uploads benutzen (Höhere Qualität, Langsamer)</value>
+  </data>
+  <data name="usePrint" xml:space="preserve">
+    <value>Druck-Taste für ImgurSniper benutzen</value>
+  </data>
+  <data name="whenFinished" xml:space="preserve">
+    <value>Nach beenden...</value>
+  </data>
+  <data name="whereSnipe" xml:space="preserve">
+    <value>Snipe Bereich</value>
   </data>
 </root>
