@@ -61,7 +61,7 @@ namespace ImgurSniper {
             _isKeyRegistered = HotKeyWinApi.RegisterHotKey(_handle, _id, KeyModifier, InteropKey);
 
             if(!_isKeyRegistered) {
-                throw new ApplicationException("Hotkey already in use");
+                throw new ApplicationException(Properties.strings.hotkeyInUse);
             }
         }
 

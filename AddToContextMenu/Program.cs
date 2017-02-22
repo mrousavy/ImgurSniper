@@ -19,9 +19,9 @@ namespace AddToContextMenu {
                     }
                 }
 
-                Console.Write("Successfully added ImgurSniper to Context Menu!");
+                Console.Write(Properties.strings.addContextMenu);
             } catch {
-                Console.Write("\n\nError: Could not add to Context Menu");
+                Console.Write(Properties.strings.errorContext);
                 Console.ReadKey();
             }
         }

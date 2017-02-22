@@ -79,15 +79,14 @@ namespace ImgurSniper {
             }
 
             ContextMenu menu = new ContextMenu();
-            menu.MenuItems.Add("Settings", delegate {
+            menu.MenuItems.Add(Properties.strings.settings, delegate {
                 try {
                     Process.Start(Path.Combine(FileIO._programFiles, "ImgurSniper.UI.exe"));
                 } catch {
                     // ignored
                 }
             });
-
-            menu.MenuItems.Add("Exit", delegate {
+            menu.MenuItems.Add(Properties.strings.exit, delegate {
                 System.Windows.Application.Current.Shutdown();
             });
 
@@ -95,7 +94,7 @@ namespace ImgurSniper {
                 Icon = Properties.Resources.Logo,
                 ContextMenu = menu,
                 Visible = true,
-                Text = $"Click or Press " + (usePrint ? "the Print Key" : "Ctrl + Shift + " + sKey) + " to Snipe a new Image!"
+                Text = Properties.strings.clickorpress + (usePrint ? Properties.strings.printKeyShortcut : string.Format(Properties.strings.ctrlShiftShortcut, sKey)) + Properties.strings.toSnipeNew
             };
             _nicon.MouseClick += (sender, e) => {
                 if(e.Button == MouseButtons.Left)
@@ -136,11 +135,11 @@ namespace ImgurSniper {
                 byte[] byteImg = File.ReadAllBytes(path);
 
                 string KB = $"{(byteImg.Length / 1024d):0.#}";
-                SuccessToast.Show($"Uploading Image... ({KB} KB)", TimeSpan.FromDays(10));
+                SuccessToast.Show(string.Format(Properties.strings.uploading, KB), TimeSpan.FromDays(10));
 
                 await UploadImageToImgur(byteImg, "");
             } else {
-                await ErrorToast.ShowAsync("Error, File is non supported Image Type!", TimeSpan.FromSeconds(5));
+                await ErrorToast.ShowAsync(Properties.strings.errorFileType, TimeSpan.FromSeconds(5));
             }
             DelayedClose(0);
         }
@@ -180,7 +179,7 @@ namespace ImgurSniper {
                 byte[] cimg = window.CroppedImage;
 
                 if(cimg.Length >= 10240000 && !FileIO.TokenExists) {
-                    await ErrorToast.ShowAsync("Image Size exceeds 10MB, to increase this please Login to Imgur!", TimeSpan.FromSeconds(3));
+                    await ErrorToast.ShowAsync(Properties.strings.imgToBig, TimeSpan.FromSeconds(3));
                     return;
                 }
 
@@ -195,17 +194,19 @@ namespace ImgurSniper {
                     //Config: Upload Image to Imgur or Copy to Clipboard?
                     if(Properties.Settings.Default.ImgurAfterSnipe) {
                         string KB = $"{(cimg.Length / 1024d):0.#}";
-                        SuccessToast.Show($"Uploading Image... ({KB} KB)", TimeSpan.FromDays(10));
+                        SuccessToast.Show(string.Format(Properties.strings.uploading, KB), TimeSpan.FromDays(10));
 
                         await UploadImageToImgur(cimg, window.HwndName);
                     } else {
                         CopyImageToClipboard(cimg);
 
-                        SuccessToast.Show($"Image was copied to your Clipboard!", TimeSpan.FromDays(10));
+                        SuccessToast.Show(Properties.strings.imgclipboard, TimeSpan.FromDays(10));
                     }
 
                 } catch(Exception ex) {
-                    ErrorToast.Show($"An unknown Error occured! (Show this to the Smart Computer Apes: \"{ex}\")",
+                    File.Delete(FileIO._config);
+
+                    ErrorToast.Show(string.Format(Properties.strings.otherErrorMsg, ex),
                         TimeSpan.FromSeconds(3.5));
                 }
             }
@@ -233,13 +234,13 @@ namespace ImgurSniper {
                     if(FileIO.OpenAfterUpload)
                         Process.Start(link);
 
-                    await SuccessToast.ShowAsync("Link to Imgur copied to Clipboard!",
+                    await SuccessToast.ShowAsync(Properties.strings.linkclipboard,
                         TimeSpan.FromSeconds(5));
                 } catch { }
             } else {
                 //Catch internal toast exceptions
                 try {
-                    await ErrorToast.ShowAsync($"Error uploading Image to Imgur! ({link})",
+                    await ErrorToast.ShowAsync(string.Format(Properties.strings.uploadingError, link),
                     TimeSpan.FromSeconds(5));
                 } catch { }
             }
@@ -248,7 +249,7 @@ namespace ImgurSniper {
         //Copy the Byte[] to the Clipboard
         private void CopyImageToClipboard(byte[] cimg) {
             CopyClipboard(cimg);
-            SuccessToast.Show("Image was copied to Clipboard!",
+            SuccessToast.Show(Properties.strings.imgclipboard,
                 TimeSpan.FromSeconds(3.5));
         }
 

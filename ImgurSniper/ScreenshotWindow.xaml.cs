@@ -200,7 +200,7 @@ namespace ImgurSniper {
             int fromY = (int)Math.Min(from.Y, to.Y);
 
             if(Math.Abs(to.X - from.X) < 7 || Math.Abs(to.Y - from.Y) < 7) {
-                toast.Show("The Image Width and/or Height is too small!", TimeSpan.FromSeconds(3.3));
+                toast.Show(Properties.strings.imgSize, TimeSpan.FromSeconds(3.3));
             } else {
                 this.Cursor = Cursors.Arrow;
 
@@ -275,7 +275,7 @@ namespace ImgurSniper {
             bool result = MakeImage(new System.Drawing.Rectangle(fromX, fromY, w, h));
 
             if(!result) {
-                toast.Show("Whoops, something went wrong!", TimeSpan.FromSeconds(3.3));
+                toast.Show(Properties.strings.whoops, TimeSpan.FromSeconds(3.3));
                 CloseSnap(false, 1500);
             } else {
                 DialogResult = true;

@@ -21,7 +21,7 @@ namespace Cleanup {
         }
 
         static void Main(string[] args) {
-            Console.Title = "Imgur Sniper Uninstaller";
+            Console.Title = Properties.strings.uninstallTitle;
 
             //Remove Startmenu Shortcut
             try {
@@ -85,30 +85,30 @@ namespace Cleanup {
 
 
                 if(notRemoved)
-                    Console.WriteLine("Some Files were not successfully removed!");
+                    Console.WriteLine(Properties.strings.wrongUninstall);
 
 
-                Console.WriteLine("Waiting for all ImgurSniper instances to exit...");
+                Console.WriteLine(Properties.strings.closeInstance);
 
                 KillTasks();
 
                 if(Directory.Exists(_docPath)) {
-                    Console.WriteLine("Cleaning up User Data...");
+                    Console.WriteLine(Properties.strings.cleanUserData);
                     Directory.Delete(_docPath, true);
                 }
 
                 if(Directory.Exists(_programFiles)) {
-                    Console.WriteLine("Removing Program Files...");
+                    Console.WriteLine(Properties.strings.cleanProgramFiles);
                     Directory.Delete(_programFiles, true);
                 }
 
 
-                Console.WriteLine("Sad to see you go! Bye :(");
+                Console.WriteLine(Properties.strings.byeMSG);
 
-                Console.Write("\n\nPress any key to continue...");
+                Console.Write(Properties.strings.continueMSG);
                 Console.ReadKey();
             } catch(Exception ex) {
-                Console.WriteLine("An unknown Error occured!\nShow this to the smart Computer apes: " + ex.Message);
+                Console.WriteLine(string.Format(Properties.strings.error, ex.Message));
             }
         }
 
