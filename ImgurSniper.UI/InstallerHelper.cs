@@ -46,6 +46,9 @@ namespace ImgurSniper.UI {
         public void AddToContextMenu() {
             string addPath = Path.Combine(_path, "AddToContextMenu.exe");
 
+            if(!File.Exists(addPath))
+                return;
+
             Process add = new Process();
             add.StartInfo = new ProcessStartInfo {
                 FileName = addPath
