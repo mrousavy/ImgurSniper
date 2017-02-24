@@ -216,4 +216,10 @@
   <data name="usePNG" xml:space="preserve">
     <value>Use .PNG for Images (Slower uploads, higher Quality)</value>
   </data>
+  <data name="update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="updateAvailable" xml:space="preserve">
+    <value>An ImgurSniper Update is available to download!</value>
+  </data>
 </root>

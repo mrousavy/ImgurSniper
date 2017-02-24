@@ -9,40 +9,34 @@ using Toast;
 namespace ImgurSniper.UI {
     class ImgurLoginHelper {
 
-        public static string ClientID {
-            get {
-                return "766263aaa4c9882";
-            }
-        }
-        public static string ClientSecret {
-            get {
-                return "1f16f21e51e499422fb90ae670a1974e88f7c6ae";
-            }
-        }
+        public static string ClientId => "766263aaa4c9882";
+
+        public static string ClientSecret => "1f16f21e51e499422fb90ae670a1974e88f7c6ae";
 
         public string User { private set; get; }
 
-        private ImgurClient _client;
-        private OAuth2Endpoint _endpoint;
+        private readonly ImgurClient _client;
+        private readonly OAuth2Endpoint _endpoint;
 
-        private Toasty error, success;
+        private readonly Toasty _error;
+        private readonly Toasty _success;
 
         /// <summary>
         /// Login to Imgur with OAuth2
         /// </summary>
         public ImgurLoginHelper(Toasty errorToast, Toasty successToast) {
-            _client = new ImgurClient(ClientID, ClientSecret);
+            _client = new ImgurClient(ClientId, ClientSecret);
             _endpoint = new OAuth2Endpoint(_client);
 
-            error = errorToast;
-            success = successToast;
+            _error = errorToast;
+            _success = successToast;
         }
 
         public void Authorize() {
             string redirectUrl = _endpoint.GetAuthorizationUrl(Imgur.API.Enums.OAuth2ResponseType.Pin);
             Process.Start(redirectUrl);
 
-            success.Show("Please enter the PIN you received on the Website!", TimeSpan.FromSeconds(2));
+            _success.Show("Please enter the PIN you received on the Website!", TimeSpan.FromSeconds(2));
         }
 
         public async Task<bool> Login(string pin) {
@@ -53,10 +47,10 @@ namespace ImgurSniper.UI {
                 FileIO.WriteRefreshToken(token.RefreshToken);
 
                 User = token.AccountUsername;
-                success.Show("Successfully logged in! Hi, " + User + "!", TimeSpan.FromSeconds(2));
+                _success.Show("Successfully logged in! Hi, " + User + "!", TimeSpan.FromSeconds(2));
                 return true;
             } catch(Exception ex) {
-                error.Show("Wrong PIN? Could not login to Imgur! (" + ex.Message + ")", TimeSpan.FromSeconds(2));
+                _error.Show("Wrong PIN? Could not login to Imgur! (" + ex.Message + ")", TimeSpan.FromSeconds(2));
                 return false;
             }
         }

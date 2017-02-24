@@ -201,6 +201,12 @@
   <data name="unknownError" xml:space="preserve">
     <value>Ein unbekannter Fehler ist aufgetreten!\r\nZeige dies den klugen Computer Affen: {0}</value>
   </data>
+  <data name="update" xml:space="preserve">
+    <value>Aktualisieren</value>
+  </data>
+  <data name="updateAvailable" xml:space="preserve">
+    <value>Eine neuere Version von ImgurSniper ist verfügbar.</value>
+  </data>
   <data name="useJPEG" xml:space="preserve">
     <value>.JPEG Format für Uploads benutzen (Niedrigere Qualität, Schneller)</value>
   </data>

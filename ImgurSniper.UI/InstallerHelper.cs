@@ -8,7 +8,6 @@ using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Controls;
 using Toast;
 
 namespace ImgurSniper.UI {
@@ -39,8 +38,8 @@ namespace ImgurSniper.UI {
             _success = successToast;
         }
 
-        public void Install(object senderButton) {
-            Download(senderButton);
+        public void Update() {
+            Download();
         }
 
         public void AddToContextMenu() {
@@ -49,9 +48,10 @@ namespace ImgurSniper.UI {
             if(!File.Exists(addPath))
                 return;
 
-            Process add = new Process();
-            add.StartInfo = new ProcessStartInfo {
-                FileName = addPath
+            Process add = new Process {
+                StartInfo = new ProcessStartInfo {
+                    FileName = addPath
+                }
             };
             add.Start();
             add.WaitForExit();
@@ -61,23 +61,28 @@ namespace ImgurSniper.UI {
         /// Download the ImgurSniper Archive from github
         /// </summary>
         /// <param name="path">The path to save the zip to</param>
-        private void Download(object sender) {
+        private void Download() {
             string file = Path.Combine(_path, "ImgurSniperSetup.zip");
             using(WebClient client = new WebClient()) {
                 client.DownloadFileCompleted += DownloadCompleted;
-
-                client.DownloadFileCompleted += delegate {
-                    (sender as Button).Content = "Done!";
-                    (sender as Button).IsEnabled = false;
-                    (sender as Button).Tag = new object();
-                    _success.Show("Successfully Installed ImgurSniper!", TimeSpan.FromSeconds(3));
-                };
 
                 _success.Show("Downloading from github.com/mrousavy/ImgurSniper...", TimeSpan.FromSeconds(2));
 
                 client.DownloadFileAsync(new Uri(@"https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperSetup.zip?raw=true"),
                     file);
             }
+        }
+
+
+        private static void KillImgurSniper() {
+            List<Process> processes =
+                new List<Process>(Process.GetProcesses().Where(p => p.ProcessName.Contains("ImgurSniper")));
+            foreach(Process p in processes) {
+                if(p.Id != Process.GetCurrentProcess().Id)
+                    p.Kill();
+            }
+
+            Process.GetCurrentProcess().Kill();
         }
 
         private void DownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) {
@@ -91,15 +96,7 @@ namespace ImgurSniper.UI {
             } else {
                 Extract(file, extractTo);
                 Process.Start(Path.Combine(extractTo, "ImgurSniperSetup.msi"));
-                Application.Current.Shutdown();
-            }
-        }
-
-        private void KillTasks() {
-            List<Process> processes = new List<Process>(Process.GetProcesses().Where(p => p.ProcessName.Contains("ImgurSniper")));
-            foreach(Process p in processes) {
-                if(p.ProcessName != Process.GetCurrentProcess().ProcessName)
-                    p.Kill();
+                KillImgurSniper();
             }
         }
 
@@ -108,7 +105,7 @@ namespace ImgurSniper.UI {
         /// </summary>
         /// <param name="file">The path of the Archive</param>
         /// <param name="path">The path of the Folder</param>
-        private void Extract(string file, string path) {
+        private static void Extract(string file, string path) {
             using(ZipArchive archive = new ZipArchive(new FileStream(file, FileMode.Open))) {
                 archive.ExtractToDirectory(path);
             }

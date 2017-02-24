@@ -147,11 +147,13 @@
 
 		<StackPanel Orientation="Horizontal"
 						HorizontalAlignment="Right" VerticalAlignment="Bottom">
-			<Button Margin="5" Click="Repair" x:Name="Btn_Repair"
-					Content="{x:Static Member=cultureStrings:strings.repair}"/>
+			<!--<Button Margin="5" Click="Repair" x:Name="Btn_Repair"
+					Content="{x:Static Member=cultureStrings:strings.repair}"/>-->
+			
+			<Button Margin="5" Click="Update" x:Name="Btn_Update" Visibility="Collapsed"
+					Content="{x:Static Member=cultureStrings:strings.update}"/>
 
 			<Button Margin="5" Click="Snipe" x:Name="Btn_Snipe" Content="Snipe!"/>
-
 		</StackPanel>
 
 

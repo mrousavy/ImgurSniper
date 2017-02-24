@@ -313,6 +313,24 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string update {
+            get {
+                return ResourceManager.GetString("update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An ImgurSniper Update is available to download!.
+        /// </summary>
+        public static string updateAvailable {
+            get {
+                return ResourceManager.GetString("updateAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use .JPEG for Images (Faster uploads, lower Quality).
         /// </summary>
         public static string useJPEG {

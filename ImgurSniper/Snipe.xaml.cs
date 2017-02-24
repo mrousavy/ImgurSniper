@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Clipboard = System.Windows.Clipboard;
 
 namespace ImgurSniper {
@@ -167,12 +168,12 @@ namespace ImgurSniper {
         }
 
         //Make Screenshot, Let user Crop, Upload Picture and Copy Link to Clipboard
-        private async void Crop(bool CloseOnFinish, bool FocusNewWindow) {
+        private async void Crop(bool closeOnFinish, bool focusNewWindow) {
             this.Visibility = Visibility.Visible;
             this.BringIntoView();
             this.Topmost = true;
 
-            ScreenshotWindow window = new ScreenshotWindow(FileIO.AllMonitors, FocusNewWindow);
+            ScreenshotWindow window = new ScreenshotWindow(FileIO.AllMonitors, focusNewWindow);
             window.ShowDialog();
 
             if(window.DialogResult == true) {
@@ -211,7 +212,7 @@ namespace ImgurSniper {
             }
 
             try {
-                if(CloseOnFinish)
+                if(closeOnFinish)
                     DelayedClose(0);
                 else
                     this.Visibility = Visibility.Hidden;
@@ -221,8 +222,8 @@ namespace ImgurSniper {
         }
 
         //Upload byte[] to imgur and give user a response
-        private async Task UploadImageToImgur(byte[] cimg, string WindowName) {
-            string link = await UploadImgur(cimg, WindowName);
+        private async Task UploadImageToImgur(byte[] cimg, string windowName) {
+            string link = await UploadImgur(cimg, windowName);
 
             if(link.StartsWith("http://")) {
                 Clipboard.SetText(link);
@@ -253,8 +254,8 @@ namespace ImgurSniper {
         }
 
         //Upload Image to Imgur and returns URL to Imgur
-        private async Task<string> UploadImgur(byte[] cimg, string WindowName) {
-            string response = await _imgur.Upload(cimg, WindowName);
+        private async Task<string> UploadImgur(byte[] cimg, string windowName) {
+            string response = await _imgur.Upload(cimg, windowName);
 
             //Copy Link to Clipboard
             Clipboard.SetText(response);
@@ -265,12 +266,12 @@ namespace ImgurSniper {
         //Parse byte[] to Image and write to Clipboard
         private void CopyClipboard(byte[] cimg) {
             //Parse byte[] to Images
-            var image = new System.Windows.Media.Imaging.BitmapImage();
-            using(var mem = new MemoryStream(cimg)) {
+            BitmapImage image = new BitmapImage();
+            using(MemoryStream mem = new MemoryStream(cimg)) {
                 mem.Position = 0;
                 image.BeginInit();
-                image.CreateOptions = System.Windows.Media.Imaging.BitmapCreateOptions.PreservePixelFormat;
-                image.CacheOption = System.Windows.Media.Imaging.BitmapCacheOption.OnLoad;
+                image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+                image.CacheOption = BitmapCacheOption.OnLoad;
                 image.UriSource = null;
                 image.StreamSource = mem;
                 image.EndInit();

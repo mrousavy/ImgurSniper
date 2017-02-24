@@ -19,6 +19,7 @@ namespace ImgurSniper.UI {
             public bool RunOnBoot = true;
             public bool ImgurAfterSnipe = true;
             public bool IsInContextMenu = false;
+            public int CurrentCommits = 999;
         }
 
         //Value whether Magnifying Glass should be enabled or not
@@ -185,6 +186,21 @@ namespace ImgurSniper.UI {
             set {
                 Settings settings = JsonConfig;
                 settings.IsInContextMenu = value;
+                JsonConfig = settings;
+            }
+        }
+        //Count of Commits for this ImgurSniper Version (for checking for Updates)
+        public static int CurrentCommits {
+            get {
+                try {
+                    return JsonConfig.CurrentCommits;
+                } catch {
+                    return 999;
+                }
+            }
+            set {
+                Settings settings = JsonConfig;
+                settings.CurrentCommits = value;
                 JsonConfig = settings;
             }
         }

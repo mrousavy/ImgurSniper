@@ -19,6 +19,7 @@ namespace ImgurSniper {
             public bool RunOnBoot = true;
             public bool ImgurAfterSnipe = true;
             public bool IsInContextMenu = false;
+            public int CurrentCommits = 999;
         }
 
         //Value whether Magnifying Glass should be enabled or not
