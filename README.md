@@ -16,7 +16,7 @@ Icon by [jinga](http://jinga.at)
 # How to use
 Press _Ctrl + Shift + X_ or _Print Screen_ (depending on your Preferences) to start **ImgurSniper** Snap Mode!
 **Easily capture and share a moment** by drawing a Rectangle with your _Mouse_ to automatically upload it to [Imgur](http://www.imgur.com)!
-Optionally, press **[SPACEBAR]** to _switch Mode_ and **paint on the Screen**!
+Optionally, press _Spacebar_ to _switch Mode_ and **paint on the Screen**!
 You can now **share the Link** that has been **copied to your Clipboard** with everyone!
 
 (To change the behavior of **ImgurSniper**, right-click the _Icon in your Tray_ and click **Settings**)
