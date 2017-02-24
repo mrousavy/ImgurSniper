@@ -32,43 +32,49 @@ namespace ImgurSniper {
 
         private bool _drag = false;
         private bool _enableMagnifyer = false;
+        private bool _focusOnLoad;
 
 
         public ScreenshotWindow(bool AllMonitors, bool Focus) {
             this.ShowActivated = false;
+            _focusOnLoad = Focus;
 
             InitializeComponent();
 
             Position(AllMonitors);
             //LoadConfig();
 
-            this.Loaded += async delegate {
-                this.CaptureMouse();
-                this.Topmost = true;
+            this.Loaded += WindowLoaded;
+        }
 
-                if(Focus) {
-                    this.Activate();
-                    this.Focus();
-                }
+        private async void WindowLoaded(object sender, RoutedEventArgs e) {
+            this.CaptureMouse();
+            this.Topmost = true;
 
-                HotKey escapeHotKey = new HotKey(ModifierKeys.None, Key.Escape, this);
-                escapeHotKey.HotKeyPressed += delegate {
-                    CloseSnap(false, 0);
-                    escapeHotKey.Dispose();
-                    escapeHotKey = null;
-                };
+            if(_focusOnLoad) {
+                this.Activate();
+                this.Focus();
+            }
 
-                HotKey ctrlAHotKey = new HotKey(ModifierKeys.Control, Key.A, this);
-                ctrlAHotKey.HotKeyPressed += delegate {
-                    SelectAllCmd();
-                    ctrlAHotKey.Dispose();
-                    ctrlAHotKey = null;
-                };
-
-                //Prevent short flash of Toast
-                await Task.Delay(100);
-                toast.Visibility = Visibility.Visible;
+            //Register Escape Hotkey
+            HotKey escapeHotKey = new HotKey(ModifierKeys.None, Key.Escape, this);
+            escapeHotKey.HotKeyPressed += delegate {
+                CloseSnap(false, 0);
+                escapeHotKey.Dispose();
+                escapeHotKey = null;
             };
+
+            //Register Ctrl + A Hotkey
+            HotKey ctrlAHotKey = new HotKey(ModifierKeys.Control, Key.A, this);
+            ctrlAHotKey.HotKeyPressed += delegate {
+                SelectAllCmd();
+                ctrlAHotKey.Dispose();
+                ctrlAHotKey = null;
+            };
+
+            //Prevent short flash of Toast
+            await Task.Delay(100);
+            toast.Visibility = Visibility.Visible;
         }
 
         //Position Window correctly
@@ -83,14 +89,22 @@ namespace ImgurSniper {
 
         //Load from config File (ImgurSniper.UI)
         private void LoadConfig() {
-            _enableMagnifyer = FileIO.MagnifyingGlassEnabled;
-            if(_enableMagnifyer) {
-                Magnifyer.Visibility = Visibility.Visible;
-                VisualBrush b = (VisualBrush)MagnifyingEllipse.Fill;
-                b.Visual = SnipperGrid;
-            }
+            //_enableMagnifyer = FileIO.MagnifyingGlassEnabled;
+            //if(_enableMagnifyer) {
+            //    Magnifyer.Visibility = Visibility.Visible;
+            //    VisualBrush b = (VisualBrush)MagnifyingEllipse.Fill;
+            //    b.Visual = SnipperGrid;
+            //}
         }
 
+        private Rectangle GetRectFromHandle(IntPtr whandle) {
+            Rectangle WindowSize;
+            WindowSize = WinAPI.GetWindowRectangle(whandle);
+
+            return WindowSize;
+        }
+
+        #region Rectangle Mouse Events
         //MouseDown Event
         private void StartDrawing(object sender, MouseButtonEventArgs e) {
             if(e.ChangedButton == MouseButton.Right) {
@@ -100,13 +114,6 @@ namespace ImgurSniper {
                 //Lock the from Point to the Mouse Position when started holding Mouse Button
                 from = e.GetPosition(this);
             }
-        }
-
-        private Rectangle GetRectFromHandle(IntPtr whandle) {
-            Rectangle WindowSize;
-            WindowSize = WinAPI.GetWindowRectangle(whandle);
-
-            return WindowSize;
         }
 
         //Perform Right click -> Screenshot Window on cursor pos
@@ -191,6 +198,38 @@ namespace ImgurSniper {
             //    $"x:{(int)e.GetPosition(this).X} | y:{(int)e.GetPosition(this).Y}";
         }
 
+        #endregion
+
+        #region Painting Mouse Events
+        private Point _startPos;
+
+        //Draw on the Window
+        private void Paint(object sender, MouseEventArgs e) {
+            if(e.LeftButton == MouseButtonState.Pressed) {
+                System.Windows.Shapes.Line line = new System.Windows.Shapes.Line();
+
+                line.Stroke = System.Windows.SystemColors.WindowFrameBrush;
+                line.X1 = _startPos.X;
+                line.Y1 = _startPos.Y;
+                line.X2 = e.GetPosition(this).X;
+                line.Y2 = e.GetPosition(this).Y;
+                line.Stroke = System.Windows.Media.Brushes.Red;
+                line.StrokeThickness = 5;
+
+                _startPos = e.GetPosition(this);
+
+                paintSurface.Children.Add(line);
+            }
+        }
+
+        //Mouse Down Event - Begin Painting
+        private void BeginPaint(object sender, MouseButtonEventArgs e) {
+            if(e.ButtonState == MouseButtonState.Pressed)
+                _startPos = e.GetPosition(this);
+        }
+        #endregion
+
+        #region Snap Helper
         //Finish drawing Rectangle
         private void FinishRectangle() {
             //Width (w) and Height (h) of dragged Rectangle
@@ -209,35 +248,6 @@ namespace ImgurSniper {
 
                 this.IsEnabled = false;
             }
-        }
-
-
-        //Set Magnifyer Position
-        public void Magnifier(Point pos) {
-            MagnifyerBrush.Viewbox = new Rect(pos.X - 25, pos.Y - 25, 50, 50);
-
-            double x = pos.X - 35;
-            double y = pos.Y - 80;
-
-            Magnifyer.Margin = new Thickness(x, y, this.Width - x - 70, this.Height - y - 70);
-        }
-
-        //Close Window with fade out animation
-        private async void CloseSnap(bool result, int delay) {
-            DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
-            anim.Completed += delegate {
-                try {
-                    DialogResult = result;
-                } catch {
-                    // ignored
-                }
-            };
-            anim.From = ContentGrid.Opacity;
-            anim.To = 0;
-
-            //Wait delay (ms) and then begin animation
-            await Task.Delay(TimeSpan.FromMilliseconds(delay));
-            ContentGrid.BeginAnimation(OpacityProperty, anim);
         }
 
         //Fade out window and shoot cropped screenshot
@@ -282,20 +292,6 @@ namespace ImgurSniper {
             }
         }
 
-        //Play Camera Shutter Sound
-        private static void PlayShutter() {
-            try {
-                MediaPlayer player = new MediaPlayer { Volume = 30 };
-
-                string path = System.IO.Path.Combine(FileIO._programFiles, "Resources\\Camera_Shutter.wav");
-
-                player.Open(new Uri(path));
-                player.Play();
-            } catch {
-                // ignored
-            }
-        }
-
         //"Crop" Rectangle
         private bool MakeImage(Rectangle size) {
             try {
@@ -317,6 +313,50 @@ namespace ImgurSniper {
             }
         }
 
+        //Close Window with fade out animation
+        private async void CloseSnap(bool result, int delay) {
+            DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
+            anim.Completed += delegate {
+                try {
+                    DialogResult = result;
+                } catch {
+                    // ignored
+                }
+            };
+            anim.From = ContentGrid.Opacity;
+            anim.To = 0;
+
+            //Wait delay (ms) and then begin animation
+            await Task.Delay(TimeSpan.FromMilliseconds(delay));
+            ContentGrid.BeginAnimation(OpacityProperty, anim);
+        }
+        #endregion
+
+        //Set Magnifyer Position (Not used, huge Performance cost)
+        public void Magnifier(Point pos) {
+            //MagnifyerBrush.Viewbox = new Rect(pos.X - 25, pos.Y - 25, 50, 50);
+
+            //double x = pos.X - 35;
+            //double y = pos.Y - 80;
+
+            //Magnifyer.Margin = new Thickness(x, y, this.Width - x - 70, this.Height - y - 70);
+        }
+
+        //Play Camera Shutter Sound
+        private static void PlayShutter() {
+            try {
+                MediaPlayer player = new MediaPlayer { Volume = 30 };
+
+                string path = System.IO.Path.Combine(FileIO._programFiles, "Resources\\Camera_Shutter.wav");
+
+                player.Open(new Uri(path));
+                player.Play();
+            } catch {
+                // ignored
+            }
+        }
+
+        //Make image of whole Window with Ctrl + A
         private void SelectAllCmd() {
             selectionRectangle.Margin = new Thickness(0);
 

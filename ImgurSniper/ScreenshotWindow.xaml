@@ -9,7 +9,15 @@
         mc:Ignorable="d" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize"
         Title="Snipe a Screenshot!" WindowStartupLocation="Manual"
         MouseDown="StartDrawing" MouseUp="ReleaseRectangle" MouseMove="DrawRectangle">
+
     <Grid>
+        <Canvas Name="paintSurface" MouseDown="BeginPaint" MouseMove="Paint" >
+            <Canvas.Background>
+                <SolidColorBrush Color="White" Opacity="0"/>
+            </Canvas.Background>
+        </Canvas>
+
+
         <Grid x:Name="grid">
             <Border x:Name="selectionRectangle" Margin="9999"
                 BorderBrush="DarkGray" BorderThickness="1">
@@ -29,12 +37,14 @@
                     </EventTrigger>
                 </Grid.Triggers>
 
-                <Grid x:Name="SnipperGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <!--Unnecessary Things commented out for Performance Reasons-->
+                
+                <!--<Grid x:Name="SnipperGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <Image Name="img" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Fill"/>
-
-                </Grid>
+                </Grid>-->
+                
                 <!--<Label VerticalAlignment="Top" HorizontalAlignment="Center" Background="Black" Foreground="White" Name="coords" Opacity="0.3">x:0 | y:0</Label>-->
-                <Grid x:Name="Magnifyer" Width="70" Height="70" Visibility="Collapsed" Margin="9999">
+                <!--<Grid x:Name="Magnifyer" Width="70" Height="70" Visibility="Collapsed" Margin="9999">
                     <Ellipse Stroke="Gray" x:Name="MagnifyingEllipse" Width="70" Height="70"
                  VerticalAlignment="Center" HorizontalAlignment="Center">
                         <Ellipse.Fill>
@@ -43,9 +53,9 @@
                         </Ellipse.Fill>
                     </Ellipse>
                     <Label FontSize="25" Opacity="0.8" VerticalAlignment="Center" HorizontalAlignment="Center">✛</Label>
-                </Grid>
+                </Grid>-->
 
-                <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="MagnifyedImage"/>
+                <!--<Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="MagnifyedImage"/>-->
             </Grid>
         </Grid>
 
