@@ -74,8 +74,11 @@ namespace ImgurSniper {
             }
         }
 
-        private void InitializeTray() {
+        private async void InitializeTray() {
             this.Visibility = Visibility.Hidden;
+
+            //Wait for Dispatcher to utilize (Apparently it won't work without a Delay)
+            await Task.Delay(1000);
 
             Key sKey = FileIO.ShortcutKey;
             bool usePrint = FileIO.UsePrint;
