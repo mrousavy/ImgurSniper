@@ -168,13 +168,14 @@ namespace ImgurSniper.UI {
             _commits = await github.Repository.Commit.GetAll("mrousavy", "ImgurSniper");
 
             try {
+                int currentCommits = FileIO.CurrentCommits;
                 //999 = value is unset
-                if(FileIO.CurrentCommits == 999) {
+                if(currentCommits == 999) {
                     FileIO.CurrentCommits = _commits.Count;
-                } else if(_commits.Count > FileIO.CurrentCommits) {
+                } else if(_commits.Count > currentCommits) {
                     //Newer Version is available
                     Btn_Update.Visibility = Visibility.Visible;
-                    success_toast.Show(str.updateAvailable, TimeSpan.FromSeconds(4));
+                    success_toast.Show(string.Format(str.updateAvailable, currentCommits, _commits.Count), TimeSpan.FromSeconds(4));
                 }
             } catch { }
         }

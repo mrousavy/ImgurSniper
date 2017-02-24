@@ -220,6 +220,6 @@
     <value>Update</value>
   </data>
   <data name="updateAvailable" xml:space="preserve">
-    <value>An ImgurSniper Update is available to download!</value>
+    <value>An ImgurSniper Update is available to download! (v{0}/{1})</value>
   </data>
 </root>

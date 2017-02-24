@@ -205,7 +205,7 @@
     <value>Aktualisieren</value>
   </data>
   <data name="updateAvailable" xml:space="preserve">
-    <value>Eine neuere Version von ImgurSniper ist verfügbar.</value>
+    <value>Eine neuere Version von ImgurSniper ist verfügbar. (v{0}/{1})</value>
   </data>
   <data name="useJPEG" xml:space="preserve">
     <value>.JPEG Format für Uploads benutzen (Niedrigere Qualität, Schneller)</value>

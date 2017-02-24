@@ -322,7 +322,7 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An ImgurSniper Update is available to download!.
+        ///   Looks up a localized string similar to An ImgurSniper Update is available to download! (v{0}/{1}).
         /// </summary>
         public static string updateAvailable {
             get {
