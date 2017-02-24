@@ -129,8 +129,14 @@
   <data name="copyClipboard" xml:space="preserve">
     <value>Bild in die Zwischenablage kopieren</value>
   </data>
+  <data name="couldNotDownload" xml:space="preserve">
+    <value>Fehler beim herunterladen!</value>
+  </data>
   <data name="curMonitor" xml:space="preserve">
     <value>Derzeitiger Bildschirm</value>
+  </data>
+  <data name="downloadingGitHub" xml:space="preserve">
+    <value>Von github.com/mrousavy/ImgurSniper herunterladen...</value>
   </data>
   <data name="enMagnifying" xml:space="preserve">
     <value>Lupe aktivieren</value>

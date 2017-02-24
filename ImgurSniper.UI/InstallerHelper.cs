@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using ImgurSniper.UI.Properties;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -58,7 +59,7 @@ namespace ImgurSniper.UI {
             using(WebClient client = new WebClient()) {
                 client.DownloadFileCompleted += DownloadCompleted;
 
-                _success.Show("Downloading from github.com/mrousavy/ImgurSniper...", TimeSpan.FromSeconds(2));
+                _success.Show(strings.downloadingGitHub, TimeSpan.FromSeconds(2));
 
                 client.DownloadFileAsync(new Uri(@"https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperSetup.zip?raw=true"),
                     file);
@@ -82,7 +83,7 @@ namespace ImgurSniper.UI {
             string extractTo = Path.Combine(_path, "ImgurSniperInstaller");
 
             if(!File.Exists(file)) {
-                _error.Show("Could not download ZIP Archive from github.com!",
+                _error.Show(strings.couldNotDownload,
                     TimeSpan.FromSeconds(5));
                 Process.Start("https://mrousavy.github.io/ImgurSniper");
                 _invoker.ChangeButtonState(true);

@@ -222,4 +222,10 @@
   <data name="updateAvailable" xml:space="preserve">
     <value>An ImgurSniper Update is available to download! (v{0}/{1})</value>
   </data>
+  <data name="couldNotDownload" xml:space="preserve">
+    <value>Could not download ZIP Archive from github.com!</value>
+  </data>
+  <data name="downloadingGitHub" xml:space="preserve">
+    <value>Downloading from github.com/mrousavy/ImgurSniper...</value>
+  </data>
 </root>

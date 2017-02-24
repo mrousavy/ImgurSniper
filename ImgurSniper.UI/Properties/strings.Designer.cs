@@ -97,11 +97,29 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not download ZIP Archive from github.com!.
+        /// </summary>
+        public static string couldNotDownload {
+            get {
+                return ResourceManager.GetString("couldNotDownload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to On current Monitor.
         /// </summary>
         public static string curMonitor {
             get {
                 return ResourceManager.GetString("curMonitor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloading from github.com/mrousavy/ImgurSniper....
+        /// </summary>
+        public static string downloadingGitHub {
+            get {
+                return ResourceManager.GetString("downloadingGitHub", resourceCulture);
             }
         }
         
