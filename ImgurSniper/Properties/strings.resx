@@ -132,9 +132,6 @@
   <data name="exit" xml:space="preserve">
     <value>Exit</value>
   </data>
-  <data name="hotkeyInUse" xml:space="preserve">
-    <value>Hotkey already in use</value>
-  </data>
   <data name="imgclipboard" xml:space="preserve">
     <value>Image was copied to your Clipboard!</value>
   </data>

@@ -5,20 +5,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImgurSniper" Cursor="Cross" Topmost="True" Background="Transparent"
-        ShowActivated="False" Focusable="False"
+        ShowActivated="False" Focusable="False" ShowInTaskbar="False"
         mc:Ignorable="d" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize"
-        Title="Snipe a Screenshot!" WindowStartupLocation="Manual"
-        MouseDown="StartDrawing" MouseUp="ReleaseRectangle" MouseMove="DrawRectangle">
+        Title="Snipe a Screenshot!" WindowStartupLocation="Manual">
 
     <Grid>
-        <Canvas Name="paintSurface" MouseDown="BeginPaint" MouseMove="Paint" >
-            <Canvas.Background>
-                <SolidColorBrush Color="White" Opacity="0"/>
-            </Canvas.Background>
-        </Canvas>
-
-
-        <Grid x:Name="grid">
+        <Grid x:Name="grid" MouseDown="StartDrawing" MouseUp="ReleaseRectangle" MouseMove="DrawRectangle">
             <Border x:Name="selectionRectangle" Margin="9999"
                 BorderBrush="DarkGray" BorderThickness="1">
                 <Rectangle Fill="Gray" Opacity="0.3"/>
@@ -38,11 +30,11 @@
                 </Grid.Triggers>
 
                 <!--Unnecessary Things commented out for Performance Reasons-->
-                
+
                 <!--<Grid x:Name="SnipperGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <Image Name="img" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Fill"/>
                 </Grid>-->
-                
+
                 <!--<Label VerticalAlignment="Top" HorizontalAlignment="Center" Background="Black" Foreground="White" Name="coords" Opacity="0.3">x:0 | y:0</Label>-->
                 <!--<Grid x:Name="Magnifyer" Width="70" Height="70" Visibility="Collapsed" Margin="9999">
                     <Ellipse Stroke="Gray" x:Name="MagnifyingEllipse" Width="70" Height="70"
@@ -57,6 +49,25 @@
 
                 <!--<Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="MagnifyedImage"/>-->
             </Grid>
+        </Grid>
+
+        <Canvas Name="PaintSurface" MouseDown="BeginPaint" MouseMove="Paint" IsEnabled="False">
+            <Canvas.Background>
+                <SolidColorBrush Color="White" Opacity="0"/>
+            </Canvas.Background>
+        </Canvas>
+
+        <Grid Name="SelectedMode" Opacity="0">
+            <StackPanel Orientation="Horizontal">
+                <Border Background="Gray" Name="DrawIcon">
+                    <Border.CornerRadius>12</Border.CornerRadius>
+                    <Image Source="Resources/draw.png" Width="50" Height="50"/>
+                </Border>
+                <Border Background="Transparent" Name="CropIcon">
+                    <Border.CornerRadius>12</Border.CornerRadius>
+                    <Image Source="Resources/crop.png" Width="50" Height="50"/>
+                </Border>
+            </StackPanel>
         </Grid>
 
         <toasty:Toasty x:Name="toast"

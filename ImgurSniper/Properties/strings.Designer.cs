@@ -106,15 +106,6 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hotkey already in use.
-        /// </summary>
-        internal static string hotkeyInUse {
-            get {
-                return ResourceManager.GetString("hotkeyInUse", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Image was copied to your Clipboard!.
         /// </summary>
         internal static string imgclipboard {

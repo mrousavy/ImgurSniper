@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:toasty="clr-namespace:Toast;assembly=Toast"
         xmlns:local="clr-namespace:ImgurSniper" AllowsTransparency="True"
-        ShowActivated="False" Focusable="False"
+        ShowActivated="False" Focusable="False" ShowInTaskbar="False"
         mc:Ignorable="d" WindowStyle="None" Background="Transparent" Topmost="True"
-        Visibility="Visible" ShowInTaskbar="False" WindowStartupLocation="Manual"
+        Visibility="Visible" WindowStartupLocation="Manual" Loaded="Window_Loaded"
         Title="Snipe a new Image" Height="30" Width="200" Opacity="1">
     <Grid x:Name="grid">
 

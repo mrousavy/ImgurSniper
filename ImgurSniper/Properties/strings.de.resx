@@ -132,9 +132,6 @@
   <data name="exit" xml:space="preserve">
     <value>Beenden</value>
   </data>
-  <data name="hotkeyInUse" xml:space="preserve">
-    <value>Hotkey ist schon in Verwendung</value>
-  </data>
   <data name="imgclipboard" xml:space="preserve">
     <value>Screenshot wurde in die Zwischenablage kopiert!</value>
   </data>

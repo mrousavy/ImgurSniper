@@ -1,9 +1,11 @@
-﻿using System;
+﻿using mrousavy;
+using System;
 using System.Drawing;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using Point = System.Windows.Point;
@@ -31,8 +33,9 @@ namespace ImgurSniper {
         public string HwndName;
 
         private bool _drag = false;
-        private bool _enableMagnifyer = false;
         private bool _focusOnLoad;
+        //Magnifyer for Performance reasons disabled
+        //private bool _enableMagnifyer = false;
 
 
         public ScreenshotWindow(bool AllMonitors, bool Focus) {
@@ -48,8 +51,18 @@ namespace ImgurSniper {
         }
 
         private async void WindowLoaded(object sender, RoutedEventArgs e) {
-            this.CaptureMouse();
+            //this.CaptureMouse();
+            //grid.CaptureMouse();
+            //PaintSurface.CaptureMouse();
+            selectionRectangle.CaptureMouse();
             this.Topmost = true;
+
+            Rectangle bounds = System.Windows.Forms.Screen.PrimaryScreen.Bounds;
+            SelectedMode.Margin = new Thickness(
+                (bounds.Width / 2) - 50,
+                (bounds.Height / 2) - 25,
+                (bounds.Width / 2) - 50,
+                (bounds.Height / 2) - 25);
 
             if(_focusOnLoad) {
                 this.Activate();
@@ -72,9 +85,24 @@ namespace ImgurSniper {
                 ctrlAHotKey = null;
             };
 
+            //Register Space Hotkey
+            HotKey spaceHotKey = new HotKey(ModifierKeys.None, Key.Space, this);
+            spaceHotKey.HotKeyPressed += delegate {
+                SwitchMode();
+            };
+
             //Prevent short flash of Toast
             await Task.Delay(100);
             toast.Visibility = Visibility.Visible;
+
+
+            //Hide in Alt + Tab Switcher View
+            WindowInteropHelper wndHelper = new WindowInteropHelper(this);
+
+            int exStyle = (int)WinAPI.GetWindowLong(wndHelper.Handle, (int)WinAPI.GetWindowLongFields.GWL_EXSTYLE);
+
+            exStyle |= (int)WinAPI.ExtendedWindowStyles.WS_EX_TOOLWINDOW;
+            WinAPI.SetWindowLong(wndHelper.Handle, (int)WinAPI.GetWindowLongFields.GWL_EXSTYLE, (IntPtr)exStyle);
         }
 
         //Position Window correctly
@@ -214,11 +242,12 @@ namespace ImgurSniper {
                 line.X2 = e.GetPosition(this).X;
                 line.Y2 = e.GetPosition(this).Y;
                 line.Stroke = System.Windows.Media.Brushes.Red;
+                line.Fill = System.Windows.Media.Brushes.Red;
                 line.StrokeThickness = 5;
 
                 _startPos = e.GetPosition(this);
 
-                paintSurface.Children.Add(line);
+                PaintSurface.Children.Add(line);
             }
         }
 
@@ -238,8 +267,9 @@ namespace ImgurSniper {
             int fromX = (int)Math.Min(from.X, to.X);
             int fromY = (int)Math.Min(from.Y, to.Y);
 
-            if(Math.Abs(to.X - from.X) < 7 || Math.Abs(to.Y - from.Y) < 7) {
+            if(Math.Abs(to.X - from.X) < 9 || Math.Abs(to.Y - from.Y) < 9) {
                 toast.Show(Properties.strings.imgSize, TimeSpan.FromSeconds(3.3));
+                selectionRectangle.Margin = new Thickness(99999);
             } else {
                 this.Cursor = Cursors.Arrow;
 
@@ -282,7 +312,7 @@ namespace ImgurSniper {
             int h = toY - fromY;
 
             //Assuming from Point is already top left and not bottom right
-            bool result = MakeImage(new System.Drawing.Rectangle(fromX, fromY, w, h));
+            bool result = MakeImage(new Rectangle(fromX, fromY, w, h));
 
             if(!result) {
                 toast.Show(Properties.strings.whoops, TimeSpan.FromSeconds(3.3));
@@ -323,12 +353,12 @@ namespace ImgurSniper {
                     // ignored
                 }
             };
-            anim.From = ContentGrid.Opacity;
+            anim.From = this.Opacity;
             anim.To = 0;
 
             //Wait delay (ms) and then begin animation
             await Task.Delay(TimeSpan.FromMilliseconds(delay));
-            ContentGrid.BeginAnimation(OpacityProperty, anim);
+            this.BeginAnimation(OpacityProperty, anim);
         }
         #endregion
 
@@ -340,6 +370,49 @@ namespace ImgurSniper {
             //double y = pos.Y - 80;
 
             //Magnifyer.Margin = new Thickness(x, y, this.Width - x - 70, this.Height - y - 70);
+        }
+
+        //Switch between Rectangle Snapping and Painting
+        private void SwitchMode() {
+            grid.IsEnabled = !grid.IsEnabled;
+            PaintSurface.IsEnabled = !PaintSurface.IsEnabled;
+
+            //Stop animations by setting AnimationTimeline to null
+            SelectedMode.BeginAnimation(OpacityProperty, null);
+
+            //Set correct Selected Mode Indicator
+            if(grid.IsEnabled) {
+                grid.CaptureMouse();
+                CropIcon.Background = System.Windows.Media.Brushes.Gray;
+                DrawIcon.Background = System.Windows.Media.Brushes.Transparent;
+            } else {
+                PaintSurface.CaptureMouse();
+                DrawIcon.Background = System.Windows.Media.Brushes.Gray;
+                CropIcon.Background = System.Windows.Media.Brushes.Transparent;
+            }
+
+            //Fade Selected Mode View in
+            FadeSelectedModeIn();
+        }
+
+        //Fade the Selected Mode (Drawing/Rectangle) in
+        private void FadeSelectedModeIn() {
+            DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
+            anim.Completed += FadeSelectedModeOut;
+            anim.From = SelectedMode.Opacity;
+            anim.To = 0.7;
+
+            SelectedMode.BeginAnimation(OpacityProperty, anim);
+        }
+
+        //Fade the Selected Mode (Drawing/Rectangle) out
+        private void FadeSelectedModeOut(object sender, EventArgs e) {
+            DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
+            anim.BeginTime = TimeSpan.FromMilliseconds(1000);
+            anim.From = SelectedMode.Opacity;
+            anim.To = 0;
+
+            SelectedMode.BeginAnimation(OpacityProperty, anim);
         }
 
         //Play Camera Shutter Sound

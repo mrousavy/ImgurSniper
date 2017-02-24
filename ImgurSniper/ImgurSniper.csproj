@@ -79,6 +79,10 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Hotkeys, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GlobalHotkeys.1.0.0.6\lib\Hotkeys.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Imgur.API, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Imgur.API.4.0.1\lib\net45\Imgur.API.dll</HintPath>
       <Private>True</Private>
@@ -136,8 +140,6 @@
     </Compile>
     <Compile Include="Cipher.cs" />
     <Compile Include="FileIO.cs" />
-    <Compile Include="HotKey.cs" />
-    <Compile Include="HotKeyWinApi.cs" />
     <Compile Include="ImgurIO.cs" />
     <Compile Include="Screenshot.cs" />
     <Compile Include="ScreenshotWindow.xaml.cs">
@@ -199,6 +201,16 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\crop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\draw.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

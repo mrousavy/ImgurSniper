@@ -1,10 +1,12 @@
-﻿using System;
+﻿using mrousavy;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Clipboard = System.Windows.Clipboard;
@@ -26,14 +28,23 @@ namespace ImgurSniper {
 
             Position();
 
-            this.Loaded += async delegate {
-                //Prevent short flash of Toasts
-                await Task.Delay(100);
-                ErrorToast.Visibility = Visibility.Visible;
-                SuccessToast.Visibility = Visibility.Visible;
-            };
-
             Start();
+        }
+
+        private async void Window_Loaded(object sender, RoutedEventArgs e) {
+            //Prevent short flash of Toasts
+            await Task.Delay(100);
+            ErrorToast.Visibility = Visibility.Visible;
+            SuccessToast.Visibility = Visibility.Visible;
+
+
+            //Hide in Alt + Tab Switcher View
+            WindowInteropHelper wndHelper = new WindowInteropHelper(this);
+
+            int exStyle = (int)WinAPI.GetWindowLong(wndHelper.Handle, (int)WinAPI.GetWindowLongFields.GWL_EXSTYLE);
+
+            exStyle |= (int)WinAPI.ExtendedWindowStyles.WS_EX_TOOLWINDOW;
+            WinAPI.SetWindowLong(wndHelper.Handle, (int)WinAPI.GetWindowLongFields.GWL_EXSTYLE, (IntPtr)exStyle);
         }
 
         private void Start() {
