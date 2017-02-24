@@ -13,19 +13,11 @@ using Toast;
 namespace ImgurSniper.UI {
     public class InstallerHelper {
 
-        private string _path;
-        private string _downloads;
-        private Toasty _error, _success;
-        private MainWindow invoker;
-
-        private string _docPath {
-            get {
-                string value = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper");
-                if(!Directory.Exists(value))
-                    Directory.CreateDirectory(value);
-                return value;
-            }
-        }
+        private readonly string _path;
+        private readonly string _downloads;
+        private readonly Toasty _error;
+        private readonly Toasty _success;
+        private readonly MainWindow _invoker;
 
         public InstallerHelper(string path, Toasty errorToast, Toasty successToast, MainWindow invoker) {
             _path = path;
@@ -33,7 +25,7 @@ namespace ImgurSniper.UI {
                 SHGetKnownFolderPath(KnownFolder.Downloads, 0, IntPtr.Zero, out _downloads);
             } catch { }
 
-            this.invoker = invoker;
+            this._invoker = invoker;
             _error = errorToast;
             _success = successToast;
         }
@@ -93,6 +85,7 @@ namespace ImgurSniper.UI {
                 _error.Show("Could not download ZIP Archive from github.com!",
                     TimeSpan.FromSeconds(5));
                 Process.Start("https://mrousavy.github.io/ImgurSniper");
+                _invoker.ChangeButtonState(true);
             } else {
                 Extract(file, extractTo);
                 Process.Start(Path.Combine(extractTo, "ImgurSniperSetup.msi"));

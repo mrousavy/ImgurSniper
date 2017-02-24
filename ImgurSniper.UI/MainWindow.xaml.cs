@@ -11,7 +11,7 @@ using str = ImgurSniper.UI.Properties.strings;
 
 namespace ImgurSniper.UI {
     public partial class MainWindow : Window {
-        public InstallerHelper helper;
+        public InstallerHelper Helper;
 
         //Path to Program Files/ImgurSniper Folder
         private static string Path => AppDomain.CurrentDomain.BaseDirectory;
@@ -54,14 +54,10 @@ namespace ImgurSniper.UI {
             InitializeComponent();
             this.Closing += WindowClosing;
 
-            if(!Directory.Exists(Path)) {
-                Directory.CreateDirectory(Path);
-            }
-
             if(!Directory.Exists(DocPath))
                 Directory.CreateDirectory(DocPath);
 
-            helper = new InstallerHelper(Path, error_toast, success_toast, this);
+            Helper = new InstallerHelper(DocPath, error_toast, success_toast, this);
             _imgurhelper = new ImgurLoginHelper(error_toast, success_toast);
 
             error_toast.Show(str.loading, TimeSpan.FromSeconds(2));
@@ -73,7 +69,7 @@ namespace ImgurSniper.UI {
             PathBox.Text = DocPath;
 
             if(!FileIO.IsInContextMenu) {
-                helper.AddToContextMenu();
+                Helper.AddToContextMenu();
                 FileIO.IsInContextMenu = true;
             }
 
@@ -113,7 +109,7 @@ namespace ImgurSniper.UI {
                 //Run ImgurSniper on boot
                 if(RunOnBoot) {
                     this.RunOnBoot.IsChecked = true;
-                    helper.Autostart(true);
+                    Helper.Autostart(true);
                 }
 
                 //Enable or Disable Magnifying Glass (WIP)
@@ -279,7 +275,7 @@ namespace ImgurSniper.UI {
                     }
 
 
-                    helper.Autostart(box.IsChecked);
+                    Helper.Autostart(box.IsChecked);
                 } catch { }
             }
         }
@@ -327,7 +323,7 @@ namespace ImgurSniper.UI {
 
             FileIO.CurrentCommits = _commits.Count;
 
-            helper.Update();
+            Helper.Update();
         }
         private void SignIn(object sender, RoutedEventArgs e) {
             try {
