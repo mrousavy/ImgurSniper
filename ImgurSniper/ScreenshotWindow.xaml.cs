@@ -183,12 +183,12 @@ namespace ImgurSniper {
 
             DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
 
-            anim.Completed += async delegate {
+            anim.Completed += delegate {
                 this.Topmost = false;
                 this.Opacity = 0;
 
                 //For render complete
-                await Task.Delay(250);
+                Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.ContextIdle, null);
 
                 WinAPI.POINT point;
                 WinAPI.User32.GetCursorPos(out point);
@@ -317,10 +317,10 @@ namespace ImgurSniper {
         private void Complete(int fromX, int fromY, int toX, int toY) {
             DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
 
-            anim.Completed += async delegate {
+            anim.Completed += delegate {
                 grid.Opacity = 0;
                 //For render complete
-                await Task.Delay(50);
+                Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.ContextIdle, null);
 
                 Crop(fromX, fromY, toX, toY);
             };
@@ -388,9 +388,9 @@ namespace ImgurSniper {
             };
             anim.From = this.Opacity;
             anim.To = 0;
-
             //Wait delay (ms) and then begin animation
-            await Task.Delay(TimeSpan.FromMilliseconds(delay));
+            anim.BeginTime = TimeSpan.FromMilliseconds(delay);
+            
             this.BeginAnimation(OpacityProperty, anim);
         }
         #endregion
