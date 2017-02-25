@@ -8,7 +8,7 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("ImgurSniper")]
-[assembly: AssemblyDescription("Crop out Screenshots and Upload automatically to Imgur")]
+[assembly: AssemblyDescription("A tool to make sharing Images/Screenshots faster and easier!")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("mrousavy")]
 [assembly: AssemblyProduct("ImgurSniper")]
@@ -51,5 +51,5 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.3.3")]
-[assembly: AssemblyFileVersion("1.0.3.3")]
+[assembly: AssemblyVersion("1.0.3.4")]
+[assembly: AssemblyFileVersion("1.0.3.4")]

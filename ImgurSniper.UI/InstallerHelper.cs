@@ -15,13 +15,15 @@ namespace ImgurSniper.UI {
     public class InstallerHelper {
 
         private readonly string _path;
+        private readonly string _docPath;
         private readonly string _downloads;
         private readonly Toasty _error;
         private readonly Toasty _success;
         private readonly MainWindow _invoker;
 
-        public InstallerHelper(string path, Toasty errorToast, Toasty successToast, MainWindow invoker) {
+        public InstallerHelper(string path, string docPath, Toasty errorToast, Toasty successToast, MainWindow invoker) {
             _path = path;
+            _docPath = docPath;
             try {
                 SHGetKnownFolderPath(KnownFolder.Downloads, 0, IntPtr.Zero, out _downloads);
             } catch { }
@@ -36,7 +38,7 @@ namespace ImgurSniper.UI {
         }
 
         public void AddToContextMenu() {
-            string addPath = Path.Combine(_path, "AddToContextMenu.exe");
+            string addPath = Path.Combine(_docPath, "AddToContextMenu.exe");
 
             if(!File.Exists(addPath))
                 return;
@@ -55,7 +57,7 @@ namespace ImgurSniper.UI {
         /// </summary>
         /// <param name="path">The path to save the zip to</param>
         private void Download() {
-            string file = Path.Combine(_path, "ImgurSniperSetup.zip");
+            string file = Path.Combine(_docPath, "ImgurSniperSetup.zip");
             using(WebClient client = new WebClient()) {
                 client.DownloadFileCompleted += DownloadCompleted;
 
@@ -79,8 +81,8 @@ namespace ImgurSniper.UI {
         }
 
         private void DownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) {
-            string file = Path.Combine(_path, "ImgurSniperSetup.zip");
-            string extractTo = Path.Combine(_path, "ImgurSniperInstaller");
+            string file = Path.Combine(_docPath, "ImgurSniperSetup.zip");
+            string extractTo = Path.Combine(_docPath, "ImgurSniperInstaller");
 
             if(!File.Exists(file)) {
                 _error.Show(strings.couldNotDownload,
@@ -148,7 +150,7 @@ namespace ImgurSniper.UI {
         //                    key?.Close();
         //                }
         //            } catch  {
-        //                _error.Show("Could not create Uninstaller for ImgurSniper! You will have to remove the Files manually (from " + _path + ")",
+        //                _error.Show("Could not create Uninstaller for ImgurSniper! You will have to remove the Files manually (from " + _docPath + ")",
         //                    TimeSpan.FromSeconds(5));
         //            }
         //        }

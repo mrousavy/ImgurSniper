@@ -69,27 +69,60 @@ namespace ImgurSniper {
                 this.Focus();
             }
 
-            //Register Escape Hotkey
-            HotKey escapeHotKey = new HotKey(ModifierKeys.None, Key.Escape, this);
-            escapeHotKey.HotKeyPressed += delegate {
-                CloseSnap(false, 0);
-                escapeHotKey.Dispose();
-                escapeHotKey = null;
-            };
+            #region Escape
+            try {
+                //Register Global Escape Hotkey
+                HotKey escapeHotKey = new HotKey(ModifierKeys.None, Key.Escape, this);
+                escapeHotKey.HotKeyPressed += delegate {
+                    CloseSnap(false, 0);
+                    escapeHotKey.Dispose();
+                    escapeHotKey = null;
+                };
+            } catch {
+                //Register Escape Hotkey for this Window if Global Hotkey fails
+                this.KeyDown += (o, ke) => {
+                    if(ke.Key == Key.Escape) {
+                        CloseSnap(false, 0);
+                    }
+                };
+            }
+            #endregion
 
-            //Register Ctrl + A Hotkey
-            HotKey ctrlAHotKey = new HotKey(ModifierKeys.Control, Key.A, this);
-            ctrlAHotKey.HotKeyPressed += delegate {
-                SelectAllCmd();
-                ctrlAHotKey.Dispose();
-                ctrlAHotKey = null;
-            };
+            #region Ctrl A
+            try {
+                //Register Global Ctrl + A Hotkey
+                HotKey ctrlAHotKey = new HotKey(ModifierKeys.Control, Key.A, this);
+                ctrlAHotKey.HotKeyPressed += delegate {
+                    SelectAllCmd();
+                    ctrlAHotKey.Dispose();
+                    ctrlAHotKey = null;
+                };
+            } catch {
+                //Register Ctrl + A Hotkey for this Window if Global Hotkey fails
+                this.KeyDown += (o, ke) => {
+                    if(((System.Windows.Forms.Control.ModifierKeys & System.Windows.Forms.Keys.Control) == System.Windows.Forms.Keys.Control)) {
+                        SelectAllCmd();
+                    }
+                };
+            }
+            #endregion
 
-            //Register Space Hotkey
-            HotKey spaceHotKey = new HotKey(ModifierKeys.None, Key.Space, this);
-            spaceHotKey.HotKeyPressed += delegate {
-                SwitchMode();
-            };
+            #region Space
+            try {
+                //Register Space Hotkey
+                HotKey spaceHotKey = new HotKey(ModifierKeys.None, Key.Space, this);
+                spaceHotKey.HotKeyPressed += delegate {
+                    SwitchMode();
+                };
+            } catch {
+                //Register Space Hotkey for this Window if Global Hotkey fails
+                this.KeyDown += (o, ke) => {
+                    if(ke.Key == Key.Space) {
+                        SwitchMode();
+                    }
+                };
+            }
+            #endregion
 
             //Prevent short flash of Toast
             await Task.Delay(100);
@@ -236,7 +269,6 @@ namespace ImgurSniper {
             if(e.LeftButton == MouseButtonState.Pressed) {
                 System.Windows.Shapes.Line line = new System.Windows.Shapes.Line();
 
-                line.Stroke = System.Windows.SystemColors.WindowFrameBrush;
                 line.X1 = _startPos.X;
                 line.Y1 = _startPos.Y;
                 line.X2 = e.GetPosition(this).X;
@@ -253,8 +285,9 @@ namespace ImgurSniper {
 
         //Mouse Down Event - Begin Painting
         private void BeginPaint(object sender, MouseButtonEventArgs e) {
-            if(e.ButtonState == MouseButtonState.Pressed)
+            if(e.ButtonState == MouseButtonState.Pressed) {
                 _startPos = e.GetPosition(this);
+            }
         }
         #endregion
 

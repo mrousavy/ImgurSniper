@@ -57,7 +57,7 @@ namespace ImgurSniper.UI {
             if(!Directory.Exists(DocPath))
                 Directory.CreateDirectory(DocPath);
 
-            Helper = new InstallerHelper(DocPath, error_toast, success_toast, this);
+            Helper = new InstallerHelper(Path, DocPath, error_toast, success_toast, this);
             _imgurhelper = new ImgurLoginHelper(error_toast, success_toast);
 
             error_toast.Show(str.loading, TimeSpan.FromSeconds(2));
