@@ -228,4 +228,7 @@
   <data name="downloadingGitHub" xml:space="preserve">
     <value>Downloading from github.com/mrousavy/ImgurSniper...</value>
   </data>
+  <data name="failedUpdate" xml:space="preserve">
+    <value>Could not retrieve Version/Update info from GitHub!</value>
+  </data>
 </root>

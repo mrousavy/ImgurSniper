@@ -141,6 +141,9 @@
   <data name="enMagnifying" xml:space="preserve">
     <value>Lupe aktivieren</value>
   </data>
+  <data name="failedUpdate" xml:space="preserve">
+    <value>Fehler beim Laden von Version/Update Info von GitHub!</value>
+  </data>
   <data name="imgFormat" xml:space="preserve">
     <value>Bild Format</value>
   </data>

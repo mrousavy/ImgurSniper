@@ -180,7 +180,7 @@ namespace ImgurSniper.UI {
                     }
                 }
             } catch {
-                error_toast.Show("Could not retrieve Version/Update info from GitHub!", TimeSpan.FromSeconds(3));
+                error_toast.Show(str.failedUpdate, TimeSpan.FromSeconds(3));
             }
         }
 

@@ -133,6 +133,15 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not retrieve Version/Update info from GitHub!.
+        /// </summary>
+        public static string failedUpdate {
+            get {
+                return ResourceManager.GetString("failedUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Image Format.
         /// </summary>
         public static string imgFormat {
