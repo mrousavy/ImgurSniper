@@ -283,7 +283,7 @@ namespace ImgurSniper {
                 line.Y2 = e.GetPosition(this).Y;
                 line.Stroke = System.Windows.Media.Brushes.Red;
                 line.Fill = System.Windows.Media.Brushes.Red;
-                line.StrokeThickness = 5;
+                line.StrokeThickness = 3;
 
                 _startPos = e.GetPosition(this);
 
