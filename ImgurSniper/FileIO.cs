@@ -20,6 +20,7 @@ namespace ImgurSniper {
             public bool ImgurAfterSnipe = true;
             public bool IsInContextMenu = false;
             public int CurrentCommits = 999;
+            public DateTime LastChecked = DateTime.Now;
         }
 
         //Value whether Magnifying Glass should be enabled or not
@@ -186,6 +187,21 @@ namespace ImgurSniper {
             set {
                 Settings settings = JsonConfig;
                 settings.IsInContextMenu = value;
+                JsonConfig = settings;
+            }
+        }
+        //Last Time, ImgurSniper checked for Updates
+        public static DateTime LastChecked {
+            get {
+                try {
+                    return JsonConfig.LastChecked;
+                } catch {
+                    return DateTime.Now;
+                }
+            }
+            set {
+                Settings settings = JsonConfig;
+                settings.LastChecked = value;
                 JsonConfig = settings;
             }
         }

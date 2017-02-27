@@ -159,21 +159,29 @@ namespace ImgurSniper.UI {
                 PathPanel.IsEnabled = (bool)SaveBox.IsChecked;
             }
 
-            //Retrieve info from github
-            GitHubClient github = new GitHubClient(new ProductHeaderValue("ImgurSniper"));
-            _commits = await github.Repository.Commit.GetAll("mrousavy", "ImgurSniper");
-
             try {
-                int currentCommits = FileIO.CurrentCommits;
-                //999 = value is unset
-                if(currentCommits == 999) {
-                    FileIO.CurrentCommits = _commits.Count;
-                } else if(_commits.Count > currentCommits) {
-                    //Newer Version is available
-                    Btn_Update.Visibility = Visibility.Visible;
-                    success_toast.Show(string.Format(str.updateAvailable, currentCommits, _commits.Count), TimeSpan.FromSeconds(4));
+                //Check for Update, if last update is longer than 2 Days ago
+                if(DateTime.Now - FileIO.LastChecked > TimeSpan.FromDays(2)) {
+                    FileIO.LastChecked = DateTime.Now;
+
+                    //Retrieve info from github
+                    GitHubClient github = new GitHubClient(new ProductHeaderValue("ImgurSniper"));
+                    _commits = await github.Repository.Commit.GetAll("mrousavy", "ImgurSniper");
+
+                    int currentCommits = FileIO.CurrentCommits;
+                    //999 = value is unset
+                    if(currentCommits == 999) {
+                        FileIO.CurrentCommits = _commits.Count;
+                    } else if(_commits.Count > currentCommits) {
+                        //Newer Version is available
+                        Btn_Update.Visibility = Visibility.Visible;
+                        success_toast.Show(string.Format(str.updateAvailable, currentCommits, _commits.Count),
+                            TimeSpan.FromSeconds(4));
+                    }
                 }
-            } catch { }
+            } catch {
+                error_toast.Show("Could not retrieve Version/Update info from GitHub!", TimeSpan.FromSeconds(3));
+            }
         }
 
         #region Action Listeners
@@ -323,7 +331,7 @@ namespace ImgurSniper.UI {
 
             FileIO.CurrentCommits = _commits.Count;
 
-            Helper.Update();
+            Helper.Update(sender as Button);
         }
         private void SignIn(object sender, RoutedEventArgs e) {
             try {

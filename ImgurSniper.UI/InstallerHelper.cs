@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Controls;
 using Toast;
 
 namespace ImgurSniper.UI {
@@ -33,8 +34,8 @@ namespace ImgurSniper.UI {
             _success = successToast;
         }
 
-        public void Update() {
-            Download();
+        public void Update(Button sender) {
+            Download(sender);
         }
 
         public void AddToContextMenu() {
@@ -56,10 +57,19 @@ namespace ImgurSniper.UI {
         /// Download the ImgurSniper Archive from github
         /// </summary>
         /// <param name="path">The path to save the zip to</param>
-        private void Download() {
+        private void Download(Button sender) {
             string file = Path.Combine(_docPath, "ImgurSniperSetup.zip");
+
+            if(File.Exists(file)) {
+                File.Delete(file);
+            }
+
             using(WebClient client = new WebClient()) {
                 client.DownloadFileCompleted += DownloadCompleted;
+
+                client.DownloadProgressChanged += (o, e) => {
+                    sender.Content = strings.update + "(" + e.ProgressPercentage + "%)";
+                };
 
                 _success.Show(strings.downloadingGitHub, TimeSpan.FromSeconds(2));
 
@@ -103,6 +113,9 @@ namespace ImgurSniper.UI {
         /// <param name="path">The path of the Folder</param>
         private static void Extract(string file, string path) {
             using(ZipArchive archive = new ZipArchive(new FileStream(file, FileMode.Open))) {
+                if(Directory.Exists(path))
+                    Directory.Delete(path);
+
                 archive.ExtractToDirectory(path);
             }
         }
