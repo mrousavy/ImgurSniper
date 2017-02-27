@@ -1,6 +1,7 @@
 ﻿using mrousavy;
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -160,8 +161,7 @@ namespace ImgurSniper {
         }
 
         private Rectangle GetRectFromHandle(IntPtr whandle) {
-            Rectangle WindowSize;
-            WindowSize = WinAPI.GetWindowRectangle(whandle);
+            Rectangle WindowSize = WinAPI.GetWindowRectangle(whandle);
 
             return WindowSize;
         }
@@ -271,23 +271,16 @@ namespace ImgurSniper {
 
         #region Painting Mouse Events
         private Point _startPos;
+        private System.Windows.Shapes.Path _currentPath;
 
         //Draw on the Window
         private void Paint(object sender, MouseEventArgs e) {
             if(e.LeftButton == MouseButtonState.Pressed) {
-                System.Windows.Shapes.Line line = new System.Windows.Shapes.Line();
+                if(_currentPath == null)
+                    return;
 
-                line.X1 = _startPos.X;
-                line.Y1 = _startPos.Y;
-                line.X2 = e.GetPosition(this).X;
-                line.Y2 = e.GetPosition(this).Y;
-                line.Stroke = System.Windows.Media.Brushes.Red;
-                line.Fill = System.Windows.Media.Brushes.Red;
-                line.StrokeThickness = 3;
-
-                _startPos = e.GetPosition(this);
-
-                PaintSurface.Children.Add(line);
+                PolyLineSegment pls = (PolyLineSegment)((PathGeometry)_currentPath.Data).Figures.Last().Segments.Last();
+                pls.Points.Add(e.GetPosition(this));
             }
         }
 
@@ -295,7 +288,27 @@ namespace ImgurSniper {
         private void BeginPaint(object sender, MouseButtonEventArgs e) {
             if(e.ButtonState == MouseButtonState.Pressed) {
                 _startPos = e.GetPosition(this);
+
+
+                _currentPath = new System.Windows.Shapes.Path {
+                    Data = new PathGeometry {
+                        Figures = { new PathFigure
+                    {
+                        StartPoint = _startPos,
+                        Segments = { new PolyLineSegment() }
+                    }}
+                    },
+                    Stroke = new SolidColorBrush(Colors.Red),
+                    StrokeThickness = 4
+                };
+
+                PaintSurface.Children.Add(_currentPath);
             }
+        }
+
+        //Mouse Up Event - Stop Painting
+        private void StopPaint(object sender, MouseButtonEventArgs e) {
+            _currentPath = null;
         }
         #endregion
 

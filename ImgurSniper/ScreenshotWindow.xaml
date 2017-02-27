@@ -51,7 +51,7 @@
             </Grid>
         </Grid>
 
-        <Canvas Name="PaintSurface" MouseDown="BeginPaint" MouseMove="Paint" IsEnabled="False">
+        <Canvas Name="PaintSurface" MouseDown="BeginPaint" MouseMove="Paint" MouseUp="StopPaint" IsEnabled="False">
             <Canvas.Background>
                 <SolidColorBrush Color="White" Opacity="0"/>
             </Canvas.Background>
