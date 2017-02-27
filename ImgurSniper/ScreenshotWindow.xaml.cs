@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 using Point = System.Windows.Point;
 
 //TODO: Fix for different Resolution users
@@ -377,7 +378,7 @@ namespace ImgurSniper {
         }
 
         //Close Window with fade out animation
-        private async void CloseSnap(bool result, int delay) {
+        private void CloseSnap(bool result, int delay) {
             DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
             anim.Completed += delegate {
                 try {
@@ -390,7 +391,7 @@ namespace ImgurSniper {
             anim.To = 0;
             //Wait delay (ms) and then begin animation
             anim.BeginTime = TimeSpan.FromMilliseconds(delay);
-            
+
             this.BeginAnimation(OpacityProperty, anim);
         }
         #endregion
