@@ -19,6 +19,7 @@ namespace ImgurSniper {
         private string _dir;
         private ImgurIO _imgur;
         private NotifyIcon _nicon;
+        private int _counter = 0;
 
 
         public Snipe() {
@@ -186,6 +187,8 @@ namespace ImgurSniper {
             this.Visibility = Visibility.Visible;
             this.BringIntoView();
             this.Topmost = true;
+            _counter++;
+            int local = _counter;
 
             ScreenshotWindow window = new ScreenshotWindow(FileIO.AllMonitors, focusNewWindow);
             window.ShowDialog();
@@ -226,10 +229,13 @@ namespace ImgurSniper {
             }
 
             try {
-                if(closeOnFinish)
+                if(closeOnFinish) {
                     DelayedClose(0);
-                else
-                    this.Visibility = Visibility.Hidden;
+                } else {
+                    if(local == _counter) {
+                        this.Visibility = Visibility.Hidden;
+                    }
+                }
             } catch {
                 System.Windows.Application.Current.Shutdown();
             }

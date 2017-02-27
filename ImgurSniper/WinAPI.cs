@@ -55,6 +55,13 @@ namespace ImgurSniper {
             return result == 0;
         }
 
+
+        public static readonly IntPtr HWND_BOTTOM = new IntPtr(1);
+        public const UInt32 SWP_NOSIZE = 0x0001;
+        public const UInt32 SWP_NOMOVE = 0x0002;
+        public const UInt32 SWP_NOACTIVATE = 0x0010;
+
+
         public static bool GetBorderSize(IntPtr handle, out Size size) {
             WINDOWINFO wi = new WINDOWINFO();
 
@@ -113,6 +120,10 @@ namespace ImgurSniper {
         /// Helper class containing User32 API functions
         /// </summary>
         public static class User32 {
+
+            [DllImport("user32.dll")]
+            public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+
             [DllImport("user32.dll")]
             public static extern IntPtr GetWindow(IntPtr hWnd, GetWindowConstants wCmd);
 

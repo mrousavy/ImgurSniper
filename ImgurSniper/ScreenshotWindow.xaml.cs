@@ -169,18 +169,24 @@ namespace ImgurSniper {
         #region Rectangle Mouse Events
         //MouseDown Event
         private void StartDrawing(object sender, MouseButtonEventArgs e) {
-            if(e.ChangedButton == MouseButton.Right) {
-                //!!Not yet fully implemented
-                RightClick();
-            } else if(e.ChangedButton == MouseButton.Left) {
-                //Lock the from Point to the Mouse Position when started holding Mouse Button
-                from = e.GetPosition(this);
+            switch(e.ChangedButton) {
+                case MouseButton.Right:
+                    //!!Not yet fully implemented
+                    RightClick();
+                    break;
+                case MouseButton.Left:
+                    //Lock the from Point to the Mouse Position when started holding Mouse Button
+                    @from = e.GetPosition(this);
+                    break;
             }
         }
 
         //Perform Right click -> Screenshot Window on cursor pos
         private void RightClick() {
             this.Cursor = Cursors.Hand;
+
+            WinAPI.POINT point;
+            WinAPI.User32.GetCursorPos(out point);
 
             DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
 
@@ -191,8 +197,9 @@ namespace ImgurSniper {
                 //For render complete
                 Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.ContextIdle, null);
 
-                WinAPI.POINT point;
-                WinAPI.User32.GetCursorPos(out point);
+                //Send Window to back, so WinAPI.User32.WindowFromPoint does not detect ImgurSniper as Window
+                WinAPI.User32.SetWindowPos(new WindowInteropHelper(this).Handle, WinAPI.HWND_BOTTOM, 0, 0, 0, 0, WinAPI.SWP_NOMOVE | WinAPI.SWP_NOSIZE | WinAPI.SWP_NOACTIVATE);
+
                 IntPtr whandle = WinAPI.User32.WindowFromPoint(point);
 
                 WinAPI.User32.SetForegroundWindow(whandle);
