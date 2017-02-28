@@ -9,25 +9,21 @@ using System.Linq;
 namespace Cleanup {
 
     class Program {
-        public static string _programFiles => AppDomain.CurrentDomain.BaseDirectory;
-
-        private static string _docPath {
-            get {
-                string value = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper");
-                if(!Directory.Exists(value))
-                    Directory.CreateDirectory(value);
-                return value;
-            }
-        }
+        private static string DocPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper");
 
         static void Main(string[] args) {
-            Console.Title = Properties.strings.uninstallTitle;
+            Console.Title = "Uninstalling ImgurSniper";
 
             //Remove Startmenu Shortcut
             try {
                 string commonStartMenuPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu);
                 string shortcutLocation = Path.Combine(commonStartMenuPath, "ImgurSniper" + ".lnk");
                 System.IO.File.Delete(shortcutLocation);
+
+                shortcutLocation = Path.Combine(commonStartMenuPath, "ImgurSniper Settings" + ".lnk");
+                System.IO.File.Delete(shortcutLocation);
+
+                Console.WriteLine("Removed Start Menu Shortcut..");
             } catch { }
 
             //Remove Desktop Shortcut
@@ -36,11 +32,15 @@ namespace Cleanup {
                 WshShell shell = new WshShell();
                 string shortcutAddress = (string)shell.SpecialFolders.Item(ref shDesktop) + @"\Imgur Sniper.lnk";
                 System.IO.File.Delete(shortcutAddress);
+                shortcutAddress = (string)shell.SpecialFolders.Item(ref shDesktop) + @"\Imgur Sniper Settings.lnk";
+                System.IO.File.Delete(shortcutAddress);
+
+                Console.WriteLine("Removed Desktop Shortcut..");
             } catch { }
 
 
             try {
-                using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"image\shell")) {
+                using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"*\shell")) {
                     baseKey.DeleteSubKeyTree("ImgurSniperUpload");
                 }
             } catch { }
@@ -60,55 +60,30 @@ namespace Cleanup {
                 //Remove all files
                 bool notRemoved = false;
 
-                foreach(string filesPrograms in Directory.GetFiles(_programFiles)) {
-                    try {
-                        System.IO.File.Delete(filesPrograms);
-                    } catch {
-                        notRemoved = true;
-                    }
-                }
-                foreach(string filesDocuments in Directory.GetFiles(_docPath)) {
+                foreach(string filesDocuments in Directory.GetFiles(DocPath)) {
                     try {
                         System.IO.File.Delete(filesDocuments);
                     } catch {
                         notRemoved = true;
                     }
                 }
+                foreach(string dirs in Directory.GetDirectories(DocPath)) {
+                    try {
+                        Directory.Delete(dirs, true);
+                    } catch {
+                        notRemoved = true;
+                    }
+                }
 
-                //Remove Directories
                 try {
-                    Directory.Delete(_programFiles, true);
-                } catch { }
-                try {
-                    Directory.Delete(_docPath, true);
+                    Directory.Delete(DocPath, true);
                 } catch { }
 
 
                 if(notRemoved)
-                    Console.WriteLine(Properties.strings.wrongUninstall);
-
-
-                Console.WriteLine(Properties.strings.closeInstance);
-
-                KillTasks();
-
-                if(Directory.Exists(_docPath)) {
-                    Console.WriteLine(Properties.strings.cleanUserData);
-                    Directory.Delete(_docPath, true);
-                }
-
-                if(Directory.Exists(_programFiles)) {
-                    Console.WriteLine(Properties.strings.cleanProgramFiles);
-                    Directory.Delete(_programFiles, true);
-                }
-
-
-                Console.WriteLine(Properties.strings.byeMSG);
-
-                Console.Write(Properties.strings.continueMSG);
-                Console.ReadKey();
+                    Console.WriteLine("Error");
             } catch(Exception ex) {
-                Console.WriteLine(string.Format(Properties.strings.error, ex.Message));
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -116,7 +91,7 @@ namespace Cleanup {
             try {
                 List<Process> processes = new List<Process>(Process.GetProcesses().Where(p => p.ProcessName.Contains("ImgurSniper")));
                 foreach(Process p in processes) {
-                    if(p.ProcessName != Process.GetCurrentProcess().ProcessName)
+                    if(p.Id != Process.GetCurrentProcess().Id)
                         p.Kill();
                 }
             } catch { }

@@ -8,7 +8,6 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
-using System.Windows;
 using System.Windows.Controls;
 using Toast;
 
@@ -120,15 +119,15 @@ namespace ImgurSniper.UI {
             }
         }
 
-        public async void Uninstall() {
-            await _success.ShowAsync("Removing ImgurSniper and Cleaning up junk...",
-                TimeSpan.FromSeconds(2.5));
+        public void Uninstall() {
+            //await _success.ShowAsync("Removing ImgurSniper and Cleaning up junk...",
+            //    TimeSpan.FromSeconds(2.5));
 
-            string path = Path.Combine(Path.GetTempPath(), "Cleanup.exe");
-            File.WriteAllBytes(path, Properties.Resources.Cleanup);
-            Process.Start(path);
+            //string path = Path.Combine(Path.GetTempPath(), "Cleanup.exe");
+            //File.WriteAllBytes(path, Properties.Resources.Cleanup);
+            //Process.Start(path);
 
-            Application.Current.Shutdown();
+            //Application.Current.Shutdown();
         }
 
         //private void CreateUninstaller() {
