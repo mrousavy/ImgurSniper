@@ -430,6 +430,9 @@ namespace ImgurSniper {
         private void SwitchMode() {
             grid.IsEnabled = !grid.IsEnabled;
             PaintSurface.IsEnabled = !PaintSurface.IsEnabled;
+            
+            _currentPath = null;
+            selectionRectangle.Margin = new Thickness(99999);
 
             //Stop animations by setting AnimationTimeline to null
             SelectedMode.BeginAnimation(OpacityProperty, null);
