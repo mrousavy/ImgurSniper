@@ -1,11 +1,14 @@
-﻿using Octokit;
+﻿using MaterialDesignThemes.Wpf;
+using Octokit;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using str = ImgurSniper.UI.Properties.strings;
 
@@ -258,33 +261,44 @@ namespace ImgurSniper.UI {
                 FileIO.OpenAfterUpload = box.IsChecked == true;
             } catch { }
         }
-        private void RunOnBoot_Checkbox(object sender, RoutedEventArgs e) {
+        private async void RunOnBoot_Checkbox(object sender, RoutedEventArgs e) {
             CheckBox box = sender as CheckBox;
             if(box != null) {
+                FileIO.RunOnBoot = box.IsChecked == true;
+
+                //Run proecess if not running
                 try {
-                    FileIO.RunOnBoot = box.IsChecked == true;
-
-
-                    //Run proecess if not running
-                    try {
-                        if(RunOnBoot.IsChecked == true) {
-                            if(Process.GetProcessesByName("ImgurSniper").Length < 1) {
-                                Process start = new Process {
-                                    StartInfo = {
-                                FileName = Path + "\\ImgurSniper.exe",
-                                Arguments = " -autostart"
-                            }
-                                };
-                                start.Start();
-                            }
-                        }
-                    } catch {
-                        error_toast.Show(str.trayServiceNotRunning, TimeSpan.FromSeconds(2));
+                    bool choice = true;
+                    //Show Dialog on disabling
+                    if(box.IsChecked == false) {
+                        choice = await AreYouSure(str.disablingTrayWarning);
+                        RunOnBoot.IsChecked = !choice;
                     }
 
+                    Helper.Autostart(choice);
 
-                    Helper.Autostart(box.IsChecked);
-                } catch { }
+                    //Choice: Are you sure you want to disable?
+                    if(choice) {
+                        //Kill all ImgurSniper Instances
+                        foreach(Process proc in Process.GetProcesses().Where(p => p.ProcessName.Contains("ImgurSniper"))) {
+                            if(proc.Id != Process.GetCurrentProcess().Id)
+                                proc.Kill();
+                        }
+                    } else {
+                        //Start ImgurSniper if not yet running
+                        if(Process.GetProcessesByName("ImgurSniper").Length < 1) {
+                            Process start = new Process {
+                                StartInfo = {
+                                        FileName = Path + "\\ImgurSniper.exe",
+                                        Arguments = " -autostart"
+                                    }
+                            };
+                            start.Start();
+                        }
+                    }
+                } catch {
+                    error_toast.Show(str.trayServiceNotRunning, TimeSpan.FromSeconds(2));
+                }
             }
         }
         private void PrintKeyBox_Click(object sender, RoutedEventArgs e) {
@@ -294,6 +308,23 @@ namespace ImgurSniper.UI {
             }
             try {
                 FileIO.UsePrint = box.IsChecked == true;
+
+
+                //Restart ImgurSniper
+
+                //Kill all ImgurSniper Instances
+                foreach(Process proc in Process.GetProcesses().Where(p => p.ProcessName.Contains("ImgurSniper"))) {
+                    if(proc.Id != Process.GetCurrentProcess().Id)
+                        proc.Kill();
+                }
+                //Start ImgurSniper if not yet running
+                Process start = new Process {
+                    StartInfo = {
+                    FileName = Path + "\\ImgurSniper.exe",
+                    Arguments = " -autostart"
+                    }
+                };
+                start.Start();
             } catch { }
         }
         private async void Snipe(object sender, RoutedEventArgs e) {
@@ -447,6 +478,69 @@ namespace ImgurSniper.UI {
 
             if(Btn_Update.Tag == null)
                 Btn_Update.IsEnabled = enabled;
+        }
+
+
+
+
+        //Show a Material Design Dialog
+        private async Task<bool> AreYouSure(string message) {
+            bool choice = false;
+
+            CloseDia();
+
+            StackPanel vPanel = new StackPanel {
+                Margin = new Thickness(5)
+            };
+
+            StackPanel hPanel = new StackPanel {
+                Orientation = Orientation.Horizontal,
+                VerticalAlignment = VerticalAlignment.Bottom,
+                HorizontalAlignment = HorizontalAlignment.Right
+            };
+
+            System.Windows.Controls.Label label = new System.Windows.Controls.Label {
+                Content = message,
+                VerticalAlignment = VerticalAlignment.Top,
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
+
+            Button yes = new Button {
+                Content = str.yes,
+                Foreground = Brushes.Gray,
+                Width = 60,
+                Margin = new Thickness(3),
+                Style = (Style)FindResource("MaterialDesignFlatButton")
+            };
+            yes.Click += delegate {
+                choice = true;
+                CloseDia();
+            };
+            Button no = new Button {
+                Content = str.no,
+                Foreground = Brushes.Gray,
+                Width = 60,
+                Margin = new Thickness(3),
+                Style = (Style)FindResource("MaterialDesignFlatButton")
+            };
+            no.Click += delegate {
+                choice = false;
+                CloseDia();
+            };
+
+            hPanel.Children.Add(yes);
+            hPanel.Children.Add(no);
+
+            vPanel.Children.Add(label);
+            vPanel.Children.Add(hPanel);
+
+            await DialogHost.ShowDialog(vPanel);
+
+            return choice;
+        }
+
+        private void CloseDia() {
+            DialogHost.CloseDialogCommand.Execute(null, DialogHost);
         }
     }
 }

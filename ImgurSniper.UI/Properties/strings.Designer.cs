@@ -115,6 +115,15 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to disable the ImgurSniper Tray Service?.
+        /// </summary>
+        public static string disablingTrayWarning {
+            get {
+                return ResourceManager.GetString("disablingTrayWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Downloading from github.com/mrousavy/ImgurSniper....
         /// </summary>
         public static string downloadingGitHub {
@@ -183,6 +192,15 @@ namespace ImgurSniper.UI.Properties {
         public static string loading {
             get {
                 return ResourceManager.GetString("loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string no {
+            get {
+                return ResourceManager.GetString("no", resourceCulture);
             }
         }
         
@@ -304,20 +322,20 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start ImgurSniper when my PC starts.
-        /// </summary>
-        public static string startWhenPC {
-            get {
-                return ResourceManager.GetString("startWhenPC", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Imgur Sniper Settings.
         /// </summary>
         public static string title {
             get {
                 return ResourceManager.GetString("title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ImgurSniper Tray/Background Service.
+        /// </summary>
+        public static string trayService {
+            get {
+                return ResourceManager.GetString("trayService", resourceCulture);
             }
         }
         
@@ -399,6 +417,15 @@ namespace ImgurSniper.UI.Properties {
         public static string whereSnipe {
             get {
                 return ResourceManager.GetString("whereSnipe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string yes {
+            get {
+                return ResourceManager.GetString("yes", resourceCulture);
             }
         }
     }

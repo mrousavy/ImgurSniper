@@ -168,8 +168,8 @@
   <data name="snipe" xml:space="preserve">
     <value>Snipe!</value>
   </data>
-  <data name="startWhenPC" xml:space="preserve">
-    <value>Start ImgurSniper when my PC starts</value>
+  <data name="trayService" xml:space="preserve">
+    <value>ImgurSniper Tray/Background Service</value>
   </data>
   <data name="title" xml:space="preserve">
     <value>Imgur Sniper Settings</value>
@@ -230,5 +230,14 @@
   </data>
   <data name="failedUpdate" xml:space="preserve">
     <value>Could not retrieve Version/Update info from GitHub!</value>
+  </data>
+  <data name="disablingTrayWarning" xml:space="preserve">
+    <value>Are you sure you want to disable the ImgurSniper Tray Service?</value>
+  </data>
+  <data name="no" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
 </root>

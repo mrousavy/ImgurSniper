@@ -135,6 +135,9 @@
   <data name="curMonitor" xml:space="preserve">
     <value>Derzeitiger Bildschirm</value>
   </data>
+  <data name="disablingTrayWarning" xml:space="preserve">
+    <value>Wollen Sie den ImgurSniper Hintergrund Dienst wirklich deaktivieren?</value>
+  </data>
   <data name="downloadingGitHub" xml:space="preserve">
     <value>Von github.com/mrousavy/ImgurSniper herunterladen...</value>
   </data>
@@ -158,6 +161,9 @@
   </data>
   <data name="loading" xml:space="preserve">
     <value>Lädt...</value>
+  </data>
+  <data name="no" xml:space="preserve">
+    <value>Nein</value>
   </data>
   <data name="notOnlyMouse" xml:space="preserve">
     <value>ImgurSniper auf allen Bildschirmen öffnen</value>
@@ -198,11 +204,11 @@
   <data name="snipe" xml:space="preserve">
     <value>Snipe!</value>
   </data>
-  <data name="startWhenPC" xml:space="preserve">
-    <value>ImgurSniper mit meinem Computer starten</value>
-  </data>
   <data name="title" xml:space="preserve">
     <value>Imgur Sniper Einstellungen</value>
+  </data>
+  <data name="trayService" xml:space="preserve">
+    <value>ImgurSniper im Hintergrund ausführen</value>
   </data>
   <data name="trayServiceNotRunning" xml:space="preserve">
     <value>ImgurSniper Hintergrundservice ist nicht gestartet!</value>
@@ -230,5 +236,8 @@
   </data>
   <data name="whereSnipe" xml:space="preserve">
     <value>Snipe Bereich</value>
+  </data>
+  <data name="yes" xml:space="preserve">
+    <value>Ja</value>
   </data>
 </root>

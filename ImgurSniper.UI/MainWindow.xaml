@@ -13,6 +13,7 @@
 
 
 	<!--<md:Card HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignPaper}">-->
+	<md:DialogHost x:Name="DialogHost">
 	<Grid x:Name="grid" Background="{DynamicResource MaterialDesignPaper}">
 			<Grid.Triggers>
 				<EventTrigger RoutedEvent="Grid.Loaded">
@@ -76,7 +77,7 @@
 
 				<CheckBox x:Name="RunOnBoot" FontSize="14" Margin="15,0,0,0"
 							 Foreground="Gray" Click="RunOnBoot_Checkbox"
-						  Content="{x:Static Member=cultureStrings:strings.startWhenPC}"/>
+						  Content="{x:Static Member=cultureStrings:strings.trayService}"/>
 
 				<CheckBox x:Name="PrintKeyBox" FontSize="14" Margin="15,0,0,0"
 							 Foreground="Gray" Click="PrintKeyBox_Click"
@@ -180,5 +181,6 @@
 			Background="#2196F3"
 			FontSize="13"/>
 		</Grid>
+	</md:DialogHost>
 	<!--</md:Card>-->
 </Window>
