@@ -106,12 +106,6 @@
         "Entry"
         {
         "MsmKey" = "8:_C30D88FF15831BCB0EC0B7746F86A4D9"
-        "OwnerKey" = "8:_AFCC929FFE20407D84E08B5BE56AC081"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C30D88FF15831BCB0EC0B7746F86A4D9"
         "OwnerKey" = "8:_56D4A490C3314FDAB81B0BF1141AC7A0"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -141,6 +135,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_C30D88FF15831BCB0EC0B7746F86A4D9"
+        "OwnerKey" = "8:_AFCC929FFE20407D84E08B5BE56AC081"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_CA5E9FACB5FD4A37B56A05954A72D719"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -148,6 +148,12 @@
         "Entry"
         {
         "MsmKey" = "8:_CCFFB22825EF452281F2341B341CB11B"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CFF5201A9CF5489E88E99E08BBCF2159"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -165,14 +171,14 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_AFCC929FFE20407D84E08B5BE56AC081"
+        "MsmKey" = "8:_F6F76B946DA740AEAE31A675C5365293"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_56D4A490C3314FDAB81B0BF1141AC7A0"
+        "OwnerKey" = "8:_AFCC929FFE20407D84E08B5BE56AC081"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -239,6 +245,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_E93695BF24148F06FFC97FF6B2450434"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_56D4A490C3314FDAB81B0BF1141AC7A0"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -655,6 +667,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CFF5201A9CF5489E88E99E08BBCF2159"
+            {
+            "SourcePath" = "8:..\\ImgurSniper\\Resources\\Blop.wav"
+            "TargetName" = "8:Blop.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_6770CE43AA0D4C23AC49EB574822C974"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E93695BF24148F06FFC97FF6B2450434"
             {
             "AssemblyRegister" = "3:1"
@@ -686,6 +718,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F6F76B946DA740AEAE31A675C5365293"
+            {
+            "SourcePath" = "8:..\\ImgurSniper\\Resources\\Camera_Shutter.wav"
+            "TargetName" = "8:Camera_Shutter.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_6770CE43AA0D4C23AC49EB574822C974"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -713,6 +765,17 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_6770CE43AA0D4C23AC49EB574822C974"
+                    {
+                    "Name" = "8:Resources"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_61A2C4B2A81D4C3390A277783BC57216"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{1525181F-901A-416C-8A58-119130FE478E}:_C92603EEDB644EF2906351E98FB045F2"
