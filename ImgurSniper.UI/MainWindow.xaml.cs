@@ -268,23 +268,17 @@ namespace ImgurSniper.UI {
 
                 //Run proecess if not running
                 try {
-                    bool choice = true;
+                    bool choice = box.IsChecked == true;
                     //Show Dialog on disabling
                     if(box.IsChecked == false) {
-                        choice = await AreYouSure(str.disablingTrayWarning);
-                        RunOnBoot.IsChecked = !choice;
+                        choice = !await AreYouSure(str.disablingTrayWarning);
+                        RunOnBoot.IsChecked = choice;
                     }
 
                     Helper.Autostart(choice);
 
                     //Choice: Are you sure you want to disable?
                     if(choice) {
-                        //Kill all ImgurSniper Instances
-                        foreach(Process proc in Process.GetProcesses().Where(p => p.ProcessName.Contains("ImgurSniper"))) {
-                            if(proc.Id != Process.GetCurrentProcess().Id)
-                                proc.Kill();
-                        }
-                    } else {
                         //Start ImgurSniper if not yet running
                         if(Process.GetProcessesByName("ImgurSniper").Length < 1) {
                             Process start = new Process {
@@ -294,6 +288,12 @@ namespace ImgurSniper.UI {
                                     }
                             };
                             start.Start();
+                        }
+                    } else {
+                        //Kill all ImgurSniper Instances
+                        foreach(Process proc in Process.GetProcesses().Where(p => p.ProcessName.Contains("ImgurSniper"))) {
+                            if(proc.Id != Process.GetCurrentProcess().Id)
+                                proc.Kill();
                         }
                     }
                 } catch {
