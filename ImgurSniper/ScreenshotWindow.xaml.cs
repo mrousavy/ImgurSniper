@@ -1,77 +1,80 @@
-﻿using mrousavy;
+﻿using ImgurSniper.Properties;
+using mrousavy;
 using System;
-using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using Cursors = System.Windows.Input.Cursors;
+using MouseEventArgs = System.Windows.Input.MouseEventArgs;
+using Path = System.Windows.Shapes.Path;
 using Point = System.Windows.Point;
+using Rectangle = System.Drawing.Rectangle;
 
-//TODO: Fix for different Resolution users
 namespace ImgurSniper {
     /// <summary>
-    /// Interaction logic for ScreenshotWindow.xaml
+    ///     Interaction logic for ScreenshotWindow.xaml
     /// </summary>
-    public partial class ScreenshotWindow : Window {
+    public partial class ScreenshotWindow {
+        private readonly bool _focusOnLoad;
 
-        //Size of current Mouse Location screen
-        public static Rectangle screen {
-            get {
-                var screen = System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position);
-                return screen.Bounds;
-            }
-        }
-
-        //Size of whole Screen Array
-        public static Rectangle allScreens => System.Windows.Forms.SystemInformation.VirtualScreen;
+        private bool _drag;
 
         public byte[] CroppedImage;
-        public Point from, to;
+        public Point From, To;
         public string HwndName;
-
-        private bool _drag = false;
-        private bool _focusOnLoad;
         //Magnifyer for Performance reasons disabled
         //private bool _enableMagnifyer = false;
 
 
-        public ScreenshotWindow(bool AllMonitors, bool Focus) {
-            this.ShowActivated = false;
-            _focusOnLoad = Focus;
+        public ScreenshotWindow(bool allMonitors, bool focus) {
+            ShowActivated = false;
+            _focusOnLoad = focus;
 
             InitializeComponent();
 
-            Position(AllMonitors);
+            Position(allMonitors);
             //LoadConfig();
 
-            this.Loaded += WindowLoaded;
+            Loaded += WindowLoaded;
         }
+
+        //Size of current Mouse Location screen
+        public static Rectangle Screen
+            => System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position).Bounds;
+
+        //Size of whole Screen Array
+        public static Rectangle AllScreens => SystemInformation.VirtualScreen;
 
         private async void WindowLoaded(object sender, RoutedEventArgs e) {
             //this.CaptureMouse();
             //grid.CaptureMouse();
             //PaintSurface.CaptureMouse();
             selectionRectangle.CaptureMouse();
-            this.Topmost = true;
+            Topmost = true;
 
             Rectangle bounds = System.Windows.Forms.Screen.PrimaryScreen.Bounds;
             SelectedMode.Margin = new Thickness(
-                (bounds.Width / 2) - 50,
-                (bounds.Height / 2) - 25,
-                (bounds.Width / 2) - 50,
-                (bounds.Height / 2) - 25);
+                bounds.Width / 2 - 50,
+                bounds.Height / 2 - 25,
+                bounds.Width / 2 - 50,
+                bounds.Height / 2 - 25);
 
             if(_focusOnLoad) {
-                this.Activate();
-                this.Focus();
+                Activate();
+                Focus();
             }
 
             #region Escape
+
             try {
                 //Register Global Escape Hotkey
                 HotKey escapeHotKey = new HotKey(ModifierKeys.None, Key.Escape, this);
@@ -82,15 +85,17 @@ namespace ImgurSniper {
                 };
             } catch {
                 //Register Escape Hotkey for this Window if Global Hotkey fails
-                this.KeyDown += (o, ke) => {
+                KeyDown += (o, ke) => {
                     if(ke.Key == Key.Escape) {
                         CloseSnap(false, 0);
                     }
                 };
             }
+
             #endregion
 
             #region Ctrl A
+
             try {
                 //Register Global Ctrl + A Hotkey
                 HotKey ctrlAHotKey = new HotKey(ModifierKeys.Control, Key.A, this);
@@ -101,29 +106,30 @@ namespace ImgurSniper {
                 };
             } catch {
                 //Register Ctrl + A Hotkey for this Window if Global Hotkey fails
-                this.KeyDown += (o, ke) => {
-                    if(((System.Windows.Forms.Control.ModifierKeys & System.Windows.Forms.Keys.Control) == System.Windows.Forms.Keys.Control)) {
+                KeyDown += (o, ke) => {
+                    if((Control.ModifierKeys & Keys.Control) == Keys.Control) {
                         SelectAllCmd();
                     }
                 };
             }
+
             #endregion
 
             #region Space
+
             try {
                 //Register Space Hotkey
                 HotKey spaceHotKey = new HotKey(ModifierKeys.None, Key.Space, this);
-                spaceHotKey.HotKeyPressed += delegate {
-                    SwitchMode();
-                };
+                spaceHotKey.HotKeyPressed += delegate { SwitchMode(); };
             } catch {
                 //Register Space Hotkey for this Window if Global Hotkey fails
-                this.KeyDown += (o, ke) => {
+                KeyDown += (o, ke) => {
                     if(ke.Key == Key.Space) {
                         SwitchMode();
                     }
                 };
             }
+
             #endregion
 
             //Prevent short flash of Toast
@@ -141,13 +147,13 @@ namespace ImgurSniper {
         }
 
         //Position Window correctly
-        private void Position(bool AllMonitors) {
-            Rectangle size = AllMonitors ? allScreens : screen;
+        private void Position(bool allMonitors) {
+            Rectangle size = allMonitors ? AllScreens : Screen;
 
-            this.Left = size.Left;
-            this.Top = size.Top;
-            this.Width = size.Width;
-            this.Height = size.Height;
+            Left = size.Left;
+            Top = size.Top;
+            Width = size.Width;
+            Height = size.Height;
         }
 
         //Load from config File (ImgurSniper.UI)
@@ -160,13 +166,94 @@ namespace ImgurSniper {
             //}
         }
 
-        private Rectangle GetRectFromHandle(IntPtr whandle) {
-            Rectangle WindowSize = WinAPI.GetWindowRectangle(whandle);
+        private static Rectangle GetRectFromHandle(IntPtr whandle) {
+            Rectangle windowSize = WinAPI.GetWindowRectangle(whandle);
 
-            return WindowSize;
+            return windowSize;
+        }
+
+        //Set Magnifyer Position (Not used, huge Performance cost)
+        public void Magnifier(Point pos) {
+            //MagnifyerBrush.Viewbox = new Rect(pos.X - 25, pos.Y - 25, 50, 50);
+
+            //double x = pos.X - 35;
+            //double y = pos.Y - 80;
+
+            //Magnifyer.Margin = new Thickness(x, y, this.Width - x - 70, this.Height - y - 70);
+        }
+
+        //Switch between Rectangle Snapping and Painting
+        private void SwitchMode() {
+            grid.IsEnabled = !grid.IsEnabled;
+            PaintSurface.IsEnabled = !PaintSurface.IsEnabled;
+
+            _currentPath = null;
+            selectionRectangle.Margin = new Thickness(99999);
+
+            //Stop animations by setting AnimationTimeline to null
+            SelectedMode.BeginAnimation(OpacityProperty, null);
+
+            //Set correct Selected Mode Indicator
+            if(grid.IsEnabled) {
+                grid.CaptureMouse();
+                CropIcon.Background = Brushes.Gray;
+                DrawIcon.Background = Brushes.Transparent;
+            } else {
+                PaintSurface.CaptureMouse();
+                DrawIcon.Background = Brushes.Gray;
+                CropIcon.Background = Brushes.Transparent;
+            }
+
+            //Fade Selected Mode View in
+            FadeSelectedModeIn();
+        }
+
+        //Fade the Selected Mode (Drawing/Rectangle) in
+        private void FadeSelectedModeIn() {
+            DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
+            anim.Completed += FadeSelectedModeOut;
+            anim.From = SelectedMode.Opacity;
+            anim.To = 0.7;
+
+            SelectedMode.BeginAnimation(OpacityProperty, anim);
+        }
+
+        //Fade the Selected Mode (Drawing/Rectangle) out
+        private void FadeSelectedModeOut(object sender, EventArgs e) {
+            DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25)) {
+                BeginTime = TimeSpan.FromMilliseconds(1000),
+                From = SelectedMode.Opacity,
+                To = 0
+            };
+
+            SelectedMode.BeginAnimation(OpacityProperty, anim);
+        }
+
+        //Play Camera Shutter Sound
+        private static void PlayShutter() {
+            try {
+                MediaPlayer player = new MediaPlayer { Volume = 30 };
+
+                string path = System.IO.Path.Combine(FileIO._programFiles, "Resources\\Camera_Shutter.wav");
+
+                player.Open(new Uri(path));
+                player.Play();
+            } catch {
+                // ignored
+            }
+        }
+
+        //Make image of whole Window with Ctrl + A
+        private void SelectAllCmd() {
+            selectionRectangle.Margin = new Thickness(0);
+
+            From = new Point(0, 0);
+            To = new Point(Width, Height);
+            FinishRectangle();
         }
 
         #region Rectangle Mouse Events
+
         //MouseDown Event
         private void StartDrawing(object sender, MouseButtonEventArgs e) {
             switch(e.ChangedButton) {
@@ -176,14 +263,14 @@ namespace ImgurSniper {
                     break;
                 case MouseButton.Left:
                     //Lock the from Point to the Mouse Position when started holding Mouse Button
-                    @from = e.GetPosition(this);
+                    From = e.GetPosition(this);
                     break;
             }
         }
 
         //Perform Right click -> Screenshot Window on cursor pos
         private void RightClick() {
-            this.Cursor = Cursors.Hand;
+            Cursor = Cursors.Hand;
 
             WinAPI.POINT point;
             WinAPI.User32.GetCursorPos(out point);
@@ -191,14 +278,15 @@ namespace ImgurSniper {
             DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
 
             anim.Completed += delegate {
-                this.Topmost = false;
-                this.Opacity = 0;
+                Topmost = false;
+                Opacity = 0;
 
                 //For render complete
                 Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.ContextIdle, null);
 
                 //Send Window to back, so WinAPI.User32.WindowFromPoint does not detect ImgurSniper as Window
-                WinAPI.User32.SetWindowPos(new WindowInteropHelper(this).Handle, WinAPI.HWND_BOTTOM, 0, 0, 0, 0, WinAPI.SWP_NOMOVE | WinAPI.SWP_NOSIZE | WinAPI.SWP_NOACTIVATE);
+                WinAPI.User32.SetWindowPos(new WindowInteropHelper(this).Handle, WinAPI.HWND_BOTTOM, 0, 0, 0, 0,
+                    WinAPI.SWP_NOMOVE | WinAPI.SWP_NOSIZE | WinAPI.SWP_NOACTIVATE);
 
                 IntPtr whandle = WinAPI.User32.WindowFromPoint(point);
 
@@ -230,10 +318,11 @@ namespace ImgurSniper {
         //MouseUp Event
         private void ReleaseRectangle(object sender, MouseButtonEventArgs e) {
             //Only trigger on Left Mouse Button
-            if(e.ChangedButton != MouseButton.Left)
+            if(e.ChangedButton != MouseButton.Left) {
                 return;
+            }
 
-            to = e.GetPosition(this);
+            To = e.GetPosition(this);
             FinishRectangle();
         }
 
@@ -249,15 +338,15 @@ namespace ImgurSniper {
             //Draw Rectangle
             if(_drag) {
                 //Set Crop Rectangle to Mouse Position
-                to = e.GetPosition(this);
+                To = e.GetPosition(this);
 
                 //Width (w) and Height (h) of dragged Rectangle
-                double w = Math.Abs(from.X - to.X);
-                double h = Math.Abs(from.Y - to.Y);
-                double left = Math.Min(from.X, to.X);
-                double top = Math.Min(from.Y, to.Y);
-                double right = this.Width - left - w;
-                double bottom = this.Height - top - h;
+                double w = Math.Abs(From.X - To.X);
+                double h = Math.Abs(From.Y - To.Y);
+                double left = Math.Min(From.X, To.X);
+                double top = Math.Min(From.Y, To.Y);
+                double right = Width - left - w;
+                double bottom = Height - top - h;
 
                 selectionRectangle.Margin = new Thickness(left, top, right, bottom);
             }
@@ -270,16 +359,19 @@ namespace ImgurSniper {
         #endregion
 
         #region Painting Mouse Events
+
         private Point _startPos;
-        private System.Windows.Shapes.Path _currentPath;
+        private Path _currentPath;
 
         //Draw on the Window
         private void Paint(object sender, MouseEventArgs e) {
             if(e.LeftButton == MouseButtonState.Pressed) {
-                if(_currentPath == null)
+                if(_currentPath == null) {
                     return;
+                }
 
-                PolyLineSegment pls = (PolyLineSegment)((PathGeometry)_currentPath.Data).Figures.Last().Segments.Last();
+                PolyLineSegment pls =
+                    (PolyLineSegment)((PathGeometry)_currentPath.Data).Figures.Last().Segments.Last();
                 pls.Points.Add(e.GetPosition(this));
             }
         }
@@ -290,13 +382,14 @@ namespace ImgurSniper {
                 _startPos = e.GetPosition(this);
 
 
-                _currentPath = new System.Windows.Shapes.Path {
+                _currentPath = new Path {
                     Data = new PathGeometry {
-                        Figures = { new PathFigure
-                    {
-                        StartPoint = _startPos,
-                        Segments = { new PolyLineSegment() }
-                    }}
+                        Figures = {
+                            new PathFigure {
+                                StartPoint = _startPos,
+                                Segments = {new PolyLineSegment()}
+                            }
+                        }
                     },
                     Stroke = new SolidColorBrush(Colors.Red),
                     StrokeThickness = 4
@@ -310,27 +403,29 @@ namespace ImgurSniper {
         private void StopPaint(object sender, MouseButtonEventArgs e) {
             _currentPath = null;
         }
+
         #endregion
 
         #region Snap Helper
+
         //Finish drawing Rectangle
         private void FinishRectangle() {
             //Width (w) and Height (h) of dragged Rectangle
-            int toX = (int)Math.Max(from.X, to.X);
-            int toY = (int)Math.Max(from.Y, to.Y);
-            int fromX = (int)Math.Min(from.X, to.X);
-            int fromY = (int)Math.Min(from.Y, to.Y);
+            int toX = (int)Math.Max(From.X, To.X);
+            int toY = (int)Math.Max(From.Y, To.Y);
+            int fromX = (int)Math.Min(From.X, To.X);
+            int fromY = (int)Math.Min(From.Y, To.Y);
 
-            if(Math.Abs(to.X - from.X) < 9 || Math.Abs(to.Y - from.Y) < 9) {
-                toast.Show(Properties.strings.imgSize, TimeSpan.FromSeconds(3.3));
+            if(Math.Abs(To.X - From.X) < 9 || Math.Abs(To.Y - From.Y) < 9) {
+                toast.Show(strings.imgSize, TimeSpan.FromSeconds(3.3));
                 selectionRectangle.Margin = new Thickness(99999);
             } else {
-                this.Cursor = Cursors.Arrow;
+                Cursor = Cursors.Arrow;
 
                 //Was cropping successful?
                 Complete(fromX, fromY, toX, toY);
 
-                this.IsEnabled = false;
+                IsEnabled = false;
             }
         }
 
@@ -355,10 +450,10 @@ namespace ImgurSniper {
         //Make Image from custom Coords
         private void Crop(int fromX, int fromY, int toX, int toY) {
             //Point to screen for Users with different DPI
-            Point xy = this.PointToScreen(new Point(fromX, fromY));
+            Point xy = PointToScreen(new Point(fromX, fromY));
             fromX = (int)xy.X;
             fromY = (int)xy.Y;
-            Point wh = this.PointToScreen(new Point(toX, toY));
+            Point wh = PointToScreen(new Point(toX, toY));
             toX = (int)wh.X;
             toY = (int)wh.Y;
 
@@ -369,7 +464,7 @@ namespace ImgurSniper {
             bool result = MakeImage(new Rectangle(fromX, fromY, w, h));
 
             if(!result) {
-                toast.Show(Properties.strings.whoops, TimeSpan.FromSeconds(3.3));
+                toast.Show(strings.whoops, TimeSpan.FromSeconds(3.3));
                 CloseSnap(false, 1500);
             } else {
                 DialogResult = true;
@@ -381,11 +476,11 @@ namespace ImgurSniper {
             try {
                 ImageSource source = Screenshot.getScreenshot(size);
 
-                System.IO.MemoryStream stream = new System.IO.MemoryStream();
+                MemoryStream stream = new MemoryStream();
 
                 Screenshot.MediaImageToDrawingImage(source)
                     .Save(stream,
-                        FileIO.UsePNG ? System.Drawing.Imaging.ImageFormat.Png : System.Drawing.Imaging.ImageFormat.Jpeg);
+                        FileIO.UsePNG ? ImageFormat.Png : ImageFormat.Jpeg);
 
                 CroppedImage = stream.ToArray();
 
@@ -407,92 +502,14 @@ namespace ImgurSniper {
                     // ignored
                 }
             };
-            anim.From = this.Opacity;
+            anim.From = Opacity;
             anim.To = 0;
             //Wait delay (ms) and then begin animation
             anim.BeginTime = TimeSpan.FromMilliseconds(delay);
 
-            this.BeginAnimation(OpacityProperty, anim);
+            BeginAnimation(OpacityProperty, anim);
         }
+
         #endregion
-
-        //Set Magnifyer Position (Not used, huge Performance cost)
-        public void Magnifier(Point pos) {
-            //MagnifyerBrush.Viewbox = new Rect(pos.X - 25, pos.Y - 25, 50, 50);
-
-            //double x = pos.X - 35;
-            //double y = pos.Y - 80;
-
-            //Magnifyer.Margin = new Thickness(x, y, this.Width - x - 70, this.Height - y - 70);
-        }
-
-        //Switch between Rectangle Snapping and Painting
-        private void SwitchMode() {
-            grid.IsEnabled = !grid.IsEnabled;
-            PaintSurface.IsEnabled = !PaintSurface.IsEnabled;
-            
-            _currentPath = null;
-            selectionRectangle.Margin = new Thickness(99999);
-
-            //Stop animations by setting AnimationTimeline to null
-            SelectedMode.BeginAnimation(OpacityProperty, null);
-
-            //Set correct Selected Mode Indicator
-            if(grid.IsEnabled) {
-                grid.CaptureMouse();
-                CropIcon.Background = System.Windows.Media.Brushes.Gray;
-                DrawIcon.Background = System.Windows.Media.Brushes.Transparent;
-            } else {
-                PaintSurface.CaptureMouse();
-                DrawIcon.Background = System.Windows.Media.Brushes.Gray;
-                CropIcon.Background = System.Windows.Media.Brushes.Transparent;
-            }
-
-            //Fade Selected Mode View in
-            FadeSelectedModeIn();
-        }
-
-        //Fade the Selected Mode (Drawing/Rectangle) in
-        private void FadeSelectedModeIn() {
-            DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
-            anim.Completed += FadeSelectedModeOut;
-            anim.From = SelectedMode.Opacity;
-            anim.To = 0.7;
-
-            SelectedMode.BeginAnimation(OpacityProperty, anim);
-        }
-
-        //Fade the Selected Mode (Drawing/Rectangle) out
-        private void FadeSelectedModeOut(object sender, EventArgs e) {
-            DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
-            anim.BeginTime = TimeSpan.FromMilliseconds(1000);
-            anim.From = SelectedMode.Opacity;
-            anim.To = 0;
-
-            SelectedMode.BeginAnimation(OpacityProperty, anim);
-        }
-
-        //Play Camera Shutter Sound
-        private static void PlayShutter() {
-            try {
-                MediaPlayer player = new MediaPlayer { Volume = 30 };
-
-                string path = System.IO.Path.Combine(FileIO._programFiles, "Resources\\Camera_Shutter.wav");
-
-                player.Open(new Uri(path));
-                player.Play();
-            } catch {
-                // ignored
-            }
-        }
-
-        //Make image of whole Window with Ctrl + A
-        private void SelectAllCmd() {
-            selectionRectangle.Margin = new Thickness(0);
-
-            from = new Point(0, 0);
-            to = new Point(this.Width, this.Height);
-            FinishRectangle();
-        }
     }
 }

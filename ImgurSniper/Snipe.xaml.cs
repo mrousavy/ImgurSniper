@@ -1,4 +1,5 @@
-﻿using mrousavy;
+﻿using ImgurSniper.Properties;
+using mrousavy;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -9,17 +10,18 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Application = System.Windows.Application;
 using Clipboard = System.Windows.Clipboard;
 
 namespace ImgurSniper {
     /// <summary>
-    /// Interaction logic for Snipe.xaml
+    ///     Interaction logic for Snipe.xaml
     /// </summary>
-    public partial class Snipe : Window {
+    public partial class Snipe {
+        private int _counter;
         private string _dir;
         private ImgurIO _imgur;
         private NotifyIcon _nicon;
-        private int _counter = 0;
 
 
         public Snipe() {
@@ -59,11 +61,13 @@ namespace ImgurSniper {
                     break;
                 }
 
-                if(arg.ToLower().Contains("upload"))
+                if(arg.ToLower().Contains("upload")) {
                     upload = true;
+                }
 
-                if(File.Exists(arg))
+                if(File.Exists(arg)) {
                     image = arg;
+                }
             }
 
             if(autostart) {
@@ -76,7 +80,7 @@ namespace ImgurSniper {
         }
 
         private async void InitializeTray() {
-            this.Visibility = Visibility.Hidden;
+            Visibility = Visibility.Hidden;
 
             //Wait for Dispatcher to utilize (Apparently it won't work without a Delay)
             await Task.Delay(1000);
@@ -87,41 +91,42 @@ namespace ImgurSniper {
             HotKey hk = null;
             try {
                 hk = usePrint
-                     ? new HotKey(ModifierKeys.None, Key.PrintScreen, this)
-                     : new HotKey(ModifierKeys.Control | ModifierKeys.Shift, sKey, this);
+                    ? new HotKey(ModifierKeys.None, Key.PrintScreen, this)
+                    : new HotKey(ModifierKeys.Control | ModifierKeys.Shift, sKey, this);
                 hk.HotKeyPressed += OpenFromShortcut;
             } catch {
                 //ignored
             }
 
             ContextMenu menu = new ContextMenu();
-            menu.MenuItems.Add(Properties.strings.settings, delegate {
+            menu.MenuItems.Add(strings.settings, delegate {
                 try {
                     Process.Start(Path.Combine(FileIO._programFiles, "ImgurSniper.UI.exe"));
                 } catch {
                     // ignored
                 }
             });
-            menu.MenuItems.Add(Properties.strings.exit, delegate {
-                System.Windows.Application.Current.Shutdown();
-            });
+            menu.MenuItems.Add(strings.exit, delegate { Application.Current.Shutdown(); });
 
             _nicon = new NotifyIcon {
                 Icon = Properties.Resources.Logo,
                 ContextMenu = menu,
                 Visible = true,
-                Text = Properties.strings.clickorpress +
-                    (usePrint ? Properties.strings.printKeyShortcut : string.Format(Properties.strings.ctrlShiftShortcut, sKey)) + Properties.strings.toSnipeNew
+                Text = strings.clickorpress +
+                       (usePrint ? strings.printKeyShortcut : string.Format(strings.ctrlShiftShortcut, sKey)) +
+                       strings.toSnipeNew
             };
             _nicon.MouseClick += (sender, e) => {
-                if(e.Button == MouseButtons.Left)
-                    if(hk == null)
+                if(e.Button == MouseButtons.Left) {
+                    if(hk == null) {
                         Crop(false, true);
-                    else
+                    } else {
                         OpenFromShortcut(hk);
+                    }
+                }
             };
 
-            System.Windows.Application.Current.Exit += delegate {
+            Application.Current.Exit += delegate {
                 _nicon.Icon = null;
                 _nicon.Visible = false;
                 _nicon.Dispose();
@@ -148,15 +153,14 @@ namespace ImgurSniper {
                 lpath.EndsWith(".tiff") ||
                 lpath.EndsWith(".xcf") ||
                 lpath.EndsWith(".pdf")) {
-
                 byte[] byteImg = File.ReadAllBytes(path);
 
-                string KB = $"{(byteImg.Length / 1024d):0.#}";
-                SuccessToast.Show(string.Format(Properties.strings.uploading, KB), TimeSpan.FromDays(10));
+                string kb = $"{byteImg.Length / 1024d:0.#}";
+                SuccessToast.Show(string.Format(strings.uploading, kb), TimeSpan.FromDays(10));
 
                 await UploadImageToImgur(byteImg, "");
             } else {
-                await ErrorToast.ShowAsync(Properties.strings.errorFileType, TimeSpan.FromSeconds(5));
+                await ErrorToast.ShowAsync(strings.errorFileType, TimeSpan.FromSeconds(5));
             }
             DelayedClose(0);
         }
@@ -177,16 +181,16 @@ namespace ImgurSniper {
 
         //Position Window correctly
         private void Position() {
-            this.Top = SystemParameters.WorkArea.Height - this.Height;
-            this.Width = SystemParameters.WorkArea.Width;
-            this.Left = Screen.PrimaryScreen.Bounds.X;
+            Top = SystemParameters.WorkArea.Height - Height;
+            Width = SystemParameters.WorkArea.Width;
+            Left = Screen.PrimaryScreen.Bounds.X;
         }
 
         //Make Screenshot, Let user Crop, Upload Picture and Copy Link to Clipboard
         private async void Crop(bool closeOnFinish, bool focusNewWindow) {
-            this.Visibility = Visibility.Visible;
-            this.BringIntoView();
-            this.Topmost = true;
+            Visibility = Visibility.Visible;
+            BringIntoView();
+            Topmost = true;
             _counter++;
             int local = _counter;
 
@@ -194,36 +198,45 @@ namespace ImgurSniper {
             window.ShowDialog();
 
             if(window.DialogResult == true) {
-
                 byte[] cimg = window.CroppedImage;
 
                 if(cimg.Length >= 10240000 && !FileIO.TokenExists) {
-                    await ErrorToast.ShowAsync(Properties.strings.imgToBig, TimeSpan.FromSeconds(3));
+                    await ErrorToast.ShowAsync(strings.imgToBig, TimeSpan.FromSeconds(3));
                     return;
                 }
 
                 try {
+                    bool imgurAfterSnipe = FileIO.ImgurAfterSnipe;
+
                     //Config: Save Image locally?
                     if(FileIO.SaveImages) {
-                        long time = DateTime.Now.ToFileTimeUtc();
-                        string extension = FileIO.UsePNG ? ".png" : ".jpeg";
-                        File.WriteAllBytes(_dir + $"\\Snipe_{time}{extension}", cimg);
+                        try {
+                            long time = DateTime.Now.ToFileTimeUtc();
+                            string extension = FileIO.UsePNG ? ".png" : ".jpeg";
+                            string filename = _dir + $"\\Snipe_{time}{extension}";
+                            File.WriteAllBytes(filename, cimg);
+
+                            if(imgurAfterSnipe) {
+                                Process.Start(filename);
+                            }
+                        } catch {
+                            // ignored
+                        }
                     }
 
                     //Config: Upload Image to Imgur or Copy to Clipboard?
-                    if(FileIO.ImgurAfterSnipe) {
-                        string KB = $"{(cimg.Length / 1024d):0.#}";
-                        SuccessToast.Show(string.Format(Properties.strings.uploading, KB), TimeSpan.FromDays(10));
+                    if(imgurAfterSnipe) {
+                        string kb = $"{cimg.Length / 1024d:0.#}";
+                        SuccessToast.Show(string.Format(strings.uploading, kb), TimeSpan.FromDays(10));
 
                         await UploadImageToImgur(cimg, window.HwndName);
                     } else {
-                        CopyImageToClipboard(cimg);
+                        CopyClipboard(cimg);
 
-                        SuccessToast.Show(Properties.strings.imgclipboard, TimeSpan.FromDays(10));
+                        SuccessToast.Show(strings.imgclipboard, TimeSpan.FromDays(10));
                     }
-
                 } catch(Exception ex) {
-                    ErrorToast.Show(string.Format(Properties.strings.otherErrorMsg, ex),
+                    ErrorToast.Show(string.Format(strings.otherErrorMsg, ex),
                         TimeSpan.FromSeconds(3.5));
                 }
             }
@@ -233,52 +246,37 @@ namespace ImgurSniper {
                     DelayedClose(0);
                 } else {
                     if(local == _counter) {
-                        this.Visibility = Visibility.Hidden;
+                        Visibility = Visibility.Hidden;
                     }
                 }
             } catch {
-                System.Windows.Application.Current.Shutdown();
+                Application.Current.Shutdown();
             }
         }
 
         //Upload byte[] to imgur and give user a response
         private async Task UploadImageToImgur(byte[] cimg, string windowName) {
-            string link = await UploadImgur(cimg, windowName);
+            string link = await _imgur.Upload(cimg, windowName);
 
-            if(link.StartsWith("http://")) {
+            //Link is http or https
+            if(link.StartsWith("http")) {
                 Clipboard.SetText(link);
                 PlayBlop();
-                
-                    if(FileIO.OpenAfterUpload)
-                        Process.Start(link);
 
-                    await SuccessToast.ShowAsync(Properties.strings.linkclipboard,
-                        TimeSpan.FromSeconds(5));
+                if(FileIO.OpenAfterUpload) {
+                    Process.Start(link);
+                }
+
+                await SuccessToast.ShowAsync(strings.linkclipboard,
+                    TimeSpan.FromSeconds(5));
             } else {
-                    await ErrorToast.ShowAsync(string.Format(Properties.strings.uploadingError, link),
+                await ErrorToast.ShowAsync(string.Format(strings.uploadingError, link),
                     TimeSpan.FromSeconds(5));
             }
         }
 
-        //Copy the Byte[] to the Clipboard
-        private void CopyImageToClipboard(byte[] cimg) {
-            CopyClipboard(cimg);
-            SuccessToast.Show(Properties.strings.imgclipboard,
-                TimeSpan.FromSeconds(3.5));
-        }
-
-        //Upload Image to Imgur and returns URL to Imgur
-        private async Task<string> UploadImgur(byte[] cimg, string windowName) {
-            string response = await _imgur.Upload(cimg, windowName);
-
-            //Copy Link to Clipboard
-            Clipboard.SetText(response);
-
-            return response;
-        }
-
         //Parse byte[] to Image and write to Clipboard
-        private void CopyClipboard(byte[] cimg) {
+        private static void CopyClipboard(byte[] cimg) {
             //Parse byte[] to Images
             BitmapImage image = new BitmapImage();
             using(MemoryStream mem = new MemoryStream(cimg)) {
@@ -297,14 +295,14 @@ namespace ImgurSniper {
         }
 
         //Close Window with short delay
-        private async void DelayedClose(int Delay) {
-            await Task.Delay(TimeSpan.FromMilliseconds(Delay));
+        private static async void DelayedClose(int delay) {
+            await Task.Delay(TimeSpan.FromMilliseconds(delay));
             //this.Close();
-            System.Windows.Application.Current.Shutdown(0);
+            Application.Current.Shutdown(0);
         }
 
         //Play the Blop Success Sound
-        private void PlayBlop() {
+        private static void PlayBlop() {
             try {
                 MediaPlayer player = new MediaPlayer { Volume = 30 };
 
@@ -312,7 +310,9 @@ namespace ImgurSniper {
 
                 player.Open(new Uri(path));
                 player.Play();
-            } catch { }
+            } catch {
+                // ignored
+            }
         }
     }
 }

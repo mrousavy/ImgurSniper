@@ -163,8 +163,8 @@ namespace ImgurSniper.UI {
             }
 
             try {
-                //Check for Update, if last update is longer than 2 Days ago
-                if(DateTime.Now - FileIO.LastChecked > TimeSpan.FromDays(2)) {
+                //Check for Update, if last update is longer than 1 Day ago
+                if(DateTime.Now - FileIO.LastChecked > TimeSpan.FromDays(1)) {
                     FileIO.LastChecked = DateTime.Now;
 
                     //Retrieve info from github
@@ -541,6 +541,10 @@ namespace ImgurSniper.UI {
 
         private void CloseDia() {
             DialogHost.CloseDialogCommand.Execute(null, DialogHost);
+        }
+
+        private void Help(object sender, RoutedEventArgs e) {
+            Process.Start("http://github.com/mrousavy/ImgurSniper");
         }
     }
 }

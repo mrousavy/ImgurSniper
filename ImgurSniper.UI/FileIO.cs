@@ -3,24 +3,22 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Windows.Input;
 
 namespace ImgurSniper.UI {
     public static class FileIO {
-
-        public class Settings {
-            public bool MagnifyingGlassEnabled = true;
-            public bool AllMonitors = true;
-            public bool UsePNG = true;
-            public bool OpenAfterUpload = true;
-            public System.Windows.Input.Key ShortcutKey = System.Windows.Input.Key.X;
-            public bool UsePrint = false;
-            public string SaveImagesPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper Images");
-            public bool SaveImages = false;
-            public bool RunOnBoot = true;
-            public bool ImgurAfterSnipe = true;
-            public bool IsInContextMenu = false;
-            public int CurrentCommits = 999;
-            public DateTime LastChecked = DateTime.Now;
+        //Config Keys
+        public enum ConfigType {
+            AfterSnipeAction,
+            SaveImages,
+            Magnifyer,
+            OpenAfterUpload,
+            SnipeMonitor,
+            Path,
+            ImageFormat,
+            RunOnBoot,
+            UsePrint,
+            IsInContextMenu
         }
 
         //Value whether Magnifying Glass should be enabled or not
@@ -38,6 +36,7 @@ namespace ImgurSniper.UI {
                 JsonConfig = settings;
             }
         }
+
         //Value whether ImgurSniper should strech over all screens or not
         public static bool AllMonitors {
             get {
@@ -53,6 +52,7 @@ namespace ImgurSniper.UI {
                 JsonConfig = settings;
             }
         }
+
         //Value whether ImgurSniper should use PNG Image Format
         public static bool UsePNG {
             get {
@@ -68,6 +68,7 @@ namespace ImgurSniper.UI {
                 JsonConfig = settings;
             }
         }
+
         //Value whether ImgurSniper should open the uploaded Image in Browser after upload
         public static bool OpenAfterUpload {
             get {
@@ -83,13 +84,14 @@ namespace ImgurSniper.UI {
                 JsonConfig = settings;
             }
         }
+
         //Key for ImgurSniper Shortcut
-        public static System.Windows.Input.Key ShortcutKey {
+        public static Key ShortcutKey {
             get {
                 try {
                     return JsonConfig.ShortcutKey;
                 } catch {
-                    return System.Windows.Input.Key.X;
+                    return Key.X;
                 }
             }
             set {
@@ -98,6 +100,7 @@ namespace ImgurSniper.UI {
                 JsonConfig = settings;
             }
         }
+
         //Use PrintKey for ImgurSniper Shortcut?
         public static bool UsePrint {
             get {
@@ -113,15 +116,20 @@ namespace ImgurSniper.UI {
                 JsonConfig = settings;
             }
         }
+
         //The Path where images should be saved (if enabled)
         public static string SaveImagesPath {
             get {
                 try {
                     string path = JsonConfig.SaveImagesPath;
 
-                    return string.IsNullOrWhiteSpace(path) ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper Images") : path;
+                    return string.IsNullOrWhiteSpace(path)
+                        ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                            "ImgurSniper Images")
+                        : path;
                 } catch {
-                    return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper Images");
+                    return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                        "ImgurSniper Images");
                 }
             }
             set {
@@ -130,6 +138,7 @@ namespace ImgurSniper.UI {
                 JsonConfig = settings;
             }
         }
+
         //Value wether Images should be saved or not
         public static bool SaveImages {
             get {
@@ -145,6 +154,7 @@ namespace ImgurSniper.UI {
                 JsonConfig = settings;
             }
         }
+
         //Value wether run ImgurSniper as a Background Task on Boot or not
         public static bool RunOnBoot {
             get {
@@ -160,6 +170,7 @@ namespace ImgurSniper.UI {
                 JsonConfig = settings;
             }
         }
+
         //Value wether upload Images to Imgur or copy to Clipboard
         public static bool ImgurAfterSnipe {
             get {
@@ -175,6 +186,7 @@ namespace ImgurSniper.UI {
                 JsonConfig = settings;
             }
         }
+
         //Value wether "Upload Image to Imgur" is already in Registry
         public static bool IsInContextMenu {
             get {
@@ -190,6 +202,7 @@ namespace ImgurSniper.UI {
                 JsonConfig = settings;
             }
         }
+
         //Count of Commits for this ImgurSniper Version (for checking for Updates)
         public static int CurrentCommits {
             get {
@@ -205,6 +218,7 @@ namespace ImgurSniper.UI {
                 JsonConfig = settings;
             }
         }
+
         //Last Time, ImgurSniper checked for Updates
         public static DateTime LastChecked {
             get {
@@ -232,8 +246,13 @@ namespace ImgurSniper.UI {
             }
         }
 
-        public static string ConfigPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper");
-        public static string ConfigFile => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper", "config.json");
+        public static string ConfigPath
+            => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper");
+
+        public static string ConfigFile
+            =>
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper",
+                    "config.json");
 
         //Path to Installation Folder
         public static string _programFiles => AppDomain.CurrentDomain.BaseDirectory;
@@ -247,32 +266,53 @@ namespace ImgurSniper.UI {
             }
         }
 
-        private static void Exists() {
-            if(!Directory.Exists(ConfigPath))
-                Directory.CreateDirectory(ConfigPath);
-
-            if(!File.Exists(ConfigFile))
-                File.WriteAllText(ConfigFile, "{}");
-        }
-
         //Salt for Cipher Encryption
         private static string _passPhrase => "ImgurSniper v" + _fileVersion + " User-Login File_PassPhrase :)";
 
-        //Config Keys
-        public enum ConfigType { AfterSnipeAction, SaveImages, Magnifyer, OpenAfterUpload, SnipeMonitor, Path, ImageFormat, RunOnBoot, UsePrint, IsInContextMenu }
+        private static void Exists() {
+            if(!Directory.Exists(ConfigPath)) {
+                Directory.CreateDirectory(ConfigPath);
+            }
+
+            if(!File.Exists(ConfigFile)) {
+                File.WriteAllText(ConfigFile, "{}");
+            }
+        }
 
         //Resets User Settings
         public static void WipeUserData() {
             JsonConfig = new Settings();
         }
 
+        public class Settings {
+            public bool AllMonitors = true;
+            public int CurrentCommits = 999;
+            public bool ImgurAfterSnipe = true;
+            public bool IsInContextMenu;
+            public DateTime LastChecked = DateTime.Now;
+            public bool MagnifyingGlassEnabled = true;
+            public bool OpenAfterUpload = true;
+            public bool RunOnBoot = true;
+            public bool SaveImages;
+
+            public string SaveImagesPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper Images");
+
+            public Key ShortcutKey = Key.X;
+            public bool UsePNG = true;
+            public bool UsePrint;
+        }
 
         #region Imgur Account
+
         //Does Imgur Refresh Token exist?
         public static bool TokenExists => File.Exists(TokenPath);
 
         //Path to Imgur User Refresh Token
-        public static string TokenPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper", "refreshtoken.imgurtoken");
+        public static string TokenPath
+            =>
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper",
+                    "refreshtoken.imgurtoken");
 
         public static string ReadRefreshToken() {
             if(!File.Exists(TokenPath)) {
@@ -287,14 +327,16 @@ namespace ImgurSniper.UI {
         }
 
         public static void WriteRefreshToken(string token) {
-            string encr_token = Cipher.Encrypt(token, _passPhrase);
-            File.WriteAllText(TokenPath, encr_token);
+            string encrToken = Cipher.Encrypt(token, _passPhrase);
+            File.WriteAllText(TokenPath, encrToken);
         }
 
         public static void DeleteToken() {
-            if(File.Exists(TokenPath))
+            if(File.Exists(TokenPath)) {
                 File.Delete(TokenPath);
+            }
         }
+
         #endregion
     }
 }

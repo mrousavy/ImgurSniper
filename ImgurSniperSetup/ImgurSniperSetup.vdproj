@@ -46,13 +46,13 @@
         "Entry"
         {
         "MsmKey" = "8:_290350B9F08C688CB83A0EED14E6CC06"
-        "OwnerKey" = "8:_CCFFB22825EF452281F2341B341CB11B"
+        "OwnerKey" = "8:_CA5E9FACB5FD4A37B56A05954A72D719"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_290350B9F08C688CB83A0EED14E6CC06"
-        "OwnerKey" = "8:_CA5E9FACB5FD4A37B56A05954A72D719"
+        "OwnerKey" = "8:_CCFFB22825EF452281F2341B341CB11B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -112,19 +112,7 @@
         "Entry"
         {
         "MsmKey" = "8:_C30D88FF15831BCB0EC0B7746F86A4D9"
-        "OwnerKey" = "8:_CCFFB22825EF452281F2341B341CB11B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C30D88FF15831BCB0EC0B7746F86A4D9"
-        "OwnerKey" = "8:_55C01A15E04EDA2F9DEDFDFE5AC96DB4"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C30D88FF15831BCB0EC0B7746F86A4D9"
-        "OwnerKey" = "8:_03FF1D16D70FC48768659090FE29F403"
+        "OwnerKey" = "8:_AFCC929FFE20407D84E08B5BE56AC081"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -136,7 +124,19 @@
         "Entry"
         {
         "MsmKey" = "8:_C30D88FF15831BCB0EC0B7746F86A4D9"
-        "OwnerKey" = "8:_AFCC929FFE20407D84E08B5BE56AC081"
+        "OwnerKey" = "8:_03FF1D16D70FC48768659090FE29F403"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C30D88FF15831BCB0EC0B7746F86A4D9"
+        "OwnerKey" = "8:_55C01A15E04EDA2F9DEDFDFE5AC96DB4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C30D88FF15831BCB0EC0B7746F86A4D9"
+        "OwnerKey" = "8:_CCFFB22825EF452281F2341B341CB11B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -184,67 +184,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_CCFFB22825EF452281F2341B341CB11B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_63967D51630440EDDC183C528399E74F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_CA5E9FACB5FD4A37B56A05954A72D719"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0E184F5D949794C71D4A997F556DD076"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_55C01A15E04EDA2F9DEDFDFE5AC96DB4"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_5A6F2DFF816EA5D7B01BBBA1E39D0EF0"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_773A2D05D12498EE2606B17E765AF146"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_03FF1D16D70FC48768659090FE29F403"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_290350B9F08C688CB83A0EED14E6CC06"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_6FE760FA3D7BF0047E966A70A6BC545A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E93695BF24148F06FFC97FF6B2450434"
+        "OwnerKey" = "8:_C30D88FF15831BCB0EC0B7746F86A4D9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -256,7 +196,67 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C30D88FF15831BCB0EC0B7746F86A4D9"
+        "OwnerKey" = "8:_E93695BF24148F06FFC97FF6B2450434"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_6FE760FA3D7BF0047E966A70A6BC545A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_290350B9F08C688CB83A0EED14E6CC06"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_03FF1D16D70FC48768659090FE29F403"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_773A2D05D12498EE2606B17E765AF146"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_5A6F2DFF816EA5D7B01BBBA1E39D0EF0"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_55C01A15E04EDA2F9DEDFDFE5AC96DB4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_0E184F5D949794C71D4A997F556DD076"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_CA5E9FACB5FD4A37B56A05954A72D719"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_63967D51630440EDDC183C528399E74F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_CCFFB22825EF452281F2341B341CB11B"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -375,11 +375,6 @@
             "AssemblyAsmDisplayName" = "8:Imgur.API, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_03FF1D16D70FC48768659090FE29F403"
-                    {
-                    "Name" = "8:Imgur.API.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Imgur.API.dll"
             "TargetName" = "8:"
@@ -406,11 +401,6 @@
             "AssemblyAsmDisplayName" = "8:Toast, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_0E184F5D949794C71D4A997F556DD076"
-                    {
-                    "Name" = "8:Toast.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Toast.dll"
             "TargetName" = "8:"
@@ -437,11 +427,6 @@
             "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_290350B9F08C688CB83A0EED14E6CC06"
-                    {
-                    "Name" = "8:Newtonsoft.Json.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Newtonsoft.Json.dll"
             "TargetName" = "8:"
@@ -468,11 +453,6 @@
             "AssemblyAsmDisplayName" = "8:Octokit, Version=0.24.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_55C01A15E04EDA2F9DEDFDFE5AC96DB4"
-                    {
-                    "Name" = "8:Octokit.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Octokit.dll"
             "TargetName" = "8:"
@@ -499,11 +479,6 @@
             "AssemblyAsmDisplayName" = "8:MaterialDesignThemes.Wpf, Version=2.2.1.750, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_5A6F2DFF816EA5D7B01BBBA1E39D0EF0"
-                    {
-                    "Name" = "8:MaterialDesignThemes.Wpf.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:MaterialDesignThemes.Wpf.dll"
             "TargetName" = "8:"
@@ -530,11 +505,6 @@
             "AssemblyAsmDisplayName" = "8:Hotkeys, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_63967D51630440EDDC183C528399E74F"
-                    {
-                    "Name" = "8:Hotkeys.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Hotkeys.dll"
             "TargetName" = "8:"
@@ -561,11 +531,6 @@
             "AssemblyAsmDisplayName" = "8:System.IO.Compression.FileSystem, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                 "ScatterAssemblies"
                 {
-                    "_6FE760FA3D7BF0047E966A70A6BC545A"
-                    {
-                    "Name" = "8:System.IO.Compression.FileSystem.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.IO.Compression.FileSystem.dll"
             "TargetName" = "8:"
@@ -592,11 +557,6 @@
             "AssemblyAsmDisplayName" = "8:MaterialDesignColors, Version=1.1.3.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_773A2D05D12498EE2606B17E765AF146"
-                    {
-                    "Name" = "8:MaterialDesignColors.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:MaterialDesignColors.dll"
             "TargetName" = "8:"
@@ -643,11 +603,6 @@
             "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
                 "ScatterAssemblies"
                 {
-                    "_C30D88FF15831BCB0EC0B7746F86A4D9"
-                    {
-                    "Name" = "8:System.Net.Http.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.Net.Http.dll"
             "TargetName" = "8:"
@@ -694,11 +649,6 @@
             "AssemblyAsmDisplayName" = "8:System.IO.Compression, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                 "ScatterAssemblies"
                 {
-                    "_E93695BF24148F06FFC97FF6B2450434"
-                    {
-                    "Name" = "8:System.IO.Compression.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.IO.Compression.dll"
             "TargetName" = "8:"
@@ -816,7 +766,7 @@
         "ProductVersion" = "8:1.0.35"
         "Manufacturer" = "8:mrousavy"
         "ARPHELPTELEPHONE" = "8:"
-        "ARPHELPLINK" = "8:"
+        "ARPHELPLINK" = "8:http://github.com/mrousavy/ImgurSniper"
         "Title" = "8:ImgurSniper"
         "Subject" = "8:"
         "ARPCONTACT" = "8:mrousavy"

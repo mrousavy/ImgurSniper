@@ -1,15 +1,14 @@
 ﻿using System.Diagnostics;
 using System.Windows;
-using System.Windows.Threading;
 
 namespace ImgurSniper {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application {
+    public partial class App {
 
-        public App() : base() {
-            this.DispatcherUnhandledException += (object sender, DispatcherUnhandledExceptionEventArgs e) => {
+        public App() {
+            DispatcherUnhandledException += (sender, e) => {
                 if(MessageBox.Show($"An unknown Error occured in ImgurSniper.UI!\nImgurSniper has to shut down!\nWould you like to see a detailed Exception Info?\n\n({e.Exception.Message})",
                     "ImgurSniper Error",
                     MessageBoxButton.YesNo,
