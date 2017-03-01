@@ -248,21 +248,15 @@ namespace ImgurSniper {
             if(link.StartsWith("http://")) {
                 Clipboard.SetText(link);
                 PlayBlop();
-
-                //Catch internal toast exceptions & process start exception
-                try {
+                
                     if(FileIO.OpenAfterUpload)
                         Process.Start(link);
 
                     await SuccessToast.ShowAsync(Properties.strings.linkclipboard,
                         TimeSpan.FromSeconds(5));
-                } catch { }
             } else {
-                //Catch internal toast exceptions
-                try {
                     await ErrorToast.ShowAsync(string.Format(Properties.strings.uploadingError, link),
                     TimeSpan.FromSeconds(5));
-                } catch { }
             }
         }
 
