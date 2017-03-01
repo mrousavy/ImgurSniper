@@ -24,7 +24,6 @@ namespace ImgurSniper {
     ///     Interaction logic for ScreenshotWindow.xaml
     /// </summary>
     public partial class ScreenshotWindow {
-        private readonly bool _focusOnLoad;
 
         private bool _drag;
 
@@ -35,9 +34,8 @@ namespace ImgurSniper {
         //private bool _enableMagnifyer = false;
 
 
-        public ScreenshotWindow(bool allMonitors, bool focus) {
+        public ScreenshotWindow(bool allMonitors) {
             ShowActivated = false;
-            _focusOnLoad = focus;
 
             InitializeComponent();
 
@@ -68,10 +66,9 @@ namespace ImgurSniper {
                 bounds.Width / 2 - 50,
                 bounds.Height / 2 - 25);
 
-            if(_focusOnLoad) {
                 Activate();
+                Topmost = true;
                 Focus();
-            }
 
             #region Escape
 
