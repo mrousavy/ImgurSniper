@@ -275,12 +275,13 @@ namespace ImgurSniper {
 
             DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
 
-            anim.Completed += delegate {
+            anim.Completed += async delegate {
                 Topmost = false;
                 Opacity = 0;
 
                 //For render complete
                 Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.ContextIdle, null);
+                await Task.Delay(50);
 
                 //Send Window to back, so WinAPI.User32.WindowFromPoint does not detect ImgurSniper as Window
                 WinAPI.User32.SetWindowPos(new WindowInteropHelper(this).Handle, WinAPI.HWND_BOTTOM, 0, 0, 0, 0,
@@ -431,10 +432,11 @@ namespace ImgurSniper {
         private void Complete(int fromX, int fromY, int toX, int toY) {
             DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
 
-            anim.Completed += delegate {
+            anim.Completed += async delegate {
                 grid.Opacity = 0;
                 //For render complete
                 Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.ContextIdle, null);
+                await Task.Delay(50);
 
                 Crop(fromX, fromY, toX, toY);
             };
