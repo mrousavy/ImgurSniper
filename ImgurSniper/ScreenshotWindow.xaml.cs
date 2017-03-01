@@ -46,8 +46,7 @@ namespace ImgurSniper {
         }
 
         //Size of current Mouse Location screen
-        public static Rectangle Screen
-            => System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position).Bounds;
+        public static Rectangle Screen => System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position).Bounds;
 
         //Size of whole Screen Array
         public static Rectangle AllScreens => SystemInformation.VirtualScreen;
@@ -66,9 +65,9 @@ namespace ImgurSniper {
                 bounds.Width / 2 - 50,
                 bounds.Height / 2 - 25);
 
-                Activate();
-                Topmost = true;
-                Focus();
+            Activate();
+            Topmost = true;
+            Focus();
 
             #region Escape
 
