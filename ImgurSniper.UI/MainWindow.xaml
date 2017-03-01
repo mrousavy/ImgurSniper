@@ -84,9 +84,9 @@
 						  Content="{x:Static Member=cultureStrings:strings.usePrint}"/>
 
                  <StackPanel Orientation="Horizontal" Margin="15,5,0,0">
-                        <Label Content="{x:Static Member=cultureStrings:strings.language}" VerticalAlignment="Center"/>
+                        <Label Content="{x:Static Member=cultureStrings:strings.language}" VerticalAlignment="Center" FontSize="14" />
 
-                        <ComboBox x:Name="LanguageBox"  Margin="15,0,0,0" VerticalAlignment="Center" SelectedIndex="0"  Foreground="Gray">
+                        <ComboBox x:Name="LanguageBox" FontSize="13" Margin="15,0,0,0" VerticalAlignment="Center" SelectedIndex="0"  Foreground="Gray">
                             <ComboBoxItem x:Name="en">English</ComboBoxItem>
                             <ComboBoxItem x:Name="de">German</ComboBoxItem>
                         </ComboBox>
