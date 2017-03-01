@@ -38,12 +38,12 @@
 		<ScrollViewer Margin="0,0,0,50">
 			<StackPanel Margin="5">
 				<Label Margin="10,5,5,5" FontSize="15" Content="{x:Static Member=cultureStrings:strings.afterSnapping}"/>
-				<RadioButton GroupName="AfterSnap" Tag="Imgur" IsChecked="True"
+				<RadioButton GroupName="AfterSnap" Tag="Imgur" IsChecked="True" VerticalAlignment="Bottom"
 							 FontSize="14" Margin="15,0,0,0" x:Name="ImgurRadio" 
 							 Foreground="Gray" Click="AfterSnapClick"
 							 Content="{x:Static Member=cultureStrings:strings.autoUploadImgur}"/>
 
-				<RadioButton GroupName="AfterSnap" Tag="Clipboard"
+				<RadioButton GroupName="AfterSnap" Tag="Clipboard" VerticalAlignment="Bottom"
 							 FontSize="14" Margin="15,0,0,0" x:Name="ClipboardRadio" 
 							 Foreground="Gray" Click="AfterSnapClick"
 							 Content="{x:Static Member=cultureStrings:strings.copyClipboard}"/>
@@ -51,35 +51,35 @@
 
 				<Label Margin="10,5,5,5" FontSize="15"
 					   Content="{x:Static Member=cultureStrings:strings.whenFinished}"/>
-				<CheckBox x:Name="SaveBox" FontSize="14" Margin="15,0,0,0"
+				<CheckBox x:Name="SaveBox" FontSize="14" Margin="15,0,0,0" VerticalAlignment="Bottom"
 							 Foreground="Gray" Click="SaveImgs_Checkbox"
 						  Content="{x:Static Member=cultureStrings:strings.saveLocally}"/>
 
 				<StackPanel Orientation="Horizontal" Margin="15,5,5,5" x:Name="PathPanel">
-					<Label VerticalAlignment="Bottom"
+					<Label VerticalAlignment="Center"
 						   Content="{x:Static Member=cultureStrings:strings.path}"/>
 					<TextBox Width="250" Margin="5" VerticalAlignment="Center"
 							 x:Name="PathBox" KeyDown="PathBox_Submit"/>
-					<Button Foreground="Gray" VerticalAlignment="Bottom"
+					<Button Foreground="Gray" VerticalAlignment="Center"
 									Click="PathChooser" VerticalContentAlignment="Bottom"
 									Style="{DynamicResource MaterialDesignFlatButton}">...</Button>
 				</StackPanel>
 
 				<Label Margin="10,5,5,5" FontSize="15"
 					   Content="{x:Static Member=cultureStrings:strings.other}"/>
-				<CheckBox x:Name="MagnifyingGlassBox" FontSize="14" Margin="15,0,0,0"
+				<CheckBox x:Name="MagnifyingGlassBox" FontSize="14" Margin="15,0,0,0" VerticalAlignment="Bottom"
 							 Foreground="Gray" Click="Magnifying_Checkbox" IsEnabled="False"
 						  Content="{x:Static Member=cultureStrings:strings.enMagnifying}"/>
 
-				<CheckBox x:Name="OpenAfterUploadBox" FontSize="14" Margin="15,0,0,0"
+				<CheckBox x:Name="OpenAfterUploadBox" FontSize="14" Margin="15,0,0,0" VerticalAlignment="Bottom"
 							 Foreground="Gray" Click="OpenAfterUpload_Checkbox"
 						  Content="{x:Static Member=cultureStrings:strings.openBrowser}"/>
 
-				<CheckBox x:Name="RunOnBoot" FontSize="14" Margin="15,0,0,0"
+				<CheckBox x:Name="RunOnBoot" FontSize="14" Margin="15,0,0,0" VerticalAlignment="Bottom"
 							 Foreground="Gray" Click="RunOnBoot_Checkbox"
 						  Content="{x:Static Member=cultureStrings:strings.trayService}"/>
 
-                <CheckBox x:Name="PrintKeyBox" FontSize="14" Margin="15,0,0,0"
+                <CheckBox x:Name="PrintKeyBox" FontSize="14" Margin="15,0,0,0" VerticalAlignment="Bottom"
 							 Foreground="Gray" Click="PrintKeyBox_Click"
 						  Content="{x:Static Member=cultureStrings:strings.usePrint}"/>
 
@@ -104,10 +104,10 @@
 							   Content="PIN:"/>
 
 						<TextBox Margin="5" MaxLength="20" Width="100" x:Name="Box_PIN"
-								 VerticalAlignment="Center" TextChanged="Box_PIN_TextChanged"/>
+								 VerticalAlignment="Bottom" TextChanged="Box_PIN_TextChanged"/>
 
 						<Button Margin="5" IsEnabled="False" x:Name="Btn_PinOk"
-								VerticalAlignment="Center" Click="PINOk"
+								VerticalAlignment="Bottom" Click="PINOk"
 								Content=">"/>
 
 					</StackPanel>
@@ -127,13 +127,13 @@
 					   Content="{x:Static Member=cultureStrings:strings.whereSnipe}" />
 				<RadioButton GroupName="MonitorGroup" Tag="Current" IsChecked="True"
 							 FontSize="14" Margin="15,0,0,0" x:Name="CurrentMonitorRadio" 
-							 Foreground="Gray" Click="MonitorsClick"
+							 VerticalAlignment="Bottom" Foreground="Gray" Click="MonitorsClick"
 							 ToolTip="{x:Static Member=cultureStrings:strings.onlyMouse}"
 							 Content="{x:Static Member=cultureStrings:strings.curMonitor}"/>
 
 				<RadioButton GroupName="MonitorGroup" Tag="All"
 							 FontSize="14" Margin="15,0,0,0" x:Name="MultiMonitorRadio" 
-							 Foreground="Gray" Click="MonitorsClick"
+							 VerticalAlignment="Bottom" Foreground="Gray" Click="MonitorsClick"
 							 ToolTip="{x:Static Member=cultureStrings:strings.notOnlyMouse}"
 							 Content="{x:Static Member=cultureStrings:strings.allMonitor}"/>
 
@@ -141,13 +141,13 @@
 					   Content="{x:Static Member=cultureStrings:strings.imgFormat}"/>
 				<RadioButton GroupName="ImageFormatGroup" Tag="PNG"
 							 FontSize="14" Margin="15,0,0,0" x:Name="PngRadio" 
-							 Foreground="Gray" Click="ImgFormatClick"
+							 VerticalAlignment="Bottom" Foreground="Gray" Click="ImgFormatClick"
 							 ToolTip="{x:Static Member=cultureStrings:strings.usePNG}"
 							 Content="PNG"/>
 
 				<RadioButton GroupName="ImageFormatGroup" Tag="JPEG" IsChecked="True"
 							 FontSize="14" Margin="15,0,0,0" x:Name="JpegRadio" 
-							 Foreground="Gray" Click="ImgFormatClick"
+							 VerticalAlignment="Bottom" Foreground="Gray" Click="ImgFormatClick"
 							 ToolTip="{x:Static Member=cultureStrings:strings.useJPEG}"
 							 Content="JPEG"/>
 			</StackPanel>
