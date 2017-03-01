@@ -75,7 +75,7 @@ namespace ImgurSniper {
             } else if(upload && image != null) {
                 InstantUpload(image);
             } else {
-                Crop(true, false);
+                Crop(true);
             }
         }
 
@@ -119,7 +119,7 @@ namespace ImgurSniper {
             _nicon.MouseClick += (sender, e) => {
                 if(e.Button == MouseButtons.Left) {
                     if(hk == null) {
-                        Crop(false, true);
+                        Crop(false);
                     } else {
                         OpenFromShortcut(hk);
                     }
@@ -137,7 +137,7 @@ namespace ImgurSniper {
         //Open Snipe by Shortcut (Ctrl + Shift + I or Print)
         private void OpenFromShortcut(HotKey h) {
             h.HotKeyPressed -= OpenFromShortcut;
-            Crop(false, false);
+            Crop(false);
             h.HotKeyPressed += OpenFromShortcut;
         }
 
@@ -187,14 +187,14 @@ namespace ImgurSniper {
         }
 
         //Make Screenshot, Let user Crop, Upload Picture and Copy Link to Clipboard
-        private async void Crop(bool closeOnFinish, bool focusNewWindow) {
+        private async void Crop(bool closeOnFinish) {
             Visibility = Visibility.Visible;
             BringIntoView();
             Topmost = true;
             _counter++;
             int local = _counter;
 
-            ScreenshotWindow window = new ScreenshotWindow(FileIO.AllMonitors, focusNewWindow);
+            ScreenshotWindow window = new ScreenshotWindow(FileIO.AllMonitors);
             window.ShowDialog();
 
             if(window.DialogResult == true) {
