@@ -240,4 +240,27 @@
   <data name="yes" xml:space="preserve">
     <value>Yes</value>
   </data>
+  <data name="langChanged" xml:space="preserve">
+    <value>Language successfully changed, to proceed,
+you have to restart ImgurSniper.
+Do you want to restart ImgurSniper now?</value>
+  </data>
+  <data name="language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="unhandledError" xml:space="preserve">
+    <value>An unknown Error occured in ImgurSniper.UI!
+ImgurSniper has to shut down!
+Would you like to see a detailed Exception Info?
+</value>
+  </data>
+  <data name="loggedIn" xml:space="preserve">
+    <value>Successfully logged in! Hi, {0}!</value>
+  </data>
+  <data name="plsPin" xml:space="preserve">
+    <value>Please enter the PIN you received on the Website.</value>
+  </data>
+  <data name="wrongPin" xml:space="preserve">
+    <value>Wrong PIN? Could not login to Imgur! ({0})</value>
+  </data>
 </root>

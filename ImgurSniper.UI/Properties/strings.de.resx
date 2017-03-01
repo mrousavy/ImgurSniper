@@ -136,7 +136,7 @@
     <value>Derzeitiger Bildschirm</value>
   </data>
   <data name="disablingTrayWarning" xml:space="preserve">
-    <value>Wollen Sie den ImgurSniper Hintergrund Dienst wirklich deaktivieren?</value>
+    <value>Wollen Sie den ImgurSniper Hintergrund-dienst wirklich deaktivieren?</value>
   </data>
   <data name="downloadingGitHub" xml:space="preserve">
     <value>Von github.com/mrousavy/ImgurSniper herunterladen...</value>
@@ -157,10 +157,21 @@
     <value>Imgur Account (angemeldet als {0})</value>
   </data>
   <data name="imgurSniperNotFound" xml:space="preserve">
-    <value>Fehler, ImgurSniper wurde auf Ihrem System nicht gefunden!</value>
+    <value>Fehler, ImgurSniper wurde nicht auf Ihrem System gefunden!</value>
+  </data>
+  <data name="langChanged" xml:space="preserve">
+    <value>Sprache erfolgreich geändert, um den Vorgang abzuschließen,
+muss ImgurSniper neu gestartet werden.
+Wollen Sie ImgurSniper jetzt neustarten?</value>
+  </data>
+  <data name="language" xml:space="preserve">
+    <value>Sprache</value>
   </data>
   <data name="loading" xml:space="preserve">
     <value>Lädt...</value>
+  </data>
+  <data name="loggedIn" xml:space="preserve">
+    <value>Anmeldung erfolgreich! Hi, {0}!</value>
   </data>
   <data name="no" xml:space="preserve">
     <value>Nein</value>
@@ -182,6 +193,9 @@
   </data>
   <data name="pathNotExist" xml:space="preserve">
     <value>Der ausgefählte Pfad existiert nicht!</value>
+  </data>
+  <data name="plsPin" xml:space="preserve">
+    <value>Bitte geben Sie die PIN von Imgur.com ein.</value>
   </data>
   <data name="repair" xml:space="preserve">
     <value>Reparieren</value>
@@ -213,8 +227,14 @@
   <data name="trayServiceNotRunning" xml:space="preserve">
     <value>ImgurSniper Hintergrundservice ist nicht gestartet!</value>
   </data>
+  <data name="unhandledError" xml:space="preserve">
+    <value>Ein schwerwiegender unbekannter Fehler in ImgurSniper ist aufgetreten!
+Wollen Sie eine detaillierte Fehlermeldung sehen?
+</value>
+  </data>
   <data name="unknownError" xml:space="preserve">
-    <value>Ein unbekannter Fehler ist aufgetreten!\r\nZeige dies den klugen Computer Affen: {0}</value>
+    <value>Ein unbekannter Fehler ist aufgetreten!
+Zeige dies den klugen Computer Affen: {0}</value>
   </data>
   <data name="update" xml:space="preserve">
     <value>Aktualisieren</value>
@@ -236,6 +256,9 @@
   </data>
   <data name="whereSnipe" xml:space="preserve">
     <value>Snipe Bereich</value>
+  </data>
+  <data name="wrongPin" xml:space="preserve">
+    <value>Falsche PIN? Anmeldung fehlgeschlagen! ({0})</value>
   </data>
   <data name="yes" xml:space="preserve">
     <value>Ja</value>

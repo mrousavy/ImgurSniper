@@ -171,4 +171,9 @@
   <data name="whoops" xml:space="preserve">
     <value>Whoops, etwas ist schiefgelaufen!</value>
   </data>
+  <data name="unhandledError" xml:space="preserve">
+    <value>Ein schwerwiegender unbekannter Fehler in ImgurSniper ist aufgetreten!
+Wollen Sie eine detaillierte Fehlermeldung sehen?
+</value>
+  </data>
 </root>

@@ -35,13 +35,6 @@ namespace ImgurSniper {
             }
         }
 
-
-        public static byte[] ImageToByte(Image img) {
-            ImageConverter converter = new ImageConverter();
-            return (byte[])converter.ConvertTo(img, typeof(byte[]));
-        }
-
-
         public static Image MediaImageToDrawingImage(ImageSource image) {
             MemoryStream ms = new MemoryStream();
             var encoder = new BmpBitmapEncoder();
@@ -53,23 +46,6 @@ namespace ImgurSniper {
 
         // P/Invoke declarations
         [DllImport("gdi32.dll")]
-        static extern bool BitBlt(IntPtr hdcDest, int xDest, int yDest, int
-        wDest, int hDest, IntPtr hdcSource, int xSrc, int ySrc, CopyPixelOperation rop);
-        [DllImport("user32.dll")]
-        static extern bool ReleaseDC(IntPtr hWnd, IntPtr hDc);
-        [DllImport("gdi32.dll")]
-        static extern IntPtr DeleteDC(IntPtr hDc);
-        [DllImport("gdi32.dll")]
         static extern IntPtr DeleteObject(IntPtr hDc);
-        [DllImport("gdi32.dll")]
-        static extern IntPtr CreateCompatibleBitmap(IntPtr hdc, int nWidth, int nHeight);
-        [DllImport("gdi32.dll")]
-        static extern IntPtr CreateCompatibleDC(IntPtr hdc);
-        [DllImport("gdi32.dll")]
-        static extern IntPtr SelectObject(IntPtr hdc, IntPtr bmp);
-        [DllImport("user32.dll")]
-        public static extern IntPtr GetDesktopWindow();
-        [DllImport("user32.dll")]
-        public static extern IntPtr GetWindowDC(IntPtr ptr);
     }
 }

@@ -196,10 +196,12 @@ namespace ImgurSniper {
             //Set correct Selected Mode Indicator
             if(grid.IsEnabled) {
                 grid.CaptureMouse();
+                Cursor = Cursors.Cross;
                 CropIcon.Background = Brushes.Gray;
                 DrawIcon.Background = Brushes.Transparent;
             } else {
                 PaintSurface.CaptureMouse();
+                Cursor = Cursors.Pen;
                 DrawIcon.Background = Brushes.Gray;
                 CropIcon.Background = Brushes.Transparent;
             }

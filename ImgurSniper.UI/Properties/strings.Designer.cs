@@ -187,11 +187,40 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Language successfully changed, to proceed,
+        ///you have to restart ImgurSniper.
+        ///Do you want to restart ImgurSniper now?.
+        /// </summary>
+        public static string langChanged {
+            get {
+                return ResourceManager.GetString("langChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string language {
+            get {
+                return ResourceManager.GetString("language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading....
         /// </summary>
         public static string loading {
             get {
                 return ResourceManager.GetString("loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully logged in! Hi, {0}!.
+        /// </summary>
+        public static string loggedIn {
+            get {
+                return ResourceManager.GetString("loggedIn", resourceCulture);
             }
         }
         
@@ -255,6 +284,15 @@ namespace ImgurSniper.UI.Properties {
         public static string pathNotExist {
             get {
                 return ResourceManager.GetString("pathNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter the PIN you received on the Website..
+        /// </summary>
+        public static string plsPin {
+            get {
+                return ResourceManager.GetString("plsPin", resourceCulture);
             }
         }
         
@@ -349,6 +387,18 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An unknown Error occured in ImgurSniper.UI!
+        ///ImgurSniper has to shut down!
+        ///Would you like to see a detailed Exception Info?
+        ///.
+        /// </summary>
+        public static string unhandledError {
+            get {
+                return ResourceManager.GetString("unhandledError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An unknown Error occured!\r\nShow this to the smart Computer apes: {0}.
         /// </summary>
         public static string unknownError {
@@ -417,6 +467,15 @@ namespace ImgurSniper.UI.Properties {
         public static string whereSnipe {
             get {
                 return ResourceManager.GetString("whereSnipe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wrong PIN? Could not login to Imgur! ({0}).
+        /// </summary>
+        public static string wrongPin {
+            get {
+                return ResourceManager.GetString("wrongPin", resourceCulture);
             }
         }
         

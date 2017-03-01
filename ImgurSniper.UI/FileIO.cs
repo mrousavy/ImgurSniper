@@ -7,20 +7,6 @@ using System.Windows.Input;
 
 namespace ImgurSniper.UI {
     public static class FileIO {
-        //Config Keys
-        public enum ConfigType {
-            AfterSnipeAction,
-            SaveImages,
-            Magnifyer,
-            OpenAfterUpload,
-            SnipeMonitor,
-            Path,
-            ImageFormat,
-            RunOnBoot,
-            UsePrint,
-            IsInContextMenu
-        }
-
         //Value whether Magnifying Glass should be enabled or not
         public static bool MagnifyingGlassEnabled {
             get {
@@ -235,6 +221,22 @@ namespace ImgurSniper.UI {
             }
         }
 
+        //Text Language
+        public static string Language {
+            get {
+                try {
+                    return JsonConfig.Language;
+                } catch {
+                    return "en";
+                }
+            }
+            set {
+                Settings settings = JsonConfig;
+                settings.Language = value;
+                JsonConfig = settings;
+            }
+        }
+
         public static Settings JsonConfig {
             get {
                 Exists();
@@ -301,6 +303,7 @@ namespace ImgurSniper.UI {
             public Key ShortcutKey = Key.X;
             public bool UsePNG = true;
             public bool UsePrint;
+            public string Language = "en";
         }
 
         #region Imgur Account

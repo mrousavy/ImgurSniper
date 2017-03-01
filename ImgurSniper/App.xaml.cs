@@ -1,5 +1,8 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
+using System.Threading;
 using System.Windows;
+using System.Windows.Markup;
 
 namespace ImgurSniper {
     /// <summary>
@@ -9,7 +12,7 @@ namespace ImgurSniper {
 
         public App() {
             DispatcherUnhandledException += (sender, e) => {
-                if(MessageBox.Show($"An unknown Error occured in ImgurSniper.UI!\nImgurSniper has to shut down!\nWould you like to see a detailed Exception Info?\n\n({e.Exception.Message})",
+                if(MessageBox.Show($"{ImgurSniper.Properties.strings.unhandledError}({e.Exception.Message})",
                     "ImgurSniper Error",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Error) == MessageBoxResult.Yes) {
@@ -23,6 +26,12 @@ namespace ImgurSniper {
 
                 Process.GetCurrentProcess().Kill();
             };
+
+            string language = FileIO.Language;
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(language);
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
+            FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(
+                        XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
         }
     }
 }

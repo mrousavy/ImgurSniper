@@ -124,7 +124,6 @@
       <DependentUpon>strings.resx</DependentUpon>
     </Compile>
     <Compile Include="SystemMetrics.cs" />
-    <Compile Include="UnitsHelper.cs" />
     <Compile Include="WinAPI.cs" />
     <Page Include="ScreenshotWindow.xaml">
       <SubType>Designer</SubType>

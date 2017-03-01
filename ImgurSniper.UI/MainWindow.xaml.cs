@@ -78,15 +78,19 @@ namespace ImgurSniper.UI {
 
             #region Read Config
             try {
-                string SaveImagesPath = FileIO.SaveImagesPath;
-                bool UsePNG = FileIO.UsePNG;
-                bool AllMonitors = FileIO.AllMonitors;
-                bool OpenAfterUpload = FileIO.OpenAfterUpload;
-                bool UsePrint = FileIO.UsePrint;
-                bool RunOnBoot = FileIO.RunOnBoot;
-                //bool Magnifyer = FileIO.MagnifyingGlassEnabled;
-                bool SaveImages = FileIO.SaveImages;
-                bool ImgurAfterSnipe = FileIO.ImgurAfterSnipe;
+                //Only 1x FileIO File read, optimized performance
+                FileIO.Settings settings = FileIO.JsonConfig;
+
+                string SaveImagesPath = settings.SaveImagesPath;
+                bool UsePNG = settings.UsePNG;
+                bool AllMonitors = settings.AllMonitors;
+                bool OpenAfterUpload = settings.OpenAfterUpload;
+                bool UsePrint = settings.UsePrint;
+                bool RunOnBoot = settings.RunOnBoot;
+                //bool Magnifyer = settings.MagnifyingGlassEnabled;
+                bool SaveImages = settings.SaveImages;
+                bool ImgurAfterSnipe = settings.ImgurAfterSnipe;
+                string language = settings.Language;
 
                 //Path to Saved Images
                 PathBox.Text = string.IsNullOrWhiteSpace(SaveImagesPath) ? DocPath : SaveImagesPath;
@@ -126,6 +130,18 @@ namespace ImgurSniper.UI {
                     ImgurRadio.IsChecked = true;
                 else
                     ClipboardRadio.IsChecked = true;
+
+                //Set correct Language for Current Language Box
+                switch(language) {
+                    case "en":
+                        LanguageBox.SelectedItem = en;
+                        break;
+                    case "de":
+                        LanguageBox.SelectedItem = de;
+                        break;
+                }
+                LanguageBox.SelectionChanged += LanguageBox_SelectionChanged;
+
             } catch { }
             #endregion
 
@@ -271,7 +287,7 @@ namespace ImgurSniper.UI {
                     bool choice = box.IsChecked == true;
                     //Show Dialog on disabling
                     if(box.IsChecked == false) {
-                        choice = !await AreYouSure(str.disablingTrayWarning);
+                        choice = !await ShowAskDialog(str.disablingTrayWarning);
                         RunOnBoot.IsChecked = choice;
                     }
 
@@ -327,6 +343,28 @@ namespace ImgurSniper.UI {
                 start.Start();
             } catch { }
         }
+
+
+
+        private async void LanguageBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            ComboBox box = sender as ComboBox;
+            if(box != null) {
+                try {
+                    FileIO.Language = (box.SelectedItem as ComboBoxItem).Name;
+
+                    bool result = await ShowAskDialog(str.langChanged);
+
+                    if(result) {
+                        InstallerHelper.KillImgurSniper(false);
+                        Process.Start(Process.GetCurrentProcess().MainModule.FileName);
+                        System.Windows.Application.Current.Shutdown();
+                    }
+                } catch {
+                    box.SelectedIndex = 0;
+                }
+            }
+        }
+
         private async void Snipe(object sender, RoutedEventArgs e) {
             string exe = System.IO.Path.Combine(Path, "ImgurSniper.exe");
 
@@ -345,18 +383,7 @@ namespace ImgurSniper.UI {
                     TimeSpan.FromSeconds(3));
             }
         }
-        private async void Repair(object sender, RoutedEventArgs e) {
-            ChangeButtonState(false);
 
-            try {
-                FileIO.WipeUserData();
-                await success_toast.ShowAsync(str.repairedImgurSniper, TimeSpan.FromSeconds(3));
-                this.Close();
-            } catch(Exception ex) {
-                error_toast.Show(string.Format(str.unknownError, ex.Message),
-                    TimeSpan.FromSeconds(5));
-            }
-        }
         private void Update(object sender, RoutedEventArgs e) {
             ChangeButtonState(false);
 
@@ -364,6 +391,7 @@ namespace ImgurSniper.UI {
 
             Helper.Update(sender as Button);
         }
+
         private void SignIn(object sender, RoutedEventArgs e) {
             try {
                 _imgurhelper.Authorize();
@@ -484,7 +512,7 @@ namespace ImgurSniper.UI {
 
 
         //Show a Material Design Dialog
-        private async Task<bool> AreYouSure(string message) {
+        private async Task<bool> ShowAskDialog(string message) {
             bool choice = false;
 
             CloseDia();
@@ -543,8 +571,10 @@ namespace ImgurSniper.UI {
             DialogHost.CloseDialogCommand.Execute(null, DialogHost);
         }
 
+        //"?" Button
         private void Help(object sender, RoutedEventArgs e) {
             Process.Start("http://github.com/mrousavy/ImgurSniper");
         }
+
     }
 }

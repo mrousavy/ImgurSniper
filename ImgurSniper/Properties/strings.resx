@@ -171,4 +171,10 @@
   <data name="whoops" xml:space="preserve">
     <value>Whoops, something went wrong!</value>
   </data>
+  <data name="unhandledError" xml:space="preserve">
+    <value>An unknown Error occured in ImgurSniper.UI!
+ImgurSniper has to shut down!
+Would you like to see a detailed Exception Info?
+</value>
+  </data>
 </root>

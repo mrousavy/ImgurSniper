@@ -78,7 +78,7 @@ namespace ImgurSniper.UI {
         }
 
 
-        private static void KillImgurSniper() {
+        public static void KillImgurSniper(bool killSelf) {
             List<Process> processes =
                 new List<Process>(Process.GetProcesses().Where(p => p.ProcessName.Contains("ImgurSniper")));
             foreach(Process p in processes) {
@@ -86,7 +86,8 @@ namespace ImgurSniper.UI {
                     p.Kill();
             }
 
-            Process.GetCurrentProcess().Kill();
+            if(killSelf)
+                Process.GetCurrentProcess().Kill();
         }
 
         private void DownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) {
@@ -101,7 +102,7 @@ namespace ImgurSniper.UI {
             } else {
                 Extract(file, extractTo);
                 Process.Start(Path.Combine(extractTo, "ImgurSniperSetup.msi"));
-                KillImgurSniper();
+                KillImgurSniper(true);
             }
         }
 

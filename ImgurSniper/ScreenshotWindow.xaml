@@ -4,7 +4,7 @@
         xmlns:toasty="clr-namespace:Toast;assembly=Toast"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ImgurSniper" Cursor="Cross" Topmost="True" Background="Transparent"
+        xmlns:local="clr-namespace:ImgurSniper" Cursor="Cross" ForceCursor="True" Topmost="True" Background="Transparent"
         ShowActivated="False" Focusable="False" ShowInTaskbar="False"
         mc:Ignorable="d" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize"
         Title="Snipe a Screenshot!" WindowStartupLocation="Manual">

@@ -219,6 +219,22 @@ namespace ImgurSniper {
             }
         }
 
+        //Text Language
+        public static string Language {
+            get {
+                try {
+                    return JsonConfig.Language;
+                } catch {
+                    return "en";
+                }
+            }
+            set {
+                Settings settings = JsonConfig;
+                settings.Language = value;
+                JsonConfig = settings;
+            }
+        }
+
         public static Settings JsonConfig {
             get {
                 Exists();
@@ -285,6 +301,7 @@ namespace ImgurSniper {
             public Key ShortcutKey = Key.X;
             public bool UsePNG = true;
             public bool UsePrint;
+            public string Language = "en";
         }
 
         #region Imgur Account

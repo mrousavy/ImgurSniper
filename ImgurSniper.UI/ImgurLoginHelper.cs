@@ -1,6 +1,7 @@
 ﻿using Imgur.API.Authentication.Impl;
 using Imgur.API.Endpoints.Impl;
 using Imgur.API.Models;
+using ImgurSniper.UI.Properties;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -36,7 +37,7 @@ namespace ImgurSniper.UI {
             string redirectUrl = _endpoint.GetAuthorizationUrl(Imgur.API.Enums.OAuth2ResponseType.Pin);
             Process.Start(redirectUrl);
 
-            _success.Show("Please enter the PIN you received on the Website!", TimeSpan.FromSeconds(2));
+            _success.Show(strings.plsPin, TimeSpan.FromSeconds(2));
         }
 
         public async Task<bool> Login(string pin) {
@@ -47,10 +48,10 @@ namespace ImgurSniper.UI {
                 FileIO.WriteRefreshToken(token.RefreshToken);
 
                 User = token.AccountUsername;
-                _success.Show("Successfully logged in! Hi, " + User + "!", TimeSpan.FromSeconds(2));
+                _success.Show(string.Format(strings.loggedIn, User), TimeSpan.FromSeconds(2));
                 return true;
             } catch(Exception ex) {
-                _error.Show("Wrong PIN? Could not login to Imgur! (" + ex.Message + ")", TimeSpan.FromSeconds(2));
+                _error.Show(string.Format(strings.wrongPin, ex.Message), TimeSpan.FromSeconds(2));
                 return false;
             }
         }

@@ -61,7 +61,6 @@ namespace ImgurSniper {
         public const UInt32 SWP_NOMOVE = 0x0002;
         public const UInt32 SWP_NOACTIVATE = 0x0010;
 
-
         public static bool GetBorderSize(IntPtr handle, out Size size) {
             WINDOWINFO wi = new WINDOWINFO();
 
@@ -83,37 +82,8 @@ namespace ImgurSniper {
             [DllImport("dwmapi.dll")]
             public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out RECT pvAttribute, int cbAttribute);
 
-            [DllImport("dwmapi.dll")]
-            public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out bool pvAttribute, int cbAttribute);
-
-            [DllImport("dwmapi.dll")]
-            public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out int pvAttribute, int cbAttribute);
-
-
             [DllImport("dwmapi.dll", PreserveSig = false)]
             public static extern bool DwmIsCompositionEnabled();
-        }
-
-        /// <summary>
-        /// Helper class containing Gdi32 API functions
-        /// </summary>
-        public static class GDI32 {
-            public const int SRCCOPY = 0x00CC0020; // BitBlt dwRop parameter
-            [DllImport("gdi32.dll")]
-            public static extern bool BitBlt(IntPtr hObject, int nXDest, int nYDest,
-                int nWidth, int nHeight, IntPtr hObjectSource,
-                int nXSrc, int nYSrc, int dwRop);
-            [DllImport("gdi32.dll")]
-            public static extern IntPtr CreateCompatibleBitmap(IntPtr hDC, int nWidth,
-                int nHeight);
-            [DllImport("gdi32.dll")]
-            public static extern IntPtr CreateCompatibleDC(IntPtr hDC);
-            [DllImport("gdi32.dll")]
-            public static extern bool DeleteDC(IntPtr hDC);
-            [DllImport("gdi32.dll")]
-            public static extern bool DeleteObject(IntPtr hObject);
-            [DllImport("gdi32.dll")]
-            public static extern IntPtr SelectObject(IntPtr hDC, IntPtr hObject);
         }
 
         /// <summary>
@@ -125,17 +95,11 @@ namespace ImgurSniper {
             public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
 
             [DllImport("user32.dll")]
-            public static extern IntPtr GetWindow(IntPtr hWnd, GetWindowConstants wCmd);
-
-            [DllImport("user32.dll")]
             public static extern IntPtr SetActiveWindow(IntPtr hWnd);
 
             [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SetForegroundWindow(IntPtr hWnd);
-
-            [DllImport("user32.dll")]
-            public static extern bool BringWindowToTop(IntPtr hWnd);
 
             [DllImport("user32.dll")]
             public static extern IntPtr WindowFromPoint(POINT point);
@@ -149,27 +113,12 @@ namespace ImgurSniper {
             public static extern bool IsZoomed(IntPtr hWnd);
 
             [DllImport("user32.dll")]
-            public static extern int GetSystemMetrics(SystemMetric smIndex);
-
-            [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool GetCursorPos(out POINT lpPoint);
 
             [DllImport("user32.dll")]
-            public static extern IntPtr GetDesktopWindow();
-
-            [DllImport("user32.dll")]
-            public static extern IntPtr GetWindowDC(IntPtr hWnd);
-
-            [DllImport("user32.dll")]
-            public static extern IntPtr ReleaseDC(IntPtr hWnd, IntPtr hDC);
-
-            [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
-
-            [DllImport("user32.dll")]
-            public static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, out uint ProcessId);
 
             [DllImport("user32.dll")]
             public static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
@@ -232,16 +181,6 @@ namespace ImgurSniper {
         #endregion
 
         #region Custom Definitions
-        public enum GetWindowConstants : uint {
-            GW_HWNDFIRST = 0,
-            GW_HWNDLAST = 1,
-            GW_HWNDNEXT = 2,
-            GW_HWNDPREV = 3,
-            GW_OWNER = 4,
-            GW_CHILD = 5,
-            GW_ENABLEDPOPUP = 6,
-            GW_MAX = 6
-        }
 
         [StructLayout(LayoutKind.Sequential)]
         public struct WINDOWINFO {

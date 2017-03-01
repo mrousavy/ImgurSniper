@@ -1,5 +1,9 @@
-﻿using System.Diagnostics;
+﻿using ImgurSniper.UI.Properties;
+using System.Diagnostics;
+using System.Globalization;
+using System.Threading;
 using System.Windows;
+using System.Windows.Markup;
 using System.Windows.Threading;
 
 namespace ImgurSniper.UI {
@@ -9,8 +13,8 @@ namespace ImgurSniper.UI {
     public partial class App : Application {
 
         public App() : base() {
-            this.DispatcherUnhandledException += (object sender, DispatcherUnhandledExceptionEventArgs e) => {
-                if(MessageBox.Show($"An unknown Error occured in ImgurSniper.UI!\nImgurSniper has to shut down!\nWould you like to see a detailed Exception Info?\n\n({e.Exception.Message})",
+            DispatcherUnhandledException += (object sender, DispatcherUnhandledExceptionEventArgs e) => {
+                if(MessageBox.Show($"{strings.unhandledError}({e.Exception.Message})",
                     "ImgurSniper Error",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Error) == MessageBoxResult.Yes) {
@@ -24,6 +28,12 @@ namespace ImgurSniper.UI {
 
                 Process.GetCurrentProcess().Kill();
             };
+
+            string language = FileIO.Language;
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(language);
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
+            FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(
+                        XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
         }
     }
 }
