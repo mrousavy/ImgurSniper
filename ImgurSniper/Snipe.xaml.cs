@@ -193,14 +193,11 @@ namespace ImgurSniper {
             Topmost = true;
             _counter++;
             int local = _counter;
-            ErrorToast.Visibility = Visibility.Invisible;
-            SuccessToast.Visibility = Visibility.Invisible;
+
 
             ScreenshotWindow window = new ScreenshotWindow(FileIO.AllMonitors);
             window.ShowDialog();
-            
-            ErrorToast.Visibility = Visibility.Visible;
-            SuccessToast.Visibility = Visibility.Visible;
+
 
             if(window.DialogResult == true) {
                 byte[] cimg = window.CroppedImage;
@@ -238,7 +235,7 @@ namespace ImgurSniper {
                     } else {
                         CopyClipboard(cimg);
 
-                        SuccessToast.Show(strings.imgclipboard, TimeSpan.FromDays(10));
+                        await SuccessToast.ShowAsync(strings.imgclipboard, TimeSpan.FromSeconds(3));
                     }
                 } catch(Exception ex) {
                     ErrorToast.Show(string.Format(strings.otherErrorMsg, ex),
@@ -273,7 +270,7 @@ namespace ImgurSniper {
                 }
 
                 await SuccessToast.ShowAsync(strings.linkclipboard,
-                    TimeSpan.FromSeconds(5));
+                    TimeSpan.FromSeconds(3));
             } else {
                 await ErrorToast.ShowAsync(string.Format(strings.uploadingError, link),
                     TimeSpan.FromSeconds(5));
