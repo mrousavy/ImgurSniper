@@ -245,7 +245,7 @@ namespace ImgurSniper {
         private void SelectAllCmd() {
             selectionRectangle.Margin = new Thickness(0);
 
-            From = new Point(0, 0);
+            From = new Point(Left, Top);
             To = new Point(Width, Height);
             FinishRectangle();
         }
