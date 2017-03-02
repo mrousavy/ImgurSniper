@@ -331,6 +331,20 @@
     {
         "CustomAction"
         {
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_1680A55023D246EA9A0C29EF9C81E866"
+            {
+            "Name" = "8:Primary output from ImgurSniper.UI (Release Any CPU)"
+            "Condition" = "8:"
+            "Object" = "8:_CA5E9FACB5FD4A37B56A05954A72D719"
+            "FileType" = "3:2"
+            "InstallAction" = "3:2"
+            "Arguments" = "8:Installer"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_FBE0ED5A_042E_4F59_B479_BDA609575A2C"
+            "InstallerClass" = "11:FALSE"
+            "CustomActionData" = "8:"
+            }
             "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_AE52D09233F342A6B982D655D6DA31CA"
             {
             "Name" = "8:Cleanup"
@@ -342,7 +356,7 @@
             "EntryPoint" = "8:"
             "Sequence" = "3:1"
             "Identifier" = "8:_8D0E94E0_D0C5_47BC_BBF1_AF2B44FFD0B3"
-            "InstallerClass" = "11:TRUE"
+            "InstallerClass" = "11:FALSE"
             "CustomActionData" = "8:"
             }
         }
@@ -375,6 +389,11 @@
             "AssemblyAsmDisplayName" = "8:Imgur.API, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_03FF1D16D70FC48768659090FE29F403"
+                    {
+                    "Name" = "8:Imgur.API.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:Imgur.API.dll"
             "TargetName" = "8:"
@@ -401,6 +420,11 @@
             "AssemblyAsmDisplayName" = "8:Toast, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_0E184F5D949794C71D4A997F556DD076"
+                    {
+                    "Name" = "8:Toast.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:Toast.dll"
             "TargetName" = "8:"
@@ -427,6 +451,11 @@
             "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_290350B9F08C688CB83A0EED14E6CC06"
+                    {
+                    "Name" = "8:Newtonsoft.Json.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:Newtonsoft.Json.dll"
             "TargetName" = "8:"
@@ -453,6 +482,11 @@
             "AssemblyAsmDisplayName" = "8:Octokit, Version=0.24.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_55C01A15E04EDA2F9DEDFDFE5AC96DB4"
+                    {
+                    "Name" = "8:Octokit.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:Octokit.dll"
             "TargetName" = "8:"
@@ -479,6 +513,11 @@
             "AssemblyAsmDisplayName" = "8:MaterialDesignThemes.Wpf, Version=2.2.1.750, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_5A6F2DFF816EA5D7B01BBBA1E39D0EF0"
+                    {
+                    "Name" = "8:MaterialDesignThemes.Wpf.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:MaterialDesignThemes.Wpf.dll"
             "TargetName" = "8:"
@@ -505,6 +544,11 @@
             "AssemblyAsmDisplayName" = "8:Hotkeys, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_63967D51630440EDDC183C528399E74F"
+                    {
+                    "Name" = "8:Hotkeys.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:Hotkeys.dll"
             "TargetName" = "8:"
@@ -531,6 +575,11 @@
             "AssemblyAsmDisplayName" = "8:System.IO.Compression.FileSystem, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                 "ScatterAssemblies"
                 {
+                    "_6FE760FA3D7BF0047E966A70A6BC545A"
+                    {
+                    "Name" = "8:System.IO.Compression.FileSystem.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:System.IO.Compression.FileSystem.dll"
             "TargetName" = "8:"
@@ -557,6 +606,11 @@
             "AssemblyAsmDisplayName" = "8:MaterialDesignColors, Version=1.1.3.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_773A2D05D12498EE2606B17E765AF146"
+                    {
+                    "Name" = "8:MaterialDesignColors.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:MaterialDesignColors.dll"
             "TargetName" = "8:"
@@ -603,6 +657,11 @@
             "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
                 "ScatterAssemblies"
                 {
+                    "_C30D88FF15831BCB0EC0B7746F86A4D9"
+                    {
+                    "Name" = "8:System.Net.Http.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:System.Net.Http.dll"
             "TargetName" = "8:"
@@ -649,6 +708,11 @@
             "AssemblyAsmDisplayName" = "8:System.IO.Compression, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                 "ScatterAssemblies"
                 {
+                    "_E93695BF24148F06FFC97FF6B2450434"
+                    {
+                    "Name" = "8:System.IO.Compression.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:System.IO.Compression.dll"
             "TargetName" = "8:"
@@ -756,7 +820,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ImgurSniper"
         "ProductCode" = "8:{C3ADFA93-8892-4265-9FE6-213043EEC070}"
-        "PackageCode" = "8:{C90FC111-BBC5-4CAD-91C8-6D1529F435E7}"
+        "PackageCode" = "8:{0E92D9BB-4699-4A3E-A4E8-C2AC6C200AA3}"
         "UpgradeCode" = "8:{92522F6A-ED07-4D68-A8DB-8C766884DD1F}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
