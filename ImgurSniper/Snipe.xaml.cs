@@ -193,9 +193,14 @@ namespace ImgurSniper {
             Topmost = true;
             _counter++;
             int local = _counter;
+            ErrorToast.Visibility = Visibility.Invisible;
+            SuccessToast.Visibility = Visibility.Invisible;
 
             ScreenshotWindow window = new ScreenshotWindow(FileIO.AllMonitors);
             window.ShowDialog();
+            
+            ErrorToast.Visibility = Visibility.Visible;
+            SuccessToast.Visibility = Visibility.Visible;
 
             if(window.DialogResult == true) {
                 byte[] cimg = window.CroppedImage;
