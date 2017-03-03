@@ -12,6 +12,6 @@
 	<DockPanel HorizontalAlignment="Stretch" Margin="13" >
 		<TextBlock FontSize="14" Foreground="Gray" Margin="0,0,0,10" TextWrapping="Wrap" DockPanel.Dock="Top"
 				   Text="{x:Static Member=cultureStrings:strings.pageRightClickDesc}" />
-		<Image gif:ImageBehavior.AnimatedSource="/ImgurSniper.UI;component/Resources/SnipeDemo.gif"  Margin="0,10,0,0" DockPanel.Dock="Bottom"/>
+		<Image gif:ImageBehavior.AnimatedSource="/ImgurSniper.UI;component/Resources/RClickDemo.gif"  Margin="0,10,0,0" DockPanel.Dock="Bottom"/>
 	</DockPanel>
 </Page>

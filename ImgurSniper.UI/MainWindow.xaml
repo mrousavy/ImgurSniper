@@ -9,7 +9,7 @@
 		xmlns:res="clr-namespace:ImgurSniper.UI"
 		xmlns:cultureStrings="clr-namespace:ImgurSniper.UI.Properties"
 		mc:Ignorable="d" MinHeight="500" MinWidth="575"
-		Title="{x:Static Member=cultureStrings:strings.title}" Height="500" Width="575">
+		Title="{x:Static Member=cultureStrings:strings.title}" Height="550" Width="600">
 
 
 	<!--<md:Card HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignPaper}">-->

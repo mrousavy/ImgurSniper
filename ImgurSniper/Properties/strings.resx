@@ -142,7 +142,7 @@
     <value>Image Size exceeds 10MB, to increase this please Login to Imgur!</value>
   </data>
   <data name="linkclipboard" xml:space="preserve">
-    <value>Link to Imgur copied to your Clipboard!</value>
+    <value>Link to Imgur has been copied to your Clipboard!</value>
   </data>
   <data name="msg" xml:space="preserve">
     <value>Message: {0}\n\n</value>

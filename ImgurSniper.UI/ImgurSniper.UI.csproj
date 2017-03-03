@@ -291,16 +291,16 @@
     <Resource Include="Resources\DrawDemo.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\PrivacyDemo.gif" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\RClickDemo.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\SettingsDemo.gif" />
+    <Resource Include="Resources\SnipeDemo.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\SnipeDemo.gif" />
+    <Resource Include="Resources\PrivacyDemo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\TrayDemo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

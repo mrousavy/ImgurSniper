@@ -133,7 +133,7 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Link to Imgur copied to your Clipboard!.
+        ///   Looks up a localized string similar to Link to Imgur has been copied to your Clipboard!.
         /// </summary>
         internal static string linkclipboard {
             get {
@@ -178,7 +178,7 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to to Snipe a new Image.
+        ///   Looks up a localized string similar to  to Snipe a new Image.
         /// </summary>
         internal static string toSnipeNew {
             get {
