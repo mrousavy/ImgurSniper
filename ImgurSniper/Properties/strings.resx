@@ -157,7 +157,7 @@
     <value>Settings</value>
   </data>
   <data name="toSnipeNew" xml:space="preserve">
-    <value>to Snipe a new Image</value>
+    <value> to Snipe a new Image</value>
   </data>
   <data name="uploading" xml:space="preserve">
     <value>Uploading Image... ({0} KB)</value>
