@@ -279,6 +279,132 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clipboard.
+        /// </summary>
+        public static string pageClipboard {
+            get {
+                return ResourceManager.GetString("pageClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TODO.
+        /// </summary>
+        public static string pageClipboardDesc {
+            get {
+                return ResourceManager.GetString("pageClipboardDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Draw.
+        /// </summary>
+        public static string pageDraw {
+            get {
+                return ResourceManager.GetString("pageDraw", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TODO.
+        /// </summary>
+        public static string pageDrawDesc {
+            get {
+                return ResourceManager.GetString("pageDrawDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string pageGeneral {
+            get {
+                return ResourceManager.GetString("pageGeneral", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TODO.
+        /// </summary>
+        public static string pageGeneralDesc {
+            get {
+                return ResourceManager.GetString("pageGeneralDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Privacy.
+        /// </summary>
+        public static string pagePrivacy {
+            get {
+                return ResourceManager.GetString("pagePrivacy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TODO.
+        /// </summary>
+        public static string pagePrivacyDesc {
+            get {
+                return ResourceManager.GetString("pagePrivacyDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right Click.
+        /// </summary>
+        public static string pageRightClick {
+            get {
+                return ResourceManager.GetString("pageRightClick", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TODO.
+        /// </summary>
+        public static string pageRightClickDesc {
+            get {
+                return ResourceManager.GetString("pageRightClickDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string pageSettings {
+            get {
+                return ResourceManager.GetString("pageSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TODO.
+        /// </summary>
+        public static string pageSettingsDesc {
+            get {
+                return ResourceManager.GetString("pageSettingsDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Snipe.
+        /// </summary>
+        public static string pageSnipe {
+            get {
+                return ResourceManager.GetString("pageSnipe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TODO.
+        /// </summary>
+        public static string pageSnipeDesc {
+            get {
+                return ResourceManager.GetString("pageSnipeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Path:.
         /// </summary>
         public static string path {

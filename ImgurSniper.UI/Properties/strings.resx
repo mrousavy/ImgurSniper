@@ -266,4 +266,46 @@ Would you like to see a detailed Exception Info?
   <data name="help" xml:space="preserve">
     <value>Help</value>
   </data>
+  <data name="pageClipboard" xml:space="preserve">
+    <value>Clipboard</value>
+  </data>
+  <data name="pageDraw" xml:space="preserve">
+    <value>Draw</value>
+  </data>
+  <data name="pagePrivacy" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
+  <data name="pageRightClick" xml:space="preserve">
+    <value>Right Click</value>
+  </data>
+  <data name="pageSettings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="pageSnipe" xml:space="preserve">
+    <value>Snipe</value>
+  </data>
+  <data name="pageClipboardDesc" xml:space="preserve">
+    <value>TODO</value>
+  </data>
+  <data name="pageDrawDesc" xml:space="preserve">
+    <value>TODO</value>
+  </data>
+  <data name="pageGeneral" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="pageGeneralDesc" xml:space="preserve">
+    <value>TODO</value>
+  </data>
+  <data name="pagePrivacyDesc" xml:space="preserve">
+    <value>TODO</value>
+  </data>
+  <data name="pageRightClickDesc" xml:space="preserve">
+    <value>TODO</value>
+  </data>
+  <data name="pageSettingsDesc" xml:space="preserve">
+    <value>TODO</value>
+  </data>
+  <data name="pageSnipeDesc" xml:space="preserve">
+    <value>TODO</value>
+  </data>
 </root>

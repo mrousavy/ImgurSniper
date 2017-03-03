@@ -191,6 +191,48 @@ Wollen Sie ImgurSniper jetzt neustarten?</value>
   <data name="other" xml:space="preserve">
     <value>Anderes:</value>
   </data>
+  <data name="pageClipboard" xml:space="preserve">
+    <value>Zwischenablage</value>
+  </data>
+  <data name="pageClipboardDesc" xml:space="preserve">
+    <value>TODO</value>
+  </data>
+  <data name="pageDraw" xml:space="preserve">
+    <value>Zeichnen</value>
+  </data>
+  <data name="pageDrawDesc" xml:space="preserve">
+    <value>TODO</value>
+  </data>
+  <data name="pageGeneral" xml:space="preserve">
+    <value>Allgemein</value>
+  </data>
+  <data name="pageGeneralDesc" xml:space="preserve">
+    <value>TODO</value>
+  </data>
+  <data name="pagePrivacy" xml:space="preserve">
+    <value>Datenschutz</value>
+  </data>
+  <data name="pagePrivacyDesc" xml:space="preserve">
+    <value>TODO</value>
+  </data>
+  <data name="pageRightClick" xml:space="preserve">
+    <value>Rechtsklick</value>
+  </data>
+  <data name="pageRightClickDesc" xml:space="preserve">
+    <value>TODO</value>
+  </data>
+  <data name="pageSettings" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
+  <data name="pageSettingsDesc" xml:space="preserve">
+    <value>TODO</value>
+  </data>
+  <data name="pageSnipe" xml:space="preserve">
+    <value>Snipe</value>
+  </data>
+  <data name="pageSnipeDesc" xml:space="preserve">
+    <value>TODO</value>
+  </data>
   <data name="path" xml:space="preserve">
     <value>Pfad:</value>
   </data>

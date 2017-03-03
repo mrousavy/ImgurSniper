@@ -5,18 +5,39 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:local="clr-namespace:ImgurSniper.UI"
 		xmlns:cultureStrings="clr-namespace:ImgurSniper.UI.Properties"
+		xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
 		mc:Ignorable="d"
-		Title="{x:Static Member=cultureStrings:strings.help}" Height="400" Width="600">
+		Title="{x:Static Member=cultureStrings:strings.help}" Height="550" Width="670">
 	<Grid>
-		<TabControl>
-			<TabItem Header="General">
-				<Label Content="Content goes here..." />
+		<dragablz:TabablzControl Margin="8">
+			<dragablz:TabablzControl.InterTabController>
+				<dragablz:InterTabController />
+			</dragablz:TabablzControl.InterTabController>
+			<TabItem Header="{x:Static Member=cultureStrings:strings.pageGeneral}"
+					 IsSelected="True">
+				<Frame Source="/ImgurSniper.UI;component/Pages/GeneralPage.xaml"/>
 			</TabItem>
-			<TabItem Header="Security" />
-			<TabItem Header="Details" />
-		</TabControl>
-		
-		
+			<TabItem Header="{x:Static Member=cultureStrings:strings.pageSnipe}">
+				<Frame Source="/ImgurSniper.UI;component/Pages/SnipePage.xaml"/>
+			</TabItem>
+			<TabItem Header="{x:Static Member=cultureStrings:strings.pageDraw}">
+				<Frame Source="/ImgurSniper.UI;component/Pages/DrawPage.xaml"/>
+			</TabItem>
+			<TabItem Header="{x:Static Member=cultureStrings:strings.pageRightClick}">
+				<Frame Source="/ImgurSniper.UI;component/Pages/RightClickPage.xaml"/>
+			</TabItem>
+			<TabItem Header="{x:Static Member=cultureStrings:strings.pageClipboard}">
+				<Frame Source="/ImgurSniper.UI;component/Pages/ClipboardPage.xaml"/>
+			</TabItem>
+			<TabItem Header="{x:Static Member=cultureStrings:strings.pageSettings}">
+				<Frame Source="/ImgurSniper.UI;component/Pages/SettingsPage.xaml"/>
+			</TabItem>
+			<TabItem Header="{x:Static Member=cultureStrings:strings.pagePrivacy}">
+				<Frame Source="/ImgurSniper.UI;component/Pages/PrivacyPage.xaml"/>
+			</TabItem>
+		</dragablz:TabablzControl>
+
+
 		<StackPanel HorizontalAlignment="Stretch">
 			<Label></Label>
 			

@@ -35,7 +35,7 @@ namespace ImgurSniper.UI {
                 DoubleAnimation anim = new DoubleAnimation {
                     From = 1,
                     To = 0,
-                    Duration = new Duration(TimeSpan.FromSeconds(0.2))
+                    Duration = new Duration(TimeSpan.FromSeconds(0.18))
                 };
                 return anim;
             }
@@ -45,7 +45,7 @@ namespace ImgurSniper.UI {
                 DoubleAnimation anim = new DoubleAnimation {
                     From = 0,
                     To = 1,
-                    Duration = new Duration(TimeSpan.FromSeconds(0.2))
+                    Duration = new Duration(TimeSpan.FromSeconds(0.18))
                 };
                 return anim;
             }
@@ -212,7 +212,7 @@ namespace ImgurSniper.UI {
             DoubleAnimation fadingAnimation = new DoubleAnimation {
                 From = 1,
                 To = 0,
-                Duration = new Duration(TimeSpan.FromSeconds(0.3)),
+                Duration = new Duration(TimeSpan.FromSeconds(0.24)),
                 AutoReverse = false
             };
             fadingAnimation.Completed += delegate {
@@ -368,7 +368,10 @@ namespace ImgurSniper.UI {
 
         private void Help(object sender, RoutedEventArgs e) {
             //Process.Start("http://github.com/mrousavy/ImgurSniper#features");
-            new Help().Show();
+            Help help = new Help();
+            help.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            help.Owner = this;
+            help.Show();
         }
 
         private async void Snipe(object sender, RoutedEventArgs e) {

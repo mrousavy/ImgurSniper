@@ -8,7 +8,7 @@
 		xmlns:toasty="clr-namespace:Toast;assembly=Toast"
 		xmlns:res="clr-namespace:ImgurSniper.UI"
 		xmlns:cultureStrings="clr-namespace:ImgurSniper.UI.Properties"
-		mc:Ignorable="d" MinHeight="500" MinWidth="575" 
+		mc:Ignorable="d" MinHeight="500" MinWidth="575"
 		Title="{x:Static Member=cultureStrings:strings.title}" Height="500" Width="575">
 
 
@@ -21,7 +21,7 @@
 						<Storyboard Name="GridFadeIn">
 							<DoubleAnimation Name="GridFadeAnimation"
 									 Storyboard.TargetProperty="(Window.Opacity)"
-									 From="0.0" To="1.0" Duration="0:0:0.3"
+									 From="0.0" To="1.0" Duration="0:0:0.2"
 									 AutoReverse="False" RepeatBehavior="1x" />
 						</Storyboard>
 					</BeginStoryboard>
