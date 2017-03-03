@@ -163,7 +163,7 @@
                 <Button Margin="5" Click="Help" x:Name="Btn_Help"
 					Content="?"/>
             
-                <Button Margin="5" Click="Update" x:Name="Btn_Update" Visibility="Collapsed"
+                <Button Margin="5" Click="Update" x:Name="Btn_Update" IsEnabled="False"
 					Content="{x:Static Member=cultureStrings:strings.update}"/>
 
 			<Button Margin="5" Click="Snipe" x:Name="Btn_Snipe" Content="Snipe!"/>
