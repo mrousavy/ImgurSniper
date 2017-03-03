@@ -9,9 +9,7 @@
 #### [View all Releases](https://github.com/mrousavy/ImgurSniper/releases)
 
 
-Icon by [jinga](http://jinga.at)
-
-Idea by [dmaniak](http://github.com/dmaniak)
+Icon by [jinga](http://jinga.at), Inspired by [dmaniak](http://github.com/dmaniak)
 
 # How to use
 Press _Ctrl + Shift + X_ or _Print Screen_ (depending on your Preferences) to start **ImgurSniper** Snap Mode!
