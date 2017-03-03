@@ -193,7 +193,7 @@ namespace ImgurSniper.UI {
                         FileIO.CurrentCommits = _commits.Count;
                     } else if(_commits.Count > currentCommits) {
                         //Newer Version is available
-                        Btn_Update.Visibility = Visibility.Visible;
+                        Btn_Update.IsEnabled = true;
                         success_toast.Show(string.Format(str.updateAvailable, currentCommits, _commits.Count),
                             TimeSpan.FromSeconds(4));
                     }
