@@ -263,4 +263,7 @@ Would you like to see a detailed Exception Info?
   <data name="wrongPin" xml:space="preserve">
     <value>Wrong PIN? Could not login to Imgur! ({0})</value>
   </data>
+  <data name="help" xml:space="preserve">
+    <value>Help</value>
+  </data>
 </root>

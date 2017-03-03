@@ -79,20 +79,20 @@
 							 Foreground="Gray" Click="RunOnBoot_Checkbox"
 						  Content="{x:Static Member=cultureStrings:strings.trayService}"/>
 
-                <CheckBox x:Name="PrintKeyBox" FontSize="14" Margin="15,0,0,0" VerticalAlignment="Bottom"
+				<CheckBox x:Name="PrintKeyBox" FontSize="14" Margin="15,0,0,0" VerticalAlignment="Bottom"
 							 Foreground="Gray" Click="PrintKeyBox_Click"
 						  Content="{x:Static Member=cultureStrings:strings.usePrint}"/>
 
-                 <StackPanel Orientation="Horizontal" Margin="15,5,0,0">
-                        <Label Content="{x:Static Member=cultureStrings:strings.language}" VerticalAlignment="Center" FontSize="14" />
+				 <StackPanel Orientation="Horizontal" Margin="15,5,0,0">
+						<Label Content="{x:Static Member=cultureStrings:strings.language}" VerticalAlignment="Center" FontSize="14" />
 
-                        <ComboBox x:Name="LanguageBox" FontSize="13" Margin="15,0,0,0" VerticalAlignment="Center" SelectedIndex="0"  Foreground="Gray">
-                            <ComboBoxItem x:Name="en">English</ComboBoxItem>
-                            <ComboBoxItem x:Name="de">German</ComboBoxItem>
-                        </ComboBox>
-                    </StackPanel>
+						<ComboBox x:Name="LanguageBox" FontSize="13" Margin="15,0,0,0" VerticalAlignment="Center" SelectedIndex="0"  Foreground="Gray">
+							<ComboBoxItem x:Name="en">English</ComboBoxItem>
+							<ComboBoxItem x:Name="de">German</ComboBoxItem>
+						</ComboBox>
+					</StackPanel>
 
-                    <Label Margin="10,5,5,5" FontSize="15"
+					<Label Margin="10,5,5,5" FontSize="15"
 					   x:Name="Label_Account"
 					   Content="{x:Static Member=cultureStrings:strings.imgurAcc}"/>
 
@@ -160,10 +160,10 @@
 			<!--<Button Margin="5" Click="Repair" x:Name="Btn_Repair"
 					Content="{x:Static Member=cultureStrings:strings.repair}"/>-->
 
-                <Button Margin="5" Click="Help" x:Name="Btn_Help"
-					Content="?"/>
-            
-                <Button Margin="5" Click="Update" x:Name="Btn_Update" IsEnabled="False"
+				<Button Margin="5" Click="Help" x:Name="Btn_Help"
+					Content="{x:Static Member=cultureStrings:strings.help}"/>
+			
+				<Button Margin="5" Click="Update" x:Name="Btn_Update" IsEnabled="False"
 					Content="{x:Static Member=cultureStrings:strings.update}"/>
 
 			<Button Margin="5" Click="Snipe" x:Name="Btn_Snipe" Content="Snipe!"/>

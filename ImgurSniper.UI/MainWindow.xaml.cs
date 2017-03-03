@@ -180,7 +180,7 @@ namespace ImgurSniper.UI {
 
             try {
                 //Check for Update, if last update is longer than 1 Day ago
-                if(DateTime.Now - FileIO.LastChecked > TimeSpan.FromDays(1)) {
+                if(DateTime.Now - FileIO.LastChecked > TimeSpan.FromDays(1) || FileIO.UpdateAvailable) {
                     FileIO.LastChecked = DateTime.Now;
 
                     //Retrieve info from github
@@ -193,6 +193,7 @@ namespace ImgurSniper.UI {
                         FileIO.CurrentCommits = _commits.Count;
                     } else if(_commits.Count > currentCommits) {
                         //Newer Version is available
+                        FileIO.UpdateAvailable = true;
                         Btn_Update.IsEnabled = true;
                         success_toast.Show(string.Format(str.updateAvailable, currentCommits, _commits.Count),
                             TimeSpan.FromSeconds(4));
@@ -365,6 +366,11 @@ namespace ImgurSniper.UI {
             }
         }
 
+        private void Help(object sender, RoutedEventArgs e) {
+            //Process.Start("http://github.com/mrousavy/ImgurSniper#features");
+            new Help().Show();
+        }
+
         private async void Snipe(object sender, RoutedEventArgs e) {
             string exe = System.IO.Path.Combine(Path, "ImgurSniper.exe");
 
@@ -388,6 +394,7 @@ namespace ImgurSniper.UI {
             ChangeButtonState(false);
 
             FileIO.CurrentCommits = _commits.Count;
+            FileIO.UpdateAvailable = false;
 
             Helper.Update(sender as Button);
         }
@@ -569,11 +576,6 @@ namespace ImgurSniper.UI {
 
         private void CloseDia() {
             DialogHost.CloseDialogCommand.Execute(null, DialogHost);
-        }
-
-        //"?" Button
-        private void Help(object sender, RoutedEventArgs e) {
-            Process.Start("http://github.com/mrousavy/ImgurSniper");
         }
 
     }

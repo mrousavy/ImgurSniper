@@ -147,6 +147,9 @@
   <data name="failedUpdate" xml:space="preserve">
     <value>Fehler beim Laden von Version/Update Info von GitHub!</value>
   </data>
+  <data name="help" xml:space="preserve">
+    <value>Hilfe</value>
+  </data>
   <data name="imgFormat" xml:space="preserve">
     <value>Bild Format</value>
   </data>

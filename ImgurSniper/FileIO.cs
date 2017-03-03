@@ -219,6 +219,22 @@ namespace ImgurSniper {
             }
         }
 
+        //Is an Update Available and not yet downloaded?
+        public static bool UpdateAvailable {
+            get {
+                try {
+                    return JsonConfig.UpdateAvailable;
+                } catch {
+                    return false;
+                }
+            }
+            set {
+                Settings settings = JsonConfig;
+                settings.UpdateAvailable = value;
+                JsonConfig = settings;
+            }
+        }
+
         //Text Language
         public static string Language {
             get {
@@ -285,23 +301,26 @@ namespace ImgurSniper {
         }
 
         public class Settings {
-            public bool AllMonitors = true;
+            public DateTime LastChecked = DateTime.Now;
+
             public int CurrentCommits = 999;
+
+            public bool AllMonitors = true;
             public bool ImgurAfterSnipe = true;
             public bool IsInContextMenu;
-            public DateTime LastChecked = DateTime.Now;
             public bool MagnifyingGlassEnabled = true;
             public bool OpenAfterUpload = true;
             public bool RunOnBoot = true;
             public bool SaveImages;
+            public bool UsePNG = true;
+            public bool UsePrint;
+            public bool UpdateAvailable;
 
+            public string Language = "en";
             public string SaveImagesPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper Images");
 
             public Key ShortcutKey = Key.X;
-            public bool UsePNG = true;
-            public bool UsePrint;
-            public string Language = "en";
         }
 
         #region Imgur Account
