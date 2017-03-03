@@ -160,8 +160,8 @@
     <Compile Include="Pages\RightClickPage.xaml.cs">
       <DependentUpon>RightClickPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\SettingsPage.xaml.cs">
-      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    <Compile Include="Pages\TrayPage.xaml.cs">
+      <DependentUpon>TrayPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\SnipePage.xaml.cs">
       <DependentUpon>SnipePage.xaml</DependentUpon>
@@ -216,7 +216,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\SettingsPage.xaml">
+    <Page Include="Pages\TrayPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

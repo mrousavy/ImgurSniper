@@ -278,34 +278,41 @@ Would you like to see a detailed Exception Info?
   <data name="pageRightClick" xml:space="preserve">
     <value>Right Click</value>
   </data>
-  <data name="pageSettings" xml:space="preserve">
-    <value>Settings</value>
+  <data name="pageTray" xml:space="preserve">
+    <value>Tray</value>
   </data>
   <data name="pageSnipe" xml:space="preserve">
     <value>Snipe</value>
   </data>
   <data name="pageClipboardDesc" xml:space="preserve">
-    <value>TODO</value>
+    <value>As soon as you have finished cropping the desired Rectangle, ImgurSniper will automatically copy the URL to Imgur or the whole Image itself (depending on your Settings) to your Clipboard, so you're ready to send it immediately!</value>
   </data>
   <data name="pageDrawDesc" xml:space="preserve">
-    <value>TODO</value>
+    <value>In Snipe Mode, you can draw on your screen to show the receiver something important (Circle, Arrows, ...), hide some Information, or show your drawing Skills!
+To enter the drawing Mode, you just need to press Space once in Snap Mode!</value>
   </data>
   <data name="pageGeneral" xml:space="preserve">
     <value>General</value>
   </data>
   <data name="pageGeneralDesc" xml:space="preserve">
-    <value>TODO</value>
+    <value>ImgurSniper is an easy to use, fast and simple tool to help you share Images better.
+Open ImgurSniper and Crop an Image, or right click an Image File and click "Upload to Imgur" to upload the Image.
+See "Snipe" and "Tray" for more Information about the Program.
+Licensed under MIT Open Source License on github.com/mrousavy/ImgurSniper, you can modify the Program for your needs. To contribute, click the Fork button (top right) on GitHub, customize your Project, and create a Pull Request.</value>
   </data>
   <data name="pagePrivacyDesc" xml:space="preserve">
-    <value>TODO</value>
+    <value>ImgurSniper does not collect any data, the only Information being uploaded is your Image. (The Image itself is private, and only accessible for users with the link.)
+As the ImgurSniper C# Project is on GitHub, you can easily view 100% of the Code.
+ImgurSniper uses OAuth2.0 for Authentication, so no Password or username will be stored, and you can revoke access anytime.</value>
   </data>
   <data name="pageRightClickDesc" xml:space="preserve">
-    <value>TODO</value>
-  </data>
-  <data name="pageSettingsDesc" xml:space="preserve">
-    <value>TODO</value>
+    <value>When you Right Click with your Mouse in Snipe Mode, ImgurSniper will detect the Window you clicked, and upload the cropped Image of that Window to Imgur. ImgurSniper does detect a whole Window when you click the Titlebar and even Client Area(s) (Areas inside a Window).</value>
   </data>
   <data name="pageSnipeDesc" xml:space="preserve">
-    <value>TODO</value>
+    <value>Press Ctrl + Shift + X or PrintScreen (depending on your Preferences) to open ImgurSniper in Snipe mode. In Snipe Mode, you can hold down your mouse and draw a Rectangle to select the Area you want to upload.
+Once you release the mouse, the Image will automatically be uploaded to Imgur (if enabled), saved as a file (optionally), and the Link (or Image itself) will be copied to your Clipboard. Depending on your Settings, the Image will be automatically opened for you to see aswell.</value>
+  </data>
+  <data name="pageTrayDesc" xml:space="preserve">
+    <value>The Tray Service is running in the Background, so you can activate ImgurSniper with Ctrl + Shift + X or PrintScreen (depending on your Settings) way faster than launching the executable. The Tray Service is optimized to use as little processing power as possible, so your PC is definetly not slowed down. You can find the ImgurSniper Tray Program in the bottom right corner of your Screen, Right Click the Icon to open the Menu.</value>
   </data>
 </root>

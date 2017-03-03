@@ -14,6 +14,7 @@ using str = ImgurSniper.UI.Properties.strings;
 
 namespace ImgurSniper.UI {
     public partial class MainWindow : Window {
+        #region Fields
         public InstallerHelper Helper;
 
         //Path to Program Files/ImgurSniper Folder
@@ -51,7 +52,7 @@ namespace ImgurSniper.UI {
             }
         }
         private readonly ImgurLoginHelper _imgurhelper;
-
+        #endregion
 
         public MainWindow() {
             InitializeComponent();
@@ -71,9 +72,13 @@ namespace ImgurSniper.UI {
         private async void Load() {
             PathBox.Text = DocPath;
 
+            //Is "Upload to Imgur" entry in Windows Explorer Context Menu?
             if(!FileIO.IsInContextMenu) {
                 Helper.AddToContextMenu();
                 FileIO.IsInContextMenu = true;
+
+                //First time using ImgurSniper? Show Help Window
+                Help(null, null);
             }
 
             #region Read Config

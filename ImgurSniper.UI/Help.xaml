@@ -7,9 +7,9 @@
 		xmlns:cultureStrings="clr-namespace:ImgurSniper.UI.Properties"
 		xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
 		mc:Ignorable="d"
-		Title="{x:Static Member=cultureStrings:strings.help}" Height="550" Width="670">
+		Title="{x:Static Member=cultureStrings:strings.help}" Height="620" Width="690">
 	<Grid>
-		<dragablz:TabablzControl Margin="8">
+		<dragablz:TabablzControl Margin="8" >
 			<dragablz:TabablzControl.InterTabController>
 				<dragablz:InterTabController />
 			</dragablz:TabablzControl.InterTabController>
@@ -29,8 +29,8 @@
 			<TabItem Header="{x:Static Member=cultureStrings:strings.pageClipboard}">
 				<Frame Source="/ImgurSniper.UI;component/Pages/ClipboardPage.xaml"/>
 			</TabItem>
-			<TabItem Header="{x:Static Member=cultureStrings:strings.pageSettings}">
-				<Frame Source="/ImgurSniper.UI;component/Pages/SettingsPage.xaml"/>
+			<TabItem Header="{x:Static Member=cultureStrings:strings.pageTray}">
+				<Frame Source="/ImgurSniper.UI;component/Pages/TrayPage.xaml"/>
 			</TabItem>
 			<TabItem Header="{x:Static Member=cultureStrings:strings.pagePrivacy}">
 				<Frame Source="/ImgurSniper.UI;component/Pages/PrivacyPage.xaml"/>

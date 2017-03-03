@@ -195,43 +195,50 @@ Wollen Sie ImgurSniper jetzt neustarten?</value>
     <value>Zwischenablage</value>
   </data>
   <data name="pageClipboardDesc" xml:space="preserve">
-    <value>TODO</value>
+    <value>Sobald Sie Ihren gewünschten Bereich fertig ausgeschnitten haben, kopiert ImgurSniper die URL zu Imgur, oder das Bild selbst (Konfigurierbar in den Einstellungen), automatisch in Ihre Zwischenablage, sodass Sie das Bild sofort teilen können.</value>
   </data>
   <data name="pageDraw" xml:space="preserve">
     <value>Zeichnen</value>
   </data>
   <data name="pageDrawDesc" xml:space="preserve">
-    <value>TODO</value>
+    <value>Im Snipe Modus können Sie außerdem wichtige Informationen hervorheben, markieren, einkreisen, oder Informationen verstecken.
+Um in den Zeichenmodus zu wechseln, drücken Sie einfach die Leertaste.</value>
   </data>
   <data name="pageGeneral" xml:space="preserve">
     <value>Allgemein</value>
   </data>
   <data name="pageGeneralDesc" xml:space="preserve">
-    <value>TODO</value>
+    <value>ImgurSniper ist ein einfach benutzbares, schnelles und simples Tool um Ihnen das Teilen von Bildern zu erleichtern.
+Öffnen Sie ImgurSniper und schneiden Sie einen Bereich aus, oder rechts-klicken Sie eine Bilddatei und klicken Sie "Upload to Imgur" um das Bild schnell hochzuladen.
+Siehe "Snipe" und "Infobereich" für mehr Informationen über das Programm.
+Lizensiert unter der MIT Open Source Lizenz auf github.com/mrousavy/ImgurSniper, können Sie jederzeit den Code anpassen. Um zu ImgurSniper etwas beizutragen, klicken Sie den "Fork" Knopf (Oben Rechts) auf GitHub, bearbeiten Sie das Projekt, und erstellen Sie schlussendlich eine Pull Request.</value>
   </data>
   <data name="pagePrivacy" xml:space="preserve">
     <value>Datenschutz</value>
   </data>
   <data name="pagePrivacyDesc" xml:space="preserve">
-    <value>TODO</value>
+    <value>ImgurSniper sammelt keine privaten Informationen, die einzigen Daten die hochgeladen werden, sind von Ihnen erstellte Bilder mit ImgurSniper, welche auch nur mit dem Link einsehbar sind.
+Da das ImgurSniper C# Projekt auf GitHub ist, sind 100% der Quelldateien öffentlich einsehbar.
+Außerdem wird OAuth2.0 für die Benutzerauthentifizierung verwendet, dadurch werden keine Benutzernamen oder Passwörter gespeichert, und Sie können sich jederzeit abmelden.</value>
   </data>
   <data name="pageRightClick" xml:space="preserve">
     <value>Rechtsklick</value>
   </data>
   <data name="pageRightClickDesc" xml:space="preserve">
-    <value>TODO</value>
-  </data>
-  <data name="pageSettings" xml:space="preserve">
-    <value>Einstellungen</value>
-  </data>
-  <data name="pageSettingsDesc" xml:space="preserve">
-    <value>TODO</value>
+    <value>Wenn Sie einen Bereich im Snipe Mode rechts-klicken, wird der Bereich automatisch ausgeschnitten und zu Imgur hochgeladen. Dies funktioniert für ganze Fenster (Rechtsklick in Titelleiste) und für Client Bereiche (Inhalt eines Fensters).</value>
   </data>
   <data name="pageSnipe" xml:space="preserve">
     <value>Snipe</value>
   </data>
   <data name="pageSnipeDesc" xml:space="preserve">
-    <value>TODO</value>
+    <value>Drücken Sie Strg + Shift + X oder Drucken (abhängig von Ihren Einstellungen) um ImgurSniper im Snipe Modus zu starten. Im Snipe Modus können Sie mit Ihrer Maus ein Rechteck zeichnen.
+Sobald Sie die Linke Maustaste loslassen, bestätigen Sie den Bereich und das Bild wird automatisch zu Imgur hochgeladen (falls aktiviert), auf Ihrer Festplatte abgespeichert (optional), und die URL zum Bild (oder das Bild selbst) wird in Ihre Zwischenablage gespeichert. Je nach Ihren Einstellungen, wird das Bild auch automatisch geöffnet.</value>
+  </data>
+  <data name="pageTray" xml:space="preserve">
+    <value>Infobereich</value>
+  </data>
+  <data name="pageTrayDesc" xml:space="preserve">
+    <value>Der Infobereich bzw. "Tray" Service läuft im Hintergrund, sodass Sie ImgurSniper mit Ihrem konfigurierten Tastenkürzel so schnell wie möglich starten können. Der Tray Service ist so gut wie möglich optimiert, um so wenig Leistung wie möglich zu verschwenden, also wird Ihr PC definitiv nicht langsamer. Der ImgurSniper Tray Service ist auffindbar in dem Inforbereich (Rechts Unten, Taskbar). Mit Rechter Maustaste wird das Menü geöffnet.</value>
   </data>
   <data name="path" xml:space="preserve">
     <value>Pfad:</value>

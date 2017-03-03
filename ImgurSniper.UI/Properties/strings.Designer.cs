@@ -288,7 +288,7 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TODO.
+        ///   Looks up a localized string similar to As soon as you have finished cropping the desired Rectangle, ImgurSniper will automatically copy the URL to Imgur or the whole Image itself (depending on your Settings) to your Clipboard, so you&apos;re ready to send it immediately!.
         /// </summary>
         public static string pageClipboardDesc {
             get {
@@ -306,7 +306,8 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TODO.
+        ///   Looks up a localized string similar to In Snipe Mode, you can draw on your screen to show the receiver something important (Circle, Arrows, ...), hide some Information, or show your drawing Skills!
+        ///To enter the drawing Mode, you just need to press Space once in Snap Mode!.
         /// </summary>
         public static string pageDrawDesc {
             get {
@@ -324,7 +325,10 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TODO.
+        ///   Looks up a localized string similar to ImgurSniper is an easy to use, fast and simple tool to help you share Images better.
+        ///Open ImgurSniper and Crop an Image, or right click an Image File and click &quot;Upload to Imgur&quot; to upload the Image.
+        ///See &quot;Snipe&quot; and &quot;Tray&quot; for more Information about the Program.
+        ///Licensed under MIT Open Source License on github.com/mrousavy/ImgurSniper, you can modify the Program for your needs. To contribute, click the Fork button (top right) on GitHub, customize your Project, and create a Pull Request..
         /// </summary>
         public static string pageGeneralDesc {
             get {
@@ -342,7 +346,9 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TODO.
+        ///   Looks up a localized string similar to ImgurSniper does not collect any data, the only Information being uploaded is your Image. (The Image itself is private, and only accessible for users with the link.)
+        ///As the ImgurSniper C# Project is on GitHub, you can easily view 100% of the Code.
+        ///ImgurSniper uses OAuth2.0 for Authentication, so no Password or username will be stored, and you can revoke access anytime..
         /// </summary>
         public static string pagePrivacyDesc {
             get {
@@ -360,29 +366,11 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TODO.
+        ///   Looks up a localized string similar to When you Right Click with your Mouse in Snipe Mode, ImgurSniper will detect the Window you clicked, and upload the cropped Image of that Window to Imgur. ImgurSniper does detect a whole Window when you click the Titlebar and even Client Area(s) (Areas inside a Window)..
         /// </summary>
         public static string pageRightClickDesc {
             get {
                 return ResourceManager.GetString("pageRightClickDesc", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Settings.
-        /// </summary>
-        public static string pageSettings {
-            get {
-                return ResourceManager.GetString("pageSettings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to TODO.
-        /// </summary>
-        public static string pageSettingsDesc {
-            get {
-                return ResourceManager.GetString("pageSettingsDesc", resourceCulture);
             }
         }
         
@@ -396,11 +384,30 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TODO.
+        ///   Looks up a localized string similar to Press Ctrl + Shift + X or PrintScreen (depending on your Preferences) to open ImgurSniper in Snipe mode. In Snipe Mode, you can hold down your mouse and draw a Rectangle to select the Area you want to upload.
+        ///Once you release the mouse, the Image will automatically be uploaded to Imgur (if enabled), saved as a file (optionally), and the Link (or Image itself) will be copied to your Clipboard. Depending on your Settings, the Image will be automatically opened for you to see aswell..
         /// </summary>
         public static string pageSnipeDesc {
             get {
                 return ResourceManager.GetString("pageSnipeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tray.
+        /// </summary>
+        public static string pageTray {
+            get {
+                return ResourceManager.GetString("pageTray", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Tray Service is running in the Background, so you can activate ImgurSniper with Ctrl + Shift + X or PrintScreen (depending on your Settings) way faster than launching the executable. The Tray Service is optimized to use as little processing power as possible, so your PC is definetly not slowed down. You can find the ImgurSniper Tray Program in the bottom right corner of your Screen, Right Click the Icon to open the Menu..
+        /// </summary>
+        public static string pageTrayDesc {
+            get {
+                return ResourceManager.GetString("pageTrayDesc", resourceCulture);
             }
         }
         
