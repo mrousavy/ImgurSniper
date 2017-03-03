@@ -67,7 +67,7 @@ namespace ImgurSniper.UI {
                 client.DownloadFileCompleted += DownloadCompleted;
 
                 client.DownloadProgressChanged += (o, e) => {
-                    sender.Content = strings.update + "(" + e.ProgressPercentage + "%)";
+                    sender.Content = strings.update + " (" + e.ProgressPercentage + "%)";
                 };
 
                 _success.Show(strings.downloadingGitHub, TimeSpan.FromSeconds(2));
@@ -86,8 +86,10 @@ namespace ImgurSniper.UI {
                     p.Kill();
             }
 
-            if(killSelf)
+            if(killSelf) {
+                System.Windows.Application.Current.Shutdown(0);
                 Process.GetCurrentProcess().Kill();
+            }
         }
 
         private void DownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) {

@@ -79,6 +79,10 @@ namespace Cleanup {
                     Directory.Delete(DocPath, true);
                 } catch { }
 
+                try {
+                    Directory.Delete(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper Images"), true);
+                } catch { }
+
 
                 if(notRemoved)
                     Console.WriteLine("Error");
