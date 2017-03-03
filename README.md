@@ -23,9 +23,9 @@ You can now **share the Link** that has been **copied to your Clipboard** with e
 
 # Features
 
-- **Draw a Rectangle** with your Mouse to make a Screenshot and **upload the cropped area to Imgur** or copy to **Clipboard**!
-- Switch between **Image Cropping** and **Screen painting** by pressing **[SPACEBAR]**!
-- **Right-Click** a window in _Snap Mode_ to quickly share a **Screenshot of that Window**
+- **Draw a Rectangle** with your Mouse to make a Screenshot and **automatically upload the cropped area to Imgur** or copy to **Clipboard**!
+- Use the **Paint Mode** to circle Information, hide Information or show your drawing skills!
+- **Right-Click** a window in _Snap Mode_ to quickly share a **Screenshot of that Window** or **Client Area**
 - Press **Ctrl + A** to make a Screenshot of **all connected Screens**!
 - Save snapped Images locally
 - **Log in to your Imgur Account** (By uploading to **your** _Imgur Account_, you can upload bigger Images and have them listed on your Profile.)
@@ -35,7 +35,6 @@ You can now **share the Link** that has been **copied to your Clipboard** with e
 - Open **ImgurSniper** with a click on the Tray Icon, or by pressing _Ctrl + Shift + X_ or _Print Screen_ (when Autostart is enabled)
 - Launch **ImgurSniper** on the _Current Screen_ or _All Screens at once_
 - Upload your Images as **PNG Format** for higher quality, or **JPEG Format** for faster uploads
-- **Repair** ImgurSniper, in case you messed up the Config Files or it won't start anymore.
 	
 ### Settings
 <img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/Images/ImgurSniper.UI.png">
