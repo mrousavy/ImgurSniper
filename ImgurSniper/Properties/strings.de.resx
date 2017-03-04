@@ -176,4 +176,7 @@
 Wollen Sie eine detaillierte Fehlermeldung sehen?
 </value>
   </data>
+  <data name="help" xml:space="preserve">
+    <value>Hilfe</value>
+  </data>
 </root>

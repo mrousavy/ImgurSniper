@@ -126,6 +126,12 @@
   <data name="autoUploadImgur" xml:space="preserve">
     <value>Automatisch zu Imgur hochladen</value>
   </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="changelog" xml:space="preserve">
+    <value>Änderungsprotokoll</value>
+  </data>
   <data name="copyClipboard" xml:space="preserve">
     <value>Bild in die Zwischenablage kopieren</value>
   </data>
@@ -209,8 +215,9 @@ Um in den Zeichenmodus zu wechseln, drücken Sie einfach die Leertaste.</value>
   </data>
   <data name="pageGeneralDesc" xml:space="preserve">
     <value>ImgurSniper ist ein einfach benutzbares, schnelles und simples Tool um Ihnen das Teilen von Bildern zu erleichtern.
-Öffnen Sie ImgurSniper und schneiden Sie einen Bereich aus, oder rechts-klicken Sie eine Bilddatei und klicken Sie "Upload to Imgur" um das Bild schnell hochzuladen.
+Öffnen Sie ImgurSniper mit Strg + Shift + X und schneiden Sie einen Bereich aus, oder rechts-klicken Sie eine Bilddatei und klicken Sie "Upload to Imgur" um das Bild schnell hochzuladen.
 Siehe "Snipe" und "Infobereich" für mehr Informationen über das Programm.
+
 Lizensiert unter der MIT Open Source Lizenz auf github.com/mrousavy/ImgurSniper, können Sie jederzeit den Code anpassen. Um zu ImgurSniper etwas beizutragen, klicken Sie den "Fork" Knopf (Oben Rechts) auf GitHub, bearbeiten Sie das Projekt, und erstellen Sie schlussendlich eine Pull Request.</value>
   </data>
   <data name="pagePrivacy" xml:space="preserve">
@@ -302,6 +309,9 @@ Zeige dies den klugen Computer Affen: {0}</value>
   </data>
   <data name="usePrint" xml:space="preserve">
     <value>Druck-Taste für ImgurSniper benutzen</value>
+  </data>
+  <data name="verInfo" xml:space="preserve">
+    <value>Versions Info</value>
   </data>
   <data name="whenFinished" xml:space="preserve">
     <value>Nach beenden...</value>

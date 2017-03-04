@@ -99,6 +99,20 @@ namespace ImgurSniper {
             }
 
             ContextMenu menu = new ContextMenu();
+            menu.MenuItems.Add(strings.help, delegate {
+                try {
+                    Process p = new Process();
+
+                    p.StartInfo = new ProcessStartInfo {
+                        FileName = Path.Combine(FileIO._programFiles, "ImgurSniper.UI.exe"),
+                        Arguments = "Help"
+                    };
+
+                    p.Start();
+                } catch {
+                    // ignored
+                }
+            });
             menu.MenuItems.Add(strings.settings, delegate {
                 try {
                     Process.Start(Path.Combine(FileIO._programFiles, "ImgurSniper.UI.exe"));

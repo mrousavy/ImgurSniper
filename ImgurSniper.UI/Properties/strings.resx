@@ -296,8 +296,9 @@ To enter the drawing Mode, you just need to press Space once in Snap Mode!</valu
   </data>
   <data name="pageGeneralDesc" xml:space="preserve">
     <value>ImgurSniper is an easy to use, fast and simple tool to help you share Images better.
-Open ImgurSniper and Crop an Image, or right click an Image File and click "Upload to Imgur" to upload the Image.
+Open ImgurSniper with Ctrl + Shift + X and Crop an Image, or right click an Image File and click "Upload to Imgur" to upload the Image.
 See "Snipe" and "Tray" for more Information about the Program.
+
 Licensed under MIT Open Source License on github.com/mrousavy/ImgurSniper, you can modify the Program for your needs. To contribute, click the Fork button (top right) on GitHub, customize your Project, and create a Pull Request.</value>
   </data>
   <data name="pagePrivacyDesc" xml:space="preserve">
@@ -314,5 +315,14 @@ Once you release the mouse, the Image will automatically be uploaded to Imgur (i
   </data>
   <data name="pageTrayDesc" xml:space="preserve">
     <value>The Tray Service is running in the Background, so you can activate ImgurSniper with Ctrl + Shift + X or PrintScreen (depending on your Settings) way faster than launching the executable. The Tray Service is optimized to use as little processing power as possible, so your PC is definetly not slowed down. You can find the ImgurSniper Tray Program in the bottom right corner of your Screen, Right Click the Icon to open the Menu.</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="changelog" xml:space="preserve">
+    <value>Changelog</value>
+  </data>
+  <data name="verInfo" xml:space="preserve">
+    <value>Version Info</value>
   </data>
 </root>

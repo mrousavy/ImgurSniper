@@ -177,4 +177,7 @@ ImgurSniper has to shut down!
 Would you like to see a detailed Exception Info?
 </value>
   </data>
+  <data name="help" xml:space="preserve">
+    <value>Help</value>
+  </data>
 </root>

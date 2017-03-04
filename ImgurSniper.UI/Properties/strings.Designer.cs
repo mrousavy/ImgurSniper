@@ -88,6 +88,24 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string cancel {
+            get {
+                return ResourceManager.GetString("cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changelog.
+        /// </summary>
+        public static string changelog {
+            get {
+                return ResourceManager.GetString("changelog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy Image to Clipboard.
         /// </summary>
         public static string copyClipboard {
@@ -326,9 +344,10 @@ namespace ImgurSniper.UI.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to ImgurSniper is an easy to use, fast and simple tool to help you share Images better.
-        ///Open ImgurSniper and Crop an Image, or right click an Image File and click &quot;Upload to Imgur&quot; to upload the Image.
+        ///Open ImgurSniper with Ctrl + Shift + X and Crop an Image, or right click an Image File and click &quot;Upload to Imgur&quot; to upload the Image.
         ///See &quot;Snipe&quot; and &quot;Tray&quot; for more Information about the Program.
-        ///Licensed under MIT Open Source License on github.com/mrousavy/ImgurSniper, you can modify the Program for your needs. To contribute, click the Fork button (top right) on GitHub, customize your Project, and create a Pull Request..
+        ///
+        ///Licensed under MIT Open Source License on github.com/mrousavy/ImgurSniper, you can modify the Program for your needs. To contribute, click the Fork button (top right) on GitHub, customize your Project, and create a Pull Req [rest of string was truncated]&quot;;.
         /// </summary>
         public static string pageGeneralDesc {
             get {
@@ -591,6 +610,15 @@ namespace ImgurSniper.UI.Properties {
         public static string usePrint {
             get {
                 return ResourceManager.GetString("usePrint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version Info.
+        /// </summary>
+        public static string verInfo {
+            get {
+                return ResourceManager.GetString("verInfo", resourceCulture);
             }
         }
         

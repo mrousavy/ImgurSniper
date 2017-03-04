@@ -145,6 +145,7 @@
     <Compile Include="Help.xaml.cs">
       <DependentUpon>Help.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainWindowActionListeners.cs" />
     <Compile Include="Pages\ClipboardPage.xaml.cs">
       <DependentUpon>ClipboardPage.xaml</DependentUpon>
     </Compile>
@@ -175,6 +176,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>strings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="VersionInfo.xaml.cs">
+      <DependentUpon>VersionInfo.xaml</DependentUpon>
     </Compile>
     <Page Include="Help.xaml">
       <SubType>Designer</SubType>
@@ -221,6 +225,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\SnipePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VersionInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
