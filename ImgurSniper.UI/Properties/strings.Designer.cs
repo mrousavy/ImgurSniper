@@ -151,6 +151,15 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Downloading Update...
+        /// </summary>
+        public static string downloadingUpdate {
+            get {
+                return ResourceManager.GetString("downloadingUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable Magnifying Glass.
         /// </summary>
         public static string enMagnifying {

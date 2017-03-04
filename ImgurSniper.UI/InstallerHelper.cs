@@ -8,7 +8,6 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
-using System.Windows.Controls;
 using Toast;
 
 namespace ImgurSniper.UI {
@@ -33,8 +32,8 @@ namespace ImgurSniper.UI {
             _success = successToast;
         }
 
-        public void Update(Button sender) {
-            Download(sender);
+        public void Update(System.Windows.Controls.StackPanel panel) {
+            Download(panel);
         }
 
         public void AddToContextMenu() {
@@ -56,7 +55,7 @@ namespace ImgurSniper.UI {
         /// Download the ImgurSniper Archive from github
         /// </summary>
         /// <param name="path">The path to save the zip to</param>
-        private void Download(Button sender) {
+        private void Download(System.Windows.Controls.StackPanel panel) {
             string file = Path.Combine(_docPath, "ImgurSniperSetup.zip");
 
             if(File.Exists(file)) {
@@ -67,7 +66,8 @@ namespace ImgurSniper.UI {
                 client.DownloadFileCompleted += DownloadCompleted;
 
                 client.DownloadProgressChanged += (o, e) => {
-                    sender.Content = strings.update + " (" + e.ProgressPercentage + "%)";
+                    //sender.Content = strings.update + " (" + e.ProgressPercentage + "%)";
+                    ((System.Windows.Controls.ProgressBar)panel.Children[1]).Value = e.ProgressPercentage;
                 };
 
                 _success.Show(strings.downloadingGitHub, TimeSpan.FromSeconds(2));
@@ -104,7 +104,8 @@ namespace ImgurSniper.UI {
             } else {
                 Extract(file, extractTo);
                 Process.Start(Path.Combine(extractTo, "ImgurSniperSetup.msi"));
-                KillImgurSniper(true);
+
+                System.Windows.Application.Current.Shutdown(0);
             }
         }
 
@@ -116,7 +117,7 @@ namespace ImgurSniper.UI {
         private static void Extract(string file, string path) {
             using(ZipArchive archive = new ZipArchive(new FileStream(file, FileMode.Open))) {
                 if(Directory.Exists(path))
-                    Directory.Delete(path);
+                    Directory.Delete(path, true);
 
                 archive.ExtractToDirectory(path);
             }

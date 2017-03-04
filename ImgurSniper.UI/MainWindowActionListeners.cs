@@ -183,6 +183,9 @@ namespace ImgurSniper.UI {
             } catch { }
 
             help.Show();
+            help.Activate();
+            help.Focus();
+            help.BringIntoView();
         }
 
         private async void Snipe(object sender, RoutedEventArgs e) {
@@ -219,7 +222,8 @@ namespace ImgurSniper.UI {
                 FileIO.CurrentCommits = _commits.Count;
                 FileIO.UpdateAvailable = false;
 
-                Helper.Update(sender as Button);
+                StackPanel panel = ShowProgressDialog();
+                Helper.Update(panel);
             } else {
                 ChangeButtonState(true);
             }

@@ -147,6 +147,9 @@
   <data name="downloadingGitHub" xml:space="preserve">
     <value>Von github.com/mrousavy/ImgurSniper herunterladen...</value>
   </data>
+  <data name="downloadingUpdate" xml:space="preserve">
+    <value>Update wird geladen..</value>
+  </data>
   <data name="enMagnifying" xml:space="preserve">
     <value>Lupe aktivieren</value>
   </data>

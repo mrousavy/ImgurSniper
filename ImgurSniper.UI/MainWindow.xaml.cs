@@ -16,6 +16,7 @@ namespace ImgurSniper.UI {
     public partial class MainWindow : Window {
         #region Fields
         public InstallerHelper Helper;
+        private readonly ImgurLoginHelper _imgurhelper;
 
         //Path to Program Files/ImgurSniper Folder
         private static string Path => AppDomain.CurrentDomain.BaseDirectory;
@@ -51,7 +52,6 @@ namespace ImgurSniper.UI {
                 return anim;
             }
         }
-        private readonly ImgurLoginHelper _imgurhelper;
         #endregion
 
         //Constructor
@@ -248,7 +248,7 @@ namespace ImgurSniper.UI {
                 Btn_Update.IsEnabled = enabled;
         }
 
-        //Show a Material Design Dialog
+        //Show a Material Design Yes/No Dialog
         private async Task<bool> ShowAskDialog(string message) {
             bool choice = false;
 
@@ -302,6 +302,35 @@ namespace ImgurSniper.UI {
             await DialogHost.ShowDialog(vPanel);
 
             return choice;
+        }
+
+        //Show a Material Design Progressbar Dialog
+        private StackPanel ShowProgressDialog() {
+            CloseDia();
+
+            StackPanel vpanel = new StackPanel {
+                Margin = new Thickness(10)
+            };
+
+            System.Windows.Controls.Label label = new System.Windows.Controls.Label {
+                Content = str.downloadingUpdate,
+                FontSize = 13,
+                Foreground = Brushes.Gray
+            };
+
+            ProgressBar bar = new ProgressBar {
+                Margin = new Thickness(3),
+                IsIndeterminate = false,
+                Minimum = 0,
+                Maximum = 100
+            };
+
+            vpanel.Children.Add(label);
+            vpanel.Children.Add(bar);
+
+            DialogHost.ShowDialog(vpanel);
+
+            return vpanel;
         }
 
         //Close the Material Design Dialog

@@ -12,17 +12,14 @@ namespace ImgurSniper.UI {
         public VersionInfo(IReadOnlyList<GitHubCommit> commits, int currentCommits) {
             InitializeComponent();
 
-
-            for(int i = _commits.Count; i > currentCommits; i--) {
-                listview.Items.Add(new System.Windows.Controls.Label() {
-                    Content = i + ": " + _commits[i].Commit.Message
-                });
-            }
-
             _commits = commits;
 
-
-
+            for(int i = 0; i < _commits.Count - currentCommits; i++) {
+                Commit commit = _commits[i].Commit;
+                listview.Items.Add(new System.Windows.Controls.Label() {
+                    Content = i + $" (@{commit.Author.Date}): " + commit.Message
+                });
+            }
         }
 
         private void YesClick(object sender, RoutedEventArgs e) {
