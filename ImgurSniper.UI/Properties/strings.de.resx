@@ -224,7 +224,7 @@ Lizensiert unter der MIT Open Source Lizenz auf github.com/mrousavy/ImgurSniper,
     <value>Datenschutz</value>
   </data>
   <data name="pagePrivacyDesc" xml:space="preserve">
-    <value>ImgurSniper sammelt keine privaten Informationen, die einzigen Daten die hochgeladen werden, sind von Ihnen erstellte Bilder mit ImgurSniper, welche auch nur mit dem Link einsehbar sind.
+    <value>ImgurSniper sammelt keine privaten Informationen, die einzigen Daten die hochgeladen werden, sind von Ihnen erstellte Bilder mit ImgurSniper, welche auch nur mit der URL erreichbar sind.
 Da das ImgurSniper C# Projekt auf GitHub ist, sind 100% der Quelldateien öffentlich einsehbar.
 Außerdem wird OAuth2.0 für die Benutzerauthentifizierung verwendet, dadurch werden keine Benutzernamen oder Passwörter gespeichert, und Sie können sich jederzeit abmelden.</value>
   </data>
