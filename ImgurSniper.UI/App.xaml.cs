@@ -20,6 +20,8 @@ namespace ImgurSniper.UI {
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Error) == MessageBoxResult.Yes) {
 
+                    Process.Start("https://github.com/mrousavy/ImgurSniper/issues/new");
+
                     MessageBox.Show(
                         "Message: " + e.Exception.Message + "\n\n" +
                         "Source: " + e.Exception.Source + "\n\n" +

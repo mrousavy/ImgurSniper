@@ -152,7 +152,27 @@ namespace ImgurSniper.UI {
             } catch { }
         }
 
+        private void HotkeyBoxMDown(object sender, RoutedEventArgs e) {
+            TextBox box = sender as TextBox;
+            if(box == null) {
+                return;
+            }
 
+            try {
+                HotKeySelector sel = new HotKeySelector();
+
+                try {
+                    sel.Owner = this;
+                } catch { }
+
+                bool? result = sel.ShowDialog();
+
+                if(result == true) {
+                    FileIO.ShortcutKey = sel.key;
+                    HotkeyBox.Text = sel.key.ToString();
+                }
+            } catch { }
+        }
 
         private async void LanguageBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             ComboBox box = sender as ComboBox;

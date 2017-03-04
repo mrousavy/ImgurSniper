@@ -322,7 +322,7 @@ namespace ImgurSniper.UI {
 
             public string Language = "en";
             public string SaveImagesPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper Images");
+                Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "ImgurSniper Images");
 
             public Key ShortcutKey = Key.X;
         }

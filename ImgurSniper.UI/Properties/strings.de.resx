@@ -159,6 +159,9 @@
   <data name="help" xml:space="preserve">
     <value>Hilfe</value>
   </data>
+  <data name="hotkey" xml:space="preserve">
+    <value>Hotkey:</value>
+  </data>
   <data name="imgFormat" xml:space="preserve">
     <value>Bild Format</value>
   </data>
@@ -218,7 +221,7 @@ Um in den Zeichenmodus zu wechseln, drücken Sie einfach die Leertaste.</value>
   </data>
   <data name="pageGeneralDesc" xml:space="preserve">
     <value>ImgurSniper ist ein einfach benutzbares, schnelles und simples Tool um Ihnen das Teilen von Bildern zu erleichtern.
-Öffnen Sie ImgurSniper mit Strg + Shift + X und schneiden Sie einen Bereich aus, oder rechts-klicken Sie eine Bilddatei und klicken Sie "Upload to Imgur" um das Bild schnell hochzuladen.
+Öffnen Sie ImgurSniper mit Ihrem Tastenkürzel (standard: Strg + Shift + X) und schneiden Sie einen Bereich aus, oder rechts-klicken Sie eine Bilddatei und klicken Sie "Upload to Imgur" um das Bild schnell hochzuladen.
 Siehe "Snipe" und "Infobereich" für mehr Informationen über das Programm.
 
 Lizensiert unter der MIT Open Source Lizenz auf github.com/mrousavy/ImgurSniper, können Sie jederzeit den Code anpassen. Um zu ImgurSniper etwas beizutragen, klicken Sie den "Fork" Knopf (Oben Rechts) auf GitHub, bearbeiten Sie das Projekt, und erstellen Sie schlussendlich eine Pull Request.</value>
@@ -241,7 +244,7 @@ Außerdem wird OAuth2.0 für die Benutzerauthentifizierung verwendet, dadurch we
     <value>Snipe</value>
   </data>
   <data name="pageSnipeDesc" xml:space="preserve">
-    <value>Drücken Sie Strg + Shift + X oder Drucken (abhängig von Ihren Einstellungen) um ImgurSniper im Snipe Modus zu starten. Im Snipe Modus können Sie mit Ihrer Maus ein Rechteck zeichnen.
+    <value>Drücken Sie Ihren Hotkey (standard: Strg + Shift + X) um ImgurSniper im Snipe Modus zu starten. Im Snipe Modus können Sie mit Ihrer Maus ein Rechteck zeichnen.
 Sobald Sie die Linke Maustaste loslassen, bestätigen Sie den Bereich und das Bild wird automatisch zu Imgur hochgeladen (falls aktiviert), auf Ihrer Festplatte abgespeichert (optional), und die URL zum Bild (oder das Bild selbst) wird in Ihre Zwischenablage gespeichert. Je nach Ihren Einstellungen, wird das Bild auch automatisch geöffnet.</value>
   </data>
   <data name="pageTray" xml:space="preserve">
@@ -258,6 +261,10 @@ Sobald Sie die Linke Maustaste loslassen, bestätigen Sie den Bereich und das Bi
   </data>
   <data name="plsPin" xml:space="preserve">
     <value>Bitte geben Sie die PIN von Imgur.com ein.</value>
+  </data>
+  <data name="pressKey" xml:space="preserve">
+    <value>Drücken Sie eine Taste...
+(ESC zum Abbrechen)</value>
   </data>
   <data name="repair" xml:space="preserve">
     <value>Reparieren</value>

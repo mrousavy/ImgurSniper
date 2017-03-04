@@ -114,9 +114,18 @@ namespace ImgurSniper.UI {
                 bool SaveImages = settings.SaveImages;
                 bool ImgurAfterSnipe = settings.ImgurAfterSnipe;
                 string language = settings.Language;
+                System.Windows.Input.Key key = settings.ShortcutKey;
 
                 //Path to Saved Images
-                PathBox.Text = string.IsNullOrWhiteSpace(SaveImagesPath) ? DocPath : SaveImagesPath;
+                if(string.IsNullOrWhiteSpace(SaveImagesPath)) {
+                    PathBox.Text = DocPath;
+                } else {
+                    //Create Pictures\ImgurSniper Images Path
+                    if(!Directory.Exists(SaveImagesPath)) {
+                        Directory.CreateDirectory(SaveImagesPath);
+                    }
+                    PathBox.Text = SaveImagesPath;
+                }
 
                 //PNG or JPEG
                 if(UsePNG)
@@ -164,6 +173,8 @@ namespace ImgurSniper.UI {
                         break;
                 }
                 LanguageBox.SelectionChanged += LanguageBox_SelectionChanged;
+
+                HotkeyBox.Text = key.ToString();
 
             } catch { }
             #endregion

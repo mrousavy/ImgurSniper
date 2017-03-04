@@ -187,6 +187,15 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hotkey:.
+        /// </summary>
+        public static string hotkey {
+            get {
+                return ResourceManager.GetString("hotkey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Image Format.
         /// </summary>
         public static string imgFormat {
@@ -353,10 +362,10 @@ namespace ImgurSniper.UI.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to ImgurSniper is an easy to use, fast and simple tool to help you share Images better.
-        ///Open ImgurSniper with Ctrl + Shift + X and Crop an Image, or right click an Image File and click &quot;Upload to Imgur&quot; to upload the Image.
+        ///Open ImgurSniper with your Hotkey (default: Ctrl + Shift + X) and Crop an Image, or right click an Image File and click &quot;Upload to Imgur&quot; to upload the Image.
         ///See &quot;Snipe&quot; and &quot;Tray&quot; for more Information about the Program.
         ///
-        ///Licensed under MIT Open Source License on github.com/mrousavy/ImgurSniper, you can modify the Program for your needs. To contribute, click the Fork button (top right) on GitHub, customize your Project, and create a Pull Req [rest of string was truncated]&quot;;.
+        ///Licensed under MIT Open Source License on github.com/mrousavy/ImgurSniper, you can modify the Program for your needs. To contribute, click the Fork button (top right) on GitHub, customize your Project [rest of string was truncated]&quot;;.
         /// </summary>
         public static string pageGeneralDesc {
             get {
@@ -412,7 +421,7 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Press Ctrl + Shift + X or PrintScreen (depending on your Preferences) to open ImgurSniper in Snipe mode. In Snipe Mode, you can hold down your mouse and draw a Rectangle to select the Area you want to upload.
+        ///   Looks up a localized string similar to Press your Hotkey (default: Ctrl + Shift + X) to open ImgurSniper in Snipe mode. In Snipe Mode, you can hold down your mouse and draw a Rectangle to select the Area you want to upload.
         ///Once you release the mouse, the Image will automatically be uploaded to Imgur (if enabled), saved as a file (optionally), and the Link (or Image itself) will be copied to your Clipboard. Depending on your Settings, the Image will be automatically opened for you to see aswell..
         /// </summary>
         public static string pageSnipeDesc {
@@ -431,7 +440,7 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Tray Service is running in the Background, so you can activate ImgurSniper with Ctrl + Shift + X or PrintScreen (depending on your Settings) way faster than launching the executable. The Tray Service is optimized to use as little processing power as possible, so your PC is definetly not slowed down. You can find the ImgurSniper Tray Program in the bottom right corner of your Screen, Right Click the Icon to open the Menu..
+        ///   Looks up a localized string similar to The Tray Service is running in the Background, so you can activate ImgurSniper with your Hotkey (default: Ctrl + Shift + X) way faster than launching the executable. The Tray Service is optimized to use as little processing power as possible, so your PC is definetly not slowed down. You can find the ImgurSniper Tray Program in the bottom right corner of your Screen, Right Click the Icon to open the Menu..
         /// </summary>
         public static string pageTrayDesc {
             get {
@@ -463,6 +472,16 @@ namespace ImgurSniper.UI.Properties {
         public static string plsPin {
             get {
                 return ResourceManager.GetString("plsPin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Press any Key...
+        ///(ESC to cancel).
+        /// </summary>
+        public static string pressKey {
+            get {
+                return ResourceManager.GetString("pressKey", resourceCulture);
             }
         }
         

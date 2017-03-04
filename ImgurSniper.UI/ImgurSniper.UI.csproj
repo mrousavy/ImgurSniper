@@ -145,6 +145,9 @@
     <Compile Include="Help.xaml.cs">
       <DependentUpon>Help.xaml</DependentUpon>
     </Compile>
+    <Compile Include="HotKeySelector.xaml.cs">
+      <DependentUpon>HotKeySelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindowActionListeners.cs" />
     <Compile Include="Pages\ClipboardPage.xaml.cs">
       <DependentUpon>ClipboardPage.xaml</DependentUpon>
@@ -181,6 +184,10 @@
       <DependentUpon>VersionInfo.xaml</DependentUpon>
     </Compile>
     <Page Include="Help.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HotKeySelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

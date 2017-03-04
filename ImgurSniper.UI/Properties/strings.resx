@@ -296,7 +296,7 @@ To enter the drawing Mode, you just need to press Space once in Snap Mode!</valu
   </data>
   <data name="pageGeneralDesc" xml:space="preserve">
     <value>ImgurSniper is an easy to use, fast and simple tool to help you share Images better.
-Open ImgurSniper with Ctrl + Shift + X and Crop an Image, or right click an Image File and click "Upload to Imgur" to upload the Image.
+Open ImgurSniper with your Hotkey (default: Ctrl + Shift + X) and Crop an Image, or right click an Image File and click "Upload to Imgur" to upload the Image.
 See "Snipe" and "Tray" for more Information about the Program.
 
 Licensed under MIT Open Source License on github.com/mrousavy/ImgurSniper, you can modify the Program for your needs. To contribute, click the Fork button (top right) on GitHub, customize your Project, and create a Pull Request.</value>
@@ -310,11 +310,11 @@ ImgurSniper uses OAuth2.0 for Authentication, so no Password or username will be
     <value>When you Right Click with your Mouse in Snipe Mode, ImgurSniper will detect the Window you clicked, and upload the cropped Image of that Window to Imgur. ImgurSniper does detect a whole Window when you click the Titlebar and even Client Area(s) (Areas inside a Window).</value>
   </data>
   <data name="pageSnipeDesc" xml:space="preserve">
-    <value>Press Ctrl + Shift + X or PrintScreen (depending on your Preferences) to open ImgurSniper in Snipe mode. In Snipe Mode, you can hold down your mouse and draw a Rectangle to select the Area you want to upload.
+    <value>Press your Hotkey (default: Ctrl + Shift + X) to open ImgurSniper in Snipe mode. In Snipe Mode, you can hold down your mouse and draw a Rectangle to select the Area you want to upload.
 Once you release the mouse, the Image will automatically be uploaded to Imgur (if enabled), saved as a file (optionally), and the Link (or Image itself) will be copied to your Clipboard. Depending on your Settings, the Image will be automatically opened for you to see aswell.</value>
   </data>
   <data name="pageTrayDesc" xml:space="preserve">
-    <value>The Tray Service is running in the Background, so you can activate ImgurSniper with Ctrl + Shift + X or PrintScreen (depending on your Settings) way faster than launching the executable. The Tray Service is optimized to use as little processing power as possible, so your PC is definetly not slowed down. You can find the ImgurSniper Tray Program in the bottom right corner of your Screen, Right Click the Icon to open the Menu.</value>
+    <value>The Tray Service is running in the Background, so you can activate ImgurSniper with your Hotkey (default: Ctrl + Shift + X) way faster than launching the executable. The Tray Service is optimized to use as little processing power as possible, so your PC is definetly not slowed down. You can find the ImgurSniper Tray Program in the bottom right corner of your Screen, Right Click the Icon to open the Menu.</value>
   </data>
   <data name="cancel" xml:space="preserve">
     <value>Cancel</value>
@@ -327,5 +327,12 @@ Once you release the mouse, the Image will automatically be uploaded to Imgur (i
   </data>
   <data name="downloadingUpdate" xml:space="preserve">
     <value>Downloading Update..</value>
+  </data>
+  <data name="hotkey" xml:space="preserve">
+    <value>Hotkey:</value>
+  </data>
+  <data name="pressKey" xml:space="preserve">
+    <value>Press any Key...
+(ESC to cancel)</value>
   </data>
 </root>
