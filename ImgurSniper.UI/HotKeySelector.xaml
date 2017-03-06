@@ -5,7 +5,7 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:local="clr-namespace:ImgurSniper.UI"
 		xmlns:cultureStrings="clr-namespace:ImgurSniper.UI.Properties"
-		mc:Ignorable="d" WindowStyle="None" Background="Gray" WindowStartupLocation="CenterOwner"
+		mc:Ignorable="d" WindowStyle="None" ResizeMode="NoResize" Background="Gray" WindowStartupLocation="CenterOwner"
 		Title="HotKeySelector" Height="150" Width="270"
 		KeyDown="SelectKey">
 	<Grid>

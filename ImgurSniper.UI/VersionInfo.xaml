@@ -5,19 +5,17 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:local="clr-namespace:ImgurSniper.UI"
 		xmlns:cultureStrings="clr-namespace:ImgurSniper.UI.Properties"
-		mc:Ignorable="d" ResizeMode="CanMinimize"
-		Title="{x:Static Member=cultureStrings:strings.verInfo}" Height="400" Width="500">
+		mc:Ignorable="d"
+		Title="{x:Static Member=cultureStrings:strings.verInfo}" MinHeight="250" MinWidth="300" Width="500" Height="400">
 	<Grid Margin="5">
-		<StackPanel HorizontalAlignment="Stretch" Margin="0,0,0,50">
-			<Label FontSize="14" Content="{x:Static Member=cultureStrings:strings.changelog}"/>
+		<Label FontSize="14" Content="{x:Static Member=cultureStrings:strings.changelog}" VerticalAlignment="Top"/>
 
-            <ListView x:Name="listview" Height="280" Margin="2">
-            </ListView>
-        </StackPanel>
+		<ListView x:Name="listview" VerticalAlignment="Stretch" Margin="5,35,5,45">
+		</ListView>
 
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-            <Button Margin="5" Content="{x:Static Member=cultureStrings:strings.cancel}" Click="NoClick"/>
-            <Button Margin="5" Content="{x:Static Member=cultureStrings:strings.update}" Click="YesClick"/>
-        </StackPanel>
-    </Grid>
+		<StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+			<Button Margin="5" Content="{x:Static Member=cultureStrings:strings.cancel}" Click="NoClick"/>
+			<Button Margin="5" Content="{x:Static Member=cultureStrings:strings.update}" Click="YesClick"/>
+		</StackPanel>
+	</Grid>
 </Window>
