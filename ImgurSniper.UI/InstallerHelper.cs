@@ -17,6 +17,7 @@ namespace ImgurSniper.UI {
         private static string _path;
         private static string _docPath;
         private static string _downloads;
+        private static string _updateZipPath;
         private readonly Toasty _error;
         private readonly Toasty _success;
         private readonly MainWindow _invoker;
@@ -57,7 +58,8 @@ namespace ImgurSniper.UI {
         /// </summary>
         /// <param name="panel">The Panel for the Progressbar</param>
         private void Download(Panel panel) {
-            string file = Path.Combine(Directory.Exists(_downloads) ? _downloads : _docPath, "ImgurSniperSetup.zip");
+            _updateZipPath = Directory.Exists(_downloads) ? _downloads : _docPath;
+            string file = Path.Combine(_updateZipPath, "ImgurSniperSetup.zip");
 
             if(File.Exists(file)) {
                 File.Delete(file);
@@ -102,8 +104,8 @@ namespace ImgurSniper.UI {
         }
 
         private void DownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) {
-            string file = Path.Combine(_docPath, "ImgurSniperSetup.zip");
-            string extractTo = Path.Combine(_docPath, "ImgurSniperInstaller");
+            string file = Path.Combine(_updateZipPath, "ImgurSniperSetup.zip");
+            string extractTo = Path.Combine(_updateZipPath, "ImgurSniperInstaller");
 
             if(!File.Exists(file)) {
                 _error.Show(strings.couldNotDownload,
