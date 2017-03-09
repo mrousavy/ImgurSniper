@@ -106,6 +106,24 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Checking for Updates....
+        /// </summary>
+        public static string checkingUpdate {
+            get {
+                return ResourceManager.GetString("checkingUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connecting to Imgur....
+        /// </summary>
+        public static string contactImgur {
+            get {
+                return ResourceManager.GetString("contactImgur", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy Image to Clipboard.
         /// </summary>
         public static string copyClipboard {
@@ -257,6 +275,15 @@ namespace ImgurSniper.UI.Properties {
         public static string language {
             get {
                 return ResourceManager.GetString("language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading Configuration....
+        /// </summary>
+        public static string loadConf {
+            get {
+                return ResourceManager.GetString("loadConf", resourceCulture);
             }
         }
         

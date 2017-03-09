@@ -132,6 +132,12 @@
   <data name="changelog" xml:space="preserve">
     <value>Änderungsprotokoll</value>
   </data>
+  <data name="checkingUpdate" xml:space="preserve">
+    <value>Suche nach Updates...</value>
+  </data>
+  <data name="contactImgur" xml:space="preserve">
+    <value>Verbinde mit Imgur...</value>
+  </data>
   <data name="copyClipboard" xml:space="preserve">
     <value>Bild in die Zwischenablage kopieren</value>
   </data>
@@ -184,6 +190,9 @@ Wollen Sie ImgurSniper jetzt neustarten?</value>
   </data>
   <data name="language" xml:space="preserve">
     <value>Sprache</value>
+  </data>
+  <data name="loadConf" xml:space="preserve">
+    <value>Lade Konfiguration...</value>
   </data>
   <data name="loading" xml:space="preserve">
     <value>Lädt...</value>

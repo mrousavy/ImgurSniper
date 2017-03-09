@@ -344,4 +344,13 @@ Once you release the mouse, the Image will automatically be uploaded to Imgur (i
   <data name="version" xml:space="preserve">
     <value>Version</value>
   </data>
+  <data name="checkingUpdate" xml:space="preserve">
+    <value>Checking for Updates...</value>
+  </data>
+  <data name="contactImgur" xml:space="preserve">
+    <value>Connecting to Imgur...</value>
+  </data>
+  <data name="loadConf" xml:space="preserve">
+    <value>Loading Configuration...</value>
+  </data>
 </root>

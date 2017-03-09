@@ -32,6 +32,23 @@ namespace ImgurSniper.UI {
             _invoker = invoker;
             _error = errorToast;
             _success = successToast;
+
+            Clean();
+        }
+
+        public void Clean() {
+            try {
+                _updateZipPath = Directory.Exists(_downloads) ? _downloads : _docPath;
+                string file = Path.Combine(_updateZipPath, "ImgurSniperSetup.zip");
+                string directory = Path.Combine(_updateZipPath, "ImgurSniperInstaller");
+
+                if(File.Exists(file)) {
+                    File.Delete(file);
+                }
+                if(Directory.Exists(directory)) {
+                    Directory.Delete(directory, true);
+                }
+            } catch { }
         }
 
         public void Update(StackPanel panel) {

@@ -159,19 +159,27 @@
 
 		<Separator VerticalAlignment="Bottom" Margin="0,0,0,48" Foreground="LightGray"/>
 
-		<StackPanel Orientation="Horizontal"
+			<StackPanel Orientation="Horizontal"
 						HorizontalAlignment="Right" VerticalAlignment="Bottom">
-			<!--<Button Margin="5" Click="Repair" x:Name="Btn_Repair"
+				<!--<Button Margin="5" Click="Repair" x:Name="Btn_Repair"
 					Content="{x:Static Member=cultureStrings:strings.repair}"/>-->
 
 				<Button Margin="5" Click="Help" x:Name="Btn_Help"
 					Content="{x:Static Member=cultureStrings:strings.help}"/>
-			
+
 				<Button Margin="5" Click="Update" x:Name="Btn_Update" IsEnabled="False"
 					Content="{x:Static Member=cultureStrings:strings.update}"/>
 
-			<Button Margin="5" Click="Snipe" x:Name="Btn_Snipe" Content="Snipe!"/>
-		</StackPanel>
+				<Button Margin="5" Click="Snipe" x:Name="Btn_Snipe" Content="Snipe!"/>
+			</StackPanel>
+
+			<StackPanel Orientation="Horizontal" x:Name="progressIndicator" Opacity="0.7"
+						HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="12">
+				
+				<ProgressBar x:Name="progressBar" IsIndeterminate="True"  Style="{StaticResource MaterialDesignCircularProgressBar}" Value="35" />
+				
+				<Label x:Name="loadingDesc"/>
+			</StackPanel>
 
 
 

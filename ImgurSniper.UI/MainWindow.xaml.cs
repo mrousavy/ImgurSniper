@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using str = ImgurSniper.UI.Properties.strings;
 
 namespace ImgurSniper.UI {
@@ -72,6 +73,9 @@ namespace ImgurSniper.UI {
                 //First time using ImgurSniper? Show Help Window
                 Help(null, null);
             }
+
+            //Update Loading Indicator
+            loadingDesc.Content = str.loadConf;
 
             #region Read Config
             try {
@@ -171,6 +175,9 @@ namespace ImgurSniper.UI {
             }
 
 
+            //Update Loading Indicator
+            loadingDesc.Content = str.contactImgur;
+
             string refreshToken = FileIO.ReadRefreshToken();
             //name = null if refreshToken = null or any error occured in Login
             string name = await _imgurhelper.LoggedInUser(refreshToken);
@@ -186,7 +193,11 @@ namespace ImgurSniper.UI {
                 PathPanel.IsEnabled = (bool)SaveBox.IsChecked;
             }
 
+
             try {
+                //Update Loading Indicator
+                loadingDesc.Content = str.checkingUpdate;
+
                 //Check for Update, if last update is longer than 1 Day ago
                 if(DateTime.Now - FileIO.LastChecked > TimeSpan.FromDays(1) || FileIO.UpdateAvailable) {
                     FileIO.LastChecked = DateTime.Now;
@@ -210,6 +221,13 @@ namespace ImgurSniper.UI {
             } catch {
                 error_toast.Show(str.failedUpdate, TimeSpan.FromSeconds(3));
             }
+
+            //Remove Loading Indicator
+            DoubleAnimation fadeOut = Animations.FadeOut;
+            fadeOut.Completed += delegate {
+                progressIndicator.Visibility = Visibility.Collapsed;
+            };
+            progressIndicator.BeginAnimation(OpacityProperty, fadeOut);
         }
 
         //Enable or disable all Buttons
