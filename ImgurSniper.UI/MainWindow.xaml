@@ -23,7 +23,7 @@
 				   Source="Resources/Logo.png"></Image>
 			</StackPanel>
 
-		<ScrollViewer Margin="0,0,0,50">
+		<ScrollViewer Margin="0,0,0,50" VerticalScrollBarVisibility="Auto">
 			<StackPanel Margin="5">
 				<Label Margin="10,5,5,5" FontSize="15" Content="{x:Static Member=cultureStrings:strings.afterSnapping}"/>
 				<RadioButton GroupName="AfterSnap" Tag="Imgur" IsChecked="True" VerticalAlignment="Bottom"
