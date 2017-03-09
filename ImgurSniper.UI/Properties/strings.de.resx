@@ -359,4 +359,7 @@ Zeige dies den klugen Computer Affen: {0}</value>
   <data name="yes" xml:space="preserve">
     <value>Ja</value>
   </data>
+  <data name="initializing" xml:space="preserve">
+    <value>Initialisierung...</value>
+  </data>
 </root>
