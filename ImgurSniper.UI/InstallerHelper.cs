@@ -93,13 +93,10 @@ namespace ImgurSniper.UI {
             }
         }
         public static void StartImgurSniper() {
-            bool running = false;
-
             List<Process> processes =
                 new List<Process>(Process.GetProcesses().Where(p => p.ProcessName.Contains("ImgurSniper")));
-            running = processes.Count > 0;
 
-            if(!running) {
+            if(processes.Count == 0) {
                 Process.Start(Path.Combine(_path, "ImgurSniper.exe"));
             }
         }
@@ -117,7 +114,7 @@ namespace ImgurSniper.UI {
                 Extract(file, extractTo);
                 Process.Start(Path.Combine(extractTo, "ImgurSniperSetup.msi"));
 
-                System.Windows.Application.Current.Shutdown(0);
+                KillImgurSniper(true);
             }
         }
 
