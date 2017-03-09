@@ -39,4 +39,6 @@ You can now **share the Link** that has been **copied to your Clipboard** with e
 ### Settings
 <img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/Images/ImgurSniper.UI.png">
 
-## Thanks for using Imgur Sniper! :)
+<img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/Images/ImgurSniper.UI.Update.png">
+
+<img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/Images/ImgurSniper.UI.Help.png">
