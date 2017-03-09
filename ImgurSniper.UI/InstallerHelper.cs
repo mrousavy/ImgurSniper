@@ -96,7 +96,9 @@ namespace ImgurSniper.UI {
         }
         public static void StartImgurSniper() {
             List<Process> processes =
-                new List<Process>(Process.GetProcesses().Where(p => p.ProcessName.Contains("ImgurSniper")));
+                new List<Process>(Process.GetProcesses().Where(p =>
+                                                               p.ProcessName.Contains("ImgurSniper")
+                                                               && p.Id != Process.GetCurrentProcess().Id));
 
             if(processes.Count == 0) {
                 Process.Start(Path.Combine(_path, "ImgurSniper.exe"));
