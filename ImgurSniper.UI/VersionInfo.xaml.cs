@@ -14,12 +14,32 @@ namespace ImgurSniper.UI {
 
             _commits = commits;
 
+#if DEBUG
+            //commits = null and currentCommits = ?? in DEBUG
+            int commitNr = 50;
+            for(int i = 0; i < 50 - 4; i++) {
+                listview.Items.Add(new VersionInfoItem {
+                    Version = "v" + commitNr,
+                    Date = $"{System.DateTime.Now:dd.MM.yyyy}",
+                    Message = "\"Updated Something!\""
+                });
+
+                commitNr--;
+            }
+#else
+
+            int commitNr = _commits.Count;
             for(int i = 0; i < _commits.Count - currentCommits; i++) {
                 Commit commit = _commits[i].Commit;
-                listview.Items.Add(new System.Windows.Controls.Label() {
-                    Content = i + $" (@{commit.Author.Date}): " + commit.Message
+                listview.Items.Add(new VersionInfoItem {
+                    Version = "v" + commitNr,
+                    Date = $"{commit.Author.Date:dd.MM.yyyy}",
+                    Message = $"\"{commit.Message}\""
                 });
+
+                commitNr--;
             }
+#endif
         }
 
         private void YesClick(object sender, RoutedEventArgs e) {

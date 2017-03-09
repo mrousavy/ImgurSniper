@@ -5,12 +5,19 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:local="clr-namespace:ImgurSniper.UI"
 		xmlns:cultureStrings="clr-namespace:ImgurSniper.UI.Properties"
-		mc:Ignorable="d"
+		mc:Ignorable="d" WindowStartupLocation="CenterOwner"
 		Title="{x:Static Member=cultureStrings:strings.verInfo}" MinHeight="250" MinWidth="300" Width="500" Height="400">
 	<Grid Margin="5">
 		<Label FontSize="14" Content="{x:Static Member=cultureStrings:strings.changelog}" VerticalAlignment="Top"/>
 
-		<ListView x:Name="listview" VerticalAlignment="Stretch" Margin="5,35,5,45">
+		<ListView x:Name="listview" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5,35,5,45">
+			<ListView.View>
+				<GridView>
+					<GridViewColumn Header="{x:Static Member=cultureStrings:strings.version}" DisplayMemberBinding="{Binding Version}"/>
+					<GridViewColumn Header="{x:Static Member=cultureStrings:strings.date}" DisplayMemberBinding="{Binding Date}"/>
+					<GridViewColumn Header="{x:Static Member=cultureStrings:strings.message}" DisplayMemberBinding="{Binding Message}"/>
+				</GridView>
+			</ListView.View>
 		</ListView>
 
 		<StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">

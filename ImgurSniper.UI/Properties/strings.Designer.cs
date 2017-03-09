@@ -133,6 +133,15 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string date {
+            get {
+                return ResourceManager.GetString("date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to disable the ImgurSniper Tray Service?.
         /// </summary>
         public static string disablingTrayWarning {
@@ -266,6 +275,15 @@ namespace ImgurSniper.UI.Properties {
         public static string loggedIn {
             get {
                 return ResourceManager.GetString("loggedIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message.
+        /// </summary>
+        public static string message {
+            get {
+                return ResourceManager.GetString("message", resourceCulture);
             }
         }
         
@@ -647,6 +665,15 @@ namespace ImgurSniper.UI.Properties {
         public static string verInfo {
             get {
                 return ResourceManager.GetString("verInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        public static string version {
+            get {
+                return ResourceManager.GetString("version", resourceCulture);
             }
         }
         

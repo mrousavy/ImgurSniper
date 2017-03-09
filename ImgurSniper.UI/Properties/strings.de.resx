@@ -141,6 +141,9 @@
   <data name="curMonitor" xml:space="preserve">
     <value>Derzeitiger Bildschirm</value>
   </data>
+  <data name="date" xml:space="preserve">
+    <value>Date</value>
+  </data>
   <data name="disablingTrayWarning" xml:space="preserve">
     <value>Wollen Sie den ImgurSniper Hintergrund-dienst wirklich deaktivieren?</value>
   </data>
@@ -187,6 +190,9 @@ Wollen Sie ImgurSniper jetzt neustarten?</value>
   </data>
   <data name="loggedIn" xml:space="preserve">
     <value>Anmeldung erfolgreich! Hi, {0}!</value>
+  </data>
+  <data name="message" xml:space="preserve">
+    <value>Message</value>
   </data>
   <data name="no" xml:space="preserve">
     <value>Nein</value>
@@ -322,6 +328,9 @@ Zeige dies den klugen Computer Affen: {0}</value>
   </data>
   <data name="verInfo" xml:space="preserve">
     <value>Versions Info</value>
+  </data>
+  <data name="version" xml:space="preserve">
+    <value>Version</value>
   </data>
   <data name="whenFinished" xml:space="preserve">
     <value>Nach beenden...</value>

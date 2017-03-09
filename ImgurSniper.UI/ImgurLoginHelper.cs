@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Toast;
 
 namespace ImgurSniper.UI {
-    class ImgurLoginHelper {
+    internal class ImgurLoginHelper {
 
         public static string ClientId => "766263aaa4c9882";
 

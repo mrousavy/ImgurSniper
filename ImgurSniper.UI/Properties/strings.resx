@@ -335,4 +335,13 @@ Once you release the mouse, the Image will automatically be uploaded to Imgur (i
     <value>Press any Key...
 (ESC to cancel)</value>
   </data>
+  <data name="date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="version" xml:space="preserve">
+    <value>Version</value>
+  </data>
 </root>

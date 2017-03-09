@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using str = ImgurSniper.UI.Properties.strings;
 
 namespace ImgurSniper.UI {
@@ -28,28 +27,6 @@ namespace ImgurSniper.UI {
 
                 string value = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper");
                 return value;
-            }
-        }
-
-        //Animation Templates
-        private static DoubleAnimation FadeOut {
-            get {
-                DoubleAnimation anim = new DoubleAnimation {
-                    From = 1,
-                    To = 0,
-                    Duration = new Duration(TimeSpan.FromSeconds(0.18))
-                };
-                return anim;
-            }
-        }
-        private static DoubleAnimation FadeIn {
-            get {
-                DoubleAnimation anim = new DoubleAnimation {
-                    From = 0,
-                    To = 1,
-                    Duration = new Duration(TimeSpan.FromSeconds(0.18))
-                };
-                return anim;
             }
         }
         #endregion

@@ -1,20 +1,30 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
+using System.Windows.Input;
 using System.Windows.Media.Animation;
+using Application = System.Windows.Application;
+using CheckBox = System.Windows.Controls.CheckBox;
+using ComboBox = System.Windows.Controls.ComboBox;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+using RadioButton = System.Windows.Controls.RadioButton;
 using str = ImgurSniper.UI.Properties.strings;
+using TextBox = System.Windows.Controls.TextBox;
 
 
 namespace ImgurSniper.UI {
     public partial class MainWindow {
         #region Action Listeners
-        private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e) {
+
+        private void WindowClosing(object sender, CancelEventArgs e) {
             e.Cancel = true;
-            this.Closing -= WindowClosing;
+            Closing -= WindowClosing;
 
             DoubleAnimation fadingAnimation = new DoubleAnimation {
                 From = 1,
@@ -22,12 +32,11 @@ namespace ImgurSniper.UI {
                 Duration = new Duration(TimeSpan.FromSeconds(0.24)),
                 AutoReverse = false
             };
-            fadingAnimation.Completed += delegate {
-                this.Close();
-            };
+            fadingAnimation.Completed += delegate { Close(); };
 
-            grid.BeginAnimation(Grid.OpacityProperty, fadingAnimation);
+            grid.BeginAnimation(OpacityProperty, fadingAnimation);
         }
+
         private void AfterSnapClick(object sender, RoutedEventArgs e) {
             RadioButton button = sender as RadioButton;
             if(button == null) {
@@ -37,6 +46,7 @@ namespace ImgurSniper.UI {
                 FileIO.ImgurAfterSnipe = button.Tag as string == "Imgur";
             } catch { }
         }
+
         private void MonitorsClick(object sender, RoutedEventArgs e) {
             RadioButton button = sender as RadioButton;
             if(button == null) {
@@ -46,6 +56,7 @@ namespace ImgurSniper.UI {
                 FileIO.AllMonitors = button.Tag as string == "All";
             } catch { }
         }
+
         private void ImgFormatClick(object sender, RoutedEventArgs e) {
             RadioButton button = sender as RadioButton;
             if(button != null) {
@@ -54,6 +65,7 @@ namespace ImgurSniper.UI {
                 } catch { }
             }
         }
+
         private void SaveImgs_Checkbox(object sender, RoutedEventArgs e) {
             CheckBox box = sender as CheckBox;
             if(box == null) {
@@ -67,6 +79,7 @@ namespace ImgurSniper.UI {
                 }
             } catch { }
         }
+
         private void Magnifying_Checkbox(object sender, RoutedEventArgs e) {
             CheckBox box = sender as CheckBox;
             if(box == null) {
@@ -76,6 +89,7 @@ namespace ImgurSniper.UI {
                 FileIO.MagnifyingGlassEnabled = box.IsChecked == true;
             } catch { }
         }
+
         private void OpenAfterUpload_Checkbox(object sender, RoutedEventArgs e) {
             CheckBox box = sender as CheckBox;
             if(box == null) {
@@ -85,6 +99,7 @@ namespace ImgurSniper.UI {
                 FileIO.OpenAfterUpload = box.IsChecked == true;
             } catch { }
         }
+
         private async void RunOnBoot_Checkbox(object sender, RoutedEventArgs e) {
             CheckBox box = sender as CheckBox;
             if(box != null) {
@@ -107,17 +122,19 @@ namespace ImgurSniper.UI {
                         if(Process.GetProcessesByName("ImgurSniper").Length < 1) {
                             Process start = new Process {
                                 StartInfo = {
-                                        FileName = Path + "\\ImgurSniper.exe",
-                                        Arguments = " -autostart"
-                                    }
+                                    FileName = Path + "\\ImgurSniper.exe",
+                                    Arguments = " -autostart"
+                                }
                             };
                             start.Start();
                         }
                     } else {
                         //Kill all ImgurSniper Instances
-                        foreach(Process proc in Process.GetProcesses().Where(p => p.ProcessName.Contains("ImgurSniper"))) {
-                            if(proc.Id != Process.GetCurrentProcess().Id)
+                        foreach(
+                            Process proc in Process.GetProcesses().Where(p => p.ProcessName.Contains("ImgurSniper"))) {
+                            if(proc.Id != Process.GetCurrentProcess().Id) {
                                 proc.Kill();
+                            }
                         }
                     }
                 } catch {
@@ -125,6 +142,7 @@ namespace ImgurSniper.UI {
                 }
             }
         }
+
         private void PrintKeyBox_Click(object sender, RoutedEventArgs e) {
             CheckBox box = sender as CheckBox;
             if(box == null) {
@@ -138,14 +156,15 @@ namespace ImgurSniper.UI {
 
                 //Kill all ImgurSniper Instances
                 foreach(Process proc in Process.GetProcesses().Where(p => p.ProcessName.Contains("ImgurSniper"))) {
-                    if(proc.Id != Process.GetCurrentProcess().Id)
+                    if(proc.Id != Process.GetCurrentProcess().Id) {
                         proc.Kill();
+                    }
                 }
                 //Start ImgurSniper if not yet running
                 Process start = new Process {
                     StartInfo = {
-                    FileName = Path + "\\ImgurSniper.exe",
-                    Arguments = " -autostart"
+                        FileName = Path + "\\ImgurSniper.exe",
+                        Arguments = " -autostart"
                     }
                 };
                 start.Start();
@@ -170,6 +189,9 @@ namespace ImgurSniper.UI {
                 if(result == true) {
                     FileIO.ShortcutKey = sel.key;
                     HotkeyBox.Text = sel.key.ToString();
+
+                    InstallerHelper.KillImgurSniper(false);
+                    InstallerHelper.StartImgurSniper();
                 }
             } catch { }
         }
@@ -185,7 +207,7 @@ namespace ImgurSniper.UI {
                     if(result) {
                         InstallerHelper.KillImgurSniper(false);
                         Process.Start(Process.GetCurrentProcess().MainModule.FileName);
-                        System.Windows.Application.Current.Shutdown();
+                        Application.Current.Shutdown();
                     }
                 } catch {
                     box.SelectedIndex = 0;
@@ -215,12 +237,12 @@ namespace ImgurSniper.UI {
                 Process snipeProc = new Process { StartInfo = new ProcessStartInfo(exe) };
                 snipeProc.Start();
 
-                this.Visibility = Visibility.Hidden;
+                Visibility = Visibility.Hidden;
 
                 await Task.Delay(500);
                 snipeProc.WaitForExit();
 
-                this.Visibility = Visibility.Visible;
+                Visibility = Visibility.Visible;
             } else {
                 error_toast.Show(str.imgurSniperNotFound,
                     TimeSpan.FromSeconds(3));
@@ -229,78 +251,79 @@ namespace ImgurSniper.UI {
 
         private void Update(object sender, RoutedEventArgs e) {
             ChangeButtonState(false);
-            VersionInfo info = new VersionInfo(_commits, FileIO.CurrentCommits);
 
-            try {
-                info.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                info.Owner = this;
-            } catch { }
+            DoubleAnimation darken = Animations.GetDarkenAnimation(Opacity);
+            DoubleAnimation brighten = Animations.GetBrightenAnimation(Opacity);
 
-            bool? result = info.ShowDialog();
+            VersionInfo info = new VersionInfo(_commits, FileIO.CurrentCommits) {
+                Owner = this
+            };
 
-            if(result == true) {
-                FileIO.CurrentCommits = _commits.Count;
-                FileIO.UpdateAvailable = false;
+            darken.Completed += delegate {
+                bool? result = info.ShowDialog();
 
-                StackPanel panel = ShowProgressDialog();
-                Helper.Update(panel);
-            } else {
-                ChangeButtonState(true);
-            }
+                BeginAnimation(OpacityProperty, brighten);
+
+                if(result == true) {
+                    FileIO.CurrentCommits = _commits.Count;
+                    FileIO.UpdateAvailable = false;
+
+                    StackPanel panel = ShowProgressDialog();
+                    Helper.Update(panel);
+                } else {
+                    ChangeButtonState(true);
+                }
+            };
+
+            BeginAnimation(OpacityProperty, darken);
         }
 
         private void SignIn(object sender, RoutedEventArgs e) {
             try {
                 _imgurhelper.Authorize();
 
-                DoubleAnimation fadeBtnOut = FadeOut;
+                DoubleAnimation fadeBtnOut = Animations.FadeOut;
                 fadeBtnOut.Completed += delegate {
-
-                    DoubleAnimation fadePanelIn = FadeIn;
-                    fadePanelIn.Completed += delegate {
-                        Btn_SignIn.Visibility = Visibility.Collapsed;
-                    };
+                    DoubleAnimation fadePanelIn = Animations.FadeIn;
+                    fadePanelIn.Completed += delegate { Btn_SignIn.Visibility = Visibility.Collapsed; };
                     Panel_PIN.Visibility = Visibility.Visible;
-                    Panel_PIN.BeginAnimation(StackPanel.OpacityProperty, fadePanelIn);
-
+                    Panel_PIN.BeginAnimation(OpacityProperty, fadePanelIn);
                 };
-                Btn_SignIn.BeginAnimation(Button.OpacityProperty, fadeBtnOut);
+                Btn_SignIn.BeginAnimation(OpacityProperty, fadeBtnOut);
             } catch { }
         }
+
         private void SignOut(object sender, RoutedEventArgs e) {
-            DoubleAnimation fadeBtnOut = FadeOut;
+            DoubleAnimation fadeBtnOut = Animations.FadeOut;
             fadeBtnOut.Completed += delegate {
                 FileIO.DeleteToken();
 
-                DoubleAnimation fadeBtnIn = FadeIn;
+                DoubleAnimation fadeBtnIn = Animations.FadeIn;
                 fadeBtnIn.Completed += delegate {
                     Btn_SignOut.Visibility = Visibility.Collapsed;
 
                     Label_Account.Content = "Imgur Account";
                 };
                 Btn_SignIn.Visibility = Visibility.Visible;
-                Btn_SignIn.BeginAnimation(StackPanel.OpacityProperty, fadeBtnIn);
-
+                Btn_SignIn.BeginAnimation(OpacityProperty, fadeBtnIn);
             };
-            Btn_SignOut.BeginAnimation(Button.OpacityProperty, fadeBtnOut);
+            Btn_SignOut.BeginAnimation(OpacityProperty, fadeBtnOut);
         }
+
         private async void PINOk(object sender, RoutedEventArgs e) {
             bool result = await _imgurhelper.Login(Box_PIN.Text);
 
             if(!result) {
                 return;
             }
-            DoubleAnimation fadePanelOut = FadeOut;
+            DoubleAnimation fadePanelOut = Animations.FadeOut;
             fadePanelOut.Completed += delegate {
-                DoubleAnimation fadeBtnIn = FadeIn;
-                fadeBtnIn.Completed += delegate {
-                    Panel_PIN.Visibility = Visibility.Collapsed;
-                };
+                DoubleAnimation fadeBtnIn = Animations.FadeIn;
+                fadeBtnIn.Completed += delegate { Panel_PIN.Visibility = Visibility.Collapsed; };
                 Btn_SignOut.Visibility = Visibility.Visible;
-                Btn_SignOut.BeginAnimation(StackPanel.OpacityProperty, fadeBtnIn);
-
+                Btn_SignOut.BeginAnimation(OpacityProperty, fadeBtnIn);
             };
-            Panel_PIN.BeginAnimation(Button.OpacityProperty, fadePanelOut);
+            Panel_PIN.BeginAnimation(OpacityProperty, fadePanelOut);
 
             if(_imgurhelper.User != null) {
                 Label_Account.Content = string.Format(str.imgurAccSignedIn, _imgurhelper.User);
@@ -310,23 +333,27 @@ namespace ImgurSniper.UI {
             }
             Box_PIN.Clear();
         }
+
         private void Box_PIN_TextChanged(object sender, TextChangedEventArgs e) {
             Btn_PinOk.IsEnabled = Box_PIN.Text.Length > 0;
         }
-        private void PathBox_Submit(object sender, System.Windows.Input.KeyEventArgs e) {
-            if(e.Key == System.Windows.Input.Key.Enter) {
+
+        private void PathBox_Submit(object sender, KeyEventArgs e) {
+            if(e.Key == Key.Enter) {
                 SavePath();
             }
         }
-        private void PathChooser(object sender, RoutedEventArgs e) {
-            System.Windows.Forms.FolderBrowserDialog fbd = new System.Windows.Forms.FolderBrowserDialog();
 
-            if(Directory.Exists(PathBox.Text))
+        private void PathChooser(object sender, RoutedEventArgs e) {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+
+            if(Directory.Exists(PathBox.Text)) {
                 fbd.SelectedPath = PathBox.Text;
+            }
 
             fbd.Description = str.selectPath;
 
-            System.Windows.Forms.DialogResult result = fbd.ShowDialog();
+            DialogResult result = fbd.ShowDialog();
 
             if(string.IsNullOrWhiteSpace(fbd.SelectedPath)) {
                 return;
@@ -334,6 +361,7 @@ namespace ImgurSniper.UI {
             PathBox.Text = fbd.SelectedPath;
             SavePath();
         }
+
         private void SavePath() {
             if(Directory.Exists(PathBox.Text)) {
                 FileIO.SaveImagesPath = PathBox.Text;
@@ -341,6 +369,7 @@ namespace ImgurSniper.UI {
                 error_toast.Show(str.pathNotExist, TimeSpan.FromSeconds(4));
             }
         }
+
         #endregion
     }
 }

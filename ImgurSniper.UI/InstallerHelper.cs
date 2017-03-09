@@ -8,14 +8,15 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
+using System.Windows.Controls;
 using Toast;
 
 namespace ImgurSniper.UI {
     public class InstallerHelper {
 
-        private readonly string _path;
-        private readonly string _docPath;
-        private readonly string _downloads;
+        private static string _path;
+        private static string _docPath;
+        private static string _downloads;
         private readonly Toasty _error;
         private readonly Toasty _success;
         private readonly MainWindow _invoker;
@@ -27,12 +28,12 @@ namespace ImgurSniper.UI {
                 SHGetKnownFolderPath(KnownFolder.Downloads, 0, IntPtr.Zero, out _downloads);
             } catch { }
 
-            this._invoker = invoker;
+            _invoker = invoker;
             _error = errorToast;
             _success = successToast;
         }
 
-        public void Update(System.Windows.Controls.StackPanel panel) {
+        public void Update(StackPanel panel) {
             Download(panel);
         }
 
@@ -54,9 +55,9 @@ namespace ImgurSniper.UI {
         /// <summary>
         /// Download the ImgurSniper Archive from github
         /// </summary>
-        /// <param name="path">The path to save the zip to</param>
-        private void Download(System.Windows.Controls.StackPanel panel) {
-            string file = Path.Combine(_docPath, "ImgurSniperSetup.zip");
+        /// <param name="panel">The Panel for the Progressbar</param>
+        private void Download(Panel panel) {
+            string file = Path.Combine(Directory.Exists(_downloads) ? _downloads : _docPath, "ImgurSniperSetup.zip");
 
             if(File.Exists(file)) {
                 File.Delete(file);
@@ -67,7 +68,7 @@ namespace ImgurSniper.UI {
 
                 client.DownloadProgressChanged += (o, e) => {
                     //sender.Content = strings.update + " (" + e.ProgressPercentage + "%)";
-                    ((System.Windows.Controls.ProgressBar)panel.Children[1]).Value = e.ProgressPercentage;
+                    ((ProgressBar)panel.Children[1]).Value = e.ProgressPercentage;
                 };
 
                 _success.Show(strings.downloadingGitHub, TimeSpan.FromSeconds(2));
@@ -89,6 +90,17 @@ namespace ImgurSniper.UI {
             if(killSelf) {
                 System.Windows.Application.Current.Shutdown(0);
                 Process.GetCurrentProcess().Kill();
+            }
+        }
+        public static void StartImgurSniper() {
+            bool running = false;
+
+            List<Process> processes =
+                new List<Process>(Process.GetProcesses().Where(p => p.ProcessName.Contains("ImgurSniper")));
+            running = processes.Count > 0;
+
+            if(!running) {
+                Process.Start(Path.Combine(_path, "ImgurSniper.exe"));
             }
         }
 
@@ -123,16 +135,16 @@ namespace ImgurSniper.UI {
             }
         }
 
-        public void Uninstall() {
-            //await _success.ShowAsync("Removing ImgurSniper and Cleaning up junk...",
-            //    TimeSpan.FromSeconds(2.5));
+        //public void Uninstall() {
+        //await _success.ShowAsync("Removing ImgurSniper and Cleaning up junk...",
+        //    TimeSpan.FromSeconds(2.5));
 
-            //string path = Path.Combine(Path.GetTempPath(), "Cleanup.exe");
-            //File.WriteAllBytes(path, Properties.Resources.Cleanup);
-            //Process.Start(path);
+        //string path = Path.Combine(Path.GetTempPath(), "Cleanup.exe");
+        //File.WriteAllBytes(path, Properties.Resources.Cleanup);
+        //Process.Start(path);
 
-            //Application.Current.Shutdown();
-        }
+        //Application.Current.Shutdown();
+        //}
 
         //private void CreateUninstaller() {
         //    try {
@@ -194,6 +206,6 @@ namespace ImgurSniper.UI {
         }
 
         [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
-        static extern int SHGetKnownFolderPath([MarshalAs(UnmanagedType.LPStruct)] Guid rfid, uint dwFlags, IntPtr hToken, out string pszPath);
+        private static extern int SHGetKnownFolderPath([MarshalAs(UnmanagedType.LPStruct)] Guid rfid, uint dwFlags, IntPtr hToken, out string pszPath);
     }
 }
