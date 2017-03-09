@@ -15,7 +15,7 @@ namespace ImgurSniper.UI {
             return new DoubleAnimation {
                 To = 0.5,
                 From = opacity,
-                Duration = TimeSpan.FromMilliseconds(100)
+                Duration = TimeSpan.FromMilliseconds(300)
             };
         }
 
