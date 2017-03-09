@@ -138,6 +138,12 @@
   <data name="contactImgur" xml:space="preserve">
     <value>Verbinde mit Imgur...</value>
   </data>
+  <data name="contextMenu" xml:space="preserve">
+    <value>Kontext Menü</value>
+  </data>
+  <data name="contextMenuDesc" xml:space="preserve">
+    <value>Rechtsklicken Sie eine Datei in Windows Explorer (or on your Desktop) um das Kontext Menü zu öffnen. Um das Bild schnell zu Imgur hochladen zu können, drücken Sie nun "Upload to Imgur"</value>
+  </data>
   <data name="copyClipboard" xml:space="preserve">
     <value>Bild in die Zwischenablage kopieren</value>
   </data>

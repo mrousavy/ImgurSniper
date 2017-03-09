@@ -159,6 +159,9 @@
     <Compile Include="Pages\GeneralPage.xaml.cs">
       <DependentUpon>GeneralPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ContextMenuPage.xaml.cs">
+      <DependentUpon>ContextMenuPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\PrivacyPage.xaml.cs">
       <DependentUpon>PrivacyPage.xaml</DependentUpon>
     </Compile>
@@ -220,6 +223,10 @@
     <Page Include="Pages\GeneralPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ContextMenuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\PrivacyPage.xaml">
       <SubType>Designer</SubType>
@@ -318,6 +325,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\TrayDemo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ContextMenuDemo.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

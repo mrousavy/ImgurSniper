@@ -353,4 +353,10 @@ Once you release the mouse, the Image will automatically be uploaded to Imgur (i
   <data name="loadConf" xml:space="preserve">
     <value>Loading Configuration...</value>
   </data>
+  <data name="contextMenu" xml:space="preserve">
+    <value>Context Menu</value>
+  </data>
+  <data name="contextMenuDesc" xml:space="preserve">
+    <value>Right click any File in Windows Explorer (or on your Desktop) to open the Context Menu. To quickly upload any File to Imgur, you can now click "Upload to Imgur"</value>
+  </data>
 </root>

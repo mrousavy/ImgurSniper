@@ -124,6 +124,24 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Context Menu.
+        /// </summary>
+        public static string contextMenu {
+            get {
+                return ResourceManager.GetString("contextMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right click any File in Windows Explorer (or on your Desktop) to open the Context Menu. To quickly upload any File to Imgur, you can now click &quot;Upload to Imgur&quot;.
+        /// </summary>
+        public static string contextMenuDesc {
+            get {
+                return ResourceManager.GetString("contextMenuDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy Image to Clipboard.
         /// </summary>
         public static string copyClipboard {

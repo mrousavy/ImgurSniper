@@ -13,7 +13,7 @@ namespace AddToContextMenu {
 
                 using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"*\shell\ImgurSniperUpload")) {
                     baseKey.SetValue("Icon", path);
-                    baseKey.SetValue(string.Empty, "Upload Image to Imgur");
+                    baseKey.SetValue(string.Empty, "Upload to Imgur");
                     using(RegistryKey key = baseKey.CreateSubKey("command")) {
                         key.SetValue(string.Empty, "\"" + path + "\" upload \"%1\"");
                     }

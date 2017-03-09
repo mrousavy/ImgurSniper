@@ -72,7 +72,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.manifest" />
-    <None Include="mrousavy.pfx" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\strings.resx">
