@@ -38,9 +38,6 @@ namespace ImgurSniper.UI {
             //Check for Commandline Arguments
             Arguments();
 
-            //Window Closing Event
-            Closing += WindowClosing;
-
             //Create Documents\ImgurSniper Path
             if(!Directory.Exists(DocPath))
                 Directory.CreateDirectory(DocPath);
