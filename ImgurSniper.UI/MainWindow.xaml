@@ -15,18 +15,6 @@
 	<!--<md:Card HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignPaper}">-->
 	<md:DialogHost x:Name="DialogHost">
 	<Grid x:Name="grid" Background="{DynamicResource MaterialDesignPaper}">
-			<Grid.Triggers>
-				<EventTrigger RoutedEvent="Grid.Loaded">
-					<BeginStoryboard>
-						<Storyboard Name="GridFadeIn">
-							<DoubleAnimation Name="GridFadeAnimation"
-									 Storyboard.TargetProperty="(Window.Opacity)"
-									 From="0.0" To="1.0" Duration="0:0:0.2"
-									 AutoReverse="False" RepeatBehavior="1x" />
-						</Storyboard>
-					</BeginStoryboard>
-				</EventTrigger>
-			</Grid.Triggers>
 			<StackPanel Orientation="Horizontal" Margin="5,0,15,5"
 						HorizontalAlignment="Right" VerticalAlignment="Top">
 				<Image Width="100" Margin="10" RenderOptions.BitmapScalingMode="HighQuality"
