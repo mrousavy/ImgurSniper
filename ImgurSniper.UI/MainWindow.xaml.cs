@@ -36,6 +36,9 @@ namespace ImgurSniper.UI {
         public MainWindow() {
             InitializeComponent();
 
+            //Update Loading Indicator
+            loadingDesc.Content = str.initializing;
+            
             //Check for Commandline Arguments
             Arguments();
 
