@@ -22,21 +22,6 @@ namespace ImgurSniper.UI {
     public partial class MainWindow {
         #region Action Listeners
 
-        private void WindowClosing(object sender, CancelEventArgs e) {
-            e.Cancel = true;
-            Closing -= WindowClosing;
-
-            DoubleAnimation fadingAnimation = new DoubleAnimation {
-                From = 1,
-                To = 0,
-                Duration = new Duration(TimeSpan.FromSeconds(0.24)),
-                AutoReverse = false
-            };
-            fadingAnimation.Completed += delegate { Close(); };
-
-            grid.BeginAnimation(OpacityProperty, fadingAnimation);
-        }
-
         private void AfterSnapClick(object sender, RoutedEventArgs e) {
             RadioButton button = sender as RadioButton;
             if(button == null) {
