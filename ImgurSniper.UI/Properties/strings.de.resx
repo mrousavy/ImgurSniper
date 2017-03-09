@@ -142,7 +142,7 @@
     <value>Derzeitiger Bildschirm</value>
   </data>
   <data name="date" xml:space="preserve">
-    <value>Date</value>
+    <value>Datum</value>
   </data>
   <data name="disablingTrayWarning" xml:space="preserve">
     <value>Wollen Sie den ImgurSniper Hintergrund-dienst wirklich deaktivieren?</value>
@@ -192,7 +192,7 @@ Wollen Sie ImgurSniper jetzt neustarten?</value>
     <value>Anmeldung erfolgreich! Hi, {0}!</value>
   </data>
   <data name="message" xml:space="preserve">
-    <value>Message</value>
+    <value>Details</value>
   </data>
   <data name="no" xml:space="preserve">
     <value>Nein</value>

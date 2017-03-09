@@ -70,7 +70,7 @@
 					<StackPanel Orientation="Horizontal" Margin="15,5,0,0" VerticalAlignment="Center">
 						<Label Content="{x:Static Member=cultureStrings:strings.hotkey}" VerticalAlignment="Center" FontSize="13" Foreground="Gray"/>
 						
-						<Border CornerRadius="5" Background="LightGray" BorderBrush="#ABABAB" BorderThickness="0,0,1,2" Margin="3" Height="25" MinWidth="10" VerticalAlignment="Center">
+						<Border CornerRadius="5" Background="LightGray" BorderBrush="#ABABAB" BorderThickness="0,0,2,2.3" Margin="3" Height="25" MinWidth="10" VerticalAlignment="Center">
 
 							<TextBox FontSize="14" VerticalAlignment="Center" 
 								 Focusable="False" x:Name="HotkeyBox" MouseDown="HotkeyBoxMDown" MaxLength="1" MinWidth="10" Height="25" SelectionBrush="Transparent" Cursor="Hand" Text="X" Padding="3,0,3,0" BorderBrush="Transparent"/>
