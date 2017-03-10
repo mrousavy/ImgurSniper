@@ -311,7 +311,8 @@ ImgurSniper uses OAuth2.0 for Authentication, so no Password or username will be
   </data>
   <data name="pageSnipeDesc" xml:space="preserve">
     <value>Press your Hotkey (default: Ctrl + Shift + X) to open ImgurSniper in Snipe mode. In Snipe Mode, you can hold down your mouse and draw a Rectangle to select the Area you want to upload.
-Once you release the mouse, the Image will automatically be uploaded to Imgur (if enabled), saved as a file (optionally), and the Link (or Image itself) will be copied to your Clipboard. Depending on your Settings, the Image will be automatically opened for you to see aswell.</value>
+Once you release the mouse, the Image will automatically be uploaded to Imgur (if enabled), saved as a file (optionally), and the Link (or Image itself) will be copied to your Clipboard. Depending on your Settings, the Image will be automatically opened for you to see aswell.
+Pro Tip: Hit Ctrl + A to instantly create a Screenshot of your whole Desktop.</value>
   </data>
   <data name="pageTrayDesc" xml:space="preserve">
     <value>The Tray Service is running in the Background, so you can activate ImgurSniper with your Hotkey (default: Ctrl + Shift + X) way faster than launching the executable. The Tray Service is optimized to use as little processing power as possible, so your PC is definetly not slowed down. You can find the ImgurSniper Tray Program in the bottom right corner of your Screen, Right Click the Icon to open the Menu.</value>

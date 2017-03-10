@@ -8,8 +8,11 @@
 
 #### [View all Releases](https://github.com/mrousavy/ImgurSniper/releases)
 
-
 Icon by [jinga](http://jinga.at), Idea by [dmaniak](http://github.com/dmaniak)
+
+## Why choose ImgurSniper?
+Compared to other Screenshot software, ImgurSniper is **as fast as sharing Images can get**. Also, ImgurSniper will upload directly to [imgur](http://www.imgur.com), which gets a direct Image Link 
+(Meaning the Link is Image only, so you can embed the Image, or share it with Software that can preview _Image URLs_, like _Discord_, ...)
 
 # How to use
 Press _Ctrl + Shift + X_ or _Print Screen_ (depending on your Preferences) to start **ImgurSniper** Snap Mode!
@@ -18,6 +21,8 @@ Optionally, press _Spacebar_ to _switch Mode_ and **paint on the Screen**!
 You can now **share the Link** that has been **copied to your Clipboard** with everyone!
 
 (To change the behavior of **ImgurSniper**, right-click the _Icon in your Tray_ and click **Settings**)
+
+(See more Info at **ImgurSniper Settings -> Help**)
 
 <img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/Images/ImgurSniper_Demo.gif">
 

@@ -494,7 +494,8 @@ namespace ImgurSniper.UI.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to Press your Hotkey (default: Ctrl + Shift + X) to open ImgurSniper in Snipe mode. In Snipe Mode, you can hold down your mouse and draw a Rectangle to select the Area you want to upload.
-        ///Once you release the mouse, the Image will automatically be uploaded to Imgur (if enabled), saved as a file (optionally), and the Link (or Image itself) will be copied to your Clipboard. Depending on your Settings, the Image will be automatically opened for you to see aswell..
+        ///Once you release the mouse, the Image will automatically be uploaded to Imgur (if enabled), saved as a file (optionally), and the Link (or Image itself) will be copied to your Clipboard. Depending on your Settings, the Image will be automatically opened for you to see aswell.
+        ///Pro Tip: Hit Ctrl + A to instantly create a Scre [rest of string was truncated]&quot;;.
         /// </summary>
         public static string pageSnipeDesc {
             get {

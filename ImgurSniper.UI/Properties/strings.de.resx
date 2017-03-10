@@ -266,7 +266,8 @@ Außerdem wird OAuth2.0 für die Benutzerauthentifizierung verwendet, dadurch we
   </data>
   <data name="pageSnipeDesc" xml:space="preserve">
     <value>Drücken Sie Ihren Hotkey (standard: Strg + Shift + X) um ImgurSniper im Snipe Modus zu starten. Im Snipe Modus können Sie mit Ihrer Maus ein Rechteck zeichnen.
-Sobald Sie die Linke Maustaste loslassen, bestätigen Sie den Bereich und das Bild wird automatisch zu Imgur hochgeladen (falls aktiviert), auf Ihrer Festplatte abgespeichert (optional), und die URL zum Bild (oder das Bild selbst) wird in Ihre Zwischenablage gespeichert. Je nach Ihren Einstellungen, wird das Bild auch automatisch geöffnet.</value>
+Sobald Sie die Linke Maustaste loslassen, bestätigen Sie den Bereich und das Bild wird automatisch zu Imgur hochgeladen (falls aktiviert), auf Ihrer Festplatte abgespeichert (optional), und die URL zum Bild (oder das Bild selbst) wird in Ihre Zwischenablage gespeichert. Je nach Ihren Einstellungen, wird das Bild auch automatisch geöffnet.
+Pro Tip: Drücken Sie im Snipe Modus Strg + A um einen Screenshot vom ganzen Monitor zu erstellen.</value>
   </data>
   <data name="pageTray" xml:space="preserve">
     <value>Infobereich</value>
