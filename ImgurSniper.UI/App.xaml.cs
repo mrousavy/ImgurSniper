@@ -20,13 +20,22 @@ namespace ImgurSniper.UI {
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Error) == MessageBoxResult.Yes) {
 
-                    Process.Start("https://github.com/mrousavy/ImgurSniper/issues/new");
+                    if(MessageBox.Show("Do you want to help out and fix a bug in ImgurSniper?" + "\n" +
+                                        "Please explain how the Problem you encountered can be replicated, and what the Error Message said!",
+                            "Do you want to help ImgurSniper bugfixing?",
+                            MessageBoxButton.YesNo,
+                            MessageBoxImage.Question) == MessageBoxResult.Yes) {
+                        Process.Start("https://github.com/mrousavy/ImgurSniper/issues/new");
+                    }
 
                     MessageBox.Show(
-                        "Message: " + e.Exception.Message + "\n\n" +
-                        "Source: " + e.Exception.Source + "\n\n" +
-                        "Stacktrace: " + e.Exception.StackTrace,
-                        "ImgurSniper Exception Details");
+                        "|||Base Message: " + e.Exception.GetBaseException().Message + "\n\n" +
+                        "|||Message: " + e.Exception.Message + "\n\n" +
+                        "|||Source: " + e.Exception.Source + "\n\n" +
+                        "|||Stacktrace: " + e.Exception.StackTrace,
+                        "ImgurSniper Exception - More Details",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error);
                 }
 
                 Process.GetCurrentProcess().Kill();
