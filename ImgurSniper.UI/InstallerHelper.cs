@@ -118,7 +118,10 @@ namespace ImgurSniper.UI {
                                                                && p.Id != Process.GetCurrentProcess().Id));
 
             if(processes.Count == 0) {
-                Process.Start(Path.Combine(_path, "ImgurSniper.exe"));
+                Process p = new Process();
+                p.StartInfo.FileName = Path.Combine(_path, "ImgurSniper.exe");
+                p.StartInfo.Arguments = "-autostart";
+                p.Start();
             }
         }
 
