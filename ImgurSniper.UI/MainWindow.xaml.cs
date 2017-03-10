@@ -203,11 +203,11 @@ namespace ImgurSniper.UI {
 
                 //Check for Update, if last update is longer than 1 Day ago
                 if(DateTime.Now - FileIO.LastChecked > TimeSpan.FromDays(1) || FileIO.UpdateAvailable) {
-                    FileIO.LastChecked = DateTime.Now;
-
                     //Retrieve info from github
                     GitHubClient github = new GitHubClient(new ProductHeaderValue("ImgurSniper"));
                     _commits = await github.Repository.Commit.GetAll("mrousavy", "ImgurSniper");
+                    
+                    FileIO.LastChecked = DateTime.Now;
 
                     int currentCommits = FileIO.CurrentCommits;
                     //999 = value is unset
@@ -219,6 +219,9 @@ namespace ImgurSniper.UI {
                         Btn_Update.IsEnabled = true;
                         success_toast.Show(string.Format(str.updateAvailable, currentCommits, _commits.Count),
                             TimeSpan.FromSeconds(4));
+                    } else {
+                        //No Update available
+                        FileIO.UpdateAvailable = false;
                     }
                 }
             } catch {
