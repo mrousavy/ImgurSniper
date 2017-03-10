@@ -261,6 +261,24 @@ namespace ImgurSniper.UI {
 
             BeginAnimation(OpacityProperty, darken);
         }
+        
+        
+        private async void Btn_SearchUpdates(object sender, RoutedEventArgs e) {
+            Button btn = sender as Button;
+            if(btn != null)
+                btn.IsEnabled = false;
+
+            //Show Progress Indicator
+            progressIndicator.BeginAnimation(OpacityProperty, Animations.FadeIn);
+
+            await CheckForUpdates(true);
+
+            //Hide Progress Indicator
+            progressIndicator.BeginAnimation(OpacityProperty, Animations.FadeOut);
+            
+            if(btn != null)
+                btn.IsEnabled = true;
+        }
 
         private void SignIn(object sender, RoutedEventArgs e) {
             try {
