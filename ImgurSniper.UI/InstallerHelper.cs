@@ -90,8 +90,6 @@ namespace ImgurSniper.UI {
                     ((ProgressBar)panel.Children[1]).Value = e.ProgressPercentage;
                 };
 
-                _success.Show(strings.downloadingGitHub, TimeSpan.FromSeconds(2));
-
                 client.DownloadFileAsync(new Uri(@"https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperSetup.zip?raw=true"),
                     file);
             }
