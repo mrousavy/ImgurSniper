@@ -311,18 +311,7 @@ namespace ImgurSniper.UI {
         private void CloseDia() {
             DialogHost.CloseDialogCommand.Execute(null, DialogHost);
         }
-
-        private async void Btn_SearchUpdates(object sender, RoutedEventArgs e) {
-            //Show Progress Indicator
-            progressIndicator.BeginAnimation(OpacityProperty, Animations.FadeIn);
-
-            await CheckForUpdates(true);
-
-            //Hide Progress Indicator
-            progressIndicator.BeginAnimation(OpacityProperty, Animations.FadeOut);
-        }
-
-
+        
         //forceSearch = true if should search for updates even if Last Checked is not longer than 1 Day ago
         private async Task CheckForUpdates(bool forceSearch) {
             try {
