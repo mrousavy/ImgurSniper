@@ -34,9 +34,9 @@ You can now **share the Link** that has been **copied to your Clipboard** with e
 - Automatically start **ImgurSniper** on PC startup
 - Open **ImgurSniper** with a click on the Tray Icon, or by pressing _Ctrl + Shift + X_ or _Print Screen_ (when Autostart is enabled)
 - Launch **ImgurSniper** on the _Current Screen_ or _All Screens at once_
-- Upload your Images as **PNG Format** for higher quality, or **JPEG Format** for faster uploads
-	
-### Settings
+- Upload your Images as **PNG Format** for higher quality, or **JPEG Format** for faster uploads (Pro Tip: Enable "Upload Images in high Quality" [here](https://imgur.com/account/settings) for high quality Screenshots!)
+
+## Settings
 <img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/Images/ImgurSniper.UI.png">
 
 <img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/Images/ImgurSniper.UI.Update.png">
