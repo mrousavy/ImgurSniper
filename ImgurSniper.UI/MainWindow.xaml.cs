@@ -50,16 +50,23 @@ namespace ImgurSniper.UI {
             _imgurhelper = new ImgurLoginHelper(error_toast, success_toast);
 
             //Load Config
-            error_toast.Show(str.loading, TimeSpan.FromSeconds(2));
-            Load();
+            Loaded += delegate { Load(); };
         }
 
         //Command Line Args
-        private void Arguments() {
+        private async void Arguments() {
             string[] args = Environment.GetCommandLineArgs();
             if(args.Contains("Help")) {
                 Help(null, null);
                 Close();
+            }
+            if(args.Contains("Update")) {
+                bool updateAvailable = await CheckForUpdates(false);
+                if(updateAvailable) {
+                    Update(null, null);
+                } else {
+                    Close();
+                }
             }
         }
 
@@ -195,7 +202,11 @@ namespace ImgurSniper.UI {
                 PathPanel.IsEnabled = (bool)SaveBox.IsChecked;
             }
 
+#if DEBUG
+            Btn_Update.IsEnabled = true;
+#else
             await CheckForUpdates(false);
+#endif
 
             //Remove Loading Indicator
             progressIndicator.BeginAnimation(OpacityProperty, Animations.FadeOut);
@@ -205,9 +216,6 @@ namespace ImgurSniper.UI {
         public void ChangeButtonState(bool enabled) {
             if(Btn_PinOk.Tag == null)
                 Btn_PinOk.IsEnabled = enabled;
-
-            //if(Btn_Repair.Tag == null)
-            //Btn_Repair.IsEnabled = enabled;
 
             if(Btn_SignIn.Tag == null)
                 Btn_SignIn.IsEnabled = enabled;
@@ -222,6 +230,7 @@ namespace ImgurSniper.UI {
                 Btn_Update.IsEnabled = enabled;
         }
 
+        #region Dialogs
         //Show a Material Design Yes/No Dialog
         private async Task<bool> ShowAskDialog(string message) {
             bool choice = false;
@@ -311,9 +320,10 @@ namespace ImgurSniper.UI {
         private void CloseDia() {
             DialogHost.CloseDialogCommand.Execute(null, DialogHost);
         }
-        
+        #endregion
+
         //forceSearch = true if should search for updates even if Last Checked is not longer than 1 Day ago
-        private async Task CheckForUpdates(bool forceSearch) {
+        private async Task<bool> CheckForUpdates(bool forceSearch) {
             try {
                 //Last update Check
                 DateTime lastChecked = FileIO.LastChecked;
@@ -345,6 +355,8 @@ namespace ImgurSniper.UI {
                         Btn_Update.IsEnabled = true;
                         success_toast.Show(string.Format(str.updateAvailable, currentCommits, _commits.Count),
                             TimeSpan.FromSeconds(4));
+
+                        return true;
                     } else {
                         //No Update available
                         FileIO.UpdateAvailable = false;
@@ -353,6 +365,8 @@ namespace ImgurSniper.UI {
             } catch {
                 error_toast.Show(str.failedUpdate, TimeSpan.FromSeconds(3));
             }
+            //Any other way than return true = no update
+            return false;
         }
     }
 }

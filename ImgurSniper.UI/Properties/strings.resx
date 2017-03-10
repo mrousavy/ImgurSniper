@@ -369,4 +369,10 @@ Pro Tip: Hit Ctrl + A to instantly create a Screenshot of your whole Desktop.</v
   <data name="updateLast" xml:space="preserve">
     <value>Last: {0}</value>
   </data>
+  <data name="skip" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="skipTooltip" xml:space="preserve">
+    <value>Skip these ImgurSniper Updates</value>
+  </data>
 </root>

@@ -613,6 +613,24 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Skip.
+        /// </summary>
+        public static string skip {
+            get {
+                return ResourceManager.GetString("skip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skip these ImgurSniper Updates.
+        /// </summary>
+        public static string skipTooltip {
+            get {
+                return ResourceManager.GetString("skipTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Snipe!.
         /// </summary>
         public static string snipe {

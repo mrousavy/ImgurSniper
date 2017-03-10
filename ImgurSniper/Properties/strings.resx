@@ -126,8 +126,8 @@
   <data name="error" xml:space="preserve">
     <value>An unknown Error occured in ImgurSniper.UI!\nImgurSniper has to shut down!\nWould you like to see a detailed Exception Info? ({0})</value>
   </data>
-  <data name="errorFileType" xml:space="preserve">
-    <value>Error, File is non supported Image Type!</value>
+  <data name="errorInstantUpload" xml:space="preserve">
+    <value>Error uploading File(s), make sure to check your Internet connection and see if the File is a valid Image file!</value>
   </data>
   <data name="exit" xml:space="preserve">
     <value>Exit</value>
@@ -179,5 +179,8 @@ Would you like to see a detailed Exception Info?
   </data>
   <data name="help" xml:space="preserve">
     <value>Help</value>
+  </data>
+  <data name="uploadingFiles" xml:space="preserve">
+    <value>Uploading Images... ({0} KB) ({1} of {2})</value>
   </data>
 </root>

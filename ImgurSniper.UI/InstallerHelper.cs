@@ -86,8 +86,8 @@ namespace ImgurSniper.UI {
                 client.DownloadFileCompleted += DownloadCompleted;
 
                 client.DownloadProgressChanged += (o, e) => {
-                    //sender.Content = strings.update + " (" + e.ProgressPercentage + "%)";
-                    ((ProgressBar)panel.Children[1]).Value = e.ProgressPercentage;
+                    if(panel != null)
+                        ((ProgressBar)panel.Children[1]).Value = e.ProgressPercentage;
                 };
 
                 client.DownloadFileAsync(new Uri(@"https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperSetup.zip?raw=true"),
@@ -153,56 +153,6 @@ namespace ImgurSniper.UI {
                 archive.ExtractToDirectory(path);
             }
         }
-
-        //public void Uninstall() {
-        //await _success.ShowAsync("Removing ImgurSniper and Cleaning up junk...",
-        //    TimeSpan.FromSeconds(2.5));
-
-        //string path = Path.Combine(Path.GetTempPath(), "Cleanup.exe");
-        //File.WriteAllBytes(path, Properties.Resources.Cleanup);
-        //Process.Start(path);
-
-        //Application.Current.Shutdown();
-        //}
-
-        //private void CreateUninstaller() {
-        //    try {
-        //        using(RegistryKey parent = Registry.LocalMachine.OpenSubKey(
-        //                     @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall", true)) {
-        //            if(parent == null) {
-        //                return;
-        //            }
-        //            try {
-        //                RegistryKey key = null;
-
-        //                try {
-        //                    string appName = "ImgurSniper";
-
-        //                    key = parent.CreateSubKey(appName);
-
-        //                    Assembly asm = GetType().Assembly;
-        //                    Version v = asm.GetName().Version;
-        //                    string exe = "\"" + asm.CodeBase.Substring(8).Replace("/", "\\\\") + "\"";
-
-        //                    key.SetValue("DisplayName", "ImgurSniper");
-        //                    key.SetValue("ApplicationVersion", v.ToString());
-        //                    key.SetValue("Publisher", "mrousavy");
-        //                    key.SetValue("DisplayIcon", exe);
-        //                    key.SetValue("DisplayVersion", v.ToString(2));
-        //                    key.SetValue("URLInfoAbout", "http://www.github.com/mrousavy/ImgurSniper");
-        //                    key.SetValue("Contact", "");
-        //                    key.SetValue("InstallDate", DateTime.Now.ToString("yyyyMMdd"));
-        //                    key.SetValue("UninstallString", exe + " /uninstall");
-        //                } finally {
-        //                    key?.Close();
-        //                }
-        //            } catch  {
-        //                _error.Show("Could not create Uninstaller for ImgurSniper! You will have to remove the Files manually (from " + _docPath + ")",
-        //                    TimeSpan.FromSeconds(5));
-        //            }
-        //        }
-        //    } catch  { }
-        //}
 
         public void Autostart(bool? boxIsChecked) {
             try {

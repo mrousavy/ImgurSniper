@@ -61,7 +61,7 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click or Press.
+        ///   Looks up a localized string similar to Click or Press .
         /// </summary>
         internal static string clickorpress {
             get {
@@ -88,11 +88,11 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error, File is non supported Image Type!.
+        ///   Looks up a localized string similar to Error uploading File(s), make sure to check your Internet connection and see if the File is a valid Image file!.
         /// </summary>
-        internal static string errorFileType {
+        internal static string errorInstantUpload {
             get {
-                return ResourceManager.GetString("errorFileType", resourceCulture);
+                return ResourceManager.GetString("errorInstantUpload", resourceCulture);
             }
         }
         
@@ -222,6 +222,15 @@ namespace ImgurSniper.Properties {
         internal static string uploadingError {
             get {
                 return ResourceManager.GetString("uploadingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uploading Images... ({0} KB) ({1} of {2}).
+        /// </summary>
+        internal static string uploadingFiles {
+            get {
+                return ResourceManager.GetString("uploadingFiles", resourceCulture);
             }
         }
         

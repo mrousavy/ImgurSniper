@@ -7,7 +7,8 @@ namespace ImgurSniper.UI {
     /// Interaction logic for VersionInfo.xaml
     /// </summary>
     public partial class VersionInfo : Window {
-        IReadOnlyList<GitHubCommit> _commits;
+        private IReadOnlyList<GitHubCommit> _commits;
+        private int latest;
 
         public VersionInfo(IReadOnlyList<GitHubCommit> commits, int currentCommits) {
             InitializeComponent();
@@ -15,6 +16,8 @@ namespace ImgurSniper.UI {
             _commits = commits;
 
 #if DEBUG
+            latest = 50;
+
             //commits = null and currentCommits = ?? in DEBUG
             int commitNr = 50;
             for(int i = 0; i < 50 - 4; i++) {
@@ -27,7 +30,9 @@ namespace ImgurSniper.UI {
                 commitNr--;
             }
 #else
+            latest = _commits.Count;
 
+            //commits = correct values
             int commitNr = _commits.Count;
             for(int i = 0; i < _commits.Count - currentCommits; i++) {
                 Commit commit = _commits[i].Commit;
@@ -44,6 +49,12 @@ namespace ImgurSniper.UI {
 
         private void YesClick(object sender, RoutedEventArgs e) {
             DialogResult = true;
+        }
+
+        private void SkipClick(object sender, RoutedEventArgs e) {
+            FileIO.CurrentCommits = latest;
+            FileIO.UpdateAvailable = false;
+            DialogResult = false;
         }
 
         private void NoClick(object sender, RoutedEventArgs e) {

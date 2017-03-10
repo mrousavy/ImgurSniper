@@ -204,14 +204,10 @@ namespace ImgurSniper.UI {
             Help help = new Help();
 
             try {
-                help.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                 help.Owner = this;
             } catch { }
 
             help.Show();
-            help.Activate();
-            help.Focus();
-            help.BringIntoView();
         }
 
         private async void Snipe(object sender, RoutedEventArgs e) {

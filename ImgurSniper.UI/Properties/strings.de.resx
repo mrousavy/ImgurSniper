@@ -369,4 +369,10 @@ Zeige dies den klugen Computer Affen: {0}</value>
   <data name="updateLast" xml:space="preserve">
     <value>Zuletzt: {0}</value>
   </data>
+  <data name="skip" xml:space="preserve">
+    <value>Überspringen</value>
+  </data>
+  <data name="skipTooltip" xml:space="preserve">
+    <value>Diese ImgurSniper Updates überspringen</value>
+  </data>
 </root>

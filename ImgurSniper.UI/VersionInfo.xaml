@@ -21,8 +21,9 @@
 		</ListView>
 
 		<StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-			<Button Margin="5" Content="{x:Static Member=cultureStrings:strings.cancel}" Click="NoClick"/>
-			<Button Margin="5" Content="{x:Static Member=cultureStrings:strings.update}" Click="YesClick"/>
+            <Button Margin="5" Content="{x:Static Member=cultureStrings:strings.cancel}" Click="NoClick"/>
+            <Button Margin="5" Content="{x:Static Member=cultureStrings:strings.skip}" Click="SkipClick"/>
+            <Button Margin="5" Content="{x:Static Member=cultureStrings:strings.update}" Click="YesClick"/>
 		</StackPanel>
 	</Grid>
 </Window>

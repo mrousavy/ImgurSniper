@@ -6,7 +6,7 @@
 		xmlns:local="clr-namespace:ImgurSniper.UI"
 		xmlns:cultureStrings="clr-namespace:ImgurSniper.UI.Properties"
 		xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
-		mc:Ignorable="d" MinHeight="200" MinWidth="200"
+		mc:Ignorable="d" MinHeight="200" MinWidth="200" WindowStartupLocation="CenterOwner"
 		Title="{x:Static Member=cultureStrings:strings.help}" Height="620" Width="720">
 	<Grid>
 		<dragablz:TabablzControl Margin="8" >

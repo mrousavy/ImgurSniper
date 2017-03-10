@@ -126,9 +126,6 @@
   <data name="error" xml:space="preserve">
     <value>Ein unbekannter Fehler in ImgurSniper.UI ist aufgetreten!\nImgurSniper wurde beendet!\nMöchten Sie detaillierte Informationen über die Fehlermeldung erhalten? ({0})</value>
   </data>
-  <data name="errorFileType" xml:space="preserve">
-    <value>Fehler, Datei ist eine nicht unterstützte Bild-Datei</value>
-  </data>
   <data name="exit" xml:space="preserve">
     <value>Beenden</value>
   </data>
@@ -178,5 +175,11 @@ Wollen Sie eine detaillierte Fehlermeldung sehen?
   </data>
   <data name="help" xml:space="preserve">
     <value>Hilfe</value>
+  </data>
+  <data name="errorInstantUpload" xml:space="preserve">
+    <value>Fehler beim hochladen der Datei(en), prüfen Sie Ihre Internetverbindung und stellen Sie sicher, dass Sie eine korrekte Bild Datei hochladen!</value>
+  </data>
+  <data name="uploadingFiles" xml:space="preserve">
+    <value>Bild wird hochgeladen... ({0} KB) ({1} von {2})</value>
   </data>
 </root>

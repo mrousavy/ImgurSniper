@@ -1,6 +1,7 @@
 ﻿using ImgurSniper.Properties;
 using mrousavy;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -53,7 +54,7 @@ namespace ImgurSniper {
         private void Start() {
             string[] args = Environment.GetCommandLineArgs();
             bool upload = false, autostart = false;
-            string image = null;
+            List<string> uploadFiles = new List<string>();
 
             foreach(string arg in args) {
                 if(arg.ToLower().Contains("autostart")) {
@@ -66,17 +67,30 @@ namespace ImgurSniper {
                 }
 
                 if(File.Exists(arg)) {
-                    image = arg;
+                    uploadFiles.Add(arg);
                 }
             }
 
+            UpdateCheck();
+
             if(autostart) {
                 InitializeTray();
-            } else if(upload && image != null) {
-                InstantUpload(image);
+            } else if(upload && uploadFiles.Count != 0) {
+                InstantUpload(uploadFiles);
             } else {
                 Crop(true);
             }
+        }
+
+        private void UpdateCheck() {
+            Process p = new Process();
+
+            p.StartInfo = new ProcessStartInfo {
+                FileName = Path.Combine(FileIO._programFiles, "ImgurSniper.UI.exe"),
+                Arguments = "Update"
+            };
+
+            p.Start();
         }
 
         private async void InitializeTray() {
@@ -155,27 +169,29 @@ namespace ImgurSniper {
             h.HotKeyPressed += OpenFromShortcut;
         }
 
-        private async void InstantUpload(string path) {
+        private async void InstantUpload(List<string> files) {
             await Task.Delay(550);
 
-            string lpath = path.ToLower();
-            if(lpath.EndsWith(".jpeg") ||
-                lpath.EndsWith(".jpg") ||
-                lpath.EndsWith(".png") ||
-                lpath.EndsWith(".gif") ||
-                lpath.EndsWith(".apng") ||
-                lpath.EndsWith(".tiff") ||
-                lpath.EndsWith(".xcf") ||
-                lpath.EndsWith(".pdf")) {
-                byte[] byteImg = File.ReadAllBytes(path);
+            int index = 1;
+            foreach(string file in files) {
+                try {
+                    //Binary Image
+                    byte[] byteImg = File.ReadAllBytes(file);
 
-                string kb = $"{byteImg.Length / 1024d:0.#}";
-                SuccessToast.Show(string.Format(strings.uploading, kb), TimeSpan.FromDays(10));
+                    //Image Size
+                    string kb = $"{byteImg.Length / 1024d:0.#}";
 
-                await UploadImageToImgur(byteImg, "");
-            } else {
-                await ErrorToast.ShowAsync(strings.errorFileType, TimeSpan.FromSeconds(5));
+                    //e.g. "Uploading Images (123KB) (1 of 2)"
+                    SuccessToast.Show(string.Format(strings.uploadingFiles, kb, index, files.Count), TimeSpan.FromDays(10));
+
+                    await UploadImageToImgur(byteImg, "");
+                } catch {
+                    //Unsupported File Type? Internet connection error?
+                    await ErrorToast.ShowAsync(strings.errorInstantUpload, TimeSpan.FromSeconds(5));
+                }
+                index++;
             }
+
             DelayedClose(0);
         }
 
