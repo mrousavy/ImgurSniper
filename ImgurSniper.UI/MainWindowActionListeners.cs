@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -247,8 +246,6 @@ namespace ImgurSniper.UI {
             darken.Completed += delegate {
                 bool? result = info.ShowDialog();
 
-                BeginAnimation(OpacityProperty, brighten);
-
                 if(result == true) {
                     FileIO.CurrentCommits = _commits.Count;
                     FileIO.UpdateAvailable = false;
@@ -258,6 +255,8 @@ namespace ImgurSniper.UI {
                 } else {
                     ChangeButtonState(true);
                 }
+
+                BeginAnimation(OpacityProperty, brighten);
             };
 
             BeginAnimation(OpacityProperty, darken);

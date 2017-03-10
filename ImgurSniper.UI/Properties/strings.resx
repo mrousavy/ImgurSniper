@@ -362,4 +362,10 @@ Once you release the mouse, the Image will automatically be uploaded to Imgur (i
   <data name="initializing" xml:space="preserve">
     <value>Initializing...</value>
   </data>
+  <data name="updateNow" xml:space="preserve">
+    <value>Search for Updates</value>
+  </data>
+  <data name="updateLast" xml:space="preserve">
+    <value>Last: {0}</value>
+  </data>
 </root>

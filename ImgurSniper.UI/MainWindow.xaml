@@ -4,17 +4,16 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
-		xmlns:local="clr-namespace:ImgurSniper.UI" Background="Transparent"
+		xmlns:local="clr-namespace:ImgurSniper.UI"
 		xmlns:toasty="clr-namespace:Toast;assembly=Toast"
 		xmlns:res="clr-namespace:ImgurSniper.UI"
 		xmlns:cultureStrings="clr-namespace:ImgurSniper.UI.Properties"
 		mc:Ignorable="d" MinHeight="500" MinWidth="575"
-		Title="{x:Static Member=cultureStrings:strings.title}" Height="550" Width="600">
-
+		Title="{x:Static Member=cultureStrings:strings.title}" Height="550" Width="600"  Background="{DynamicResource MaterialDesignPaper}">
 
 	<!--<md:Card HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignPaper}">-->
 	<md:DialogHost x:Name="DialogHost">
-	<Grid x:Name="grid" Background="{DynamicResource MaterialDesignPaper}">
+	<Grid x:Name="grid">
 			<StackPanel Orientation="Horizontal" Margin="5,0,15,5"
 						HorizontalAlignment="Right" VerticalAlignment="Top">
 				<Image Width="100" Margin="10" RenderOptions.BitmapScalingMode="HighQuality"
@@ -154,6 +153,15 @@
 							 VerticalAlignment="Bottom" Foreground="Gray" Click="ImgFormatClick"
 							 ToolTip="{x:Static Member=cultureStrings:strings.useJPEG}"
 							 Content="JPEG"/>
+
+
+					<Label Margin="10,5,5,5" FontSize="15"
+					   Content="{x:Static Member=cultureStrings:strings.update}"/>
+				
+					<StackPanel Margin="15,0,0,0" HorizontalAlignment="Left">
+						<Button HorizontalAlignment="Left" Content="{x:Static Member=cultureStrings:strings.updateNow}" Click="Btn_SearchUpdates"/>
+						<Label x:Name="Label_LastUpdate" Margin="-3" FontSize="12" Foreground="Gray" HorizontalAlignment="Center">Debug Test</Label>
+					</StackPanel>
 			</StackPanel>
 		</ScrollViewer>
 
@@ -178,7 +186,7 @@
 				
 				<ProgressBar x:Name="progressBar" IsIndeterminate="True"  Style="{StaticResource MaterialDesignCircularProgressBar}" Value="35" />
 				
-				<Label x:Name="loadingDesc"/>
+				<Label x:Name="loadingDesc" Foreground="Gray"/>
 			</StackPanel>
 
 

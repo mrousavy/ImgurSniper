@@ -277,6 +277,15 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Initializing....
+        /// </summary>
+        public static string initializing {
+            get {
+                return ResourceManager.GetString("initializing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language successfully changed, to proceed,
         ///you have to restart ImgurSniper.
         ///Do you want to restart ImgurSniper now?.
@@ -674,6 +683,24 @@ namespace ImgurSniper.UI.Properties {
         public static string updateAvailable {
             get {
                 return ResourceManager.GetString("updateAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last: {0}.
+        /// </summary>
+        public static string updateLast {
+            get {
+                return ResourceManager.GetString("updateLast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search for Updates.
+        /// </summary>
+        public static string updateNow {
+            get {
+                return ResourceManager.GetString("updateNow", resourceCulture);
             }
         }
         

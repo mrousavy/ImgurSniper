@@ -362,4 +362,10 @@ Zeige dies den klugen Computer Affen: {0}</value>
   <data name="initializing" xml:space="preserve">
     <value>Initialisierung...</value>
   </data>
+  <data name="updateNow" xml:space="preserve">
+    <value>Nach Aktualisierungen suchen</value>
+  </data>
+  <data name="updateLast" xml:space="preserve">
+    <value>Zuletzt: {0}</value>
+  </data>
 </root>

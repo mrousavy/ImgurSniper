@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using str = ImgurSniper.UI.Properties.strings;
 
 namespace ImgurSniper.UI {
@@ -38,7 +37,7 @@ namespace ImgurSniper.UI {
 
             //Update Loading Indicator
             loadingDesc.Content = str.initializing;
-            
+
             //Check for Commandline Arguments
             Arguments();
 
@@ -196,44 +195,10 @@ namespace ImgurSniper.UI {
                 PathPanel.IsEnabled = (bool)SaveBox.IsChecked;
             }
 
-
-            try {
-                //Update Loading Indicator
-                loadingDesc.Content = str.checkingUpdate;
-
-                //Check for Update, if last update is longer than 1 Day ago
-                if(DateTime.Now - FileIO.LastChecked > TimeSpan.FromDays(1) || FileIO.UpdateAvailable) {
-                    //Retrieve info from github
-                    GitHubClient github = new GitHubClient(new ProductHeaderValue("ImgurSniper"));
-                    _commits = await github.Repository.Commit.GetAll("mrousavy", "ImgurSniper");
-                    
-                    FileIO.LastChecked = DateTime.Now;
-
-                    int currentCommits = FileIO.CurrentCommits;
-                    //999 = value is unset
-                    if(currentCommits == 999) {
-                        FileIO.CurrentCommits = _commits.Count;
-                    } else if(_commits.Count > currentCommits) {
-                        //Newer Version is available
-                        FileIO.UpdateAvailable = true;
-                        Btn_Update.IsEnabled = true;
-                        success_toast.Show(string.Format(str.updateAvailable, currentCommits, _commits.Count),
-                            TimeSpan.FromSeconds(4));
-                    } else {
-                        //No Update available
-                        FileIO.UpdateAvailable = false;
-                    }
-                }
-            } catch {
-                error_toast.Show(str.failedUpdate, TimeSpan.FromSeconds(3));
-            }
+            await CheckForUpdates(false);
 
             //Remove Loading Indicator
-            DoubleAnimation fadeOut = Animations.FadeOut;
-            fadeOut.Completed += delegate {
-                progressIndicator.Visibility = Visibility.Collapsed;
-            };
-            progressIndicator.BeginAnimation(OpacityProperty, fadeOut);
+            progressIndicator.BeginAnimation(OpacityProperty, Animations.FadeOut);
         }
 
         //Enable or disable all Buttons
@@ -345,6 +310,60 @@ namespace ImgurSniper.UI {
         //Close the Material Design Dialog
         private void CloseDia() {
             DialogHost.CloseDialogCommand.Execute(null, DialogHost);
+        }
+
+        private async void Btn_SearchUpdates(object sender, RoutedEventArgs e) {
+            //Show Progress Indicator
+            progressIndicator.BeginAnimation(OpacityProperty, Animations.FadeIn);
+
+            await CheckForUpdates(true);
+
+            //Hide Progress Indicator
+            progressIndicator.BeginAnimation(OpacityProperty, Animations.FadeOut);
+        }
+
+
+        //forceSearch = true if should search for updates even if Last Checked is not longer than 1 Day ago
+        private async Task CheckForUpdates(bool forceSearch) {
+            try {
+                //Last update Check
+                DateTime lastChecked = FileIO.LastChecked;
+
+                //Last Update Content for Label
+                Label_LastUpdate.Content = string.Format(str.updateLast, $"{lastChecked:dd.MM.yyyy HH:mm}");
+
+                //Update Loading Indicator
+                loadingDesc.Content = str.checkingUpdate;
+
+                //Check for Update, if last update is longer than 1 Day ago
+                if(forceSearch || DateTime.Now - lastChecked > TimeSpan.FromDays(1) || FileIO.UpdateAvailable) {
+                    //Retrieve info from github
+                    GitHubClient github = new GitHubClient(new ProductHeaderValue("ImgurSniper"));
+                    _commits = await github.Repository.Commit.GetAll("mrousavy", "ImgurSniper");
+
+                    FileIO.LastChecked = DateTime.Now;
+
+                    //Last Update Content for Label
+                    Label_LastUpdate.Content = string.Format(str.updateLast, $"{DateTime.Now:dd.MM.yyyy HH:mm}");
+
+                    int currentCommits = FileIO.CurrentCommits;
+                    //999 = value is unset
+                    if(currentCommits == 999) {
+                        FileIO.CurrentCommits = _commits.Count;
+                    } else if(_commits.Count > currentCommits) {
+                        //Newer Version is available
+                        FileIO.UpdateAvailable = true;
+                        Btn_Update.IsEnabled = true;
+                        success_toast.Show(string.Format(str.updateAvailable, currentCommits, _commits.Count),
+                            TimeSpan.FromSeconds(4));
+                    } else {
+                        //No Update available
+                        FileIO.UpdateAvailable = false;
+                    }
+                }
+            } catch {
+                error_toast.Show(str.failedUpdate, TimeSpan.FromSeconds(3));
+            }
         }
     }
 }
