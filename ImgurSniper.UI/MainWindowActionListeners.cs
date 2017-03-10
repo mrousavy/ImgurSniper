@@ -84,6 +84,16 @@ namespace ImgurSniper.UI {
             } catch { }
         }
 
+        private void AutoUpdate_Checkbox(object sender, RoutedEventArgs e) {
+            CheckBox box = sender as CheckBox;
+            if(box == null) {
+                return;
+            }
+            try {
+                FileIO.AutoUpdate = box.IsChecked == true;
+            } catch { }
+        }
+
         private async void RunOnBoot_Checkbox(object sender, RoutedEventArgs e) {
             CheckBox box = sender as CheckBox;
             if(box != null) {

@@ -100,6 +100,7 @@ namespace ImgurSniper.UI {
                 //bool Magnifyer = settings.MagnifyingGlassEnabled;
                 bool SaveImages = settings.SaveImages;
                 bool ImgurAfterSnipe = settings.ImgurAfterSnipe;
+                bool AutoUpdate = settings.AutoUpdate;
                 string language = settings.Language;
                 System.Windows.Input.Key key = settings.ShortcutKey;
 
@@ -136,6 +137,11 @@ namespace ImgurSniper.UI {
                 if(RunOnBoot) {
                     this.RunOnBoot.IsChecked = true;
                     Helper.Autostart(true);
+                }
+
+                //Auto search for Updates
+                if(AutoUpdate) {
+                    AutoUpdateBox.IsChecked = true;
                 }
 
                 //Enable or Disable Magnifying Glass (WIP)
@@ -325,6 +331,9 @@ namespace ImgurSniper.UI {
         //forceSearch = true if should search for updates even if Last Checked is not longer than 1 Day ago
         private async Task<bool> CheckForUpdates(bool forceSearch) {
             try {
+                if(!FileIO.AutoUpdate && !forceSearch)
+                    return false;
+
                 //Last update Check
                 DateTime lastChecked = FileIO.LastChecked;
 

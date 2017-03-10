@@ -79,6 +79,15 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Automatically search for Updates.
+        /// </summary>
+        public static string autoUpdate {
+            get {
+                return ResourceManager.GetString("autoUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Automatically upload to Imgur.
         /// </summary>
         public static string autoUploadImgur {

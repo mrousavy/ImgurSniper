@@ -71,6 +71,22 @@ namespace ImgurSniper.UI {
             }
         }
 
+        //Value whether ImgurSniper should automatically search for Updates
+        public static bool AutoUpdate {
+            get {
+                try {
+                    return JsonConfig.AutoUpdate;
+                } catch {
+                    return true;
+                }
+            }
+            set {
+                Settings settings = JsonConfig;
+                settings.AutoUpdate = value;
+                JsonConfig = settings;
+            }
+        }
+
         //Key for ImgurSniper Shortcut
         public static Key ShortcutKey {
             get {
@@ -319,6 +335,7 @@ namespace ImgurSniper.UI {
             public bool UsePNG = true;
             public bool UsePrint;
             public bool UpdateAvailable;
+            public bool AutoUpdate;
 
             public string Language = "en";
             public string SaveImagesPath = Path.Combine(

@@ -375,4 +375,7 @@ Pro Tip: Hit Ctrl + A to instantly create a Screenshot of your whole Desktop.</v
   <data name="skipTooltip" xml:space="preserve">
     <value>Skip these ImgurSniper Updates</value>
   </data>
+  <data name="autoUpdate" xml:space="preserve">
+    <value>Automatically search for Updates</value>
+  </data>
 </root>

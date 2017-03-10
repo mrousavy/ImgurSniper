@@ -375,4 +375,7 @@ Zeige dies den klugen Computer Affen: {0}</value>
   <data name="skipTooltip" xml:space="preserve">
     <value>Diese ImgurSniper Updates überspringen</value>
   </data>
+  <data name="autoUpdate" xml:space="preserve">
+    <value>Automatisch nach Aktualisierungen suchen</value>
+  </data>
 </root>
