@@ -331,15 +331,16 @@ namespace ImgurSniper.UI {
         //forceSearch = true if should search for updates even if Last Checked is not longer than 1 Day ago
         private async Task<bool> CheckForUpdates(bool forceSearch) {
             try {
-                if(!FileIO.AutoUpdate && !forceSearch)
-                    return false;
-
                 //Last update Check
                 DateTime lastChecked = FileIO.LastChecked;
 
                 //Last Update Content for Label
                 Label_LastUpdate.Content = string.Format(str.updateLast, $"{lastChecked:dd.MM.yyyy HH:mm}");
 
+                //If AutoUpdate is disabled and the User does not manually search, exit Method
+                if(!FileIO.AutoUpdate && !forceSearch)
+                    return false;
+                
                 //Update Loading Indicator
                 loadingDesc.Content = str.checkingUpdate;
 
