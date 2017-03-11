@@ -159,7 +159,7 @@
 					   Content="{x:Static Member=cultureStrings:strings.update}"/>
 
 					<CheckBox x:Name="AutoUpdateBox" FontSize="14" Margin="15,0,0,5" VerticalAlignment="Bottom"
-							 Foreground="Gray" Click="AutoUpdate_Checkbox"
+							 Foreground="Gray" Click="AutoUpdate_Checkbox" IsChecked="True"
 						  Content="{x:Static Member=cultureStrings:strings.autoUpdate}"/>
 				
 					<StackPanel Margin="15,5,5,5" HorizontalAlignment="Left">
