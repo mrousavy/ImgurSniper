@@ -307,18 +307,19 @@ namespace ImgurSniper {
 
             public bool AllMonitors = true;
             public bool ImgurAfterSnipe = true;
-            public bool IsInContextMenu;
+            public bool IsInContextMenu = false;
             public bool MagnifyingGlassEnabled = true;
             public bool OpenAfterUpload = true;
             public bool RunOnBoot = true;
             public bool SaveImages;
             public bool UsePNG = true;
-            public bool UsePrint;
-            public bool UpdateAvailable;
+            public bool UsePrint = false;
+            public bool UpdateAvailable = false;
+            public bool AutoUpdate = true;
 
             public string Language = "en";
             public string SaveImagesPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper Images");
+                Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "ImgurSniper Images");
 
             public Key ShortcutKey = Key.X;
         }
