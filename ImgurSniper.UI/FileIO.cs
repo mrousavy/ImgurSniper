@@ -327,15 +327,15 @@ namespace ImgurSniper.UI {
 
             public bool AllMonitors = true;
             public bool ImgurAfterSnipe = true;
-            public bool IsInContextMenu;
+            public bool IsInContextMenu = false;
             public bool MagnifyingGlassEnabled = true;
             public bool OpenAfterUpload = true;
             public bool RunOnBoot = true;
             public bool SaveImages;
             public bool UsePNG = true;
-            public bool UsePrint;
-            public bool UpdateAvailable;
-            public bool AutoUpdate;
+            public bool UsePrint = false;
+            public bool UpdateAvailable = false;
+            public bool AutoUpdate = true;
 
             public string Language = "en";
             public string SaveImagesPath = Path.Combine(
