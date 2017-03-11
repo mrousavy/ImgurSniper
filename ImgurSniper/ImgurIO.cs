@@ -1,6 +1,7 @@
 ﻿using Imgur.API.Authentication.Impl;
 using Imgur.API.Endpoints.Impl;
 using Imgur.API.Models;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -61,6 +62,43 @@ namespace ImgurSniper {
                     "https://mrousavy.github.io/ImgurSniper");
             }
             return image.Link;
+        }
+
+
+        /// <summary>
+        /// Upload Image to Imgur and return Id
+        /// </summary>
+        /// <param name="image">The Image as byte[]</param>
+        /// <returns>The Link to the uploaded Image</returns>
+        public async Task<string> UploadId(byte[] bimage, string albumId) {
+            ImageEndpoint endpoint = new ImageEndpoint(_client);
+
+            IImage image;
+            using(MemoryStream stream = new MemoryStream(bimage)) {
+                image = await endpoint.UploadImageStreamAsync(stream, albumId);
+            }
+            return image.Id;
+        }
+
+        /// <summary>
+        /// Create a New Album and get Id
+        /// </summary>
+        /// <returns>Album ID and DeleteHash (If not logged in)</returns>
+        public async Task<KeyValuePair<string, string>> CreateAlbum() {
+            AlbumEndpoint endpoint = new AlbumEndpoint(_client);
+            IAlbum album = await endpoint.CreateAlbumAsync("Images uploaded with ImgurSniper",
+                "https://mrousavy.github.io/ImgurSniper");
+
+            KeyValuePair<string, string> pair;
+
+            //Logged in User = Album ID for uploads
+            if(_client.OAuth2Token != null)
+                pair = new KeyValuePair<string, string>(album.Id, album.Id);
+            //Not Logged in User = Album Delete Has (Anonymous Albums)
+            else
+                pair = new KeyValuePair<string, string>(album.Id, album.DeleteHash);
+
+            return pair;
         }
     }
 }

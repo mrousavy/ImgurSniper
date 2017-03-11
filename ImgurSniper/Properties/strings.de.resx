@@ -182,4 +182,7 @@ Wollen Sie eine detaillierte Fehlermeldung sehen?
   <data name="uploadingFiles" xml:space="preserve">
     <value>Bild wird hochgeladen... ({0} KB) ({1} von {2})</value>
   </data>
+  <data name="linkAlbumClipboard" xml:space="preserve">
+    <value>Link zum Album wurde in die Zwischenablage kopiert.</value>
+  </data>
 </root>

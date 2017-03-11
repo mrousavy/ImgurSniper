@@ -196,17 +196,6 @@
 
 
 
-			<toasty:Toasty x:Name="error_toast"
-			Height="30"
-			VerticalAlignment="Bottom"
-			Duration="0:0:0:2.7"
-			Message="Whoops! Something went wrong!"
-			FontFamily="Segoe UI"
-			FontWeight="Bold"
-			MessageColor="White"
-			Background="#F44336"
-			FontSize="13"/>
-
 			<toasty:Toasty x:Name="success_toast"
 			Height="30"
 			VerticalAlignment="Bottom"
@@ -216,6 +205,17 @@
 			FontWeight="Bold"
 			MessageColor="White"
 			Background="#2196F3"
+			FontSize="13"/>
+
+			<toasty:Toasty x:Name="error_toast"
+			Height="30"
+			VerticalAlignment="Bottom"
+			Duration="0:0:0:2.7"
+			Message="Whoops! Something went wrong!"
+			FontFamily="Segoe UI"
+			FontWeight="Bold"
+			MessageColor="White"
+			Background="#F44336"
 			FontSize="13"/>
 		</Grid>
 	</md:DialogHost>

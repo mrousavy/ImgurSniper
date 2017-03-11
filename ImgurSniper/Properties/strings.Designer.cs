@@ -142,6 +142,15 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Link to the Imgur Album has been copied to your Clipboard!.
+        /// </summary>
+        internal static string linkAlbumClipboard {
+            get {
+                return ResourceManager.GetString("linkAlbumClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Link to Imgur has been copied to your Clipboard!.
         /// </summary>
         internal static string linkclipboard {
@@ -226,7 +235,7 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uploading Images... ({0} KB) ({1} of {2}).
+        ///   Looks up a localized string similar to Uploading Image... ({0} KB) ({1} of {2}).
         /// </summary>
         internal static string uploadingFiles {
             get {

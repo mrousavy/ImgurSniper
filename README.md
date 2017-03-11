@@ -28,10 +28,12 @@ You can now **share the Link** that has been **copied to your Clipboard** with e
 
 # Features
 
+- Use ImgurSniper as a **Tray service**, so you can open it **instantly** with your _custom_ Hotkey!
 - **Draw a Rectangle** with your Mouse to make a Screenshot and **automatically upload the cropped area to Imgur** or copy to **Clipboard**!
 - Use the **Paint Mode** to circle Information, hide Information or show your drawing skills!
 - **Right-Click** a window in _Snap Mode_ to quickly share a **Screenshot of that Window** or **Client Area**
 - Press **Ctrl + A** to make a Screenshot of **all connected Screens**!
+- **Right click a File** on your Desktop or in Windows Explorer, and click **"Upload to Imgur"** to **instantly upload the selected Image(s) to Imgur!**
 - Save snapped Images locally
 - **Log in to your Imgur Account** (By uploading to **your** _Imgur Account_, you can upload bigger Images and have them listed on your Profile.)
 - (Not yet implemented) Try the **Magnifying Glass** for precise cropping

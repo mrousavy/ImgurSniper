@@ -66,8 +66,11 @@ namespace ImgurSniper {
                     upload = true;
                 }
 
-                if(File.Exists(arg)) {
-                    uploadFiles.Add(arg);
+                //To definetly be sure, arg is a File
+                if(File.Exists(arg) && (arg.Contains("/") || arg.Contains("\\"))) {
+                    //In debug mode, the vshost exe is passed as argument
+                    if(!arg.ToLower().EndsWith("exe"))
+                        uploadFiles.Add(arg);
                 }
             }
 
@@ -83,14 +86,18 @@ namespace ImgurSniper {
         }
 
         private void UpdateCheck() {
-            Process p = new Process();
+#if !DEBUG
+            try {
+                Process p = new Process();
 
-            p.StartInfo = new ProcessStartInfo {
-                FileName = Path.Combine(FileIO._programFiles, "ImgurSniper.UI.exe"),
-                Arguments = "Update"
-            };
+                p.StartInfo = new ProcessStartInfo {
+                    FileName = Path.Combine(FileIO._programFiles, "ImgurSniper.UI.exe"),
+                    Arguments = "Update"
+                };
 
-            p.Start();
+                p.Start();
+            } catch { }
+#endif
         }
 
         private async void InitializeTray() {
@@ -172,24 +179,65 @@ namespace ImgurSniper {
         private async void InstantUpload(List<string> files) {
             await Task.Delay(550);
 
-            int index = 1;
-            foreach(string file in files) {
+            if(files.Count > 1) {
+                //////UPLOAD MULTIPLE IMAGES
                 try {
                     //Binary Image
-                    byte[] byteImg = File.ReadAllBytes(file);
+                    List<byte[]> images = new List<byte[]>();
+                    //Image IDs
+                    List<string> ids = new List<string>();
+
+                    double size = 0;
+                    foreach(string file in files) {
+                        byte[] image = File.ReadAllBytes(file);
+                        images.Add(image);
+                        size += image.Length;
+                    }
+
+                    //Image Size
+                    string kb = $"{size / 1024d:0.#}";
+
+                    //Key = Album ID | Value = Album Delete Hash (Key = Value if User is logged in)
+                    KeyValuePair<string, string> albumInfo = await _imgur.CreateAlbum();
+
+                    int index = 1;
+                    //Upload each image
+                    foreach(byte[] file in images) {
+                        try {
+                            //e.g. "Uploading Images (123KB) (1 of 2)"
+                            SuccessToast.Show(string.Format(strings.uploadingFiles, kb, index, files.Count), TimeSpan.FromDays(10));
+
+                            string id = await _imgur.UploadId(file, albumInfo.Value);
+                            ids.Add(id);
+                        } catch(Exception e) {
+                            Debug.Write(e.Message);
+                            //this image was not uploaded
+                        }
+                        index++;
+                    }
+
+                    await OpenAlbum(albumInfo.Key);
+                } catch {
+                    //Unsupported File Type? Internet connection error?
+                    await ErrorToast.ShowAsync(strings.errorInstantUpload, TimeSpan.FromSeconds(5));
+                }
+            } else {
+                //////UPLOAD SINGLE IMAGE
+                try {
+                    //Binary Image
+                    byte[] byteImg = File.ReadAllBytes(files[0]);
 
                     //Image Size
                     string kb = $"{byteImg.Length / 1024d:0.#}";
 
-                    //e.g. "Uploading Images (123KB) (1 of 2)"
-                    SuccessToast.Show(string.Format(strings.uploadingFiles, kb, index, files.Count), TimeSpan.FromDays(10));
+                    //e.g. "Uploading Image (123KB)"
+                    SuccessToast.Show(string.Format(strings.uploading, kb), TimeSpan.FromDays(10));
 
                     await UploadImageToImgur(byteImg, "");
                 } catch {
                     //Unsupported File Type? Internet connection error?
                     await ErrorToast.ShowAsync(strings.errorInstantUpload, TimeSpan.FromSeconds(5));
                 }
-                index++;
             }
 
             DelayedClose(0);
@@ -305,6 +353,23 @@ namespace ImgurSniper {
                 await ErrorToast.ShowAsync(string.Format(strings.uploadingError, link),
                     TimeSpan.FromSeconds(5));
             }
+        }
+
+
+        //Open an Album with the ID
+        private async Task OpenAlbum(string albumId) {
+            //Default Imgur Album URL
+            string link = "http://imgur.com/a/" + albumId;
+
+            Clipboard.SetText(link);
+            PlayBlop();
+
+            if(FileIO.OpenAfterUpload) {
+                Process.Start(link);
+            }
+
+            await SuccessToast.ShowAsync(strings.linkclipboard,
+                TimeSpan.FromSeconds(3));
         }
 
         //Parse byte[] to Image and write to Clipboard

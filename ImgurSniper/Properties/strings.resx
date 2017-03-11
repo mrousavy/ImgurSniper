@@ -181,6 +181,9 @@ Would you like to see a detailed Exception Info?
     <value>Help</value>
   </data>
   <data name="uploadingFiles" xml:space="preserve">
-    <value>Uploading Images... ({0} KB) ({1} of {2})</value>
+    <value>Uploading Image... ({0} KB) ({1} of {2})</value>
+  </data>
+  <data name="linkAlbumClipboard" xml:space="preserve">
+    <value>Link to the Imgur Album has been copied to your Clipboard!</value>
   </data>
 </root>
