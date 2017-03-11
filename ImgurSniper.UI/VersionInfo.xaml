@@ -10,7 +10,7 @@
 	<Grid Margin="5">
 		<Label FontSize="14" Content="{x:Static Member=cultureStrings:strings.changelog}" VerticalAlignment="Top"/>
 
-		<ListView x:Name="listview" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5,35,5,45">
+		<ListView x:Name="listview" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5,35,5,45" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 			<ListView.View>
 				<GridView>
 					<GridViewColumn Header="{x:Static Member=cultureStrings:strings.version}" DisplayMemberBinding="{Binding Version}"/>
