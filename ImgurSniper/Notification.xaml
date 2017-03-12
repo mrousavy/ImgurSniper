@@ -11,13 +11,18 @@
         
         Height="100" Width="300" Loaded="Window_Loaded">
 
+    <md:Card Background="{DynamicResource MaterialDesignPaper}"  Margin="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" UniformCornerRadius="3">
 
-    <md:Card Background="{DynamicResource MaterialDesignPaper}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <!--Shadow Effect-->
+        <md:Card.Effect>
+            <DropShadowEffect BlurRadius="3" Direction="-90" RenderingBias="Quality" ShadowDepth="1" Color="Gray" Opacity="0.2"/>
+        </md:Card.Effect>
+
         <StackPanel>
             <!--Title Bar-->
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,5,0">
                 <Image Source="Logo.ico" Height="23" Width="23" Margin="5"></Image>
-                <Label Margin="5" FontSize="13.5">ImgurSniper</Label>
+                <Label Margin="3" FontSize="13.5">ImgurSniper</Label>
             </StackPanel>
 
             <!--Content-->
