@@ -7,7 +7,7 @@
         xmlns:md="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
         mc:Ignorable="d"
         
-        WindowStyle="None" Background="Transparent" ResizeMode="NoResize" AllowsTransparency="True" WindowStartupLocation="Manual" Opacity="1"
+        WindowStyle="None" Background="Transparent" ResizeMode="NoResize" AllowsTransparency="True" WindowStartupLocation="Manual" Opacity="1" Topmost="True" ShowActivated="False" ShowInTaskbar="False"
         
         Height="150" Width="300" Loaded="Window_Loaded">
 
@@ -21,17 +21,15 @@
             </StackPanel>
 
             <!--Content-->
-            <StackPanel Orientation="Horizontal" Margin="10,0,10,10" VerticalAlignment="Center">
-                <ProgressBar x:Name="progressBar" IsIndeterminate="True"  Style="{StaticResource MaterialDesignCircularProgressBar}" Value="35" VerticalAlignment="Center" Margin="10"/>
+            <StackPanel Orientation="Horizontal" Margin="10,0,10,10" VerticalAlignment="Center" Width="280">
 
-                <Label x:Name="contentLabel" VerticalAlignment="Center" Margin="10" FontSize="12" x:FieldModifier="public">Test</Label>
-            </StackPanel>
+                <Grid Margin="10" Height="25" Width="25">
+                    <ProgressBar x:Name="progressBar" IsIndeterminate="True"  Style="{StaticResource MaterialDesignCircularProgressBar}" Value="35" VerticalAlignment="Center" Visibility="Collapsed"/>
+                    <md:PackIcon x:Name="successIcon" Kind="CheckCircle" Foreground="#2196F3" Height="25" Width="25" Visibility="Collapsed"/>
+                    <md:PackIcon x:Name="errorIcon" Kind="CloseCircle" Foreground="#F44336" Height="25" Width="25" Visibility="Collapsed"/>
+                </Grid>
 
-            <!--Buttons-->
-            <StackPanel Orientation="Horizontal" Margin="10,20,10,5" VerticalAlignment="Bottom" HorizontalAlignment="Center" x:Name="Buttons" Visibility="Collapsed">
-                <Button Width="130" Height="26" Margin="5,0,5,0" x:Name="Btn1" Style="{DynamicResource MaterialDesignFlatButton}">Open</Button>
-
-                <Button Width="130" Height="26" Margin="5,0,5,0" x:Name="Btn2" Style="{DynamicResource MaterialDesignFlatButton}">Close</Button>
+                <TextBlock Foreground="#616161" x:Name="contentLabel" VerticalAlignment="Center" Width="225" Margin="10" FontSize="12" x:FieldModifier="public" TextWrapping="Wrap">Test</TextBlock>
             </StackPanel>
         </Grid>
     </md:Card>

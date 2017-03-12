@@ -126,6 +126,7 @@ namespace ImgurSniper.UI {
         private void DownloadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) {
             string file = Path.Combine(_updateZipPath, "ImgurSniperSetup.zip");
             string extractTo = Path.Combine(_updateZipPath, "ImgurSniperInstaller");
+            string msiPath = Path.Combine(extractTo, "ImgurSniperSetup.msi");
 
             if(!File.Exists(file)) {
                 _error.Show(strings.couldNotDownload,
@@ -134,7 +135,16 @@ namespace ImgurSniper.UI {
                 _invoker.ChangeButtonState(true);
             } else {
                 Extract(file, extractTo);
-                Process.Start(Path.Combine(extractTo, "ImgurSniperSetup.msi"));
+
+                FileVersionInfo versionInfoMSI = null;
+                FileVersionInfo versionInfoThis = null;
+                try {
+                    versionInfoMSI = FileVersionInfo.GetVersionInfo(msiPath);
+                    versionInfoThis = FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                } catch { }
+
+                if((versionInfoMSI != null && versionInfoThis != null) && versionInfoMSI.ProductVersion != versionInfoThis.ProductVersion)
+                    Process.Start(msiPath);
 
                 KillImgurSniper(true);
             }

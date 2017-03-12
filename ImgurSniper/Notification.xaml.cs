@@ -11,8 +11,11 @@ namespace ImgurSniper {
         private double _top;
         private double _left;
         private bool _autoHide;
+        private TaskCompletionSource<bool> _task = new TaskCompletionSource<bool>();
 
-        public Notification(string text, bool showLoading, bool autoHide) {
+        public enum NotificationType { Progress, Success, Error }
+
+        public Notification(string text, NotificationType type, bool autoHide) {
             InitializeComponent();
 
             _left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width;
@@ -23,17 +26,19 @@ namespace ImgurSniper {
 
             _autoHide = autoHide;
 
-            contentLabel.Content = text;
-            progressBar.Visibility = showLoading ? Visibility.Visible : Visibility.Collapsed;
-        }
+            contentLabel.Text = text;
 
-        public Notification(string text, bool showLoading, bool autoHide,
-            string btn1Text, string btn2Text, RoutedEventHandler btn1Action, RoutedEventHandler btn2Action) : this(text, showLoading, autoHide) {
-            Buttons.Visibility = Visibility.Visible;
-            Btn1.Content = btn1Text;
-            Btn2.Content = btn2Text;
-            Btn1.Click += btn1Action;
-            Btn2.Click += btn2Action;
+            switch(type) {
+                case NotificationType.Error:
+                    errorIcon.Visibility = Visibility.Visible;
+                    break;
+                case NotificationType.Progress:
+                    progressBar.Visibility = Visibility.Visible;
+                    break;
+                case NotificationType.Success:
+                    successIcon.Visibility = Visibility.Visible;
+                    break;
+            }
         }
 
 
@@ -45,6 +50,12 @@ namespace ImgurSniper {
 
                 FadeOut();
             }
+        }
+
+        public Task ShowAsync() {
+            Show();
+
+            return _task.Task;
         }
 
         public new void Close() {
@@ -66,6 +77,9 @@ namespace ImgurSniper {
             DoubleAnimation slideOutX = new DoubleAnimation(Left, _left, TimeSpan.FromMilliseconds(80));
 
             fadeOut.Completed += delegate {
+                try {
+                    _task.SetResult(true);
+                } catch { }
                 base.Close();
             };
 
