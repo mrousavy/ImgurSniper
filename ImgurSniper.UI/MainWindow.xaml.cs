@@ -108,11 +108,15 @@ namespace ImgurSniper.UI {
                 if(string.IsNullOrWhiteSpace(SaveImagesPath)) {
                     PathBox.Text = DocPath;
                 } else {
-                    //Create Pictures\ImgurSniper Images Path
-                    if(!Directory.Exists(SaveImagesPath)) {
-                        Directory.CreateDirectory(SaveImagesPath);
+                    //Create Pictures\ImgurSniperImages Path
+                    try {
+                        if(!Directory.Exists(SaveImagesPath)) {
+                            Directory.CreateDirectory(SaveImagesPath);
+                        }
+                        PathBox.Text = SaveImagesPath;
+                    } catch {
+                        PathBox.Text = "";
                     }
-                    PathBox.Text = SaveImagesPath;
                 }
 
                 //PNG or JPEG
@@ -340,7 +344,7 @@ namespace ImgurSniper.UI {
                 //If AutoUpdate is disabled and the User does not manually search, exit Method
                 if(!FileIO.AutoUpdate && !forceSearch)
                     return false;
-                
+
                 //Update Loading Indicator
                 loadingDesc.Content = str.checkingUpdate;
 

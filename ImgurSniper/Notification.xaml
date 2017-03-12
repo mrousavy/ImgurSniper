@@ -13,7 +13,7 @@
 
 
     <md:Card Background="{DynamicResource MaterialDesignPaper}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        <Grid>
+        <StackPanel>
             <!--Title Bar-->
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,5,0">
                 <Image Source="Logo.ico" Height="23" Width="23" Margin="5"></Image>
@@ -31,6 +31,6 @@
 
                 <TextBlock Foreground="#616161" x:Name="contentLabel" VerticalAlignment="Center" Width="225" Margin="10" FontSize="12" x:FieldModifier="public" TextWrapping="Wrap">Test</TextBlock>
             </StackPanel>
-        </Grid>
+        </StackPanel>
     </md:Card>
 </Window>

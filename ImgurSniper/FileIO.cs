@@ -3,6 +3,8 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Security.AccessControl;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ImgurSniper {
@@ -122,14 +124,11 @@ namespace ImgurSniper {
             get {
                 try {
                     string path = JsonConfig.SaveImagesPath;
+                    string ret = CanWrite(path) ? path : ConfigPath;
 
-                    return string.IsNullOrWhiteSpace(path)
-                        ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                            "ImgurSniper Images")
-                        : path;
+                    return ret;
                 } catch {
-                    return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                        "ImgurSniper Images");
+                    return ConfigPath;
                 }
             }
             set {
@@ -253,12 +252,23 @@ namespace ImgurSniper {
 
         public static Settings JsonConfig {
             get {
-                Exists();
-                return JsonConvert.DeserializeObject<Settings>(File.ReadAllText(ConfigFile));
+                try {
+                    Exists();
+                    return JsonConvert.DeserializeObject<Settings>(File.ReadAllText(ConfigFile));
+                } catch {
+                    MessageBox.Show("An Error occured, please make sure that you have\nread and Write Access to the following Path:\n" + ConfigFile,
+                        "Fatal ImgurSniper Configuration File Error");
+                    throw new Exception("An Error occured, please make sure that you have\nread and Write Access to the following Path:\n" + ConfigFile);
+                }
             }
             set {
-                Exists();
-                File.WriteAllText(ConfigFile, JsonConvert.SerializeObject(value));
+                try {
+                    Exists();
+                    File.WriteAllText(ConfigFile, JsonConvert.SerializeObject(value));
+                } catch {
+                    MessageBox.Show("An Error occured, please make sure that you have\nread and Write Access to the following Path:\n" + ConfigFile,
+                        "Fatal ImgurSniper Configuration File Error");
+                }
             }
         }
 
@@ -266,8 +276,7 @@ namespace ImgurSniper {
             => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper");
 
         public static string ConfigFile
-            =>
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper",
+            => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper",
                     "config.json");
 
         //Path to Installation Folder
@@ -319,9 +328,37 @@ namespace ImgurSniper {
 
             public string Language = "en";
             public string SaveImagesPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "ImgurSniper Images");
+                Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "ImgurSniperImages");
 
             public Key ShortcutKey = Key.X;
+        }
+
+        //Check for Write Access to Directory
+        public static bool CanWrite(string path) {
+            try {
+                var writeAllow = false;
+                var writeDeny = false;
+                var accessControlList = Directory.GetAccessControl(path);
+                if(accessControlList == null)
+                    return false;
+                var accessRules = accessControlList.GetAccessRules(true, true, typeof(System.Security.Principal.SecurityIdentifier));
+                if(accessRules == null)
+                    return false;
+
+                foreach(FileSystemAccessRule rule in accessRules) {
+                    if((FileSystemRights.Write & rule.FileSystemRights) != FileSystemRights.Write)
+                        continue;
+
+                    if(rule.AccessControlType == AccessControlType.Allow)
+                        writeAllow = true;
+                    else if(rule.AccessControlType == AccessControlType.Deny)
+                        writeDeny = true;
+                }
+
+                return writeAllow && !writeDeny;
+            } catch {
+                return false;
+            }
         }
 
         #region Imgur Account

@@ -80,7 +80,7 @@ namespace Cleanup {
                 } catch { }
 
                 try {
-                    Directory.Delete(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper Images"), true);
+                    Directory.Delete(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniperImages"), true);
                 } catch { }
 
 

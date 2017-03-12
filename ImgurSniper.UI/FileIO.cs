@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Security.AccessControl;
 using System.Windows.Input;
 
 namespace ImgurSniper.UI {
@@ -124,14 +125,11 @@ namespace ImgurSniper.UI {
             get {
                 try {
                     string path = JsonConfig.SaveImagesPath;
+                    string ret = CanWrite(path) ? path : ConfigPath;
 
-                    return string.IsNullOrWhiteSpace(path)
-                        ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                            "ImgurSniper Images")
-                        : path;
+                    return ret;
                 } catch {
-                    return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                        "ImgurSniper Images");
+                    return ConfigPath;
                 }
             }
             set {
@@ -339,9 +337,37 @@ namespace ImgurSniper.UI {
 
             public string Language = "en";
             public string SaveImagesPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "ImgurSniper Images");
+                Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "ImgurSniperImages");
 
             public Key ShortcutKey = Key.X;
+        }
+
+        //Check for Write Access to Directory
+        public static bool CanWrite(string path) {
+            try {
+                var writeAllow = false;
+                var writeDeny = false;
+                var accessControlList = Directory.GetAccessControl(path);
+                if(accessControlList == null)
+                    return false;
+                var accessRules = accessControlList.GetAccessRules(true, true, typeof(System.Security.Principal.SecurityIdentifier));
+                if(accessRules == null)
+                    return false;
+
+                foreach(FileSystemAccessRule rule in accessRules) {
+                    if((FileSystemRights.Write & rule.FileSystemRights) != FileSystemRights.Write)
+                        continue;
+
+                    if(rule.AccessControlType == AccessControlType.Allow)
+                        writeAllow = true;
+                    else if(rule.AccessControlType == AccessControlType.Deny)
+                        writeDeny = true;
+                }
+
+                return writeAllow && !writeDeny;
+            } catch {
+                return false;
+            }
         }
 
         #region Imgur Account

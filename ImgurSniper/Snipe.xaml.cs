@@ -50,10 +50,6 @@ namespace ImgurSniper {
         private async void Window_Loaded(object sender, RoutedEventArgs e) {
             //Prevent short flash of Toasts
             await Task.Delay(100);
-            //TODO: DEBUG
-            //ErrorToast.Visibility = Visibility.Visible;
-            //SuccessToast.Visibility = Visibility.Visible;
-
 
             //Hide in Alt + Tab Switcher View
             WindowInteropHelper wndHelper = new WindowInteropHelper(this);
@@ -273,14 +269,16 @@ namespace ImgurSniper {
 
         //Initialize important Variables
         private void Initialize() {
-            _dir = FileIO.SaveImagesPath;
-            if(string.IsNullOrWhiteSpace(_dir)) {
-                _dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper");
-            }
+            try {
+                _dir = FileIO.SaveImagesPath;
+                if(string.IsNullOrWhiteSpace(_dir)) {
+                    _dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper");
+                }
 
-            if(!Directory.Exists(_dir)) {
-                Directory.CreateDirectory(_dir);
-            }
+                if(!Directory.Exists(_dir)) {
+                    Directory.CreateDirectory(_dir);
+                }
+            } catch { }
 
             _imgur = new ImgurIO();
         }

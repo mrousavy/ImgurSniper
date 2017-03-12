@@ -371,11 +371,13 @@ namespace ImgurSniper.UI {
         }
 
         private void SavePath() {
-            if(Directory.Exists(PathBox.Text)) {
-                FileIO.SaveImagesPath = PathBox.Text;
-            } else {
-                error_toast.Show(str.pathNotExist, TimeSpan.FromSeconds(4));
-            }
+            try {
+                if(Directory.Exists(PathBox.Text)) {
+                    FileIO.SaveImagesPath = PathBox.Text;
+                } else {
+                    error_toast.Show(str.pathNotExist, TimeSpan.FromSeconds(4));
+                }
+            } catch { }
         }
 
         #endregion
