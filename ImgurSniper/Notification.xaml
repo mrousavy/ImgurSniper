@@ -9,7 +9,7 @@
         
         WindowStyle="None" Background="Transparent" ResizeMode="NoResize" AllowsTransparency="True" WindowStartupLocation="Manual" Opacity="1" Topmost="True" ShowActivated="False" ShowInTaskbar="False"
         
-        Height="150" Width="300" Loaded="Window_Loaded">
+        Height="100" Width="300" Loaded="Window_Loaded">
 
 
     <md:Card Background="{DynamicResource MaterialDesignPaper}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
