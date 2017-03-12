@@ -62,13 +62,6 @@ namespace ImgurSniper {
 
             exStyle |= (int)WinAPI.ExtendedWindowStyles.WS_EX_TOOLWINDOW;
             WinAPI.SetWindowLong(wndHelper.Handle, (int)WinAPI.GetWindowLongFields.GWL_EXSTYLE, (IntPtr)exStyle);
-
-
-            //Notification n = new Notification("Hallo", true, false);
-            //n.Show();
-            //await Task.Delay(1000);
-            //n.contentLabel.Content = "Test";
-            //n.Close();
         }
 
         private void Start() {
@@ -242,6 +235,8 @@ namespace ImgurSniper {
                     }
 
                     await OpenAlbum(albumInfo.Key);
+
+                    _notification.Close();
                 } catch {
                     //Unsupported File Type? Internet connection error?
                     _notification = new Notification(strings.errorInstantUpload, Notification.NotificationType.Error, true);
@@ -258,11 +253,13 @@ namespace ImgurSniper {
                     string kb = $"{byteImg.Length / 1024d:0.#}";
 
                     //e.g. "Uploading Image (123KB)"
-                    _notification = new Notification(string.Format(strings.uploading, kb), Notification.NotificationType.Progress, true);
+                    _notification = new Notification(string.Format(strings.uploading, kb), Notification.NotificationType.Progress, false);
                     _notification.Show();
                     //SuccessToast.Show(string.Format(strings.uploading, kb), TimeSpan.FromDays(10));
 
                     await UploadImageToImgur(byteImg, "");
+
+                    _notification.Close();
                 } catch {
                     //Unsupported File Type? Internet connection error?
                     _notification = new Notification(strings.errorInstantUpload, Notification.NotificationType.Error, true);
@@ -340,11 +337,13 @@ namespace ImgurSniper {
                     //Config: Upload Image to Imgur or Copy to Clipboard?
                     if(imgurAfterSnipe) {
                         string kb = $"{cimg.Length / 1024d:0.#}";
-                        _notification = new Notification(string.Format(strings.uploading, kb), Notification.NotificationType.Progress, true);
+                        _notification = new Notification(string.Format(strings.uploading, kb), Notification.NotificationType.Progress, false);
                         _notification.Show();
                         //SuccessToast.Show(string.Format(strings.uploading, kb), TimeSpan.FromDays(10));
 
                         await UploadImageToImgur(cimg, window.HwndName);
+
+                        _notification.Close();
                     } else {
                         CopyClipboard(cimg);
 
@@ -397,7 +396,6 @@ namespace ImgurSniper {
                 //    TimeSpan.FromSeconds(5));
             }
         }
-
 
         //Open an Album with the ID
         private async Task OpenAlbum(string albumId) {

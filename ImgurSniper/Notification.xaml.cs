@@ -53,6 +53,8 @@ namespace ImgurSniper {
         }
 
         public Task ShowAsync() {
+            _autoHide = true;
+
             Show();
 
             return _task.Task;
