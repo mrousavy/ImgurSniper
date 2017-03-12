@@ -1,0 +1,38 @@
+﻿<Window x:Class="ImgurSniper.Notification"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ImgurSniper"
+        xmlns:md="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+        mc:Ignorable="d"
+        
+        WindowStyle="None" Background="Transparent" ResizeMode="NoResize" AllowsTransparency="True" WindowStartupLocation="Manual" Opacity="1"
+        
+        Height="150" Width="300" Loaded="Window_Loaded">
+
+
+    <md:Card Background="{DynamicResource MaterialDesignPaper}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Grid>
+            <!--Title Bar-->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,5,0">
+                <Image Source="Logo.ico" Height="23" Width="23" Margin="5"></Image>
+                <Label Margin="5" FontSize="13.5">ImgurSniper</Label>
+            </StackPanel>
+
+            <!--Content-->
+            <StackPanel Orientation="Horizontal" Margin="10,0,10,10" VerticalAlignment="Center">
+                <ProgressBar x:Name="progressBar" IsIndeterminate="True"  Style="{StaticResource MaterialDesignCircularProgressBar}" Value="35" VerticalAlignment="Center" Margin="10"/>
+
+                <Label x:Name="contentLabel" VerticalAlignment="Center" Margin="10" FontSize="12" x:FieldModifier="public">Test</Label>
+            </StackPanel>
+
+            <!--Buttons-->
+            <StackPanel Orientation="Horizontal" Margin="10,20,10,5" VerticalAlignment="Bottom" HorizontalAlignment="Center" x:Name="Buttons" Visibility="Collapsed">
+                <Button Width="130" Height="26" Margin="5,0,5,0" x:Name="Btn1" Style="{DynamicResource MaterialDesignFlatButton}">Open</Button>
+
+                <Button Width="130" Height="26" Margin="5,0,5,0" x:Name="Btn2" Style="{DynamicResource MaterialDesignFlatButton}">Close</Button>
+            </StackPanel>
+        </Grid>
+    </md:Card>
+</Window>

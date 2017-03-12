@@ -38,6 +38,7 @@ namespace ImgurSniper {
         private async void Window_Loaded(object sender, RoutedEventArgs e) {
             //Prevent short flash of Toasts
             await Task.Delay(100);
+            //TODO: DEBUG
             ErrorToast.Visibility = Visibility.Visible;
             SuccessToast.Visibility = Visibility.Visible;
 
@@ -49,6 +50,13 @@ namespace ImgurSniper {
 
             exStyle |= (int)WinAPI.ExtendedWindowStyles.WS_EX_TOOLWINDOW;
             WinAPI.SetWindowLong(wndHelper.Handle, (int)WinAPI.GetWindowLongFields.GWL_EXSTYLE, (IntPtr)exStyle);
+
+
+            //Notification n = new Notification("Hallo", true, false);
+            //n.Show();
+            //await Task.Delay(1000);
+            //n.contentLabel.Content = "Test";
+            //n.Close();
         }
 
         private void Start() {
@@ -200,12 +208,17 @@ namespace ImgurSniper {
                     //Key = Album ID | Value = Album Delete Hash (Key = Value if User is logged in)
                     KeyValuePair<string, string> albumInfo = await _imgur.CreateAlbum();
 
+
+                    Notification n = new Notification("", true, false);
+                    //n.Show();
+
                     int index = 1;
                     //Upload each image
                     foreach(byte[] file in images) {
                         try {
                             //e.g. "Uploading Images (123KB) (1 of 2)"
                             SuccessToast.Show(string.Format(strings.uploadingFiles, kb, index, files.Count), TimeSpan.FromDays(10));
+                            n.contentLabel.Content = string.Format(strings.uploadingFiles, kb, index, files.Count);
 
                             string id = await _imgur.UploadId(file, albumInfo.Value);
                             ids.Add(id);
