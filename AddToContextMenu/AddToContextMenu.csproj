@@ -49,7 +49,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>mrousavy.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -78,7 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.manifest" />
-    <None Include="mrousavy.pfx" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\strings.resx">

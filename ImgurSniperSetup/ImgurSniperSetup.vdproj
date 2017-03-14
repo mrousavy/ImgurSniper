@@ -416,7 +416,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:v4.5"
+                "FrameworkVersion" = "8:v4.5 "
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=395269"
                 }
@@ -943,15 +943,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ImgurSniper"
-        "ProductCode" = "8:{A1F6C758-8509-4307-9AD6-FEB2FAFF3AB5}"
-        "PackageCode" = "8:{17A58701-172D-4EE8-9FE5-83D47FD5CF65}"
+        "ProductCode" = "8:{A1A6E9B9-571C-48B4-8514-A436A8D1A803}"
+        "PackageCode" = "8:{33359537-CCA1-4E8B-9DC1-D8F91E64DEB8}"
         "UpgradeCode" = "8:{92522F6A-ED07-4D68-A8DB-8C766884DD1F}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.47"
+        "ProductVersion" = "8:1.0.48"
         "Manufacturer" = "8:mrousavy"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://github.com/mrousavy/ImgurSniper"

@@ -179,7 +179,7 @@ namespace ImgurSniper.UI {
             //Run proecess if not running
             try {
                 if(RunOnBoot.IsChecked == true) {
-                    if(Process.GetProcessesByName("ImgurSniper").Length < 1) {
+                    if(!Process.GetProcessesByName("ImgurSniper").Any()) {
                         Process start = new Process {
                             StartInfo = {
                                 FileName = Path + "\\ImgurSniper.exe",
