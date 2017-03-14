@@ -260,6 +260,10 @@ namespace ImgurSniper.UI {
                     Helper.Update(panel);
                 } else {
                     ChangeButtonState(true);
+
+                    if(info.skipped) {
+                        Btn_Update.IsEnabled = false;
+                    }
                 }
 
                 BeginAnimation(OpacityProperty, brighten);

@@ -52,7 +52,7 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>mrousavy.pfx</AssemblyOriginatorKeyFile>

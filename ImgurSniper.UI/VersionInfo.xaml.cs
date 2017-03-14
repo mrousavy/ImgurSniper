@@ -9,6 +9,7 @@ namespace ImgurSniper.UI {
     public partial class VersionInfo : Window {
         private IReadOnlyList<GitHubCommit> _commits;
         private int latest;
+        public bool skipped = false;
 
         public VersionInfo(IReadOnlyList<GitHubCommit> commits, int currentCommits) {
             InitializeComponent();
@@ -52,6 +53,7 @@ namespace ImgurSniper.UI {
         }
 
         private void SkipClick(object sender, RoutedEventArgs e) {
+            skipped = true;
             FileIO.CurrentCommits = latest;
             FileIO.UpdateAvailable = false;
             DialogResult = false;
