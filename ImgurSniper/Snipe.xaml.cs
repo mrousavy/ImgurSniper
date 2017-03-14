@@ -306,7 +306,7 @@ namespace ImgurSniper {
             if(window.DialogResult == true) {
                 byte[] cimg = window.CroppedImage;
 
-                if(cimg.Length >= 10240000 && !FileIO.TokenExists) {
+                if(cimg.Length >= 12000024) {
                     _notification = new Notification(strings.imgToBig, Notification.NotificationType.Error, true);
                     await _notification.ShowAsync();
                     //await ErrorToast.ShowAsync(strings.imgToBig, TimeSpan.FromSeconds(3));
@@ -350,8 +350,10 @@ namespace ImgurSniper {
                         //await SuccessToast.ShowAsync(strings.imgclipboard, TimeSpan.FromSeconds(3));
                     }
                 } catch(Exception ex) {
-                    _notification = new Notification(string.Format(strings.otherErrorMsg, ex), Notification.NotificationType.Error, true);
+                    _notification = new Notification(strings.errorMsg, Notification.NotificationType.Error, true);
                     await _notification.ShowAsync();
+
+                    System.Windows.MessageBox.Show(string.Format(strings.otherErrorMsg, ex.Message), strings.errorMsg);
                     //ErrorToast.Show(string.Format(strings.otherErrorMsg, ex),
                     //    TimeSpan.FromSeconds(3.5));
                 }

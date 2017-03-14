@@ -97,6 +97,15 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An unknown Error occured!.
+        /// </summary>
+        internal static string errorMsg {
+            get {
+                return ResourceManager.GetString("errorMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exit.
         /// </summary>
         internal static string exit {
@@ -133,7 +142,7 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image Size exceeds 10MB, to increase this please Login to Imgur!.
+        ///   Looks up a localized string similar to Image Size exceeds 12 MB! (Try smaller Images or use .JPEG!).
         /// </summary>
         internal static string imgToBig {
             get {

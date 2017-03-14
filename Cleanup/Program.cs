@@ -38,14 +38,14 @@ namespace Cleanup {
                 Console.WriteLine("Removed Desktop Shortcut..");
             } catch { }
 
-
+            //Remove Context Menu Shortcut
             try {
                 using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"*\shell")) {
                     baseKey.DeleteSubKeyTree("ImgurSniperUpload");
                 }
             } catch { }
 
-
+            //Remove Autostart
             try {
                 using(
                     RegistryKey baseKey =
@@ -60,6 +60,7 @@ namespace Cleanup {
                 //Remove all files
                 bool notRemoved = false;
 
+                //Remove Documents/ImgurSniper/[files]
                 foreach(string filesDocuments in Directory.GetFiles(DocPath)) {
                     try {
                         System.IO.File.Delete(filesDocuments);
@@ -67,6 +68,8 @@ namespace Cleanup {
                         notRemoved = true;
                     }
                 }
+
+                //Remove Documents/ImgurSniper/[directories]
                 foreach(string dirs in Directory.GetDirectories(DocPath)) {
                     try {
                         Directory.Delete(dirs, true);
@@ -75,10 +78,12 @@ namespace Cleanup {
                     }
                 }
 
+                //Remove Documents/ImgurSniper
                 try {
                     Directory.Delete(DocPath, true);
                 } catch { }
 
+                //Remove Documents/ImgurSniperImages
                 try {
                     Directory.Delete(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniperImages"), true);
                 } catch { }

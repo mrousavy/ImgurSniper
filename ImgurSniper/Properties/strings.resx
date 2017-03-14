@@ -139,7 +139,7 @@
     <value>The Image Width and/or Height is too small!</value>
   </data>
   <data name="imgToBig" xml:space="preserve">
-    <value>Image Size exceeds 10MB, to increase this please Login to Imgur!</value>
+    <value>Image Size exceeds 12 MB! (Try smaller Images or use .JPEG!)</value>
   </data>
   <data name="linkclipboard" xml:space="preserve">
     <value>Link to Imgur has been copied to your Clipboard!</value>
@@ -185,5 +185,8 @@ Would you like to see a detailed Exception Info?
   </data>
   <data name="linkAlbumClipboard" xml:space="preserve">
     <value>Link to the Imgur Album has been copied to your Clipboard!</value>
+  </data>
+  <data name="errorMsg" xml:space="preserve">
+    <value>An unknown Error occured!</value>
   </data>
 </root>
