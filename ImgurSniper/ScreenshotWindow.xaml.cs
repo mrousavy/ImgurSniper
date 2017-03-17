@@ -24,7 +24,6 @@ namespace ImgurSniper {
     ///     Interaction logic for ScreenshotWindow.xaml
     /// </summary>
     public partial class ScreenshotWindow {
-
         private bool _drag;
 
         public byte[] CroppedImage;
@@ -35,9 +34,14 @@ namespace ImgurSniper {
 
 
         public ScreenshotWindow(bool allMonitors) {
-            ShowActivated = false;
+#if DEBUG
+            Topmost = false;
+#else
+            Topmost = true;
+#endif
 
             InitializeComponent();
+
 
             Position(allMonitors);
             //LoadConfig();
@@ -56,7 +60,6 @@ namespace ImgurSniper {
             //grid.CaptureMouse();
             //PaintSurface.CaptureMouse();
             selectionRectangle.CaptureMouse();
-            Topmost = true;
 
             Rectangle bounds = System.Windows.Forms.Screen.PrimaryScreen.Bounds;
             SelectedMode.Margin = new Thickness(
@@ -66,7 +69,6 @@ namespace ImgurSniper {
                 bounds.Height / 2 - 25);
 
             Activate();
-            Topmost = true;
             Focus();
 
             #region Escape
@@ -103,7 +105,26 @@ namespace ImgurSniper {
             } catch {
                 //Register Ctrl + A Hotkey for this Window if Global Hotkey fails
                 KeyDown += (o, ke) => {
-                    if((Control.ModifierKeys & Keys.Control) == Keys.Control) {
+                    if((Control.ModifierKeys & Keys.Control) == Keys.Control && ke.Key == Key.A) {
+                        SelectAllCmd();
+                    }
+                };
+            }
+
+            #endregion
+
+            #region Ctrl Z
+
+            try {
+                //Register Global Ctrl + Z Hotkey
+                HotKey ctrlAHotKey = new HotKey(ModifierKeys.Control, Key.Z, this);
+                ctrlAHotKey.HotKeyPressed += delegate {
+                    CtrlZ();
+                };
+            } catch {
+                //Register Ctrl + Z Hotkey for this Window if Global Hotkey fails
+                KeyDown += (o, ke) => {
+                    if((Control.ModifierKeys & Keys.Control) == Keys.Control && ke.Key == Key.Z) {
                         SelectAllCmd();
                     }
                 };
@@ -401,6 +422,13 @@ namespace ImgurSniper {
         //Mouse Up Event - Stop Painting
         private void StopPaint(object sender, MouseButtonEventArgs e) {
             _currentPath = null;
+        }
+
+
+
+        private void CtrlZ() {
+            if(PaintSurface.Children.Count > 0)
+                PaintSurface.Children.RemoveAt(PaintSurface.Children.Count - 1);
         }
 
         #endregion
