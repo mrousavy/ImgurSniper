@@ -324,10 +324,10 @@
     <Resource Include="Resources\TrayDemo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\ContextMenuDemo.jpg" />
+    <Resource Include="Resources\ClipboardDemo.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\ClipboardDemo.gif" />
+    <Resource Include="Resources\ContextMenuDemo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
