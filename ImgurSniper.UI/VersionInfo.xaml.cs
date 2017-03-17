@@ -24,8 +24,8 @@ namespace ImgurSniper.UI {
             for(int i = 0; i < 50 - 4; i++) {
                 listview.Items.Add(new VersionInfoItem {
                     Version = "v" + commitNr,
-                    Date = $"{System.DateTime.Now:dd.MM.yyyy}",
-                    Message = "\"Updated Something!\""
+                    Date = $"{System.DateTime.Now:dd.MM}",
+                    Message = "\"Updated Something! (this is debug and not release 123)\""
                 });
 
                 commitNr--;
@@ -39,7 +39,7 @@ namespace ImgurSniper.UI {
                 Commit commit = _commits[i].Commit;
                 listview.Items.Add(new VersionInfoItem {
                     Version = "v" + commitNr,
-                    Date = $"{commit.Author.Date:dd.MM.yyyy}",
+                    Date = $"{commit.Author.Date:dd.MM}",
                     Message = $"\"{commit.Message}\""
                 });
 

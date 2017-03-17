@@ -171,6 +171,12 @@ namespace ImgurSniper {
             Top = size.Top;
             Width = size.Width;
             Height = size.Height;
+
+
+            if(allMonitors) {
+                Rect workArea = SystemParameters.WorkArea;
+                toast.Margin = new Thickness(workArea.Left, workArea.Top, (SystemParameters.VirtualScreenWidth - workArea.Right), (SystemParameters.VirtualScreenHeight - SystemParameters.PrimaryScreenHeight));
+            }
         }
 
         //Load from config File (ImgurSniper.UI)
