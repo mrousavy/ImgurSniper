@@ -238,7 +238,7 @@ namespace ImgurSniper {
             DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
             anim.Completed += FadeSelectedModeOut;
             anim.From = SelectedMode.Opacity;
-            anim.To = 0.7;
+            anim.To = 0.9;
 
             SelectedMode.BeginAnimation(OpacityProperty, anim);
         }
@@ -297,8 +297,7 @@ namespace ImgurSniper {
         private void RightClick() {
             Cursor = Cursors.Hand;
 
-            WinAPI.POINT point;
-            WinAPI.User32.GetCursorPos(out point);
+            WinAPI.User32.GetCursorPos(out WinAPI.POINT point);
 
             DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
 
@@ -464,7 +463,7 @@ namespace ImgurSniper {
 
         //Fade out window and shoot cropped screenshot
         private void Complete(int fromX, int fromY, int toX, int toY) {
-            DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
+            DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.15));
 
             anim.Completed += async delegate {
                 grid.Opacity = 0;
@@ -528,7 +527,7 @@ namespace ImgurSniper {
 
         //Close Window with fade out animation
         private void CloseSnap(bool result, int delay) {
-            DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
+            DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.15));
             anim.Completed += delegate {
                 try {
                     DialogResult = result;

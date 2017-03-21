@@ -4,7 +4,8 @@
         xmlns:toasty="clr-namespace:Toast;assembly=Toast"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ImgurSniper" Cursor="Cross" ForceCursor="True" Background="Transparent"
+        xmlns:md="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+        Cursor="Cross" ForceCursor="True" Background="Transparent"
         ShowActivated="False" Focusable="False" ShowInTaskbar="False"
         mc:Ignorable="d" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize"
         Title="Snipe a Screenshot!" WindowStartupLocation="Manual">
@@ -59,13 +60,13 @@
 
         <Grid Name="SelectedMode" Opacity="0">
             <StackPanel Orientation="Horizontal">
-                <Border Background="Gray" Name="DrawIcon">
+                <Border Background="Gray" Name="DrawIcon" Width="50" Height="50">
                     <Border.CornerRadius>12</Border.CornerRadius>
-                    <Image Source="Resources/draw.png" Width="50" Height="50"/>
+                    <md:PackIcon Kind="Pencil" Width="40" Height="40" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Border>
-                <Border Background="Transparent" Name="CropIcon">
+                <Border Background="Transparent" Name="CropIcon" Width="50" Height="50">
                     <Border.CornerRadius>12</Border.CornerRadius>
-                    <Image Source="Resources/crop.png" Width="50" Height="50"/>
+                    <md:PackIcon Kind="Crop" Width="40" Height="40" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Border>
             </StackPanel>
         </Grid>
