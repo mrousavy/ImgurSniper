@@ -4,87 +4,102 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
-		xmlns:local="clr-namespace:ImgurSniper.UI"
 		xmlns:toasty="clr-namespace:Toast;assembly=Toast"
-		xmlns:res="clr-namespace:ImgurSniper.UI"
 		xmlns:cultureStrings="clr-namespace:ImgurSniper.UI.Properties"
 		mc:Ignorable="d" MinHeight="500" MinWidth="575"
-		Title="{x:Static Member=cultureStrings:strings.title}" Height="550" Width="600"  Background="{DynamicResource MaterialDesignPaper}">
+		Title="{x:Static Member=cultureStrings:strings.title}" Height="590" Width="600"  Background="{DynamicResource MaterialDesignPaper}">
 
 	<!--<md:Card HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignPaper}">-->
 	<md:DialogHost x:Name="DialogHost">
-	<Grid x:Name="grid">
-			<StackPanel Orientation="Horizontal" Margin="5,0,15,5"
-						HorizontalAlignment="Right" VerticalAlignment="Top">
+        <Grid x:Name="grid">
+            <!--Custom Title Bar        => 35 Top Margin for Underlying Controls-->
+            <!--<md:Card HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="{DynamicResource MaterialDesignPaper}" MouseDown="Window_Move">
+                
+                <StackPanel Orientation="Horizontal" Margin="5,5,0,0" VerticalAlignment="Top">
+                    --><!--Close "Button"--><!--
+                    <Border CornerRadius="10" Height="12" Width="12" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right" Background="#FD5E4E" MouseDown="Window_Close" Cursor="Hand"/>
+                    --><!--Minimize "Button"--><!--
+                    <Border CornerRadius="10" Height="12" Width="12" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right" Background="#FBBF2D" MouseDown="Window_Minimize" Cursor="Hand"/>
+                    --><!--Maximize "Button"--><!--
+                    <Border CornerRadius="10" Height="12" Width="12" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right" Background="#00D04E" MouseDown="Window_Maximize" Cursor="Hand"/>
+
+
+                    <Label Content="{x:Static Member=cultureStrings:strings.title}" FontSize="16" VerticalAlignment="Top" Margin="10,-6,0,0"/>
+                </StackPanel>
+            </md:Card>-->
+
+
+            <StackPanel Orientation="Horizontal" Margin="5,0,15,5"
+					HorizontalAlignment="Right" VerticalAlignment="Top">
 				<Image Width="100" Margin="10" RenderOptions.BitmapScalingMode="HighQuality"
-				   Source="Resources/mrousavy.png"></Image>
+					Source="Resources/mrousavy.png"></Image>
 				<Image Width="30" Margin="10" RenderOptions.BitmapScalingMode="HighQuality"
-				   Source="Resources/Logo.png"></Image>
+					Source="Resources/Logo.png"></Image>
 			</StackPanel>
 
-		<ScrollViewer Margin="0,0,0,50" VerticalScrollBarVisibility="Auto">
-			<StackPanel Margin="5">
-				<Label Margin="10,5,5,5" FontSize="15" Content="{x:Static Member=cultureStrings:strings.afterSnapping}"/>
-				<RadioButton GroupName="AfterSnap" Tag="Imgur" IsChecked="True" VerticalAlignment="Bottom"
-							 FontSize="14" Margin="15,0,0,0" x:Name="ImgurRadio" 
-							 Foreground="Gray" Click="AfterSnapClick"
-							 Content="{x:Static Member=cultureStrings:strings.autoUploadImgur}"/>
+			<ScrollViewer Margin="0,0,0,50" VerticalScrollBarVisibility="Auto">
+				<StackPanel Margin="5">
+					<Label Margin="10,5,5,5" FontSize="15" Content="{x:Static Member=cultureStrings:strings.afterSnapping}"/>
+					<RadioButton GroupName="AfterSnap" Tag="Imgur" IsChecked="True" VerticalAlignment="Bottom"
+								 FontSize="14" Margin="15,0,0,0" x:Name="ImgurRadio" 
+								 Foreground="Gray" Click="AfterSnapClick"
+								 Content="{x:Static Member=cultureStrings:strings.autoUploadImgur}"/>
 
-				<RadioButton GroupName="AfterSnap" Tag="Clipboard" VerticalAlignment="Bottom"
-							 FontSize="14" Margin="15,0,0,0" x:Name="ClipboardRadio" 
-							 Foreground="Gray" Click="AfterSnapClick"
-							 Content="{x:Static Member=cultureStrings:strings.copyClipboard}"/>
-
-
-				<Label Margin="10,5,5,5" FontSize="15"
-					   Content="{x:Static Member=cultureStrings:strings.whenFinished}"/>
-				<CheckBox x:Name="SaveBox" FontSize="14" Margin="15,0,0,0" VerticalAlignment="Bottom"
-							 Foreground="Gray" Click="SaveImgs_Checkbox"
-						  Content="{x:Static Member=cultureStrings:strings.saveLocally}"/>
-
-				<StackPanel Orientation="Horizontal" Margin="15,5,5,5" x:Name="PathPanel">
-					<Label VerticalAlignment="Center"
-						   Content="{x:Static Member=cultureStrings:strings.path}" FontSize="13" Foreground="Gray"/>
-					<TextBox Width="250" Margin="5" VerticalAlignment="Center"
-							 x:Name="PathBox" KeyDown="PathBox_Submit"/>
-					<Button Foreground="Gray" VerticalAlignment="Center"
-									Click="PathChooser" VerticalContentAlignment="Bottom"
-									Style="{DynamicResource MaterialDesignFlatButton}">...</Button>
-				</StackPanel>
+					<RadioButton GroupName="AfterSnap" Tag="Clipboard" VerticalAlignment="Bottom"
+								 FontSize="14" Margin="15,0,0,0" x:Name="ClipboardRadio" 
+								 Foreground="Gray" Click="AfterSnapClick"
+								 Content="{x:Static Member=cultureStrings:strings.copyClipboard}"/>
 
 
+					<Label Margin="10,5,5,5" FontSize="15"
+						   Content="{x:Static Member=cultureStrings:strings.whenFinished}"/>
+					<CheckBox x:Name="SaveBox" FontSize="14" Margin="15,0,0,0" VerticalAlignment="Bottom"
+								 Foreground="Gray" Click="SaveImgs_Checkbox"
+							  Content="{x:Static Member=cultureStrings:strings.saveLocally}"/>
+
+					<StackPanel Orientation="Horizontal" Margin="15,5,5,5" x:Name="PathPanel">
+						<Label VerticalAlignment="Center"
+							   Content="{x:Static Member=cultureStrings:strings.path}" FontSize="13" Foreground="Gray"/>
+						<TextBox Width="250" Margin="5" VerticalAlignment="Center"
+								 x:Name="PathBox" KeyDown="PathBox_Submit"/>
+						<Button Foreground="Gray" VerticalAlignment="Center"
+										Click="PathChooser" VerticalContentAlignment="Bottom"
+										Style="{DynamicResource MaterialDesignFlatButton}">...</Button>
+					</StackPanel>
 
 
-				<Label Margin="10,5,5,5" FontSize="15"
-					Content="{x:Static Member=cultureStrings:strings.trayService}"/>
 
-				<CheckBox x:Name="RunOnBoot" FontSize="14" Margin="15,0,0,0" VerticalAlignment="Bottom"
-							Foreground="Gray" Click="RunOnBoot_Checkbox"
+
+					<Label Margin="10,5,5,5" FontSize="15"
 						Content="{x:Static Member=cultureStrings:strings.trayService}"/>
 
-				<CheckBox x:Name="PrintKeyBox" FontSize="14" Margin="15,0,0,0" VerticalAlignment="Bottom"
-							Foreground="Gray" Click="PrintKeyBox_Click"
-						Content="{x:Static Member=cultureStrings:strings.usePrint}"/>
+					<CheckBox x:Name="RunOnBoot" FontSize="14" Margin="15,0,0,0" VerticalAlignment="Bottom"
+								Foreground="Gray" Click="RunOnBoot_Checkbox"
+							Content="{x:Static Member=cultureStrings:strings.trayService}"/>
+
+					<CheckBox x:Name="PrintKeyBox" FontSize="14" Margin="15,0,0,0" VerticalAlignment="Bottom"
+								Foreground="Gray" Click="PrintKeyBox_Click"
+							Content="{x:Static Member=cultureStrings:strings.usePrint}"/>
 
 					<StackPanel Orientation="Horizontal" Margin="15,5,0,0" VerticalAlignment="Center">
 						<Label Content="{x:Static Member=cultureStrings:strings.hotkey}" VerticalAlignment="Center" FontSize="13" Foreground="Gray"/>
-						
+
 						<Border CornerRadius="5" Background="LightGray" BorderBrush="#ABABAB" BorderThickness="0,0,2,2.3" Margin="3" Height="25" MinWidth="10" VerticalAlignment="Center">
 
 							<TextBox FontSize="14" VerticalAlignment="Center" 
-								 Focusable="False" x:Name="HotkeyBox" MouseDown="HotkeyBoxMDown" MaxLength="1" MinWidth="10" Height="25" SelectionBrush="Transparent" Cursor="Hand" Text="X" Padding="3,0,3,0" BorderBrush="Transparent"/>
+									 Focusable="False" x:Name="HotkeyBox" MouseDown="HotkeyBoxMDown" MaxLength="1" MinWidth="10" Height="25" SelectionBrush="Transparent" Cursor="Hand" Text="X" Padding="3,0,3,0" BorderBrush="Transparent"/>
 						</Border>
 					</StackPanel>
 
 					<Label Margin="10,5,5,5" FontSize="15"
-					   Content="{x:Static Member=cultureStrings:strings.other}"/>
-				<CheckBox x:Name="MagnifyingGlassBox" FontSize="14" Margin="15,0,0,0" VerticalAlignment="Bottom"
-							 Foreground="Gray" Click="Magnifying_Checkbox" IsEnabled="False"
-						  Content="{x:Static Member=cultureStrings:strings.enMagnifying}"/>
+						   Content="{x:Static Member=cultureStrings:strings.other}"/>
+					<CheckBox x:Name="MagnifyingGlassBox" FontSize="14" Margin="15,0,0,0" VerticalAlignment="Bottom"
+								 Foreground="Gray" Click="Magnifying_Checkbox" IsEnabled="False"
+							  Content="{x:Static Member=cultureStrings:strings.enMagnifying}"/>
 
-				<CheckBox x:Name="OpenAfterUploadBox" FontSize="14" Margin="15,0,0,0" VerticalAlignment="Bottom"
-							 Foreground="Gray" Click="OpenAfterUpload_Checkbox"
-						  Content="{x:Static Member=cultureStrings:strings.openBrowser}"/>
+					<CheckBox x:Name="OpenAfterUploadBox" FontSize="14" Margin="15,0,0,0" VerticalAlignment="Bottom"
+								 Foreground="Gray" Click="OpenAfterUpload_Checkbox"
+							  Content="{x:Static Member=cultureStrings:strings.openBrowser}"/>
 
 					<StackPanel Orientation="Horizontal" Margin="15,5,0,0">
 						<Label Content="{x:Static Member=cultureStrings:strings.language}" VerticalAlignment="Center" FontSize="14" />
@@ -96,81 +111,86 @@
 					</StackPanel>
 
 					<Label Margin="10,5,5,5" FontSize="15"
-					   x:Name="Label_Account"
-					   Content="{x:Static Member=cultureStrings:strings.imgurAcc}"/>
+						   x:Name="Label_Account"
+						   Content="{x:Static Member=cultureStrings:strings.imgurAcc}"/>
 
-				<Grid Margin="15,5,5,5">
-					<StackPanel Orientation="Horizontal" Visibility="Collapsed"
-								x:Name="Panel_PIN">
-						<Label Foreground="Gray" FontSize="13"
-							   VerticalAlignment="Center"
-							   Content="PIN:"/>
+					<Grid Margin="15,5,5,5">
+						<StackPanel Orientation="Horizontal" Visibility="Collapsed"
+									x:Name="Panel_PIN">
+							<Label Foreground="Gray" FontSize="13"
+								   VerticalAlignment="Center"
+								   Content="PIN:"/>
 
-						<TextBox Margin="5" MaxLength="20" Width="100" x:Name="Box_PIN"
-								 VerticalAlignment="Bottom" TextChanged="Box_PIN_TextChanged"/>
+							<TextBox Margin="5" MaxLength="20" Width="100" x:Name="Box_PIN"
+									 VerticalAlignment="Bottom" TextChanged="Box_PIN_TextChanged"/>
 
-						<Button Margin="5" IsEnabled="False" x:Name="Btn_PinOk"
-								VerticalAlignment="Bottom" Click="PINOk"
-								Content=">"/>
+							<Button Margin="5" IsEnabled="False" x:Name="Btn_PinOk"
+									VerticalAlignment="Bottom" Click="PINOk"
+									Content=">"/>
 
-					</StackPanel>
+						</StackPanel>
 
-					<Button HorizontalAlignment="Left" Visibility="Visible"
-							x:Name="Btn_SignIn" Click="SignIn"
-							Content="{x:Static Member=cultureStrings:strings.singIn}"/>
+						<Button HorizontalAlignment="Left" Visibility="Visible"
+								x:Name="Btn_SignIn" Click="SignIn"
+								Content="{x:Static Member=cultureStrings:strings.singIn}"/>
 
-					<Button HorizontalAlignment="Left" Visibility="Collapsed"
-							x:Name="Btn_SignOut" Click="SignOut"
-							Content="{x:Static Member=cultureStrings:strings.singOut}"/>
+                        <StackPanel Orientation="Horizontal">
+                        <Button HorizontalAlignment="Left" Visibility="Collapsed"
+								x:Name="Btn_SignOut" Click="SignOut"
+								Content="{x:Static Member=cultureStrings:strings.singOut}" Margin="0,0,5,0"/>
+                        <Button HorizontalAlignment="Left" Visibility="Collapsed"
+								x:Name="Btn_ViewPics" Click="ViewPics"
+								Content="{x:Static Member=cultureStrings:strings.viewPics}" Margin="5,0,0,0"/>
+                        </StackPanel>
 
-				</Grid>
-
-
-				<Label Margin="10,5,5,5" FontSize="15"
-					   Content="{x:Static Member=cultureStrings:strings.whereSnipe}" />
-				<RadioButton GroupName="MonitorGroup" Tag="Current" IsChecked="True"
-							 FontSize="14" Margin="15,0,0,0" x:Name="CurrentMonitorRadio" 
-							 VerticalAlignment="Bottom" Foreground="Gray" Click="MonitorsClick"
-							 ToolTip="{x:Static Member=cultureStrings:strings.onlyMouse}"
-							 Content="{x:Static Member=cultureStrings:strings.curMonitor}"/>
-
-				<RadioButton GroupName="MonitorGroup" Tag="All"
-							 FontSize="14" Margin="15,0,0,0" x:Name="MultiMonitorRadio" 
-							 VerticalAlignment="Bottom" Foreground="Gray" Click="MonitorsClick"
-							 ToolTip="{x:Static Member=cultureStrings:strings.notOnlyMouse}"
-							 Content="{x:Static Member=cultureStrings:strings.allMonitor}"/>
-
-				<Label Margin="10,5,5,5" FontSize="15"
-					   Content="{x:Static Member=cultureStrings:strings.imgFormat}"/>
-				<RadioButton GroupName="ImageFormatGroup" Tag="PNG"
-							 FontSize="14" Margin="15,0,0,0" x:Name="PngRadio" 
-							 VerticalAlignment="Bottom" Foreground="Gray" Click="ImgFormatClick"
-							 ToolTip="{x:Static Member=cultureStrings:strings.usePNG}"
-							 Content="PNG"/>
-
-				<RadioButton GroupName="ImageFormatGroup" Tag="JPEG" IsChecked="True"
-							 FontSize="14" Margin="15,0,0,0" x:Name="JpegRadio" 
-							 VerticalAlignment="Bottom" Foreground="Gray" Click="ImgFormatClick"
-							 ToolTip="{x:Static Member=cultureStrings:strings.useJPEG}"
-							 Content="JPEG"/>
+                    </Grid>
 
 
 					<Label Margin="10,5,5,5" FontSize="15"
-					   Content="{x:Static Member=cultureStrings:strings.update}"/>
+						   Content="{x:Static Member=cultureStrings:strings.whereSnipe}" />
+					<RadioButton GroupName="MonitorGroup" Tag="Current" IsChecked="True"
+								 FontSize="14" Margin="15,0,0,0" x:Name="CurrentMonitorRadio" 
+								 VerticalAlignment="Bottom" Foreground="Gray" Click="MonitorsClick"
+								 ToolTip="{x:Static Member=cultureStrings:strings.onlyMouse}"
+								 Content="{x:Static Member=cultureStrings:strings.curMonitor}"/>
+
+					<RadioButton GroupName="MonitorGroup" Tag="All"
+								 FontSize="14" Margin="15,0,0,0" x:Name="MultiMonitorRadio" 
+								 VerticalAlignment="Bottom" Foreground="Gray" Click="MonitorsClick"
+								 ToolTip="{x:Static Member=cultureStrings:strings.notOnlyMouse}"
+								 Content="{x:Static Member=cultureStrings:strings.allMonitor}"/>
+
+					<Label Margin="10,5,5,5" FontSize="15"
+						   Content="{x:Static Member=cultureStrings:strings.imgFormat}"/>
+					<RadioButton GroupName="ImageFormatGroup" Tag="PNG"
+								 FontSize="14" Margin="15,0,0,0" x:Name="PngRadio" 
+								 VerticalAlignment="Bottom" Foreground="Gray" Click="ImgFormatClick"
+								 ToolTip="{x:Static Member=cultureStrings:strings.usePNG}"
+								 Content="PNG"/>
+
+					<RadioButton GroupName="ImageFormatGroup" Tag="JPEG" IsChecked="True"
+								 FontSize="14" Margin="15,0,0,0" x:Name="JpegRadio" 
+								 VerticalAlignment="Bottom" Foreground="Gray" Click="ImgFormatClick"
+								 ToolTip="{x:Static Member=cultureStrings:strings.useJPEG}"
+								 Content="JPEG"/>
+
+
+					<Label Margin="10,5,5,5" FontSize="15"
+						   Content="{x:Static Member=cultureStrings:strings.update}"/>
 
 					<CheckBox x:Name="AutoUpdateBox" FontSize="14" Margin="15,0,0,5" VerticalAlignment="Bottom"
-							 Foreground="Gray" Click="AutoUpdate_Checkbox" IsChecked="False"
-						  Content="{x:Static Member=cultureStrings:strings.autoUpdate}"/>
-				
+								 Foreground="Gray" Click="AutoUpdate_Checkbox" IsChecked="False"
+							  Content="{x:Static Member=cultureStrings:strings.autoUpdate}"/>
+
 					<StackPanel Margin="15,5,5,5" HorizontalAlignment="Left">
 						<Button HorizontalAlignment="Left" Content="{x:Static Member=cultureStrings:strings.updateNow}" Click="Btn_SearchUpdates"/>
 						<Label x:Name="Label_LastUpdate" Margin="-3" FontSize="12" Foreground="Gray" HorizontalAlignment="Center">Debug Test</Label>
 					</StackPanel>
-				
-				</StackPanel>
-		</ScrollViewer>
 
-		<Separator VerticalAlignment="Bottom" Margin="0,0,0,48" Foreground="LightGray"/>
+				</StackPanel>
+			</ScrollViewer>
+
+			<Separator VerticalAlignment="Bottom" Margin="0,0,0,48" Foreground="LightGray"/>
 
 			<StackPanel Orientation="Horizontal"
 						HorizontalAlignment="Right" VerticalAlignment="Bottom">

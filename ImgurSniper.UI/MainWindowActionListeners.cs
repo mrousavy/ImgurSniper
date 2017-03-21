@@ -42,8 +42,7 @@ namespace ImgurSniper.UI {
         }
 
         private void ImgFormatClick(object sender, RoutedEventArgs e) {
-            RadioButton button = sender as RadioButton;
-            if(button != null) {
+            if(sender is RadioButton button) {
                 try {
                     FileIO.UsePNG = button.Tag as string == "PNG";
                 } catch { }
@@ -95,8 +94,7 @@ namespace ImgurSniper.UI {
         }
 
         private async void RunOnBoot_Checkbox(object sender, RoutedEventArgs e) {
-            CheckBox box = sender as CheckBox;
-            if(box != null) {
+            if(sender is CheckBox box) {
                 FileIO.RunOnBoot = box.IsChecked == true;
 
                 //Run proecess if not running
@@ -191,8 +189,7 @@ namespace ImgurSniper.UI {
         }
 
         private async void LanguageBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            ComboBox box = sender as ComboBox;
-            if(box != null) {
+            if(sender is ComboBox box) {
                 try {
                     FileIO.Language = (box.SelectedItem as ComboBoxItem).Name;
 
@@ -297,7 +294,9 @@ namespace ImgurSniper.UI {
                 DoubleAnimation fadeBtnOut = Animations.FadeOut;
                 fadeBtnOut.Completed += delegate {
                     DoubleAnimation fadePanelIn = Animations.FadeIn;
-                    fadePanelIn.Completed += delegate { Btn_SignIn.Visibility = Visibility.Collapsed; };
+                    fadePanelIn.Completed += delegate {
+                        Btn_SignIn.Visibility = Visibility.Collapsed;
+                    };
                     Panel_PIN.Visibility = Visibility.Visible;
                     Panel_PIN.BeginAnimation(OpacityProperty, fadePanelIn);
                 };
@@ -307,12 +306,17 @@ namespace ImgurSniper.UI {
 
         private void SignOut(object sender, RoutedEventArgs e) {
             DoubleAnimation fadeBtnOut = Animations.FadeOut;
+            Btn_ViewPics.BeginAnimation(OpacityProperty, fadeBtnOut);
+
             fadeBtnOut.Completed += delegate {
                 FileIO.DeleteToken();
 
                 DoubleAnimation fadeBtnIn = Animations.FadeIn;
+                Btn_ViewPics.BeginAnimation(OpacityProperty, fadeBtnIn);
+
                 fadeBtnIn.Completed += delegate {
                     Btn_SignOut.Visibility = Visibility.Collapsed;
+                    Btn_ViewPics.Visibility = Visibility.Collapsed;
 
                     Label_Account.Content = "Imgur Account";
                 };
@@ -320,6 +324,10 @@ namespace ImgurSniper.UI {
                 Btn_SignIn.BeginAnimation(OpacityProperty, fadeBtnIn);
             };
             Btn_SignOut.BeginAnimation(OpacityProperty, fadeBtnOut);
+        }
+
+        private void ViewPics(object sender, RoutedEventArgs e) {
+            Process.Start(_imgurhelper.UserUrl);
         }
 
         private async void PINOk(object sender, RoutedEventArgs e) {
@@ -334,6 +342,8 @@ namespace ImgurSniper.UI {
                 fadeBtnIn.Completed += delegate { Panel_PIN.Visibility = Visibility.Collapsed; };
                 Btn_SignOut.Visibility = Visibility.Visible;
                 Btn_SignOut.BeginAnimation(OpacityProperty, fadeBtnIn);
+                Btn_ViewPics.Visibility = Visibility.Visible;
+                Btn_ViewPics.BeginAnimation(OpacityProperty, fadeBtnIn);
             };
             Panel_PIN.BeginAnimation(OpacityProperty, fadePanelOut);
 
@@ -342,6 +352,7 @@ namespace ImgurSniper.UI {
 
                 Btn_SignIn.Visibility = Visibility.Collapsed;
                 Btn_SignOut.Visibility = Visibility.Visible;
+                Btn_ViewPics.Visibility = Visibility.Visible;
             }
             Box_PIN.Clear();
         }
@@ -384,6 +395,27 @@ namespace ImgurSniper.UI {
             } catch { }
         }
 
+
+        //TODO: Custom Title Bar (Mac OSX Title bar?)
+        //private async void Window_Maximize(object sender, MouseButtonEventArgs e) {
+        //    if(WindowState == WindowState.Normal) {
+        //        WindowState = WindowState.Maximized;
+        //    } else {
+        //        WindowState = WindowState.Normal;
+        //    }
+
+        //    WindowStyle = WindowStyle.SingleBorderWindow;
+        //}
+        //private void Window_Minimize(object sender, MouseButtonEventArgs e) {
+        //    WindowStyle = WindowStyle.SingleBorderWindow;
+        //    WindowState = WindowState.Minimized;
+        //}
+        //private void Window_Close(object sender, MouseButtonEventArgs e) {
+        //    Close();
+        //}
+        //private void Window_Move(object sender, MouseButtonEventArgs e) {
+        //    DragMove();
+        //}
         #endregion
     }
 }

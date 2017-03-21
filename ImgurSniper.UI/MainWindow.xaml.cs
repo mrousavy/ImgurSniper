@@ -1,5 +1,4 @@
-﻿using MaterialDesignThemes.Wpf;
-using Octokit;
+﻿using Octokit;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,8 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
 using str = ImgurSniper.UI.Properties.strings;
 
 namespace ImgurSniper.UI {
@@ -61,12 +58,19 @@ namespace ImgurSniper.UI {
                 Close();
             }
             if(args.Contains("Update")) {
-                bool updateAvailable = await CheckForUpdates(false);
+                bool updateAvailable = await CheckForUpdates(true);
                 if(updateAvailable) {
                     Update(null, null);
                 } else {
                     Close();
                 }
+            }
+            if(args.Contains("Troubleshooting")) {
+                //Task.Delay for Open/Close Animations
+                await Task.Delay(400);
+                await ShowOkDialog(str.troubleshooting, str.troubleshootingTips);
+                await Task.Delay(400);
+                Close();
             }
         }
 
@@ -205,6 +209,7 @@ namespace ImgurSniper.UI {
                 Label_Account.Content = string.Format(str.imgurAccSignedIn, name);
 
                 Btn_SignIn.Visibility = Visibility.Collapsed;
+                Btn_ViewPics.Visibility = Visibility.Visible;
                 Btn_SignOut.Visibility = Visibility.Visible;
             }
 
@@ -233,104 +238,15 @@ namespace ImgurSniper.UI {
             if(Btn_SignOut.Tag == null)
                 Btn_SignOut.IsEnabled = enabled;
 
+            if(Btn_ViewPics.Tag == null)
+                Btn_ViewPics.IsEnabled = enabled;
+
             if(Btn_Snipe.Tag == null)
                 Btn_Snipe.IsEnabled = enabled;
 
             if(Btn_Update.Tag == null)
                 Btn_Update.IsEnabled = enabled;
         }
-
-        #region Dialogs
-        //Show a Material Design Yes/No Dialog
-        private async Task<bool> ShowAskDialog(string message) {
-            bool choice = false;
-
-            CloseDia();
-
-            StackPanel vPanel = new StackPanel {
-                Margin = new Thickness(5)
-            };
-
-            StackPanel hPanel = new StackPanel {
-                Orientation = Orientation.Horizontal,
-                VerticalAlignment = VerticalAlignment.Bottom,
-                HorizontalAlignment = HorizontalAlignment.Right
-            };
-
-            System.Windows.Controls.Label label = new System.Windows.Controls.Label {
-                Content = message,
-                VerticalAlignment = VerticalAlignment.Top,
-                HorizontalAlignment = HorizontalAlignment.Center
-            };
-
-            Button yes = new Button {
-                Content = str.yes,
-                Foreground = Brushes.Gray,
-                Width = 60,
-                Margin = new Thickness(3),
-                Style = (Style)FindResource("MaterialDesignFlatButton")
-            };
-            yes.Click += delegate {
-                choice = true;
-                CloseDia();
-            };
-            Button no = new Button {
-                Content = str.no,
-                Foreground = Brushes.Gray,
-                Width = 60,
-                Margin = new Thickness(3),
-                Style = (Style)FindResource("MaterialDesignFlatButton")
-            };
-            no.Click += delegate {
-                choice = false;
-                CloseDia();
-            };
-
-            hPanel.Children.Add(yes);
-            hPanel.Children.Add(no);
-
-            vPanel.Children.Add(label);
-            vPanel.Children.Add(hPanel);
-
-            await DialogHost.ShowDialog(vPanel);
-
-            return choice;
-        }
-
-        //Show a Material Design Progressbar Dialog
-        private StackPanel ShowProgressDialog() {
-            CloseDia();
-
-            StackPanel vpanel = new StackPanel {
-                Margin = new Thickness(10)
-            };
-
-            System.Windows.Controls.Label label = new System.Windows.Controls.Label {
-                Content = str.downloadingUpdate,
-                FontSize = 13,
-                Foreground = Brushes.Gray
-            };
-
-            ProgressBar bar = new ProgressBar {
-                Margin = new Thickness(3),
-                IsIndeterminate = false,
-                Minimum = 0,
-                Maximum = 100
-            };
-
-            vpanel.Children.Add(label);
-            vpanel.Children.Add(bar);
-
-            DialogHost.ShowDialog(vpanel);
-
-            return vpanel;
-        }
-
-        //Close the Material Design Dialog
-        private void CloseDia() {
-            DialogHost.CloseDialogCommand.Execute(null, DialogHost);
-        }
-        #endregion
 
         //forceSearch = true if should search for updates even if Last Checked is not longer than 1 Day ago
         private async Task<bool> CheckForUpdates(bool forceSearch) {

@@ -369,6 +369,15 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string ok {
+            get {
+                return ResourceManager.GetString("ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Only Snipe a Window on the Monitor the Mouse Cursor is currently on..
         /// </summary>
         public static string onlyMouse {
@@ -676,6 +685,31 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Troubleshooting.
+        /// </summary>
+        public static string troubleshooting {
+            get {
+                return ResourceManager.GetString("troubleshooting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oh no! It looks like you encountered an Error while uploading an Image.
+        ///If this problem occurs more often, try the following:
+        ///    • Try logging in with your Imgur Account
+        ///    • Change the Image Format from .PNG to .JPEG
+        ///    • Restart your Computer
+        ///    • Make sure that you have Write Permissions to Documents/ImgurSniper
+        ///Does the Error still occur? Maybe your Internet Connection
+        ///is too slow for the Imgur Service..
+        /// </summary>
+        public static string troubleshootingTips {
+            get {
+                return ResourceManager.GetString("troubleshootingTips", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An unknown Error occured in ImgurSniper.UI!
         ///ImgurSniper has to shut down!
         ///Would you like to see a detailed Exception Info?
@@ -774,6 +808,15 @@ namespace ImgurSniper.UI.Properties {
         public static string version {
             get {
                 return ResourceManager.GetString("version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My Images.
+        /// </summary>
+        public static string viewPics {
+            get {
+                return ResourceManager.GetString("viewPics", resourceCulture);
             }
         }
         

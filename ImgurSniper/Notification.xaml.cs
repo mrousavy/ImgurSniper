@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media.Animation;
 
 namespace ImgurSniper {
@@ -15,7 +16,7 @@ namespace ImgurSniper {
 
         public enum NotificationType { Progress, Success, Error }
 
-        public Notification(string text, NotificationType type, bool autoHide) {
+        public Notification(string text, NotificationType type, bool autoHide, Action onClick) {
             InitializeComponent();
 
             _left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width;
@@ -38,6 +39,14 @@ namespace ImgurSniper {
                 case NotificationType.Success:
                     successIcon.Visibility = Visibility.Visible;
                     break;
+            }
+
+            if(onClick != null) {
+                NotificationContent.Cursor = Cursors.Hand;
+                NotificationContent.MouseDown += delegate {
+                    onClick.Invoke();
+                    FadeOut();
+                };
             }
         }
 
@@ -87,6 +96,10 @@ namespace ImgurSniper {
 
             BeginAnimation(LeftProperty, slideOutX);
             BeginAnimation(OpacityProperty, fadeOut);
+        }
+
+        private void Window_Close(object sender, MouseButtonEventArgs e) {
+            FadeOut();
         }
     }
 }

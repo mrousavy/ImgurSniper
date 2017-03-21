@@ -378,4 +378,23 @@ Zeige dies den klugen Computer Affen: {0}</value>
   <data name="autoUpdate" xml:space="preserve">
     <value>Automatisch nach Aktualisierungen suchen</value>
   </data>
+  <data name="ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="troubleshooting" xml:space="preserve">
+    <value>Fehlerbehebung</value>
+  </data>
+  <data name="troubleshootingTips" xml:space="preserve">
+    <value>Oh nein! Anscheinend ist ein Fehler beim hochladen eines Snipes aufgetreten.
+Falls dieses Problem öfters auftritt, probieren Sie folgendes:
+    • Melden Sie sich mit Ihrem Imgur Account an
+    • Ändern Sie das Bild format von .PNG auf .JPEG
+    • Starten Sie Ihren Computer neu
+    • Stellen Sie sicher, dass Sie Zugriff auf den Ordner Dokumente/ImgurSniper haben
+Tritt der Fehler immer noch auf, ist Ihre Internet Verbindung möglicherweise
+zu langsam für den Imgur Dienst.</value>
+  </data>
+  <data name="viewPics" xml:space="preserve">
+    <value>Meine Bilder</value>
+  </data>
 </root>

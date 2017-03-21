@@ -189,4 +189,7 @@ Would you like to see a detailed Exception Info?
   <data name="errorMsg" xml:space="preserve">
     <value>An unknown Error occured!</value>
   </data>
+  <data name="close" xml:space="preserve">
+    <value>Close</value>
+  </data>
 </root>

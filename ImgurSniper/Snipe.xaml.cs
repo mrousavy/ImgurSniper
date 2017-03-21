@@ -23,6 +23,14 @@ namespace ImgurSniper {
         private string _dir;
         private ImgurIO _imgur;
         private NotifyIcon _nicon;
+
+        private static Action _actionTroubleshoot = new Action(delegate {
+            Process.Start(Path.Combine(FileIO._programFiles, "ImgurSniper.UI.exe"), "Troubleshooting");
+        });
+
+        //TODO: Implement
+        private static Action _actionOpenImgur = null;
+
         private static Notification _notification {
             get {
                 return _internalNotification;
@@ -97,14 +105,7 @@ namespace ImgurSniper {
         private void UpdateCheck() {
 #if !DEBUG
             try {
-                Process p = new Process();
-
-                p.StartInfo = new ProcessStartInfo {
-                    FileName = Path.Combine(FileIO._programFiles, "ImgurSniper.UI.exe"),
-                    Arguments = "Update"
-                };
-
-                p.Start();
+                Process.Start(Path.Combine(FileIO._programFiles, "ImgurSniper.UI.exe"), "Update");
             } catch { }
 #endif
         }
@@ -131,14 +132,7 @@ namespace ImgurSniper {
             ContextMenu menu = new ContextMenu();
             menu.MenuItems.Add(strings.help, delegate {
                 try {
-                    Process p = new Process();
-
-                    p.StartInfo = new ProcessStartInfo {
-                        FileName = Path.Combine(FileIO._programFiles, "ImgurSniper.UI.exe"),
-                        Arguments = "Help"
-                    };
-
-                    p.Start();
+                    Process.Start(Path.Combine(FileIO._programFiles, "ImgurSniper.UI.exe"), "Help");
                 } catch {
                     // ignored
                 }
@@ -210,7 +204,7 @@ namespace ImgurSniper {
                     KeyValuePair<string, string> albumInfo = await _imgur.CreateAlbum();
 
 
-                    _notification = new Notification("", Notification.NotificationType.Progress, false);
+                    _notification = new Notification("", Notification.NotificationType.Progress, false, null);
                     _notification.Show();
 
                     int index = 1;
@@ -235,7 +229,7 @@ namespace ImgurSniper {
                     _notification.Close();
                 } catch {
                     //Unsupported File Type? Internet connection error?
-                    _notification = new Notification(strings.errorInstantUpload, Notification.NotificationType.Error, true);
+                    _notification = new Notification(strings.errorInstantUpload, Notification.NotificationType.Error, true, _actionTroubleshoot);
                     await _notification.ShowAsync();
                     //await ErrorToast.ShowAsync(strings.errorInstantUpload, TimeSpan.FromSeconds(5));
                 }
@@ -249,7 +243,7 @@ namespace ImgurSniper {
                     string kb = $"{byteImg.Length / 1024d:0.#}";
 
                     //e.g. "Uploading Image (123KB)"
-                    _notification = new Notification(string.Format(strings.uploading, kb), Notification.NotificationType.Progress, false);
+                    _notification = new Notification(string.Format(strings.uploading, kb), Notification.NotificationType.Progress, false, null);
                     _notification.Show();
                     //SuccessToast.Show(string.Format(strings.uploading, kb), TimeSpan.FromDays(10));
 
@@ -258,7 +252,7 @@ namespace ImgurSniper {
                     _notification.Close();
                 } catch {
                     //Unsupported File Type? Internet connection error?
-                    _notification = new Notification(strings.errorInstantUpload, Notification.NotificationType.Error, true);
+                    _notification = new Notification(strings.errorInstantUpload, Notification.NotificationType.Error, true, _actionTroubleshoot);
                     await _notification.ShowAsync();
                     //await ErrorToast.ShowAsync(strings.errorInstantUpload, TimeSpan.FromSeconds(5));
                 }
@@ -306,8 +300,9 @@ namespace ImgurSniper {
             if(window.DialogResult == true) {
                 byte[] cimg = window.CroppedImage;
 
-                if(cimg.Length >= 12000024) {
-                    _notification = new Notification(strings.imgToBig, Notification.NotificationType.Error, true);
+                //10 MB = 10.485.760 Bytes      => Imgur's max. File Size
+                if(cimg.Length >= 10485760) {
+                    _notification = new Notification(strings.imgToBig, Notification.NotificationType.Error, true, null);
                     await _notification.ShowAsync();
                     //await ErrorToast.ShowAsync(strings.imgToBig, TimeSpan.FromSeconds(3));
                     return;
@@ -319,13 +314,21 @@ namespace ImgurSniper {
                     //Config: Save Image locally?
                     if(FileIO.SaveImages) {
                         try {
+                            //Save File with unique name
                             long time = DateTime.Now.ToFileTimeUtc();
                             string extension = FileIO.UsePNG ? ".png" : ".jpeg";
                             string filename = _dir + $"\\Snipe_{time}{extension}";
                             File.WriteAllBytes(filename, cimg);
 
-                            if(imgurAfterSnipe) {
-                                Process.Start(filename);
+                            if(FileIO.OpenAfterUpload) {
+                                //If name contains Spaces, Arguments get seperated by the Space
+                                if(filename.Contains(" ")) {
+                                    //Open Image itself
+                                    Process.Start(filename);
+                                } else {
+                                    //Open Explorer and Highlight Image
+                                    Process.Start("explorer.exe", $"/select,\"{filename}\"");
+                                }
                             }
                         } catch {
                             // ignored
@@ -335,7 +338,7 @@ namespace ImgurSniper {
                     //Config: Upload Image to Imgur or Copy to Clipboard?
                     if(imgurAfterSnipe) {
                         string kb = $"{cimg.Length / 1024d:0.#}";
-                        _notification = new Notification(string.Format(strings.uploading, kb), Notification.NotificationType.Progress, false);
+                        _notification = new Notification(string.Format(strings.uploading, kb), Notification.NotificationType.Progress, false, _actionOpenImgur);
                         _notification.Show();
                         //SuccessToast.Show(string.Format(strings.uploading, kb), TimeSpan.FromDays(10));
 
@@ -345,12 +348,12 @@ namespace ImgurSniper {
                     } else {
                         CopyClipboard(cimg);
 
-                        _notification = new Notification(strings.imgclipboard, Notification.NotificationType.Success, true);
+                        _notification = new Notification(strings.imgclipboard, Notification.NotificationType.Success, true, null);
                         await _notification.ShowAsync();
                         //await SuccessToast.ShowAsync(strings.imgclipboard, TimeSpan.FromSeconds(3));
                     }
                 } catch(Exception ex) {
-                    _notification = new Notification(strings.errorMsg, Notification.NotificationType.Error, true);
+                    _notification = new Notification(strings.errorMsg, Notification.NotificationType.Error, true, _actionTroubleshoot);
                     await _notification.ShowAsync();
 
                     System.Windows.MessageBox.Show(string.Format(strings.otherErrorMsg, ex.Message), strings.errorMsg);
@@ -381,16 +384,19 @@ namespace ImgurSniper {
                 Clipboard.SetText(link);
                 PlayBlop();
 
+                Action action = _actionOpenImgur;
+
                 if(FileIO.OpenAfterUpload) {
                     Process.Start(link);
+                    action = null;
                 }
 
-                _notification = new Notification(strings.linkclipboard, Notification.NotificationType.Success, true);
+                _notification = new Notification(strings.linkclipboard, Notification.NotificationType.Success, true, action);
                 await _notification.ShowAsync();
                 //await SuccessToast.ShowAsync(strings.linkclipboard,
                 //    TimeSpan.FromSeconds(3));
             } else {
-                _notification = new Notification(string.Format(strings.uploadingError, link), Notification.NotificationType.Error, true);
+                _notification = new Notification(string.Format(strings.uploadingError, link), Notification.NotificationType.Error, true, _actionTroubleshoot);
                 await _notification.ShowAsync();
                 //await ErrorToast.ShowAsync(string.Format(strings.uploadingError, link),
                 //    TimeSpan.FromSeconds(5));
@@ -405,13 +411,16 @@ namespace ImgurSniper {
             Clipboard.SetText(link);
             PlayBlop();
 
+            Action action = _actionOpenImgur;
+
             if(FileIO.OpenAfterUpload) {
                 Process.Start(link);
+                action = null;
             }
 
             //await SuccessToast.ShowAsync(strings.linkclipboard,
             //    TimeSpan.FromSeconds(3));
-            _notification = new Notification(strings.linkclipboard, Notification.NotificationType.Success, true);
+            _notification = new Notification(strings.linkclipboard, Notification.NotificationType.Success, true, action);
             await _notification.ShowAsync();
         }
 

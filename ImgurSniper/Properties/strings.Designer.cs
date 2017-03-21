@@ -70,6 +70,15 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        internal static string close {
+            get {
+                return ResourceManager.GetString("close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ctrl + Shift + {0}.
         /// </summary>
         internal static string ctrlShiftShortcut {

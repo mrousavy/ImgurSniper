@@ -378,4 +378,23 @@ Pro Tip: Hit Ctrl + A to instantly create a Screenshot of your whole Desktop.</v
   <data name="autoUpdate" xml:space="preserve">
     <value>Automatically search for Updates</value>
   </data>
+  <data name="ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="troubleshooting" xml:space="preserve">
+    <value>Troubleshooting</value>
+  </data>
+  <data name="troubleshootingTips" xml:space="preserve">
+    <value>Oh no! It looks like you encountered an Error while uploading an Image.
+If this problem occurs more often, try the following:
+    • Try logging in with your Imgur Account
+    • Change the Image Format from .PNG to .JPEG
+    • Restart your Computer
+    • Make sure that you have Write Permissions to Documents/ImgurSniper
+Does the Error still occur? Maybe your Internet Connection
+is too slow for the Imgur Service.</value>
+  </data>
+  <data name="viewPics" xml:space="preserve">
+    <value>My Images</value>
+  </data>
 </root>

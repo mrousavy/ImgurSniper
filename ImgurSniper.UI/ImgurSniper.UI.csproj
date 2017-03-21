@@ -150,6 +150,7 @@
       <DependentUpon>HotKeySelector.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindowActionListeners.cs" />
+    <Compile Include="MDDialogs.cs" />
     <Compile Include="Pages\ClipboardPage.xaml.cs">
       <DependentUpon>ClipboardPage.xaml</DependentUpon>
     </Compile>

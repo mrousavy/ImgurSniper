@@ -16,6 +16,8 @@ namespace ImgurSniper.UI {
 
         public string User { private set; get; }
 
+        public string UserUrl { private set; get; }
+
         private readonly ImgurClient _client;
         private readonly OAuth2Endpoint _endpoint;
 
@@ -48,6 +50,8 @@ namespace ImgurSniper.UI {
                 FileIO.WriteRefreshToken(token.RefreshToken);
 
                 User = token.AccountUsername;
+                UserUrl = $"http://{User}.imgur.com/all/";
+
                 _success.Show(string.Format(strings.loggedIn, User), TimeSpan.FromSeconds(2));
                 return true;
             } catch(Exception ex) {
@@ -63,6 +67,8 @@ namespace ImgurSniper.UI {
                 IOAuth2Token token = await _endpoint.GetTokenByRefreshTokenAsync(refreshToken);
                 username = token.AccountUsername;
             } catch { }
+
+            UserUrl = $"http://{username}.imgur.com/all/";
 
             return username;
         }

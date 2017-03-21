@@ -188,4 +188,7 @@ Wollen Sie eine detaillierte Fehlermeldung sehen?
   <data name="errorMsg" xml:space="preserve">
     <value>Ein unbekannter Fehler ist aufgetreten!</value>
   </data>
+  <data name="close" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
 </root>
