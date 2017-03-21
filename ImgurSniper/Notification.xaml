@@ -8,7 +8,7 @@
 		
 		WindowStyle="None" Background="Transparent" ResizeMode="NoResize" AllowsTransparency="True" WindowStartupLocation="Manual" Opacity="1" Topmost="True" ShowActivated="False" ShowInTaskbar="False"
 		
-		Height="110" Width="300" Loaded="Window_Loaded">
+		Height="110" Width="300" Loaded="Window_Loaded" MouseEnter="Window_MouseEnter" MouseLeave="Window_MouseLeave">
 
 	<md:Card Background="{DynamicResource MaterialDesignPaper}"  Margin="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" UniformCornerRadius="3">
 
@@ -40,7 +40,7 @@
 
 
 			<!--Close "Button"-->
-			<Border CornerRadius="10" Height="12" Width="12" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right" Background="#FD5E4E" MouseDown="Window_Close" Cursor="Hand"/>
+			<Border CornerRadius="10" Height="12" Width="12" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right" Background="#FD5E4E" MouseDown="Window_Close" Cursor="Hand" x:Name="Btn_Close" Opacity="0"/>
 		</Grid>
 	</md:Card>
 </Window>

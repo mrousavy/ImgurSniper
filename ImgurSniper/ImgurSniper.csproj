@@ -126,6 +126,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Animations.cs" />
     <Compile Include="Notification.xaml.cs">
       <DependentUpon>Notification.xaml</DependentUpon>
     </Compile>
