@@ -54,10 +54,12 @@ namespace ImgurSniper.UI {
         private async void Arguments() {
             string[] args = Environment.GetCommandLineArgs();
             if(args.Contains("Help")) {
+                Hide();
                 Help(null, null);
                 Close();
             }
             if(args.Contains("Update")) {
+                Hide();
                 bool updateAvailable = await CheckForUpdates(true);
                 if(updateAvailable) {
                     Update(null, null);

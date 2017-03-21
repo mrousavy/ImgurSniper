@@ -44,7 +44,6 @@ namespace ImgurSniper {
         }
         private static Notification _internalNotification;
 
-
         public Snipe() {
             InitializeComponent();
 
