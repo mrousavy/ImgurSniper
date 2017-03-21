@@ -242,9 +242,13 @@ namespace ImgurSniper.UI {
             DoubleAnimation darken = Animations.GetDarkenAnimation(Opacity);
             DoubleAnimation brighten = Animations.GetBrightenAnimation(Opacity);
 
-            VersionInfo info = new VersionInfo(_commits, FileIO.CurrentCommits) {
-                Owner = this
-            };
+            VersionInfo info = new VersionInfo(_commits, FileIO.CurrentCommits);
+
+            try {
+                info.Owner = this;
+            } catch {
+                // ignored
+            }
 
             darken.Completed += delegate {
                 bool? result = info.ShowDialog();
