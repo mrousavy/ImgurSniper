@@ -48,24 +48,11 @@ namespace ImgurSniper {
             Notification = new Notification("ImgurSniper initialized!", Notification.NotificationType.Success, true, null);
             Notification.Show();
 #endif
-            Closing += ClosingDisposer;
-
             Initialize();
 
             Position();
 
             Start();
-        }
-
-        private void ClosingDisposer(object sender, CancelEventArgs cancelEventArgs) {
-            _internalNotification.Close();
-            _internalNotification = null;
-
-            if(_nicon != null) {
-                _nicon.Icon = null;
-                _nicon.Dispose();
-                _nicon = null;
-            }
         }
 
         //Initialize important Variables
