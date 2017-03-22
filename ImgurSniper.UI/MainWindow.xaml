@@ -7,29 +7,36 @@
 		xmlns:toasty="clr-namespace:Toast;assembly=Toast"
 		xmlns:cultureStrings="clr-namespace:ImgurSniper.UI.Properties"
 		mc:Ignorable="d" MinHeight="500" MinWidth="575"
-		Title="{x:Static Member=cultureStrings:strings.title}" Height="590" Width="600"  Background="{DynamicResource MaterialDesignPaper}">
+		Title="{x:Static Member=cultureStrings:strings.title}" Height="590" Width="600"  Background="{DynamicResource MaterialDesignPaper}"
+		
+		
+		TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+		TextElement.FontWeight="Medium"
+		TextElement.FontSize="14"
+		FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
 
 	<!--<md:Card HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignPaper}">-->
 	<md:DialogHost x:Name="DialogHost">
-        <Grid x:Name="grid">
-            <!--Custom Title Bar        => 35 Top Margin for Underlying Controls-->
-            <!--<md:Card HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="{DynamicResource MaterialDesignPaper}" MouseDown="Window_Move">
-                
-                <StackPanel Orientation="Horizontal" Margin="5,5,0,0" VerticalAlignment="Top">
-                    --><!--Close "Button"--><!--
-                    <Border CornerRadius="10" Height="12" Width="12" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right" Background="#FD5E4E" MouseDown="Window_Close" Cursor="Hand"/>
-                    --><!--Minimize "Button"--><!--
-                    <Border CornerRadius="10" Height="12" Width="12" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right" Background="#FBBF2D" MouseDown="Window_Minimize" Cursor="Hand"/>
-                    --><!--Maximize "Button"--><!--
-                    <Border CornerRadius="10" Height="12" Width="12" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right" Background="#00D04E" MouseDown="Window_Maximize" Cursor="Hand"/>
+		<Grid x:Name="grid">
+			<!--Custom Title Bar        => 35 Top Margin for Underlying Controls-->
+			<!--<md:Card HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="{DynamicResource MaterialDesignPaper}" MouseDown="Window_Move">
+				
+				<StackPanel Orientation="Horizontal" Margin="5,5,0,0" VerticalAlignment="Top">
+					--><!--Close "Button"--><!--
+					<Border CornerRadius="10" Height="12" Width="12" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right" Background="#FD5E4E" MouseDown="Window_Close" Cursor="Hand"/>
+					--><!--Minimize "Button"--><!--
+					<Border CornerRadius="10" Height="12" Width="12" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right" Background="#FBBF2D" MouseDown="Window_Minimize" Cursor="Hand"/>
+					--><!--Maximize "Button"--><!--
+					<Border CornerRadius="10" Height="12" Width="12" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right" Background="#00D04E" MouseDown="Window_Maximize" Cursor="Hand"/>
 
 
-                    <Label Content="{x:Static Member=cultureStrings:strings.title}" FontSize="16" VerticalAlignment="Top" Margin="10,-6,0,0"/>
-                </StackPanel>
-            </md:Card>-->
+					<Label Content="{x:Static Member=cultureStrings:strings.title}" FontSize="16" VerticalAlignment="Top" Margin="10,-6,0,0"/>
+				</StackPanel>
+			</md:Card>-->
 
 
-            <StackPanel Orientation="Horizontal" Margin="5,0,15,5"
+
+			<StackPanel Orientation="Horizontal" Margin="5,0,15,5"
 					HorizontalAlignment="Right" VerticalAlignment="Top">
 				<Image Width="100" Margin="10" RenderOptions.BitmapScalingMode="HighQuality"
 					Source="Resources/mrousavy.png"></Image>
@@ -37,7 +44,12 @@
 					Source="Resources/Logo.png"></Image>
 			</StackPanel>
 
-			<ScrollViewer Margin="0,0,0,50" VerticalScrollBarVisibility="Auto">
+			<!--Animation-->
+			<md:Transitioner SelectedIndex="0">
+				<md:TransitionerSlide OpeningEffect="{md:TransitionEffect ExpandIn}">
+
+					
+					<ScrollViewer Margin="0,0,0,50" VerticalScrollBarVisibility="Auto">
 				<StackPanel Margin="5">
 					<Label Margin="10,5,5,5" FontSize="15" Content="{x:Static Member=cultureStrings:strings.afterSnapping}"/>
 					<RadioButton GroupName="AfterSnap" Tag="Imgur" IsChecked="True" VerticalAlignment="Bottom"
@@ -134,16 +146,16 @@
 								x:Name="Btn_SignIn" Click="SignIn"
 								Content="{x:Static Member=cultureStrings:strings.singIn}"/>
 
-                        <StackPanel Orientation="Horizontal">
-                        <Button HorizontalAlignment="Left" Visibility="Collapsed"
+						<StackPanel Orientation="Horizontal">
+						<Button HorizontalAlignment="Left" Visibility="Collapsed"
 								x:Name="Btn_SignOut" Click="SignOut"
 								Content="{x:Static Member=cultureStrings:strings.singOut}" Margin="0,0,5,0"/>
-                        <Button HorizontalAlignment="Left" Visibility="Collapsed"
+						<Button HorizontalAlignment="Left" Visibility="Collapsed"
 								x:Name="Btn_ViewPics" Click="ViewPics"
 								Content="{x:Static Member=cultureStrings:strings.viewPics}" Margin="5,0,0,0"/>
-                        </StackPanel>
+						</StackPanel>
 
-                    </Grid>
+					</Grid>
 
 
 					<Label Margin="10,5,5,5" FontSize="15"
@@ -188,7 +200,11 @@
 					</StackPanel>
 
 				</StackPanel>
-			</ScrollViewer>
+					</ScrollViewer>
+					
+					
+				</md:TransitionerSlide>
+			</md:Transitioner>
 
 			<Separator VerticalAlignment="Bottom" Margin="0,0,0,48" Foreground="LightGray"/>
 

@@ -8,7 +8,7 @@
         Cursor="Cross" ForceCursor="True" Background="Transparent"
         ShowActivated="False" Focusable="False" ShowInTaskbar="False"
         mc:Ignorable="d" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize"
-        Title="Snipe a Screenshot!" WindowStartupLocation="Manual">
+        Title="Snipe a Screenshot!" WindowStartupLocation="Manual" Loaded="WindowLoaded">
     
     <Grid>
         <Grid x:Name="grid" MouseDown="StartDrawing" MouseUp="ReleaseRectangle" MouseMove="DrawRectangle">

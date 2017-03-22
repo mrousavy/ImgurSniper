@@ -109,5 +109,12 @@ namespace ImgurSniper {
         private void Window_MouseLeave(object sender, MouseEventArgs e) {
             Btn_Close.BeginAnimation(OpacityProperty, Animations.FadeOut);
         }
+
+        private void Close_MouseEnter(object sender, MouseEventArgs e) {
+            CloseIcon.BeginAnimation(OpacityProperty, Animations.FadeIn);
+        }
+        private void Close_MouseLeave(object sender, MouseEventArgs e) {
+            CloseIcon.BeginAnimation(OpacityProperty, Animations.FadeOut);
+        }
     }
 }

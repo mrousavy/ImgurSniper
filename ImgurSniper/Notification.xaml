@@ -40,7 +40,9 @@
 
 
 			<!--Close "Button"-->
-			<Border CornerRadius="10" Height="12" Width="12" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right" Background="#FD5E4E" MouseDown="Window_Close" Cursor="Hand" x:Name="Btn_Close" Opacity="0"/>
+			<Border CornerRadius="10" Height="12" Width="12" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right" Background="#FD5E4E" MouseDown="Window_Close" Cursor="Hand" x:Name="Btn_Close" Opacity="0" MouseEnter="Close_MouseEnter" MouseLeave="Close_MouseLeave">
+				<md:PackIcon Kind="WindowClose" Width="10" Height="10" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#222222" x:Name="CloseIcon" Opacity="0" />
+			</Border>
 		</Grid>
 	</md:Card>
 </Window>

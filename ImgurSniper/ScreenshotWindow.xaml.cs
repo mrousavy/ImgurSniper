@@ -33,6 +33,13 @@ namespace ImgurSniper {
         //private bool _enableMagnifyer = false;
 
 
+        //Size of current Mouse Location screen
+        public static Rectangle Screen => System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position).Bounds;
+
+        //Size of whole Screen Array
+        public static Rectangle AllScreens => SystemInformation.VirtualScreen;
+
+
         public ScreenshotWindow(bool allMonitors) {
 #if DEBUG
             Topmost = false;
@@ -42,18 +49,25 @@ namespace ImgurSniper {
 
             InitializeComponent();
 
-
             Position(allMonitors);
             //LoadConfig();
-
-            Loaded += WindowLoaded;
         }
 
-        //Size of current Mouse Location screen
-        public static Rectangle Screen => System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position).Bounds;
+        //Position Window correctly
+        private void Position(bool allMonitors) {
+            Rectangle size = allMonitors ? AllScreens : Screen;
 
-        //Size of whole Screen Array
-        public static Rectangle AllScreens => SystemInformation.VirtualScreen;
+            Left = size.Left;
+            Top = size.Top;
+            Width = size.Width;
+            Height = size.Height;
+
+
+            if(allMonitors) {
+                Rect workArea = SystemParameters.WorkArea;
+                toast.Margin = new Thickness(workArea.Left, workArea.Top, (SystemParameters.VirtualScreenWidth - workArea.Right), (SystemParameters.VirtualScreenHeight - SystemParameters.PrimaryScreenHeight));
+            }
+        }
 
         private async void WindowLoaded(object sender, RoutedEventArgs e) {
             //this.CaptureMouse();
@@ -117,8 +131,8 @@ namespace ImgurSniper {
 
             try {
                 //Register Global Ctrl + Z Hotkey
-                HotKey ctrlAHotKey = new HotKey(ModifierKeys.Control, Key.Z, this);
-                ctrlAHotKey.HotKeyPressed += delegate {
+                HotKey ctrlZHotKey = new HotKey(ModifierKeys.Control, Key.Z, this);
+                ctrlZHotKey.HotKeyPressed += delegate {
                     CtrlZ();
                 };
             } catch {
@@ -161,22 +175,6 @@ namespace ImgurSniper {
 
             exStyle |= (int)WinAPI.ExtendedWindowStyles.WS_EX_TOOLWINDOW;
             WinAPI.SetWindowLong(wndHelper.Handle, (int)WinAPI.GetWindowLongFields.GWL_EXSTYLE, (IntPtr)exStyle);
-        }
-
-        //Position Window correctly
-        private void Position(bool allMonitors) {
-            Rectangle size = allMonitors ? AllScreens : Screen;
-
-            Left = size.Left;
-            Top = size.Top;
-            Width = size.Width;
-            Height = size.Height;
-
-
-            if(allMonitors) {
-                Rect workArea = SystemParameters.WorkArea;
-                toast.Margin = new Thickness(workArea.Left, workArea.Top, (SystemParameters.VirtualScreenWidth - workArea.Right), (SystemParameters.VirtualScreenHeight - SystemParameters.PrimaryScreenHeight));
-            }
         }
 
         //Load from config File (ImgurSniper.UI)
@@ -288,7 +286,7 @@ namespace ImgurSniper {
                     break;
                 case MouseButton.Left:
                     //Lock the from Point to the Mouse Position when started holding Mouse Button
-                    From = e.GetPosition(this);
+                    From = e.GetPosition(null);
                     break;
             }
         }
@@ -347,7 +345,7 @@ namespace ImgurSniper {
                 return;
             }
 
-            To = e.GetPosition(this);
+            To = e.GetPosition(null);
             FinishRectangle();
         }
 
@@ -363,7 +361,7 @@ namespace ImgurSniper {
             //Draw Rectangle
             if(_drag) {
                 //Set Crop Rectangle to Mouse Position
-                To = e.GetPosition(this);
+                To = e.GetPosition(null);
 
                 //Width (w) and Height (h) of dragged Rectangle
                 double w = Math.Abs(From.X - To.X);
@@ -378,7 +376,7 @@ namespace ImgurSniper {
 
             //Window Cords Display (Disabled for Performance reasons)
             //this.coords.Content =
-            //    $"x:{(int)e.GetPosition(this).X} | y:{(int)e.GetPosition(this).Y}";
+            //    $"x:{(int)e.GetPosition(null).X} | y:{(int)e.GetPosition(null).Y}";
         }
 
         #endregion
@@ -397,14 +395,14 @@ namespace ImgurSniper {
 
                 PolyLineSegment pls =
                     (PolyLineSegment)((PathGeometry)_currentPath.Data).Figures.Last().Segments.Last();
-                pls.Points.Add(e.GetPosition(this));
+                pls.Points.Add(e.GetPosition(null));
             }
         }
 
         //Mouse Down Event - Begin Painting
         private void BeginPaint(object sender, MouseButtonEventArgs e) {
             if(e.ButtonState == MouseButtonState.Pressed) {
-                _startPos = e.GetPosition(this);
+                _startPos = e.GetPosition(null);
 
 
                 _currentPath = new Path {
