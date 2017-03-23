@@ -9,20 +9,6 @@ using System.Windows.Input;
 
 namespace ImgurSniper {
     public static class FileIO {
-        //Config Keys
-        public enum ConfigType {
-            AfterSnipeAction,
-            SaveImages,
-            Magnifyer,
-            OpenAfterUpload,
-            SnipeMonitor,
-            Path,
-            ImageFormat,
-            RunOnBoot,
-            UsePrint,
-            IsInContextMenu
-        }
-
         //Value whether Magnifying Glass should be enabled or not
         public static bool MagnifyingGlassEnabled {
             get {
@@ -250,6 +236,38 @@ namespace ImgurSniper {
             }
         }
 
+        //Frames per Second of GIF Capture
+        public static int GifFps {
+            get {
+                try {
+                    return JsonConfig.GifFps;
+                } catch {
+                    return 10;
+                }
+            }
+            set {
+                Settings settings = JsonConfig;
+                settings.GifFps = value;
+                JsonConfig = settings;
+            }
+        }
+
+        //Maximum GIF Length in Milliseconds
+        public static int GifLength {
+            get {
+                try {
+                    return JsonConfig.GifLength;
+                } catch {
+                    return 10000;
+                }
+            }
+            set {
+                Settings settings = JsonConfig;
+                settings.GifLength = value;
+                JsonConfig = settings;
+            }
+        }
+
         public static Settings JsonConfig {
             get {
                 try {
@@ -313,6 +331,8 @@ namespace ImgurSniper {
             public DateTime LastChecked = DateTime.Now;
 
             public int CurrentCommits = 999;
+            public int GifLength = 10000;
+            public int GifFps = 10;
 
             public bool AllMonitors = true;
             public bool ImgurAfterSnipe = true;

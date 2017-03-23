@@ -16,7 +16,7 @@ namespace ImgurSniper.UI {
 
         //Path to Program Files/ImgurSniper Folder
         private static string Path => AppDomain.CurrentDomain.BaseDirectory;
-        private IReadOnlyList<GitHubCommit> _commits;
+        private List<GitHubCommit> _commits;
 
         //Path to Documents/ImgurSniper Folder
         private static string DocPath {
@@ -273,7 +273,9 @@ namespace ImgurSniper.UI {
                 if(forceSearch || DateTime.Now - lastChecked > TimeSpan.FromDays(1) || updateAvailable) {
                     //Retrieve info from github
                     GitHubClient github = new GitHubClient(new ProductHeaderValue("ImgurSniper"));
-                    _commits = await github.Repository.Commit.GetAll("mrousavy", "ImgurSniper");
+                    IReadOnlyList<GitHubCommit> commitsRaw = await github.Repository.Commit.GetAll("mrousavy", "ImgurSniper");
+                    //All Commits where a new ImgurSniper Version is available start with "R:"
+                    _commits = new List<GitHubCommit>(commitsRaw.Where(c => c.Commit.Message.StartsWith("R:")));
 
                     FileIO.LastChecked = DateTime.Now;
 

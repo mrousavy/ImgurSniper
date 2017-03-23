@@ -138,7 +138,7 @@
   <data name="imgSize" xml:space="preserve">
     <value>The Image Width and/or Height is too small!</value>
   </data>
-  <data name="imgToBig" xml:space="preserve">
+  <data name="imgTooBig" xml:space="preserve">
     <value>Image Size exceeds 12 MB! (Try smaller Images or use .JPEG!)</value>
   </data>
   <data name="linkclipboard" xml:space="preserve">
@@ -191,5 +191,17 @@ Would you like to see a detailed Exception Info?
   </data>
   <data name="close" xml:space="preserve">
     <value>Close</value>
+  </data>
+  <data name="imgclipboardGif" xml:space="preserve">
+    <value>GIF was copied to your Clipboard!</value>
+  </data>
+  <data name="imgTooBigGif" xml:space="preserve">
+    <value>GIF Size exceeds 12 MB! (Try smaller/shorter GIFs!)</value>
+  </data>
+  <data name="uploadingGif" xml:space="preserve">
+    <value>Uploading GIF... ({0} KB)</value>
+  </data>
+  <data name="gif" xml:space="preserve">
+    <value>GIF</value>
   </data>
 </root>

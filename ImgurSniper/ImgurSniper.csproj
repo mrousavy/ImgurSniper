@@ -95,6 +95,7 @@
       <HintPath>..\packages\MaterialDesignThemes.2.3.0.823\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Expression.Encoder, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86" />
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -127,6 +128,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Animations.cs" />
+    <Compile Include="GifOutline.xaml.cs">
+      <DependentUpon>GifOutline.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GifWindow.xaml.cs">
+      <DependentUpon>GifWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Notification.xaml.cs">
       <DependentUpon>Notification.xaml</DependentUpon>
     </Compile>
@@ -136,7 +143,16 @@
       <DependentUpon>strings.resx</DependentUpon>
     </Compile>
     <Compile Include="SystemMetrics.cs" />
+    <Compile Include="Templates.cs" />
     <Compile Include="WinAPI.cs" />
+    <Page Include="GifOutline.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GifWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Notification.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

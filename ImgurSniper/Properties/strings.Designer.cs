@@ -124,6 +124,15 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GIF.
+        /// </summary>
+        internal static string gif {
+            get {
+                return ResourceManager.GetString("gif", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Help.
         /// </summary>
         internal static string help {
@@ -142,6 +151,15 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GIF was copied to your Clipboard!.
+        /// </summary>
+        internal static string imgclipboardGif {
+            get {
+                return ResourceManager.GetString("imgclipboardGif", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The Image Width and/or Height is too small!.
         /// </summary>
         internal static string imgSize {
@@ -153,9 +171,18 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Image Size exceeds 12 MB! (Try smaller Images or use .JPEG!).
         /// </summary>
-        internal static string imgToBig {
+        internal static string imgTooBig {
             get {
-                return ResourceManager.GetString("imgToBig", resourceCulture);
+                return ResourceManager.GetString("imgTooBig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GIF Size exceeds 12 MB! (Try smaller/shorter GIFs!).
+        /// </summary>
+        internal static string imgTooBigGif {
+            get {
+                return ResourceManager.GetString("imgTooBigGif", resourceCulture);
             }
         }
         
@@ -258,6 +285,15 @@ namespace ImgurSniper.Properties {
         internal static string uploadingFiles {
             get {
                 return ResourceManager.GetString("uploadingFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uploading GIF... ({0} KB).
+        /// </summary>
+        internal static string uploadingGif {
+            get {
+                return ResourceManager.GetString("uploadingGif", resourceCulture);
             }
         }
         
