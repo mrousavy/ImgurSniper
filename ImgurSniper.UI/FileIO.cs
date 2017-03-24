@@ -110,7 +110,7 @@ namespace ImgurSniper.UI {
                 try {
                     return JsonConfig.ShortcutGifKey;
                 } catch {
-                    return Key.X;
+                    return Key.G;
                 }
             }
             set {
