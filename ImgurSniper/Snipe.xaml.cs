@@ -2,9 +2,7 @@
 using mrousavy;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,7 +11,6 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Microsoft.Expression.Encoder.ScreenCapture;
 using Application = System.Windows.Application;
 using Clipboard = System.Windows.Clipboard;
 
@@ -142,15 +139,22 @@ namespace ImgurSniper {
             //Wait for Dispatcher to utilize (Apparently it won't work without a Delay)
             await Task.Delay(1000);
 
-            Key sKey = FileIO.ShortcutKey;
+            Key imgKey = FileIO.ShortcutImgKey;
+            Key gifKey = FileIO.ShortcutGifKey;
             bool usePrint = FileIO.UsePrint;
 
-            HotKey hk = null;
+            HotKey imgHotKey = null;
             try {
-                hk = usePrint
+                imgHotKey = usePrint
                     ? new HotKey(ModifierKeys.None, Key.PrintScreen, this)
-                    : new HotKey(ModifierKeys.Control | ModifierKeys.Shift, sKey, this);
-                hk.HotKeyPressed += OpenFromShortcut;
+                    : new HotKey(ModifierKeys.Control | ModifierKeys.Shift, imgKey, this);
+                imgHotKey.HotKeyPressed += OpenFromShortcutImg;
+            } catch {
+                //ignored
+            }
+            try {
+                HotKey gifHotKey = new HotKey(ModifierKeys.Control | ModifierKeys.Shift, gifKey, this);
+                gifHotKey.HotKeyPressed += OpenFromShortcutGif;
             } catch {
                 //ignored
             }
@@ -185,15 +189,15 @@ namespace ImgurSniper {
                 ContextMenu = menu,
                 Visible = true,
                 Text = strings.clickorpress +
-                       (usePrint ? strings.printKeyShortcut : string.Format(strings.ctrlShiftShortcut, sKey)) +
+                       (usePrint ? strings.printKeyShortcut : string.Format(strings.ctrlShiftShortcut, imgKey)) +
                        strings.toSnipeNew
             };
             _nicon.MouseClick += (sender, e) => {
                 if(e.Button == MouseButtons.Left) {
-                    if(hk == null) {
-                        Crop(false, _gif);
+                    if(imgHotKey == null) {
+                        Crop(false, false);
                     } else {
-                        OpenFromShortcut(hk);
+                        OpenFromShortcutImg(imgHotKey);
                     }
                 }
             };
@@ -207,10 +211,17 @@ namespace ImgurSniper {
         }
 
         //Open Snipe by Shortcut (Ctrl + Shift + I or Print)
-        private void OpenFromShortcut(HotKey h) {
-            h.HotKeyPressed -= OpenFromShortcut;
-            Crop(false, _gif);
-            h.HotKeyPressed += OpenFromShortcut;
+        private void OpenFromShortcutImg(HotKey h) {
+            h.HotKeyPressed -= OpenFromShortcutImg;
+            Crop(false, false);
+            h.HotKeyPressed += OpenFromShortcutImg;
+        }
+
+        //Open Snipe by Shortcut (Ctrl + Shift + I or Print)
+        private void OpenFromShortcutGif(HotKey h) {
+            h.HotKeyPressed -= OpenFromShortcutGif;
+            Crop(false, true);
+            h.HotKeyPressed += OpenFromShortcutGif;
         }
 
         private async void InstantUpload(List<string> files) {
@@ -242,7 +253,7 @@ namespace ImgurSniper {
 
                     int index = 1;
                     //Upload each image
-                    foreach(byte[] file in images) {
+                    for(int i = 0; i < images.Count; i++) {
                         try {
                             //e.g. "Uploading Images (123KB) (1 of 2)"
                             //SuccessToast.Show(string.Format(strings.uploadingFiles, kb, index, files.Count), TimeSpan.FromDays(10));

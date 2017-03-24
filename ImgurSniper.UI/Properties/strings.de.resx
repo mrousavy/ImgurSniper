@@ -175,7 +175,7 @@
     <value>Hilfe</value>
   </data>
   <data name="hotkey" xml:space="preserve">
-    <value>Hotkey:</value>
+    <value>Hotkey (Image):</value>
   </data>
   <data name="imgFormat" xml:space="preserve">
     <value>Bild Format</value>
@@ -396,5 +396,41 @@ zu langsam für den Imgur Dienst.</value>
   </data>
   <data name="viewPics" xml:space="preserve">
     <value>Meine Bilder</value>
+  </data>
+  <data name="hotkeyGif" xml:space="preserve">
+    <value>Hotkey (GIF):</value>
+  </data>
+  <data name="couldNotLoad" xml:space="preserve">
+    <value>Konfiguration konnte nicht geladen werden!</value>
+  </data>
+  <data name="errorConfig" xml:space="preserve">
+    <value>Fehler beim Laden der Konfigurations Datei!
+("{0}")</value>
+  </data>
+  <data name="ctrlShift" xml:space="preserve">
+    <value>Strg + Shift + </value>
+  </data>
+  <data name="gif" xml:space="preserve">
+    <value>GIF</value>
+  </data>
+  <data name="gifFps" xml:space="preserve">
+    <value>FPS:</value>
+  </data>
+  <data name="gifFpsVal" xml:space="preserve">
+    <value>{0} FPS</value>
+  </data>
+  <data name="gifLength" xml:space="preserve">
+    <value>Max. Länge:</value>
+  </data>
+  <data name="gifLengthVal" xml:space="preserve">
+    <value>{0} Sekunden</value>
+  </data>
+  <data name="pageGif" xml:space="preserve">
+    <value>GIF</value>
+  </data>
+  <data name="pageGifDesc" xml:space="preserve">
+    <value>Um ein animiertes GIF zu teilen, drücken Sie Ihren GIF Hotkey (Standard: Strg + Shift + G) oder Klicken Sie mit der Rechten Maustaste auf das ImgurSniper Tray Logo (Rechte Seite der Taskleiste), und wählen Sie "GIF". Statt dass Sie ein starres Bild teilen, können Sie nun eine kurze Aufnahme teilen!
+
+Sobald Sie den gewünschten Bereich ausgewählt haben, beginnt ImgurSniper mit der Aufnahme des GIFs. Die Blaue Leiste unter dem Grauen Rahmen zeigt den Fortschritt der verstrichenen Zeit (Sobald diese Leiste voll ist, wird die Aufnahme automatisch beendet.) Um die Aufnahme manuell zu beenden, drücken Sie einfach den Haken nehmen der Blauen Leiste. Ihr GIF wird nun auf Imgur hochgeladen.</value>
   </data>
 </root>

@@ -505,11 +505,9 @@ namespace ImgurSniper {
         //"Crop" Rectangle
         private bool MakeImage(Rectangle size) {
             try {
-                ImageSource source = Screenshot.getScreenshot(size);
-
                 MemoryStream stream = new MemoryStream();
 
-                Screenshot.MediaImageToDrawingImage(source)
+                Screenshot.GetScreenshot(size)
                     .Save(stream,
                         FileIO.UsePNG ? ImageFormat.Png : ImageFormat.Jpeg);
 

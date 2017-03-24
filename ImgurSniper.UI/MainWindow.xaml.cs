@@ -93,11 +93,11 @@ namespace ImgurSniper.UI {
             loadingDesc.Content = str.loadConf;
 
             #region Read Config
+
             try {
                 //Only 1x FileIO File read, optimized performance
                 FileIO.Settings settings = FileIO.JsonConfig;
 
-                string SaveImagesPath = settings.SaveImagesPath;
                 bool UsePNG = settings.UsePNG;
                 bool AllMonitors = settings.AllMonitors;
                 bool OpenAfterUpload = settings.OpenAfterUpload;
@@ -107,8 +107,12 @@ namespace ImgurSniper.UI {
                 bool SaveImages = settings.SaveImages;
                 bool ImgurAfterSnipe = settings.ImgurAfterSnipe;
                 bool AutoUpdate = settings.AutoUpdate;
+                int gifFps = settings.GifFps;
+                int gifLength = settings.GifLength / 1000;
                 string language = settings.Language;
-                System.Windows.Input.Key key = settings.ShortcutKey;
+                string SaveImagesPath = settings.SaveImagesPath;
+                System.Windows.Input.Key imgKey = settings.ShortcutImgKey;
+                System.Windows.Input.Key gifKey = settings.ShortcutGifKey;
 
                 //Path to Saved Images
                 if(string.IsNullOrWhiteSpace(SaveImagesPath)) {
@@ -177,9 +181,20 @@ namespace ImgurSniper.UI {
                 }
                 LanguageBox.SelectionChanged += LanguageBox_SelectionChanged;
 
-                HotkeyBox.Text = key.ToString();
+                HotkeyGifBox.Text = imgKey.ToString();
 
-            } catch { }
+                HotkeyImgBox.Text = gifKey.ToString();
+
+                GifFpsSlider.Value = gifFps;
+                GifFpsSlider.ValueChanged += SliderGifFps_Changed;
+                GifFpsLabel.Content = string.Format(str.gifFpsVal, gifFps);
+
+                GifLengthSlider.Value = gifLength;
+                GifLengthSlider.ValueChanged += SliderGifLength_Changed;
+                GifLengthLabel.Content = string.Format(str.gifLengthVal, gifLength);
+            } catch {
+                await ShowOkDialog(str.couldNotLoad, string.Format(str.errorConfig, FileIO.ConfigPath));
+            }
             #endregion
 
             //Run proecess if not running

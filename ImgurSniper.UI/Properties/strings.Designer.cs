@@ -169,6 +169,24 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not load Config!.
+        /// </summary>
+        public static string couldNotLoad {
+            get {
+                return ResourceManager.GetString("couldNotLoad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ctrl + Shift + .
+        /// </summary>
+        public static string ctrlShift {
+            get {
+                return ResourceManager.GetString("ctrlShift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to On current Monitor.
         /// </summary>
         public static string curMonitor {
@@ -223,11 +241,66 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error while loading Config!
+        ///(&quot;{0}&quot;).
+        /// </summary>
+        public static string errorConfig {
+            get {
+                return ResourceManager.GetString("errorConfig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not retrieve Version/Update info from GitHub!.
         /// </summary>
         public static string failedUpdate {
             get {
                 return ResourceManager.GetString("failedUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GIF.
+        /// </summary>
+        public static string gif {
+            get {
+                return ResourceManager.GetString("gif", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FPS:.
+        /// </summary>
+        public static string gifFps {
+            get {
+                return ResourceManager.GetString("gifFps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} FPS.
+        /// </summary>
+        public static string gifFpsVal {
+            get {
+                return ResourceManager.GetString("gifFpsVal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max. Length:.
+        /// </summary>
+        public static string gifLength {
+            get {
+                return ResourceManager.GetString("gifLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Seconds.
+        /// </summary>
+        public static string gifLengthVal {
+            get {
+                return ResourceManager.GetString("gifLengthVal", resourceCulture);
             }
         }
         
@@ -241,11 +314,20 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hotkey:.
+        ///   Looks up a localized string similar to Hotkey (GIF):.
         /// </summary>
-        public static string hotkey {
+        public static string hotkeyGif {
             get {
-                return ResourceManager.GetString("hotkey", resourceCulture);
+                return ResourceManager.GetString("hotkeyGif", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hotkey (Image):.
+        /// </summary>
+        public static string hotkeyImg {
+            get {
+                return ResourceManager.GetString("hotkeyImg", resourceCulture);
             }
         }
         
@@ -460,6 +542,26 @@ namespace ImgurSniper.UI.Properties {
         public static string pageGeneralDesc {
             get {
                 return ResourceManager.GetString("pageGeneralDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GIF.
+        /// </summary>
+        public static string pageGif {
+            get {
+                return ResourceManager.GetString("pageGif", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To snipe a new GIF you have to press your GIF Hotkey (Default: Ctrl + Shift + G) or right-click the ImgurSniper Tray Icon (right side of your Taskbar) and hit &quot;GIF&quot;. Instead of sharing a single Image, you now can share a short Screen Recording!
+        ///
+        ///As soon as you selected your desired area, ImgurSniper will start recording the GIF. The blue Progress Bar below the grey Area will show you the Progress of the GIF (Once the Progress Bar is full, the screen recording will automatically stop and begin uploading th [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string pageGifDesc {
+            get {
+                return ResourceManager.GetString("pageGifDesc", resourceCulture);
             }
         }
         

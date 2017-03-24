@@ -15,6 +15,7 @@ namespace AddToContextMenu {
                     baseKey.SetValue("Icon", path);
                     baseKey.SetValue(string.Empty, "Upload to Imgur");
                     using(RegistryKey key = baseKey.CreateSubKey("command")) {
+                        //TODO: Handle multiple Paths (instead of %1, do %* | not yet implemented in ImgurSniper)
                         key.SetValue(string.Empty, "\"" + path + "\" upload \"%1\"");
                     }
                 }

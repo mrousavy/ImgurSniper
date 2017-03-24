@@ -73,18 +73,50 @@ namespace ImgurSniper {
             }
         }
 
-        //Key for ImgurSniper Shortcut
-        public static Key ShortcutKey {
+        //Value whether ImgurSniper should automatically search for Updates
+        public static bool AutoUpdate {
             get {
                 try {
-                    return JsonConfig.ShortcutKey;
+                    return JsonConfig.AutoUpdate;
+                } catch {
+                    return true;
+                }
+            }
+            set {
+                Settings settings = JsonConfig;
+                settings.AutoUpdate = value;
+                JsonConfig = settings;
+            }
+        }
+
+        //Key for ImgurSniper Image Shortcut
+        public static Key ShortcutImgKey {
+            get {
+                try {
+                    return JsonConfig.ShortcutImgKey;
                 } catch {
                     return Key.X;
                 }
             }
             set {
                 Settings settings = JsonConfig;
-                settings.ShortcutKey = value;
+                settings.ShortcutImgKey = value;
+                JsonConfig = settings;
+            }
+        }
+
+        //Key for ImgurSniper GIF Shortcut
+        public static Key ShortcutGifKey {
+            get {
+                try {
+                    return JsonConfig.ShortcutGifKey;
+                } catch {
+                    return Key.X;
+                }
+            }
+            set {
+                Settings settings = JsonConfig;
+                settings.ShortcutGifKey = value;
                 JsonConfig = settings;
             }
         }
@@ -188,6 +220,22 @@ namespace ImgurSniper {
             }
         }
 
+        //Count of Commits for this ImgurSniper Version (for checking for Updates)
+        public static int CurrentCommits {
+            get {
+                try {
+                    return JsonConfig.CurrentCommits;
+                } catch {
+                    return 999;
+                }
+            }
+            set {
+                Settings settings = JsonConfig;
+                settings.CurrentCommits = value;
+                JsonConfig = settings;
+            }
+        }
+
         //Last Time, ImgurSniper checked for Updates
         public static DateTime LastChecked {
             get {
@@ -235,6 +283,7 @@ namespace ImgurSniper {
                 JsonConfig = settings;
             }
         }
+
 
         //Frames per Second of GIF Capture
         public static int GifFps {
@@ -350,7 +399,8 @@ namespace ImgurSniper {
             public string SaveImagesPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "ImgurSniperImages");
 
-            public Key ShortcutKey = Key.X;
+            public Key ShortcutImgKey = Key.X;
+            public Key ShortcutGifKey = Key.G;
         }
 
         //Check for Write Access to Directory

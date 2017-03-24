@@ -329,8 +329,8 @@ Pro Tip: Hit Ctrl + A to instantly create a Screenshot of your whole Desktop.</v
   <data name="downloadingUpdate" xml:space="preserve">
     <value>Downloading Update..</value>
   </data>
-  <data name="hotkey" xml:space="preserve">
-    <value>Hotkey:</value>
+  <data name="hotkeyImg" xml:space="preserve">
+    <value>Hotkey (Image):</value>
   </data>
   <data name="pressKey" xml:space="preserve">
     <value>Press any Key...
@@ -396,5 +396,41 @@ is too slow for the Imgur Service.</value>
   </data>
   <data name="viewPics" xml:space="preserve">
     <value>My Images</value>
+  </data>
+  <data name="hotkeyGif" xml:space="preserve">
+    <value>Hotkey (GIF):</value>
+  </data>
+  <data name="couldNotLoad" xml:space="preserve">
+    <value>Could not load Config!</value>
+  </data>
+  <data name="errorConfig" xml:space="preserve">
+    <value>Error while loading Config!
+("{0}")</value>
+  </data>
+  <data name="ctrlShift" xml:space="preserve">
+    <value>Ctrl + Shift + </value>
+  </data>
+  <data name="gif" xml:space="preserve">
+    <value>GIF</value>
+  </data>
+  <data name="gifFps" xml:space="preserve">
+    <value>FPS:</value>
+  </data>
+  <data name="gifFpsVal" xml:space="preserve">
+    <value>{0} FPS</value>
+  </data>
+  <data name="gifLength" xml:space="preserve">
+    <value>Max. Length:</value>
+  </data>
+  <data name="gifLengthVal" xml:space="preserve">
+    <value>{0} Seconds</value>
+  </data>
+  <data name="pageGif" xml:space="preserve">
+    <value>GIF</value>
+  </data>
+  <data name="pageGifDesc" xml:space="preserve">
+    <value>To snipe a new GIF you have to press your GIF Hotkey (Default: Ctrl + Shift + G) or right-click the ImgurSniper Tray Icon (right side of your Taskbar) and hit "GIF". Instead of sharing a single Image, you now can share a short Screen Recording!
+
+As soon as you selected your desired area, ImgurSniper will start recording the GIF. The blue Progress Bar below the grey Area will show you the Progress of the GIF (Once the Progress Bar is full, the screen recording will automatically stop and begin uploading the GIF.) To stop recording manually, you have to click the blue Check Button right next to the Progress Bar. Your GIF is then being uploaded to Imgur.</value>
   </data>
 </root>

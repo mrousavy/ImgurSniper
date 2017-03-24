@@ -36,7 +36,7 @@
 			</md:Card>-->
 
 
-            <!--CATEGORY: Logo(s)-->
+			<!--CATEGORY: Logo(s)-->
 			<StackPanel Orientation="Horizontal" Margin="5,0,15,5"
 						HorizontalAlignment="Right" VerticalAlignment="Top">
 				<Image Width="100" Margin="10" RenderOptions.BitmapScalingMode="HighQuality"
@@ -46,17 +46,17 @@
 			</StackPanel>
 
 
-            <!--CATEGORY: Different Toggles/Settings-->
-            <ScrollViewer Margin="0,0,0,50" VerticalScrollBarVisibility="Auto">
+			<!--CATEGORY: Different Toggles/Settings-->
+			<ScrollViewer Margin="0,0,0,50" VerticalScrollBarVisibility="Auto">
 
-                <!--Animation-->
-                <md:Transitioner SelectedIndex="0">
+				<!--Animation-->
+				<md:Transitioner SelectedIndex="0">
 					<md:TransitionerSlide OpeningEffect="{md:TransitionEffect FadeIn}">
 
 
-                        <StackPanel Margin="5">
-                            <!--HEADER: After Snapping-->
-                            <Label Margin="10,5,5,5" FontSize="15"
+						<StackPanel Margin="5">
+							<!--HEADER: After Snapping-->
+							<Label Margin="10,5,5,5" FontSize="15"
 								   Content="{x:Static Member=cultureStrings:strings.afterSnapping}" />
 							<RadioButton GroupName="AfterSnap" Tag="Imgur" IsChecked="True" VerticalAlignment="Bottom"
 										 FontSize="14" Margin="15,0,0,0" x:Name="ImgurRadio"
@@ -69,7 +69,7 @@
 										 Content="{x:Static Member=cultureStrings:strings.copyClipboard}" />
 
 
-                            <!--HEADER: When finished-->
+							<!--HEADER: When finished-->
 							<Label Margin="10,5,5,5" FontSize="15"
 								   Content="{x:Static Member=cultureStrings:strings.whenFinished}" />
 							<CheckBox x:Name="SaveBox" FontSize="14" Margin="15,0,0,0" VerticalAlignment="Bottom"
@@ -90,7 +90,7 @@
 							</StackPanel>
 
 
-                            <!--HEADER: Tray/Background Service-->
+							<!--HEADER: Tray/Background Service-->
 							<Label Margin="10,5,5,5" FontSize="15"
 								   Content="{x:Static Member=cultureStrings:strings.trayService}" />
 
@@ -103,21 +103,36 @@
 									  Content="{x:Static Member=cultureStrings:strings.usePrint}" />
 
 							<StackPanel Orientation="Horizontal" Margin="15,5,0,0" VerticalAlignment="Center">
-								<Label Content="{x:Static Member=cultureStrings:strings.hotkey}"
+								<Label Content="{x:Static Member=cultureStrings:strings.hotkeyImg}"
 									   VerticalAlignment="Center" FontSize="13" Foreground="Gray" />
 
+								<Label FontSize="11" Foreground="Gray" Content="{x:Static Member=cultureStrings:strings.ctrlShift}" VerticalAlignment="Center"/>
+
 								<Border CornerRadius="5" Background="LightGray" BorderBrush="#ABABAB"
-										BorderThickness="0,0,2,2.3" Margin="3" Height="25" MinWidth="10"
+										BorderThickness="0,0,2,2.3" Height="25" MinWidth="10"
 										VerticalAlignment="Center">
 
 									<TextBox FontSize="14" VerticalAlignment="Center"
-											 Focusable="False" x:Name="HotkeyBox" MouseDown="HotkeyBoxMDown"
+											 Focusable="False" x:Name="HotkeyImgBox" MouseDown="HotkeyImgBoxMDown"
 											 MaxLength="1" MinWidth="10" Height="25" SelectionBrush="Transparent"
 											 Cursor="Hand" Text="X" Padding="3,0,3,0" BorderBrush="Transparent" />
 								</Border>
 							</StackPanel>
 
-                            <!--HEADER: Other...-->
+
+							<StackPanel Orientation="Horizontal" Margin="15,5,0,0" VerticalAlignment="Center">
+								<Label Content="{x:Static Member=cultureStrings:strings.hotkeyGif}"
+									   VerticalAlignment="Center" FontSize="13" Foreground="Gray" />
+
+								<Label FontSize="11" Foreground="Gray" Content="{x:Static Member=cultureStrings:strings.ctrlShift}" VerticalAlignment="Center"/>
+								
+								<Border CornerRadius="5" Background="LightGray" BorderBrush="#ABABAB" BorderThickness="0,0,2,2.3" Height="25" MinWidth="10" VerticalAlignment="Center">
+
+									<TextBox FontSize="14" VerticalAlignment="Center" Focusable="False" x:Name="HotkeyGifBox" MouseDown="HotkeyGifBoxMDown" MaxLength="1" MinWidth="10" Height="25" SelectionBrush="Transparent" Cursor="Hand" Text="G" Padding="3,0,3,0" BorderBrush="Transparent" />
+								</Border>
+							</StackPanel>
+
+							<!--HEADER: Other...-->
 							<Label Margin="10,5,5,5" FontSize="15"
 								   Content="{x:Static Member=cultureStrings:strings.other}" />
 							<CheckBox x:Name="MagnifyingGlassBox" FontSize="14" Margin="15,0,0,0"
@@ -140,18 +155,35 @@
 									<ComboBoxItem x:Name="de">German</ComboBoxItem>
 								</ComboBox>
 							</StackPanel>
-
-                            <!--HEADER: Imgur Account-->
-							<Label Margin="10,5,5,5" FontSize="15"
-								   x:Name="Label_Account"
-								   Content="{x:Static Member=cultureStrings:strings.imgurAcc}" />
+							
+							
+							
+							<!--HEADER: GIF-->
+							<Label Margin="10,5,5,5" FontSize="15" Content="{x:Static Member=cultureStrings:strings.gif}" />
+							<!--GIF Length-->
+							<StackPanel Margin="15,5,0,0">
+								<StackPanel Orientation="Horizontal">
+									<Label Foreground="Gray" Content="{x:Static Member=cultureStrings:strings.gifLength}"/>
+                                    <Slider Maximum="10" Minimum="1" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" x:Name="GifLengthSlider"/>
+                                    
+                                    <Label Margin="5,0,0,0" Foreground="Gray" x:Name="GifLengthLabel"/>
+                                </StackPanel>
+								<!--GIF FPS-->
+									<StackPanel Orientation="Horizontal">
+										<Label Foreground="Gray" Content="{x:Static Member=cultureStrings:strings.gifFps}"/>
+                                    <Slider Maximum="60" Minimum="2" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" x:Name="GifFpsSlider"/>
+                                        
+                                        <Label Margin="5,0,0,0" Foreground="Gray" x:Name="GifFpsLabel"/>
+									</StackPanel>
+								</StackPanel>
+							
+							<!--HEADER: Imgur Account-->
+							<Label Margin="10,5,5,5" FontSize="15" x:Name="Label_Account" Content="{x:Static Member=cultureStrings:strings.imgurAcc}" />
 
 							<Grid Margin="15,5,5,5">
 								<StackPanel Orientation="Horizontal" Visibility="Collapsed"
 											x:Name="Panel_PIN">
-									<Label Foreground="Gray" FontSize="13"
-										   VerticalAlignment="Center"
-										   Content="PIN:" />
+									<Label Foreground="Gray" FontSize="13" VerticalAlignment="Center" Content="PIN:" />
 
 									<TextBox Margin="5" MaxLength="20" Width="100" x:Name="Box_PIN"
 											 VerticalAlignment="Bottom" TextChanged="Box_PIN_TextChanged" />
@@ -179,7 +211,7 @@
 							</Grid>
 
 
-                            <!--HEADER: Where to snipe-->
+							<!--HEADER: Where to snipe-->
 							<Label Margin="10,5,5,5" FontSize="15"
 								   Content="{x:Static Member=cultureStrings:strings.whereSnipe}" />
 							<RadioButton GroupName="MonitorGroup" Tag="Current" IsChecked="True"
@@ -194,7 +226,7 @@
 										 ToolTip="{x:Static Member=cultureStrings:strings.notOnlyMouse}"
 										 Content="{x:Static Member=cultureStrings:strings.allMonitor}" />
 
-                            <!--HEADER: Image Format-->
+							<!--HEADER: Image Format-->
 							<Label Margin="10,5,5,5" FontSize="15"
 								   Content="{x:Static Member=cultureStrings:strings.imgFormat}" />
 							<RadioButton GroupName="ImageFormatGroup" Tag="PNG"
@@ -210,7 +242,7 @@
 										 Content="JPEG" />
 
 
-                            <!--HEADER: Update-->
+							<!--HEADER: Update-->
 							<Label Margin="10,5,5,5" FontSize="15"
 								   Content="{x:Static Member=cultureStrings:strings.update}" />
 
@@ -238,31 +270,31 @@
 			<Separator VerticalAlignment="Bottom" Margin="0,0,0,48" Foreground="LightGray" />
 
 
-            <!--CATEGORY: Bottom Button and Statusbar-->
-            <md:Transitioner SelectedIndex="0">
-                <md:TransitionerSlide OpeningEffect="{md:TransitionEffect SlideInFromBottom}">
+			<!--CATEGORY: Bottom Button and Statusbar-->
+			<md:Transitioner SelectedIndex="0">
+				<md:TransitionerSlide OpeningEffect="{md:TransitionEffect SlideInFromBottom}">
 
-                    <!--CATEGORY: Bottom Buttons-->
-                    <StackPanel Orientation="Horizontal"
+					<!--CATEGORY: Bottom Buttons-->
+					<StackPanel Orientation="Horizontal"
 						HorizontalAlignment="Right" VerticalAlignment="Bottom">
-				        <!--<Button Margin="5" Click="Repair" x:Name="Btn_Repair"
-					        Content="{x:Static Member=cultureStrings:strings.repair}"/>-->
+						<!--<Button Margin="5" Click="Repair" x:Name="Btn_Repair"
+							Content="{x:Static Member=cultureStrings:strings.repair}"/>-->
 
-				        <Button Margin="5" Click="Help" x:Name="Btn_Help"
-						        Content="{x:Static Member=cultureStrings:strings.help}" />
+						<Button Margin="5" Click="Help" x:Name="Btn_Help"
+								Content="{x:Static Member=cultureStrings:strings.help}" />
 
-				        <Button Margin="5" Click="Update" x:Name="Btn_Update" IsEnabled="False"
-						        Content="{x:Static Member=cultureStrings:strings.update}" />
+						<Button Margin="5" Click="Update" x:Name="Btn_Update" IsEnabled="False"
+								Content="{x:Static Member=cultureStrings:strings.update}" />
 
-				        <Button Margin="5" Click="Snipe" x:Name="Btn_Snipe" Content="Snipe!" />
-			        </StackPanel>
+						<Button Margin="5" Click="Snipe" x:Name="Btn_Snipe" Content="Snipe!" />
+					</StackPanel>
 
 
-                </md:TransitionerSlide>
-            </md:Transitioner>
+				</md:TransitionerSlide>
+			</md:Transitioner>
 
-            <!--CATEGORY: Bottom Statusbar-->
-            <StackPanel Orientation="Horizontal" x:Name="progressIndicator" Opacity="0.7"
+			<!--CATEGORY: Bottom Statusbar-->
+			<StackPanel Orientation="Horizontal" x:Name="progressIndicator" Opacity="0.7"
 						HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="12">
 
 				<ProgressBar x:Name="progressBar" IsIndeterminate="True"
@@ -272,7 +304,7 @@
 			</StackPanel>
 
 
-            <!--CATEGORY: Toasts-->
+			<!--CATEGORY: Toasts-->
 			<toasty:Toasty x:Name="success_toast"
 						   Height="30"
 						   VerticalAlignment="Bottom"

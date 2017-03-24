@@ -163,7 +163,7 @@ namespace ImgurSniper.UI {
             } catch { }
         }
 
-        private void HotkeyBoxMDown(object sender, RoutedEventArgs e) {
+        private void HotkeyImgBoxMDown(object sender, RoutedEventArgs e) {
             TextBox box = sender as TextBox;
             if(box == null) {
                 return;
@@ -179,8 +179,32 @@ namespace ImgurSniper.UI {
                 bool? result = sel.ShowDialog();
 
                 if(result == true) {
-                    FileIO.ShortcutKey = sel.key;
-                    HotkeyBox.Text = sel.key.ToString();
+                    FileIO.ShortcutImgKey = sel.key;
+                    HotkeyImgBox.Text = sel.key.ToString();
+
+                    InstallerHelper.KillImgurSniper(false);
+                    InstallerHelper.StartImgurSniper();
+                }
+            } catch { }
+        }
+        private void HotkeyGifBoxMDown(object sender, RoutedEventArgs e) {
+            TextBox box = sender as TextBox;
+            if(box == null) {
+                return;
+            }
+
+            try {
+                HotKeySelector sel = new HotKeySelector();
+
+                try {
+                    sel.Owner = this;
+                } catch { }
+
+                bool? result = sel.ShowDialog();
+
+                if(result == true) {
+                    FileIO.ShortcutGifKey = sel.key;
+                    HotkeyGifBox.Text = sel.key.ToString();
 
                     InstallerHelper.KillImgurSniper(false);
                     InstallerHelper.StartImgurSniper();
@@ -203,6 +227,24 @@ namespace ImgurSniper.UI {
                 } catch {
                     box.SelectedIndex = 0;
                 }
+            }
+        }
+
+        private void SliderGifLength_Changed(object sender, RoutedPropertyChangedEventArgs<double> e) {
+            if(sender is Slider slider) {
+                int value = (int)(slider.Value);
+                FileIO.GifLength = value * 1000;
+
+                GifLengthLabel.Content = string.Format(str.gifLengthVal, value);
+            }
+        }
+
+        private void SliderGifFps_Changed(object sender, RoutedPropertyChangedEventArgs<double> e) {
+            if(sender is Slider slider) {
+                int value = (int)slider.Value;
+                FileIO.GifFps = value;
+
+                GifFpsLabel.Content = string.Format(str.gifFpsVal, value);
             }
         }
 

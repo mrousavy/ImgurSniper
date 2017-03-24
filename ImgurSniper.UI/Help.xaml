@@ -7,7 +7,7 @@
 		xmlns:cultureStrings="clr-namespace:ImgurSniper.UI.Properties"
 		xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
 		mc:Ignorable="d" MinHeight="200" MinWidth="200" WindowStartupLocation="CenterOwner"
-		Title="{x:Static Member=cultureStrings:strings.help}" Height="620" Width="720">
+		Title="{x:Static Member=cultureStrings:strings.help}" Height="620" Width="770">
 	<Grid>
 		<dragablz:TabablzControl Margin="8" >
 			<dragablz:TabablzControl.InterTabController>
@@ -16,11 +16,14 @@
 			<TabItem Header="{x:Static Member=cultureStrings:strings.pageGeneral}"
 					 IsSelected="True">
 				<Frame Source="/ImgurSniper.UI;component/Pages/GeneralPage.xaml"/>
-			</TabItem>
-			<TabItem Header="{x:Static Member=cultureStrings:strings.pageSnipe}">
-				<Frame Source="/ImgurSniper.UI;component/Pages/SnipePage.xaml"/>
-			</TabItem>
-			<TabItem Header="{x:Static Member=cultureStrings:strings.pageDraw}">
+            </TabItem>
+            <TabItem Header="{x:Static Member=cultureStrings:strings.pageSnipe}">
+                <Frame Source="/ImgurSniper.UI;component/Pages/SnipePage.xaml"/>
+            </TabItem>
+            <TabItem Header="{x:Static Member=cultureStrings:strings.pageGif}">
+                <Frame Source="/ImgurSniper.UI;component/Pages/GifPage.xaml"/>
+            </TabItem>
+            <TabItem Header="{x:Static Member=cultureStrings:strings.pageDraw}">
 				<Frame Source="/ImgurSniper.UI;component/Pages/DrawPage.xaml"/>
 			</TabItem>
 			<TabItem Header="{x:Static Member=cultureStrings:strings.pageRightClick}">

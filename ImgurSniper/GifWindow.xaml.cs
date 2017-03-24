@@ -1,5 +1,4 @@
 ﻿using ImgurSniper.Properties;
-using Microsoft.Expression.Encoder.ScreenCapture;
 using mrousavy;
 using System;
 using System.IO;
@@ -18,16 +17,13 @@ using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Path = System.Windows.Shapes.Path;
 using Point = System.Windows.Point;
 using Rectangle = System.Drawing.Rectangle;
-using static ImgurSniper.Templates;
 
 namespace ImgurSniper {
     /// <summary>
     /// Interaction logic for GifWindow.xaml
     /// </summary>
     public partial class GifWindow : Window {
-        private bool _drag, _stopped = false;
-        private ScreenCaptureJob _screenCaptureJob;
-        private System.Timers.Timer _timer;
+        private bool _drag;
 
         public byte[] CroppedGif;
         public Point From, To;
@@ -489,59 +485,15 @@ namespace ImgurSniper {
         private void StartGif(Rectangle size) {
             int gifLength = FileIO.GifLength;
 
-            RECT bounds = new RECT {
-                Left = size.Left,
-                Top = size.Top,
-                Height = size.Height,
-                Width = size.Width
-            };
-            GifOutline outline = new GifOutline(bounds, gifLength);
-            outline.Show();
+            //Stop recording after 10 Secs
+            //CHANGE THIS IF YOU WANT LONGER CAPTURES
+            TimeSpan recordingLength = TimeSpan.FromMilliseconds(5000);
 
-            try {
-                //Path for temporary WMV
-                string tmp = System.IO.Path.Combine(
-                    System.IO.Path.GetTempPath(),
-                    "imgursnipertempvid.wmv");
+            GifRecorder recorder = new GifRecorder(size, recordingLength);
+            bool? result = recorder.ShowDialog();
 
-                if(File.Exists(tmp))
-                    File.Delete(tmp);
-
-                //Initialize Capture Job
-                _screenCaptureJob = new ScreenCaptureJob {
-                    CaptureRectangle = size,
-                    ShowFlashingBoundary = true,
-                    ScreenCaptureVideoProfile = { FrameRate = FileIO.GifFps },
-                    CaptureMouseCursor = true,
-                    OutputScreenCaptureFileName = tmp
-                };
-
-                _screenCaptureJob.ShowFlashingBoundary = false;
-
-                //Record
-                _screenCaptureJob.Start();
-
-
-                //Stop recording after 10 Secs
-                //CHANGE THIS IF YOU WANT LONGER CAPTURES
-                _timer = new System.Timers.Timer(gifLength);
-                _timer.Elapsed += delegate {
-                    _timer.Stop();
-                    if(!_stopped) {
-                        Dispatcher.BeginInvoke(new Action(delegate {
-                            _screenCaptureJob.Stop();
-                            _screenCaptureJob.Dispose();
-                            outline.Close();
-                            _stopped = true;
-                            Finish(true, tmp);
-                        }));
-                    }
-                };
-                _timer.Start();
-            } catch {
-                outline.Close();
-                Finish(false, null);
-            }
+            CroppedGif = recorder.Gif;
+            DialogResult = result;
         }
 
         //success = Successful?   |    wmv = Path to .wmv File

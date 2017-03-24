@@ -88,18 +88,34 @@ namespace ImgurSniper.UI {
             }
         }
 
-        //Key for ImgurSniper Shortcut
-        public static Key ShortcutKey {
+        //Key for ImgurSniper Image Shortcut
+        public static Key ShortcutImgKey {
             get {
                 try {
-                    return JsonConfig.ShortcutKey;
+                    return JsonConfig.ShortcutImgKey;
                 } catch {
                     return Key.X;
                 }
             }
             set {
                 Settings settings = JsonConfig;
-                settings.ShortcutKey = value;
+                settings.ShortcutImgKey = value;
+                JsonConfig = settings;
+            }
+        }
+
+        //Key for ImgurSniper GIF Shortcut
+        public static Key ShortcutGifKey {
+            get {
+                try {
+                    return JsonConfig.ShortcutGifKey;
+                } catch {
+                    return Key.X;
+                }
+            }
+            set {
+                Settings settings = JsonConfig;
+                settings.ShortcutGifKey = value;
                 JsonConfig = settings;
             }
         }
@@ -373,7 +389,8 @@ namespace ImgurSniper.UI {
             public string SaveImagesPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "ImgurSniperImages");
 
-            public Key ShortcutKey = Key.X;
+            public Key ShortcutImgKey = Key.X;
+            public Key ShortcutGifKey = Key.G;
         }
 
         //Check for Write Access to Directory

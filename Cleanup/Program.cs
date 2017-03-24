@@ -24,7 +24,10 @@ namespace Cleanup {
                 System.IO.File.Delete(shortcutLocation);
 
                 Console.WriteLine("Removed Start Menu Shortcut..");
-            } catch { }
+            } catch {
+                Console.WriteLine("Could not remove Start Menu Shortcut! Press any key to continue...");
+                Console.ReadKey();
+            }
 
             //Remove Desktop Shortcut
             try {
@@ -36,23 +39,31 @@ namespace Cleanup {
                 System.IO.File.Delete(shortcutAddress);
 
                 Console.WriteLine("Removed Desktop Shortcut..");
-            } catch { }
+            } catch {
+                Console.WriteLine("Could not remove Desktop Shortcut! Press any key to continue...");
+                Console.ReadKey();
+            }
 
             //Remove Context Menu Shortcut
             try {
                 using(RegistryKey baseKey = Registry.ClassesRoot.CreateSubKey(@"*\shell")) {
                     baseKey.DeleteSubKeyTree("ImgurSniperUpload");
                 }
-            } catch { }
+            } catch {
+                Console.WriteLine("Could not remove Context Menu Shortcut! Press any key to continue...");
+                Console.ReadKey();
+            }
 
             //Remove Autostart
             try {
-                using(
-                    RegistryKey baseKey =
+                using(RegistryKey baseKey =
                         Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run")) {
                     baseKey.DeleteValue("ImgurSniper");
                 }
-            } catch { }
+            } catch {
+                Console.WriteLine("Could not remove Autostart/Run Registry Entry! Press any key to continue...");
+                Console.ReadKey();
+            }
 
             try {
                 KillTasks();
@@ -92,7 +103,8 @@ namespace Cleanup {
                 if(notRemoved)
                     Console.WriteLine("Error");
             } catch(Exception ex) {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine($"Could not remove all Files ({ex.Message})! Press any key to continue...");
+                Console.ReadKey();
             }
         }
 
