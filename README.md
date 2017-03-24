@@ -3,9 +3,9 @@
 **ImgurSniper** is a small and lightweight tool that is designed to make **sharing Images** way **easier and faster** by instantly uploading them to [imgur](http://www.imgur.com)!
 
 # Downloads
-### [⇩ Imgur Sniper v1.0.5.4 (16.256 KB) (Full Setup) (Recommended)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperSetup.zip?raw=true)
+### [⇩ Imgur Sniper v1.0.5.4 (11.455 KB) (Full Setup) (Recommended)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperSetup.zip?raw=true)
 
-#### [⇩ Imgur Sniper v1.0.5.4 (15.656 KB) (Archive)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.zip?raw=true)
+#### [⇩ Imgur Sniper v1.0.5.4 (10.818 KB) (Archive)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.zip?raw=true)
 
 #### [View all Releases](https://github.com/mrousavy/ImgurSniper/releases)
 
@@ -30,7 +30,7 @@ You can now **share the Link** that has been **copied to your Clipboard** with e
 # Features
 
 - Use ImgurSniper as a **Tray service**, so you can open it **instantly** with your _custom_ Hotkey!
-- **Draw a Rectangle** with your Mouse to make a Screenshot and **automatically upload the cropped area to Imgur** or copy to **Clipboard**!
+- **Draw a Rectangle** with your Mouse to make a **Screenshot or GIF** and **automatically upload the cropped area to Imgur** or copy to Clipboard!
 - Use the **Paint Mode** to circle Information, hide Information or show your drawing skills!
 - **Right-Click** a window in _Snap Mode_ to quickly share a **Screenshot of that Window** or **Client Area**
 - Press **Ctrl + A** to make a Screenshot of **all connected Screens**!
