@@ -111,7 +111,7 @@ namespace ImgurSniper {
                 try {
                     return JsonConfig.ShortcutGifKey;
                 } catch {
-                    return Key.X;
+                    return Key.G;
                 }
             }
             set {
