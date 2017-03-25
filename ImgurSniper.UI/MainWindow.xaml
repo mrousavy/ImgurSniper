@@ -164,16 +164,16 @@
 							<StackPanel Margin="15,5,0,0">
 								<StackPanel Orientation="Horizontal">
 									<Label Foreground="Gray" Content="{x:Static Member=cultureStrings:strings.gifLength}"/>
-                                    <Slider Maximum="10" Minimum="1" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" x:Name="GifLengthSlider"/>
-                                    
-                                    <Label Margin="5,0,0,0" Foreground="Gray" x:Name="GifLengthLabel"/>
-                                </StackPanel>
+									<Slider Maximum="10" Minimum="1" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" x:Name="GifLengthSlider"/>
+									
+									<Label Margin="5,0,0,0" Foreground="Gray" x:Name="GifLengthLabel"/>
+								</StackPanel>
 								<!--GIF FPS-->
 									<StackPanel Orientation="Horizontal">
 										<Label Foreground="Gray" Content="{x:Static Member=cultureStrings:strings.gifFps}"/>
-                                    <Slider Maximum="60" Minimum="2" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" x:Name="GifFpsSlider"/>
-                                        
-                                        <Label Margin="5,0,0,0" Foreground="Gray" x:Name="GifFpsLabel"/>
+									<Slider Maximum="60" Minimum="2" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" x:Name="GifFpsSlider"/>
+										
+										<Label Margin="5,0,0,0" Foreground="Gray" x:Name="GifFpsLabel"/>
 									</StackPanel>
 								</StackPanel>
 							

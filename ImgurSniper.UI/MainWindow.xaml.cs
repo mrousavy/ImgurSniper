@@ -181,9 +181,9 @@ namespace ImgurSniper.UI {
                 }
                 LanguageBox.SelectionChanged += LanguageBox_SelectionChanged;
 
-                HotkeyGifBox.Text = imgKey.ToString();
+                HotkeyGifBox.Text = gifKey.ToString();
 
-                HotkeyImgBox.Text = gifKey.ToString();
+                HotkeyImgBox.Text = imgKey.ToString();
 
                 GifFpsSlider.Value = gifFps;
                 GifFpsSlider.ValueChanged += SliderGifFps_Changed;
