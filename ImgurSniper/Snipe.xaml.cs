@@ -468,6 +468,9 @@ namespace ImgurSniper {
                     //ErrorToast.Show(string.Format(strings.otherErrorMsg, ex),
                     //    TimeSpan.FromSeconds(3.5));
                 }
+            } else {
+                Notification = new Notification(strings.uploadingErrorGif, Notification.NotificationType.Error, true, ActionTroubleshoot);
+                await Notification.ShowAsync();
             }
         }
 

@@ -17,14 +17,16 @@ namespace ImgurSniper {
         private bool _stopped = false;
         private readonly int _fps = FileIO.GifFps;
         private Timer _timer;
+        private Rectangle _size;
+        private TimeSpan _gifLength;
 
         public byte[] Gif;
 
         public GifRecorder(Rectangle size, TimeSpan gifLength) {
             InitializeComponent();
 
-            //Begin Recording
-            Record(size, gifLength);
+            _size = size;
+            _gifLength = gifLength;
 
             Left = size.Left - 2;
             Top = size.Top - 2;
@@ -39,25 +41,33 @@ namespace ImgurSniper {
             //Space for ProgressBar
             Height += 30;
 
-            BeginAnimation(OpacityProperty, Animations.FadeIn);
+            Loaded += delegate {
+                BeginAnimation(OpacityProperty, Animations.FadeIn);
+                Record();
+            };
         }
+
 
         private void FadeOut(bool result) {
             DoubleAnimation fadeOut = Animations.FadeOut;
             fadeOut.Completed += delegate {
-                DialogResult = result;
+                try {
+                    DialogResult = result;
+                } catch {
+                    Close();
+                }
             };
             BeginAnimation(OpacityProperty, fadeOut);
         }
 
-        private void Record(Rectangle size, TimeSpan duration) {
+        private void Record() {
             try {
                 //Each Frame with TimeStamp
                 List<BitmapFrame> bitmapframes = new List<BitmapFrame>();
 
                 #region Method 1: Timer
                 int currentFrames = 0;
-                int totalFrames = (int)(_fps * (duration.TotalMilliseconds / 1000D));
+                int totalFrames = (int)(_fps * (_gifLength.TotalMilliseconds / 1000D));
                 MemoryStream stream;
                 MemoryStream gifStream = new MemoryStream();
                 // ReSharper disable once PossibleLossOfFraction
@@ -68,39 +78,46 @@ namespace ImgurSniper {
                 //Every Frame
                 _timer.Elapsed += delegate {
                     new Thread(() => {
-                        //Finish GIF
-                        if(_stopped || currentFrames >= totalFrames) {
-                            _timer.Stop();
+                        try {
+                            //Finish GIF
+                            if(_stopped || currentFrames >= totalFrames) {
+                                _timer.Stop();
 
-                            GifBitmapEncoder encoder = new GifBitmapEncoder();
-                            foreach(BitmapFrame frame in bitmapframes)
-                                encoder.Frames.Add(frame);
+                                GifBitmapEncoder encoder = new GifBitmapEncoder();
+                                foreach(BitmapFrame frame in bitmapframes)
+                                    encoder.Frames.Add(frame);
 
-                            encoder.Save(gifStream);
+                                encoder.Save(gifStream);
 
-                            Gif = gifStream.ToArray();
+                                Gif = gifStream.ToArray();
 
-                            _timer.Dispose();
-                            return;
+                                _timer.Dispose();
+                                return;
+                            }
+
+                            //Add Frames
+                            stream = new MemoryStream();
+
+                            Screenshot.GetScreenshotWithMouse(_size).Save(stream, ImageFormat.Gif);
+
+                            BitmapFrame bitmap = BitmapFrame.Create(
+                                stream,
+                                BitmapCreateOptions.PreservePixelFormat,
+                                BitmapCacheOption.OnLoad);
+
+                            bitmapframes.Add(bitmap);
+
+                            currentFrames++;
+
+                            Dispatcher.BeginInvoke(new Action(delegate {
+                                ProgressBar.Value = currentFrames;
+                            }));
+                        } catch {
+                            Dispatcher.BeginInvoke(new Action(delegate {
+                                FadeOut(false);
+                                _timer.Stop();
+                            }));
                         }
-
-                        //Add Frames
-                        stream = new MemoryStream();
-
-                        Screenshot.GetScreenshotWithMouse(size).Save(stream, ImageFormat.Gif);
-
-                        BitmapFrame bitmap = BitmapFrame.Create(
-                            stream,
-                            BitmapCreateOptions.PreservePixelFormat,
-                            BitmapCacheOption.OnLoad);
-
-                        bitmapframes.Add(bitmap);
-
-                        currentFrames++;
-
-                        Dispatcher.BeginInvoke(new Action(delegate {
-                            ProgressBar.Value = currentFrames;
-                        }));
                     }).Start();
                 };
 

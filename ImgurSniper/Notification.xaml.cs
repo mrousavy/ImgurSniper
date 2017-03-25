@@ -44,7 +44,9 @@ namespace ImgurSniper {
             if(onClick != null) {
                 NotificationContent.Cursor = Cursors.Hand;
                 NotificationContent.MouseDown += delegate {
-                    onClick.Invoke();
+                    try {
+                        onClick.Invoke();
+                    } catch { }
                     FadeOut();
                 };
             }

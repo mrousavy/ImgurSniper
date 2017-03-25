@@ -391,6 +391,7 @@ Falls dieses Problem öfters auftritt, probieren Sie folgendes:
     • Ändern Sie das Bild format von .PNG auf .JPEG
     • Starten Sie Ihren Computer neu
     • Stellen Sie sicher, dass Sie Zugriff auf den Ordner Dokumente/ImgurSniper haben
+    • Achten Sie darauf, dass ein Fehler auftreten kann wenn das GIF zu lang, zu groß, oder zu viele FPS hat!
 Tritt der Fehler immer noch auf, ist Ihre Internet Verbindung möglicherweise
 zu langsam für den Imgur Dienst.</value>
   </data>

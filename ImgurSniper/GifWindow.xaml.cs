@@ -64,7 +64,11 @@ namespace ImgurSniper {
 
             if(allMonitors) {
                 Rect workArea = SystemParameters.WorkArea;
-                toast.Margin = new Thickness(workArea.Left, workArea.Top, (SystemParameters.VirtualScreenWidth - workArea.Right), (SystemParameters.VirtualScreenHeight - SystemParameters.PrimaryScreenHeight));
+                toast.Margin = new Thickness(
+                    workArea.Left,
+                    workArea.Top,
+                    (SystemParameters.VirtualScreenWidth - workArea.Right),
+                    (SystemParameters.VirtualScreenHeight - SystemParameters.PrimaryScreenHeight));
             }
         }
 
@@ -441,10 +445,12 @@ namespace ImgurSniper {
 
         //Fade out window and shoot cropped screenshot
         private void Complete(int fromX, int fromY, int toX, int toY) {
-            DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.15));
+            DoubleAnimation fadeOut = Animations.FadeOut;
 
-            anim.Completed += async delegate {
-                grid.Opacity = 0;
+            fadeOut.Completed += async delegate {
+                grid.IsEnabled = false;
+                grid.Visibility = Visibility.Collapsed;
+
                 //For render complete
                 Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.ContextIdle, null);
                 await Task.Delay(50);
@@ -452,10 +458,7 @@ namespace ImgurSniper {
                 Crop(fromX, fromY, toX, toY);
             };
 
-            anim.From = grid.Opacity;
-            anim.To = 0;
-
-            grid.BeginAnimation(OpacityProperty, anim);
+            grid.BeginAnimation(OpacityProperty, fadeOut);
         }
 
         //Make Image from custom Coords
@@ -471,23 +474,22 @@ namespace ImgurSniper {
             int w = toX - fromX;
             int h = toY - fromY;
 
-            //The super strange Microsoft Expression Encoder Library only allows numbers dividable by 4
-            //(and only between 4 and 4096)
-            while(w % 4 != 0)
-                w += 1;
-            while(h % 4 != 0)
-                h += 1;
+            //Uncomment if using Microsoft Expression Encoder:
+            ////The super strange Microsoft Expression Encoder Library only allows numbers dividable by 4
+            ////(and only between 4 and 4096)
+            //while(w % 4 != 0)
+            //    w += 1;
+            //while(h % 4 != 0)
+            //    h += 1;
 
             StartGif(new Rectangle(fromX, fromY, w, h));
         }
 
         //"Crop" Rectangle
         private void StartGif(Rectangle size) {
-            int gifLength = FileIO.GifLength;
-
             //Stop recording after 10 Secs
             //CHANGE THIS IF YOU WANT LONGER CAPTURES
-            TimeSpan recordingLength = TimeSpan.FromMilliseconds(5000);
+            TimeSpan recordingLength = TimeSpan.FromMilliseconds(FileIO.GifLength);
 
             GifRecorder recorder = new GifRecorder(size, recordingLength);
             bool? result = recorder.ShowDialog();

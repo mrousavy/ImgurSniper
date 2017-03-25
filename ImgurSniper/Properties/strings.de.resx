@@ -203,4 +203,7 @@ Wollen Sie eine detaillierte Fehlermeldung sehen?
   <data name="gif" xml:space="preserve">
     <value>GIF</value>
   </data>
+  <data name="uploadingErrorGif" xml:space="preserve">
+    <value>Beim hochladen des GIFs ist ein Fehler aufgetreten!</value>
+  </data>
 </root>

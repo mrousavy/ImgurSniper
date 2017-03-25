@@ -204,4 +204,7 @@ Would you like to see a detailed Exception Info?
   <data name="gif" xml:space="preserve">
     <value>GIF</value>
   </data>
+  <data name="uploadingErrorGif" xml:space="preserve">
+    <value>Error uploading GIF to Imgur!</value>
+  </data>
 </root>

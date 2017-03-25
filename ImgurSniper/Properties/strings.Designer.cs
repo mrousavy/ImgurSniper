@@ -280,6 +280,15 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error uploading GIF to Imgur!.
+        /// </summary>
+        internal static string uploadingErrorGif {
+            get {
+                return ResourceManager.GetString("uploadingErrorGif", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Uploading Image... ({0} KB) ({1} of {2}).
         /// </summary>
         internal static string uploadingFiles {

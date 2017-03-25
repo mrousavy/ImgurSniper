@@ -802,6 +802,7 @@ namespace ImgurSniper.UI.Properties {
         ///    • Change the Image Format from .PNG to .JPEG
         ///    • Restart your Computer
         ///    • Make sure that you have Write Permissions to Documents/ImgurSniper
+        ///    • Make sure that your GIF is not too long, too big, or has too many FPS!
         ///Does the Error still occur? Maybe your Internet Connection
         ///is too slow for the Imgur Service..
         /// </summary>
