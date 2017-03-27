@@ -5,6 +5,8 @@ using System.Security.Cryptography;
 using System.Text;
 
 namespace ImgurSniper {
+
+
     //Cipher En/Decryption - Thanks to http://stackoverflow.com/users/57477/craigtp !
     public static class Cipher {
         private const int Keysize = 256;
@@ -15,9 +17,7 @@ namespace ImgurSniper {
                 byte[] saltStringBytes = Generate256BitsOfRandomEntropy();
                 byte[] ivStringBytes = Generate256BitsOfRandomEntropy();
                 byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainText);
-                using(
-                    Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(passPhrase, saltStringBytes,
-                        DerivationIterations)) {
+                using(Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(passPhrase, saltStringBytes, DerivationIterations)) {
                     byte[] keyBytes = password.GetBytes(Keysize / 8);
                     using(RijndaelManaged symmetricKey = new RijndaelManaged()) {
                         symmetricKey.BlockSize = 256;
@@ -25,9 +25,7 @@ namespace ImgurSniper {
                         symmetricKey.Padding = PaddingMode.PKCS7;
                         using(ICryptoTransform encryptor = symmetricKey.CreateEncryptor(keyBytes, ivStringBytes)) {
                             using(MemoryStream memoryStream = new MemoryStream()) {
-                                using(
-                                    CryptoStream cryptoStream = new CryptoStream(memoryStream, encryptor,
-                                        CryptoStreamMode.Write)) {
+                                using(CryptoStream cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write)) {
                                     cryptoStream.Write(plainTextBytes, 0, plainTextBytes.Length);
                                     cryptoStream.FlushFinalBlock();
                                     byte[] cipherTextBytes = saltStringBytes;
@@ -51,14 +49,9 @@ namespace ImgurSniper {
                 byte[] cipherTextBytesWithSaltAndIv = Convert.FromBase64String(cipherText);
                 byte[] saltStringBytes = cipherTextBytesWithSaltAndIv.Take(Keysize / 8).ToArray();
                 byte[] ivStringBytes = cipherTextBytesWithSaltAndIv.Skip(Keysize / 8).Take(Keysize / 8).ToArray();
-                byte[] cipherTextBytes =
-                    cipherTextBytesWithSaltAndIv.Skip(Keysize / 8 * 2)
-                        .Take(cipherTextBytesWithSaltAndIv.Length - Keysize / 8 * 2)
-                        .ToArray();
+                byte[] cipherTextBytes = cipherTextBytesWithSaltAndIv.Skip((Keysize / 8) * 2).Take(cipherTextBytesWithSaltAndIv.Length - ((Keysize / 8) * 2)).ToArray();
 
-                using(
-                    Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(passPhrase, saltStringBytes,
-                        DerivationIterations)) {
+                using(Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(passPhrase, saltStringBytes, DerivationIterations)) {
                     byte[] keyBytes = password.GetBytes(Keysize / 8);
                     using(RijndaelManaged symmetricKey = new RijndaelManaged()) {
                         symmetricKey.BlockSize = 256;
@@ -66,9 +59,7 @@ namespace ImgurSniper {
                         symmetricKey.Padding = PaddingMode.PKCS7;
                         using(ICryptoTransform decryptor = symmetricKey.CreateDecryptor(keyBytes, ivStringBytes)) {
                             using(MemoryStream memoryStream = new MemoryStream(cipherTextBytes)) {
-                                using(
-                                    CryptoStream cryptoStream = new CryptoStream(memoryStream, decryptor,
-                                        CryptoStreamMode.Read)) {
+                                using(CryptoStream cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read)) {
                                     byte[] plainTextBytes = new byte[cipherTextBytes.Length];
                                     int decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
                                     memoryStream.Close();

@@ -23,7 +23,7 @@ namespace ImgurSniper {
     /// <summary>
     ///     Interaction logic for ScreenshotWindow.xaml
     /// </summary>
-    public partial class ScreenshotWindow {
+    public partial class ScreenshotWindow : IDisposable {
         private bool _drag;
 
         public byte[] CroppedImage;
@@ -177,30 +177,10 @@ namespace ImgurSniper {
             WinAPI.SetWindowLong(wndHelper.Handle, (int)WinAPI.GetWindowLongFields.GWL_EXSTYLE, (IntPtr)exStyle);
         }
 
-        //Load from config File (ImgurSniper.UI)
-        private void LoadConfig() {
-            //_enableMagnifyer = FileIO.MagnifyingGlassEnabled;
-            //if(_enableMagnifyer) {
-            //    Magnifyer.Visibility = Visibility.Visible;
-            //    VisualBrush b = (VisualBrush)MagnifyingEllipse.Fill;
-            //    b.Visual = SnipperGrid;
-            //}
-        }
-
         private static Rectangle GetRectFromHandle(IntPtr whandle) {
             Rectangle windowSize = WinAPI.GetWindowRectangle(whandle);
 
             return windowSize;
-        }
-
-        //Set Magnifyer Position (Not used, huge Performance cost)
-        public void Magnifier(Point pos) {
-            //MagnifyerBrush.Viewbox = new Rect(pos.X - 25, pos.Y - 25, 50, 50);
-
-            //double x = pos.X - 35;
-            //double y = pos.Y - 80;
-
-            //Magnifyer.Margin = new Thickness(x, y, this.Width - x - 70, this.Height - y - 70);
         }
 
         //Switch between Rectangle Snapping and Painting
@@ -537,6 +517,18 @@ namespace ImgurSniper {
             anim.BeginTime = TimeSpan.FromMilliseconds(delay);
 
             BeginAnimation(OpacityProperty, anim);
+        }
+
+        public void Dispose() {
+            CroppedImage = null;
+
+            try {
+                Close();
+            } catch {
+                //Window already closed
+            }
+
+            GC.Collect();
         }
 
         #endregion

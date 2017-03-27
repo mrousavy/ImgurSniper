@@ -13,12 +13,12 @@ namespace ImgurSniper {
     /// <summary>
     /// Interaction logic for GifRecorder.xaml
     /// </summary>
-    public partial class GifRecorder {
+    public partial class GifRecorder : IDisposable {
         private bool _stopped = false;
         private readonly int _fps = FileIO.GifFps;
         private Timer _timer;
-        private Rectangle _size;
         private TimeSpan _gifLength;
+        private readonly Rectangle _size;
 
         public byte[] Gif;
 
@@ -183,6 +183,19 @@ namespace ImgurSniper {
 
         private void FinishGif(object sender, MouseButtonEventArgs e) {
             _stopped = true;
+        }
+
+
+        public void Dispose() {
+            Gif = null;
+
+            try {
+                Close();
+            } catch {
+                //Window already closed
+            }
+
+            GC.Collect();
         }
     }
 }

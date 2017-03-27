@@ -22,7 +22,7 @@ namespace ImgurSniper {
     /// <summary>
     /// Interaction logic for GifWindow.xaml
     /// </summary>
-    public partial class GifWindow : Window {
+    public partial class GifWindow : IDisposable {
         private bool _drag;
 
         public byte[] CroppedGif;
@@ -233,20 +233,6 @@ namespace ImgurSniper {
             };
 
             SelectedMode.BeginAnimation(OpacityProperty, anim);
-        }
-
-        //Play Camera Shutter Sound
-        private static void PlayShutter() {
-            try {
-                MediaPlayer player = new MediaPlayer { Volume = 30 };
-
-                string path = System.IO.Path.Combine(FileIO._programFiles, "Resources\\Camera_Shutter.wav");
-
-                player.Open(new Uri(path));
-                player.Play();
-            } catch {
-                // ignored
-            }
         }
 
         //Make image of whole Window with Ctrl + A
@@ -491,18 +477,12 @@ namespace ImgurSniper {
             //CHANGE THIS IF YOU WANT LONGER CAPTURES
             TimeSpan recordingLength = TimeSpan.FromMilliseconds(FileIO.GifLength);
 
-            GifRecorder recorder = new GifRecorder(size, recordingLength);
-            bool? result = recorder.ShowDialog();
+            using(GifRecorder recorder = new GifRecorder(size, recordingLength)) {
+                bool? result = recorder.ShowDialog();
 
-            CroppedGif = recorder.Gif;
-            DialogResult = result;
-        }
-
-        //success = Successful?   |    wmv = Path to .wmv File
-        private void Finish(bool success, string wmv) {
-            if(wmv != null)
-                CroppedGif = File.ReadAllBytes(wmv);
-            CloseSnap(success, 0);
+                CroppedGif = recorder.Gif;
+                DialogResult = result;
+            }
         }
 
         //Close Window with fade out animation
@@ -521,6 +501,18 @@ namespace ImgurSniper {
             anim.BeginTime = TimeSpan.FromMilliseconds(delay);
 
             BeginAnimation(OpacityProperty, anim);
+        }
+
+        public void Dispose() {
+            CroppedGif = null;
+
+            try {
+                Close();
+            } catch {
+                //Window already closed
+            }
+
+            GC.Collect();
         }
 
         #endregion

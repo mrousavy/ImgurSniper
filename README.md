@@ -1,11 +1,11 @@
-# <img src="https://github.com/mrousavy/ImgurSniper/raw/master/Images/Logo.png" width="42"> ImgurSniper
+# <img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/ImgurSniper.UI/Resources/Logo.png" width="42"> ImgurSniper
 
 **ImgurSniper** is a small and lightweight tool that is designed to make **sharing Images** way **easier and faster** by instantly uploading them to [imgur](http://www.imgur.com)!
 
 # Downloads
-### [⇩ Imgur Sniper v1.0.5.4 (11.455 KB) (Full Setup) (Recommended)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperSetup.zip?raw=true)
+### [⇩ Imgur Sniper v1.0.5.5 (11.455 KB) (Full Setup) (Recommended)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperSetup.zip?raw=true)
 
-#### [⇩ Imgur Sniper v1.0.5.4 (10.818 KB) (Archive)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.zip?raw=true)
+#### [⇩ Imgur Sniper v1.0.5.5 (10.818 KB) (Archive)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.zip?raw=true)
 
 #### [View all Releases](https://github.com/mrousavy/ImgurSniper/releases)
 
@@ -25,7 +25,7 @@ You can now **share the Link** that has been **copied to your Clipboard** with e
 
 (See more Info at **ImgurSniper Settings -> Help**)
 
-<img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/Images/ImgurSniper_Demo.gif">
+<img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/ImgurSniper.UI/Resources/SnipeDemo.gif">
 
 # Features
 
