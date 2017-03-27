@@ -5,10 +5,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:md="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+        mc:Ignorable="d" 
+        
         Cursor="Cross" ForceCursor="True" Background="Transparent"
-        ShowActivated="False" Focusable="False" ShowInTaskbar="False"
-        mc:Ignorable="d" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize"
-        Title="Snipe a Screenshot!" WindowStartupLocation="Manual" Loaded="WindowLoaded">
+        ShowActivated="False" ShowInTaskbar="False"
+        AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize"
+        Title="Snipe a Screenshot!" WindowStartupLocation="Manual" Loaded="WindowLoaded" KeyDown="Window_KeyDown">
 
     <Grid>
         <Grid x:Name="grid" MouseDown="StartDrawing" MouseUp="ReleaseRectangle" MouseMove="DrawRectangle">

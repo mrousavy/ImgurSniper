@@ -6,9 +6,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:md="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
         Cursor="Cross" ForceCursor="True" Background="Transparent"
-        ShowActivated="False" Focusable="False" ShowInTaskbar="False"
+        ShowActivated="False" ShowInTaskbar="False"
         mc:Ignorable="d" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize"
-        Title="Snipe a Screenshot!" WindowStartupLocation="Manual" Loaded="WindowLoaded">
+        Title="Snipe a Screenshot!" WindowStartupLocation="Manual" Loaded="WindowLoaded" KeyDown="Window_KeyDown">
 
     <Grid>
         <Grid x:Name="grid" MouseDown="StartDrawing" MouseUp="ReleaseRectangle" MouseMove="DrawRectangle">

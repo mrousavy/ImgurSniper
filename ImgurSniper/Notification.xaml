@@ -10,15 +10,12 @@
         WindowStartupLocation="Manual" Opacity="1" Topmost="True" ShowActivated="False" ShowInTaskbar="False"
 
         Height="110" Width="300" Loaded="Window_Loaded" MouseEnter="Window_MouseEnter" MouseLeave="Window_MouseLeave">
-
-    <md:Card Background="{DynamicResource MaterialDesignPaper}" Margin="1" VerticalAlignment="Stretch"
-             HorizontalAlignment="Stretch" UniformCornerRadius="3">
-
-        <!--Shadow Effect-->
-        <md:Card.Effect>
-            <DropShadowEffect BlurRadius="3" Direction="-90" RenderingBias="Quality" ShadowDepth="1" Color="Gray"
-                              Opacity="0.2" />
-        </md:Card.Effect>
+    
+    
+    <Border Background="#FEFEFE" Margin="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="3">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="3" Direction="-90" RenderingBias="Quality" ShadowDepth="1" Color="Gray" Opacity="0.2" />
+        </Border.Effect>
         <Grid>
             <!--Notification Content-->
             <StackPanel>
@@ -59,5 +56,5 @@
                              HorizontalAlignment="Center" Foreground="#222222" x:Name="CloseIcon" Opacity="0" />
             </Border>
         </Grid>
-    </md:Card>
+    </Border>
 </Window>

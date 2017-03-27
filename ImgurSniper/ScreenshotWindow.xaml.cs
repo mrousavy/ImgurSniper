@@ -14,6 +14,7 @@ using System.Windows.Threading;
 using ImgurSniper.Properties;
 using mrousavy;
 using Cursors = System.Windows.Input.Cursors;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Path = System.Windows.Shapes.Path;
 using Point = System.Windows.Point;
@@ -89,84 +90,6 @@ namespace ImgurSniper {
             Activate();
             Focus();
 
-            //TODO: Better Hotkeys (Window only, not Global)
-
-            #region Escape
-
-            try {
-                //Register Global Escape Hotkey
-                HotKey escapeHotKey = new HotKey(ModifierKeys.None, Key.Escape, this);
-                escapeHotKey.HotKeyPressed += delegate {
-                    CloseSnap(false, 0);
-                    escapeHotKey.Dispose();
-                    escapeHotKey = null;
-                };
-            } catch {
-                //Register Escape Hotkey for this Window if Global Hotkey fails
-                KeyDown += (o, ke) => {
-                    if(ke.Key == Key.Escape) {
-                        CloseSnap(false, 0);
-                    }
-                };
-            }
-
-            #endregion
-
-            #region Ctrl A
-
-            try {
-                //Register Global Ctrl + A Hotkey
-                HotKey ctrlAHotKey = new HotKey(ModifierKeys.Control, Key.A, this);
-                ctrlAHotKey.HotKeyPressed += delegate {
-                    SelectAllCmd();
-                    ctrlAHotKey.Dispose();
-                    ctrlAHotKey = null;
-                };
-            } catch {
-                //Register Ctrl + A Hotkey for this Window if Global Hotkey fails
-                KeyDown += (o, ke) => {
-                    if((Control.ModifierKeys & Keys.Control) == Keys.Control && ke.Key == Key.A) {
-                        SelectAllCmd();
-                    }
-                };
-            }
-
-            #endregion
-
-            #region Ctrl Z
-
-            try {
-                //Register Global Ctrl + Z Hotkey
-                HotKey ctrlZHotKey = new HotKey(ModifierKeys.Control, Key.Z, this);
-                ctrlZHotKey.HotKeyPressed += delegate { CtrlZ(); };
-            } catch {
-                //Register Ctrl + Z Hotkey for this Window if Global Hotkey fails
-                KeyDown += (o, ke) => {
-                    if((Control.ModifierKeys & Keys.Control) == Keys.Control && ke.Key == Key.Z) {
-                        SelectAllCmd();
-                    }
-                };
-            }
-
-            #endregion
-
-            #region Space
-
-            try {
-                //Register Space Hotkey
-                HotKey spaceHotKey = new HotKey(ModifierKeys.None, Key.Space, this);
-                spaceHotKey.HotKeyPressed += delegate { SwitchMode(); };
-            } catch {
-                //Register Space Hotkey for this Window if Global Hotkey fails
-                KeyDown += (o, ke) => {
-                    if(ke.Key == Key.Space) {
-                        SwitchMode();
-                    }
-                };
-            }
-
-            #endregion
-
             //Prevent short flash of Toast
             await Task.Delay(100);
             toast.Visibility = Visibility.Visible;
@@ -185,6 +108,30 @@ namespace ImgurSniper {
             Rectangle windowSize = WinAPI.GetWindowRectangle(whandle);
 
             return windowSize;
+        }
+
+        //All Keys
+        private void Window_KeyDown(object sender, KeyEventArgs e) {
+            switch(e.Key) {
+                case Key.Escape:
+                    //Close
+                    CloseSnap(false, 0);
+                    break;
+                case Key.Space:
+                    //Switch between Draw/Crop
+                    SwitchMode();
+                    break;
+                case Key.A:
+                    //Select All
+                    if((Control.ModifierKeys & Keys.Control) == Keys.Control)
+                        SelectAllCmd();
+                    break;
+                case Key.Z:
+                    //Undo
+                    if((Control.ModifierKeys & Keys.Control) == Keys.Control)
+                        CtrlZ();
+                    break;
+            }
         }
 
         //Switch between Rectangle Snapping and Painting
