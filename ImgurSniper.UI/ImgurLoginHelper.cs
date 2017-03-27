@@ -1,23 +1,15 @@
-﻿using Imgur.API.Authentication.Impl;
-using Imgur.API.Endpoints.Impl;
-using Imgur.API.Models;
-using ImgurSniper.UI.Properties;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Imgur.API.Authentication.Impl;
+using Imgur.API.Endpoints.Impl;
+using Imgur.API.Enums;
+using Imgur.API.Models;
+using ImgurSniper.UI.Properties;
 using Toast;
 
 namespace ImgurSniper.UI {
     internal class ImgurLoginHelper {
-
-        public static string ClientId => "766263aaa4c9882";
-
-        public static string ClientSecret => "1f16f21e51e499422fb90ae670a1974e88f7c6ae";
-
-        public string User { private set; get; }
-
-        public string UserUrl { private set; get; }
-
         private readonly ImgurClient _client;
         private readonly OAuth2Endpoint _endpoint;
 
@@ -25,7 +17,7 @@ namespace ImgurSniper.UI {
         private readonly Toasty _success;
 
         /// <summary>
-        /// Login to Imgur with OAuth2
+        ///     Login to Imgur with OAuth2
         /// </summary>
         public ImgurLoginHelper(Toasty errorToast, Toasty successToast) {
             _client = new ImgurClient(ClientId, ClientSecret);
@@ -35,8 +27,16 @@ namespace ImgurSniper.UI {
             _success = successToast;
         }
 
+        public static string ClientId => "766263aaa4c9882";
+
+        public static string ClientSecret => "1f16f21e51e499422fb90ae670a1974e88f7c6ae";
+
+        public string User { private set; get; }
+
+        public string UserUrl { private set; get; }
+
         public void Authorize() {
-            string redirectUrl = _endpoint.GetAuthorizationUrl(Imgur.API.Enums.OAuth2ResponseType.Pin);
+            string redirectUrl = _endpoint.GetAuthorizationUrl(OAuth2ResponseType.Pin);
             Process.Start(redirectUrl);
 
             _success.Show(strings.plsPin, TimeSpan.FromSeconds(2));
@@ -54,7 +54,8 @@ namespace ImgurSniper.UI {
 
                 _success.Show(string.Format(strings.loggedIn, User), TimeSpan.FromSeconds(2));
                 return true;
-            } catch(Exception ex) {
+            }
+            catch (Exception ex) {
                 _error.Show(string.Format(strings.wrongPin, ex.Message), TimeSpan.FromSeconds(2));
                 return false;
             }
@@ -66,7 +67,8 @@ namespace ImgurSniper.UI {
             try {
                 IOAuth2Token token = await _endpoint.GetTokenByRefreshTokenAsync(refreshToken);
                 username = token.AccountUsername;
-            } catch { }
+            }
+            catch {}
 
             UserUrl = $"http://{username}.imgur.com/all/";
 

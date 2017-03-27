@@ -1,52 +1,52 @@
 ﻿<Window x:Class="ImgurSniper.UI.Help"
-		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:local="clr-namespace:ImgurSniper.UI"
-		xmlns:cultureStrings="clr-namespace:ImgurSniper.UI.Properties"
-		xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
-		mc:Ignorable="d" MinHeight="200" MinWidth="200" WindowStartupLocation="CenterOwner"
-		Title="{x:Static Member=cultureStrings:strings.help}" Height="620" Width="770">
-	<Grid>
-		<dragablz:TabablzControl Margin="8" >
-			<dragablz:TabablzControl.InterTabController>
-				<dragablz:InterTabController />
-			</dragablz:TabablzControl.InterTabController>
-			<TabItem Header="{x:Static Member=cultureStrings:strings.pageGeneral}"
-					 IsSelected="True">
-				<Frame Source="/ImgurSniper.UI;component/Pages/GeneralPage.xaml"/>
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ImgurSniper.UI"
+        xmlns:cultureStrings="clr-namespace:ImgurSniper.UI.Properties"
+        xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+        mc:Ignorable="d" MinHeight="200" MinWidth="200" WindowStartupLocation="CenterOwner"
+        Title="{x:Static Member=cultureStrings:strings.help}" Height="620" Width="770">
+    <Grid>
+        <dragablz:TabablzControl Margin="8">
+            <dragablz:TabablzControl.InterTabController>
+                <dragablz:InterTabController />
+            </dragablz:TabablzControl.InterTabController>
+            <TabItem Header="{x:Static Member=cultureStrings:strings.pageGeneral}"
+                     IsSelected="True">
+                <Frame Source="/ImgurSniper.UI;component/Pages/GeneralPage.xaml" />
             </TabItem>
             <TabItem Header="{x:Static Member=cultureStrings:strings.pageSnipe}">
-                <Frame Source="/ImgurSniper.UI;component/Pages/SnipePage.xaml"/>
+                <Frame Source="/ImgurSniper.UI;component/Pages/SnipePage.xaml" />
             </TabItem>
             <TabItem Header="{x:Static Member=cultureStrings:strings.pageGif}">
-                <Frame Source="/ImgurSniper.UI;component/Pages/GifPage.xaml"/>
+                <Frame Source="/ImgurSniper.UI;component/Pages/GifPage.xaml" />
             </TabItem>
             <TabItem Header="{x:Static Member=cultureStrings:strings.pageDraw}">
-				<Frame Source="/ImgurSniper.UI;component/Pages/DrawPage.xaml"/>
-			</TabItem>
-			<TabItem Header="{x:Static Member=cultureStrings:strings.pageRightClick}">
-				<Frame Source="/ImgurSniper.UI;component/Pages/RightClickPage.xaml"/>
-			</TabItem>
-			<TabItem Header="{x:Static Member=cultureStrings:strings.pageClipboard}">
-				<Frame Source="/ImgurSniper.UI;component/Pages/ClipboardPage.xaml"/>
-			</TabItem>
-			<TabItem Header="{x:Static Member=cultureStrings:strings.pageTray}">
-				<Frame Source="/ImgurSniper.UI;component/Pages/TrayPage.xaml"/>
-			</TabItem>
-			<TabItem Header="{x:Static Member=cultureStrings:strings.pagePrivacy}">
-				<Frame Source="/ImgurSniper.UI;component/Pages/PrivacyPage.xaml"/>
-			</TabItem>
-			<TabItem Header="{x:Static Member=cultureStrings:strings.contextMenu}">
-				<Frame Source="/ImgurSniper.UI;component/Pages/ContextMenuPage.xaml"/>
-			</TabItem>
-		</dragablz:TabablzControl>
+                <Frame Source="/ImgurSniper.UI;component/Pages/DrawPage.xaml" />
+            </TabItem>
+            <TabItem Header="{x:Static Member=cultureStrings:strings.pageRightClick}">
+                <Frame Source="/ImgurSniper.UI;component/Pages/RightClickPage.xaml" />
+            </TabItem>
+            <TabItem Header="{x:Static Member=cultureStrings:strings.pageClipboard}">
+                <Frame Source="/ImgurSniper.UI;component/Pages/ClipboardPage.xaml" />
+            </TabItem>
+            <TabItem Header="{x:Static Member=cultureStrings:strings.pageTray}">
+                <Frame Source="/ImgurSniper.UI;component/Pages/TrayPage.xaml" />
+            </TabItem>
+            <TabItem Header="{x:Static Member=cultureStrings:strings.pagePrivacy}">
+                <Frame Source="/ImgurSniper.UI;component/Pages/PrivacyPage.xaml" />
+            </TabItem>
+            <TabItem Header="{x:Static Member=cultureStrings:strings.contextMenu}">
+                <Frame Source="/ImgurSniper.UI;component/Pages/ContextMenuPage.xaml" />
+            </TabItem>
+        </dragablz:TabablzControl>
 
 
-		<StackPanel HorizontalAlignment="Stretch">
-			<Label></Label>
-			
-		</StackPanel>
-	</Grid>
+        <StackPanel HorizontalAlignment="Stretch">
+            <Label />
+
+        </StackPanel>
+    </Grid>
 </Window>

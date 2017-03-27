@@ -3,21 +3,20 @@ using System.Globalization;
 using System.Threading;
 using System.Windows;
 using System.Windows.Markup;
+using ImgurSniper.Properties;
 
 namespace ImgurSniper {
     /// <summary>
-    /// Interaction logic for App.xaml
+    ///     Interaction logic for App.xaml
     /// </summary>
     public partial class App {
-
         public App() {
             DispatcherUnhandledException += (sender, e) => {
-                if(MessageBox.Show($"{ImgurSniper.Properties.strings.unhandledError}({e.Exception.Message})",
-                    "ImgurSniper Error",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Error) == MessageBoxResult.Yes) {
-
-                    if(MessageBox.Show("Do you want to help out and fix a bug in ImgurSniper?" + "\n" +
+                if (MessageBox.Show($"{strings.unhandledError}({e.Exception.Message})",
+                        "ImgurSniper Error",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Error) == MessageBoxResult.Yes) {
+                    if (MessageBox.Show("Do you want to help out and fix a bug in ImgurSniper?" + "\n" +
                                         "Please explain how the Problem you encountered can be replicated, and what the Error Message said!",
                             "Do you want to help ImgurSniper bugfixing?",
                             MessageBoxButton.YesNo,
@@ -42,7 +41,7 @@ namespace ImgurSniper {
             Thread.CurrentThread.CurrentCulture = new CultureInfo(language);
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
             FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(
-                        XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
+                XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
         }
     }
 }

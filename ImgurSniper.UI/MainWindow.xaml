@@ -106,7 +106,9 @@
 								<Label Content="{x:Static Member=cultureStrings:strings.hotkeyImg}"
 									   VerticalAlignment="Center" FontSize="13" Foreground="Gray" />
 
-								<Label FontSize="11" Foreground="Gray" Content="{x:Static Member=cultureStrings:strings.ctrlShift}" VerticalAlignment="Center"/>
+								<Label FontSize="11" Foreground="Gray"
+									   Content="{x:Static Member=cultureStrings:strings.ctrlShift}"
+									   VerticalAlignment="Center" />
 
 								<Border CornerRadius="5" Background="LightGray" BorderBrush="#ABABAB"
 										BorderThickness="0,0,2,2.3" Height="25" MinWidth="10"
@@ -124,11 +126,18 @@
 								<Label Content="{x:Static Member=cultureStrings:strings.hotkeyGif}"
 									   VerticalAlignment="Center" FontSize="13" Foreground="Gray" />
 
-								<Label FontSize="11" Foreground="Gray" Content="{x:Static Member=cultureStrings:strings.ctrlShift}" VerticalAlignment="Center"/>
-								
-								<Border CornerRadius="5" Background="LightGray" BorderBrush="#ABABAB" BorderThickness="0,0,2,2.3" Height="25" MinWidth="10" VerticalAlignment="Center">
+								<Label FontSize="11" Foreground="Gray"
+									   Content="{x:Static Member=cultureStrings:strings.ctrlShift}"
+									   VerticalAlignment="Center" />
 
-									<TextBox FontSize="14" VerticalAlignment="Center" Focusable="False" x:Name="HotkeyGifBox" MouseDown="HotkeyGifBoxMDown" MaxLength="1" MinWidth="10" Height="25" SelectionBrush="Transparent" Cursor="Hand" Text="G" Padding="3,0,3,0" BorderBrush="Transparent" />
+								<Border CornerRadius="5" Background="LightGray" BorderBrush="#ABABAB"
+										BorderThickness="0,0,2,2.3" Height="25" MinWidth="10"
+										VerticalAlignment="Center">
+
+									<TextBox FontSize="14" VerticalAlignment="Center" Focusable="False"
+											 x:Name="HotkeyGifBox" MouseDown="HotkeyGifBoxMDown" MaxLength="1"
+											 MinWidth="10" Height="25" SelectionBrush="Transparent" Cursor="Hand"
+											 Text="G" Padding="3,0,3,0" BorderBrush="Transparent" />
 								</Border>
 							</StackPanel>
 
@@ -155,30 +164,34 @@
 									<ComboBoxItem x:Name="de">German</ComboBoxItem>
 								</ComboBox>
 							</StackPanel>
-							
-							
-							
+
+
 							<!--HEADER: GIF-->
-							<Label Margin="10,5,5,5" FontSize="15" Content="{x:Static Member=cultureStrings:strings.gif}" />
+							<Label Margin="10,5,5,5" FontSize="15"
+								   Content="{x:Static Member=cultureStrings:strings.gif}" />
 							<!--GIF Length-->
 							<StackPanel Margin="15,5,0,0">
 								<StackPanel Orientation="Horizontal">
-									<Label Foreground="Gray" Content="{x:Static Member=cultureStrings:strings.gifLength}"/>
-									<Slider Maximum="10" Minimum="1" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" x:Name="GifLengthSlider"/>
-									
-									<Label Margin="5,0,0,0" Foreground="Gray" x:Name="GifLengthLabel"/>
+									<Label Foreground="Gray"
+										   Content="{x:Static Member=cultureStrings:strings.gifLength}" />
+									<Slider Maximum="30" Minimum="1" Width="200" HorizontalAlignment="Left"
+											VerticalAlignment="Center" Margin="10,0,0,0" x:Name="GifLengthSlider" />
+
+									<Label Margin="5,0,0,0" Foreground="Gray" x:Name="GifLengthLabel" />
 								</StackPanel>
 								<!--GIF FPS-->
-									<StackPanel Orientation="Horizontal">
-										<Label Foreground="Gray" Content="{x:Static Member=cultureStrings:strings.gifFps}"/>
-									<Slider Maximum="60" Minimum="2" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" x:Name="GifFpsSlider"/>
-										
-										<Label Margin="5,0,0,0" Foreground="Gray" x:Name="GifFpsLabel"/>
-									</StackPanel>
+								<StackPanel Orientation="Horizontal">
+									<Label Foreground="Gray" Content="{x:Static Member=cultureStrings:strings.gifFps}" />
+									<Slider Maximum="30" Minimum="1" Width="200" HorizontalAlignment="Left"
+											VerticalAlignment="Center" Margin="10,0,0,0" x:Name="GifFpsSlider" />
+
+									<Label Margin="5,0,0,0" Foreground="Gray" x:Name="GifFpsLabel" />
 								</StackPanel>
-							
+							</StackPanel>
+
 							<!--HEADER: Imgur Account-->
-							<Label Margin="10,5,5,5" FontSize="15" x:Name="Label_Account" Content="{x:Static Member=cultureStrings:strings.imgurAcc}" />
+							<Label Margin="10,5,5,5" FontSize="15" x:Name="Label_Account"
+								   Content="{x:Static Member=cultureStrings:strings.imgurAcc}" />
 
 							<Grid Margin="15,5,5,5">
 								<StackPanel Orientation="Horizontal" Visibility="Collapsed"
@@ -276,7 +289,7 @@
 
 					<!--CATEGORY: Bottom Buttons-->
 					<StackPanel Orientation="Horizontal"
-						HorizontalAlignment="Right" VerticalAlignment="Bottom">
+								HorizontalAlignment="Right" VerticalAlignment="Bottom">
 						<!--<Button Margin="5" Click="Repair" x:Name="Btn_Repair"
 							Content="{x:Static Member=cultureStrings:strings.repair}"/>-->
 

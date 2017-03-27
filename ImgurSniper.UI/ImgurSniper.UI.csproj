@@ -280,7 +280,6 @@
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="app.manifest" />
-    <None Include="mrousavy.pfx" />
     <None Include="packages.config" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>
@@ -300,9 +299,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Logo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Logo.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
@@ -339,6 +335,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\GIFDemo.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Logo.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

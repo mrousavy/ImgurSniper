@@ -1,18 +1,22 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
 
 namespace ImgurSniper {
-    class WinAPI {
+    internal class WinAPI {
+        public const uint SwpNosize = 0x0001;
+        public const uint SwpNomove = 0x0002;
+        public const uint SwpNoactivate = 0x0010;
+
+        public static readonly IntPtr HwndBottom = new IntPtr(1);
 
         public static Rectangle GetWindowRectangle(IntPtr handle) {
             Rectangle rect = Rectangle.Empty;
 
-            if(IsDWMEnabled()) {
-                Rectangle tempRect;
-
-                if(GetExtendedFrameBounds(handle, out tempRect)) {
+            if(IsDwmEnabled()) {
+                if(GetExtendedFrameBounds(handle, out Rectangle tempRect)) {
                     rect = tempRect;
                 }
             }
@@ -29,70 +33,59 @@ namespace ImgurSniper {
         }
 
         public static Rectangle MaximizedWindowFix(IntPtr handle, Rectangle windowRect) {
-            Size size;
-
-            if(GetBorderSize(handle, out size)) {
-                windowRect = new Rectangle(windowRect.X + size.Width, windowRect.Y + size.Height, windowRect.Width - (size.Width * 2), windowRect.Height - (size.Height * 2));
+            if(GetBorderSize(handle, out Size size)) {
+                windowRect = new Rectangle(windowRect.X + size.Width, windowRect.Y + size.Height,
+                    windowRect.Width - size.Width * 2, windowRect.Height - size.Height * 2);
             }
 
             return windowRect;
         }
 
-        public static bool IsDWMEnabled() {
-            return Environment.OSVersion.Version.Major >= 6 && dwmapi.DwmIsCompositionEnabled();
+        public static bool IsDwmEnabled() {
+            return Environment.OSVersion.Version.Major >= 6 && Dwmapi.DwmIsCompositionEnabled();
         }
 
         public static Rectangle GetWindowRect(IntPtr handle) {
-            RECT rect;
-            User32.GetWindowRect(handle, out rect);
+            User32.GetWindowRect(handle, out RECT rect);
             return rect;
         }
 
         public static bool GetExtendedFrameBounds(IntPtr handle, out Rectangle rectangle) {
-            RECT rect;
-            int result = dwmapi.DwmGetWindowAttribute(handle, (int)DwmWindowAttribute.ExtendedFrameBounds, out rect, Marshal.SizeOf(typeof(RECT)));
+            int result = Dwmapi.DwmGetWindowAttribute(handle, (int)DwmWindowAttribute.ExtendedFrameBounds, out RECT rect,
+    Marshal.SizeOf(typeof(RECT)));
             rectangle = rect;
             return result == 0;
         }
 
-
-        public static readonly IntPtr HWND_BOTTOM = new IntPtr(1);
-        public const UInt32 SWP_NOSIZE = 0x0001;
-        public const UInt32 SWP_NOMOVE = 0x0002;
-        public const UInt32 SWP_NOACTIVATE = 0x0010;
-
         public static bool GetBorderSize(IntPtr handle, out Size size) {
-            WINDOWINFO wi = new WINDOWINFO();
+            WindowInfo wi = new WindowInfo();
 
             bool result = User32.GetWindowInfo(handle, ref wi);
 
-            if(result) {
-                size = new Size((int)wi.cxWindowBorders, (int)wi.cyWindowBorders);
-            } else {
-                size = Size.Empty;
-            }
+            size = result ? new Size((int)wi.cxWindowBorders, (int)wi.cyWindowBorders) : Size.Empty;
 
             return result;
         }
 
         /// <summary>
-        /// Helper class containing dwmapi API functions
+        ///     Helper class containing dwmapi API functions
         /// </summary>
-        public static class dwmapi {
+        public static class Dwmapi {
             [DllImport("dwmapi.dll")]
-            public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out RECT pvAttribute, int cbAttribute);
+            public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out RECT pvAttribute,
+                int cbAttribute);
 
             [DllImport("dwmapi.dll", PreserveSig = false)]
             public static extern bool DwmIsCompositionEnabled();
         }
 
         /// <summary>
-        /// Helper class containing User32 API functions
+        ///     Helper class containing User32 API functions
         /// </summary>
         public static class User32 {
-
             [DllImport("user32.dll")]
-            public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+            public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy,
+                uint uFlags);
 
             [DllImport("user32.dll")]
             public static extern IntPtr SetActiveWindow(IntPtr hWnd);
@@ -106,7 +99,7 @@ namespace ImgurSniper {
 
             [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool GetWindowInfo(IntPtr hwnd, ref WINDOWINFO pwi);
+            public static extern bool GetWindowInfo(IntPtr hwnd, ref WindowInfo pwi);
 
             [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
@@ -124,18 +117,18 @@ namespace ImgurSniper {
             public static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
         }
 
-
         #region Window styles
+
         [Flags]
         public enum ExtendedWindowStyles {
             // ...
-            WS_EX_TOOLWINDOW = 0x00000080,
+            WsExToolwindow = 0x00000080
             // ...
         }
 
         public enum GetWindowLongFields {
             // ...
-            GWL_EXSTYLE = (-20),
+            GwlExstyle = -20
             // ...
         }
 
@@ -144,13 +137,13 @@ namespace ImgurSniper {
 
         public static IntPtr SetWindowLong(IntPtr hWnd, int nIndex, IntPtr dwNewLong) {
             int error = 0;
-            IntPtr result = IntPtr.Zero;
+            IntPtr result;
             // Win32 SetWindowLong doesn't clear error on success
             SetLastError(0);
 
             if(IntPtr.Size == 4) {
                 // use SetWindowLong
-                Int32 tempResult = IntSetWindowLong(hWnd, nIndex, IntPtrToInt32(dwNewLong));
+                int tempResult = IntSetWindowLong(hWnd, nIndex, IntPtrToInt32(dwNewLong));
                 error = Marshal.GetLastWin32Error();
                 result = new IntPtr(tempResult);
             } else {
@@ -159,8 +152,8 @@ namespace ImgurSniper {
                 error = Marshal.GetLastWin32Error();
             }
 
-            if((result == IntPtr.Zero) && (error != 0)) {
-                throw new System.ComponentModel.Win32Exception(error);
+            if(result == IntPtr.Zero && error != 0) {
+                throw new Win32Exception(error);
             }
 
             return result;
@@ -170,7 +163,7 @@ namespace ImgurSniper {
         private static extern IntPtr IntSetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
 
         [DllImport("user32.dll", EntryPoint = "SetWindowLong", SetLastError = true)]
-        private static extern Int32 IntSetWindowLong(IntPtr hWnd, int nIndex, Int32 dwNewLong);
+        private static extern int IntSetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
         private static int IntPtrToInt32(IntPtr intPtr) {
             return unchecked((int)intPtr.ToInt64());
@@ -178,12 +171,13 @@ namespace ImgurSniper {
 
         [DllImport("kernel32.dll", EntryPoint = "SetLastError")]
         public static extern void SetLastError(int dwErrorCode);
+
         #endregion
 
         #region Custom Definitions
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct WINDOWINFO {
+        public struct WindowInfo {
             public uint cbSize;
             public RECT rcWindow;
             public RECT rcClient;
@@ -194,11 +188,6 @@ namespace ImgurSniper {
             public uint cyWindowBorders;
             public ushort atomWindowType;
             public ushort wCreatorVersion;
-
-            public WINDOWINFO(bool? filler) : this() // Allows automatic initialization of "cbSize" with "new WINDOWINFO(null/true/false)".
-            {
-                cbSize = (uint)Marshal.SizeOf(typeof(WINDOWINFO));
-            }
         }
 
         [Flags]
@@ -232,18 +221,7 @@ namespace ImgurSniper {
                 Bottom = bottom;
             }
 
-            public RECT(Rectangle r) : this(r.Left, r.Top, r.Right, r.Bottom) {
-            }
-
-            public int X {
-                get { return Left; }
-                set { Right -= Left - value; Left = value; }
-            }
-
-            public int Y {
-                get { return Top; }
-                set { Bottom -= Top - value; Top = value; }
-            }
+            public RECT(Rectangle r) : this(r.Left, r.Top, r.Right, r.Bottom) { }
 
             public int Width {
                 get { return Right - Left; }
@@ -255,50 +233,12 @@ namespace ImgurSniper {
                 set { Bottom = value + Top; }
             }
 
-            public Point Location {
-                get { return new Point(Left, Top); }
-                set { X = value.X; Y = value.Y; }
-            }
-
-            public Size Size {
-                get { return new Size(Width, Height); }
-                set { Width = value.Width; Height = value.Height; }
-            }
-
             public static implicit operator Rectangle(RECT r) {
                 return new Rectangle(r.Left, r.Top, r.Width, r.Height);
             }
 
             public static implicit operator RECT(Rectangle r) {
                 return new RECT(r);
-            }
-
-            public static bool operator ==(RECT r1, RECT r2) {
-                return r1.Equals(r2);
-            }
-
-            public static bool operator !=(RECT r1, RECT r2) {
-                return !r1.Equals(r2);
-            }
-
-            public bool Equals(RECT r) {
-                return r.Left == Left && r.Top == Top && r.Right == Right && r.Bottom == Bottom;
-            }
-
-            public override bool Equals(object obj) {
-                if(obj is RECT) {
-                    return Equals((RECT)obj);
-                }
-
-                if(obj is Rectangle) {
-                    return Equals(new RECT((Rectangle)obj));
-                }
-
-                return false;
-            }
-
-            public override int GetHashCode() {
-                return ((Rectangle)this).GetHashCode();
             }
         }
 
@@ -311,15 +251,8 @@ namespace ImgurSniper {
                 X = x;
                 Y = y;
             }
-
-            public static explicit operator Point(POINT p) {
-                return new Point(p.X, p.Y);
-            }
-
-            public static explicit operator POINT(Point p) {
-                return new POINT(p.X, p.Y);
-            }
         }
+
         #endregion
     }
 }

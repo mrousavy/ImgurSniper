@@ -11,14 +11,14 @@ using Timer = System.Timers.Timer;
 
 namespace ImgurSniper {
     /// <summary>
-    /// Interaction logic for GifRecorder.xaml
+    ///     Interaction logic for GifRecorder.xaml
     /// </summary>
     public partial class GifRecorder : IDisposable {
-        private bool _stopped = false;
         private readonly int _fps = FileIO.GifFps;
-        private Timer _timer;
-        private TimeSpan _gifLength;
         private readonly Rectangle _size;
+        private TimeSpan _gifLength;
+        private bool _stopped;
+        private Timer _timer;
 
         public byte[] Gif;
 
@@ -48,12 +48,27 @@ namespace ImgurSniper {
         }
 
 
+        public void Dispose() {
+            Gif = null;
+
+            try {
+                Close();
+            }
+            catch {
+                //Window already closed
+            }
+
+            GC.Collect();
+        }
+
+
         private void FadeOut(bool result) {
             DoubleAnimation fadeOut = Animations.FadeOut;
             fadeOut.Completed += delegate {
                 try {
                     DialogResult = result;
-                } catch {
+                }
+                catch {
                     Close();
                 }
             };
@@ -66,8 +81,9 @@ namespace ImgurSniper {
                 List<BitmapFrame> bitmapframes = new List<BitmapFrame>();
 
                 #region Method 1: Timer
+
                 int currentFrames = 0;
-                int totalFrames = (int)(_fps * (_gifLength.TotalMilliseconds / 1000D));
+                int totalFrames = (int) (_fps * (_gifLength.TotalMilliseconds / 1000D));
                 MemoryStream stream;
                 MemoryStream gifStream = new MemoryStream();
                 // ReSharper disable once PossibleLossOfFraction
@@ -80,12 +96,13 @@ namespace ImgurSniper {
                     new Thread(() => {
                         try {
                             //Finish GIF
-                            if(_stopped || currentFrames >= totalFrames) {
+                            if (_stopped || currentFrames >= totalFrames) {
                                 _timer.Stop();
 
                                 GifBitmapEncoder encoder = new GifBitmapEncoder();
-                                foreach(BitmapFrame frame in bitmapframes)
+                                foreach (BitmapFrame frame in bitmapframes) {
                                     encoder.Frames.Add(frame);
+                                }
 
                                 encoder.Save(gifStream);
 
@@ -109,10 +126,9 @@ namespace ImgurSniper {
 
                             currentFrames++;
 
-                            Dispatcher.BeginInvoke(new Action(delegate {
-                                ProgressBar.Value = currentFrames;
-                            }));
-                        } catch {
+                            Dispatcher.BeginInvoke(new Action(delegate { ProgressBar.Value = currentFrames; }));
+                        }
+                        catch {
                             Dispatcher.BeginInvoke(new Action(delegate {
                                 FadeOut(false);
                                 _timer.Stop();
@@ -121,17 +137,14 @@ namespace ImgurSniper {
                     }).Start();
                 };
 
-                _timer.Disposed += delegate {
-                    Dispatcher.BeginInvoke(new Action(delegate {
-                        FadeOut(true);
-                    }));
-                };
+                _timer.Disposed += delegate { Dispatcher.BeginInvoke(new Action(delegate { FadeOut(true); })); };
 
                 _timer.Start();
+
                 #endregion
 
-
                 #region Method 2: Async ForLoop
+
                 //for(int i = 0; i < 1000; i++) {
                 //    MemoryStream stream = new MemoryStream();
 
@@ -145,9 +158,11 @@ namespace ImgurSniper {
 
                 //    encoder.Frames.Add(bitmap);
                 //}
+
                 #endregion
 
                 #region Method 3: Expression Encoder .WMV
+
                 //Path for temporary WMV
                 //string tmp = Path.Combine(
                 //    @"C:\Users\b4dpi\Documents\ImgurSniper",
@@ -175,27 +190,16 @@ namespace ImgurSniper {
 
                 //    Close();
                 //};
+
                 #endregion
-            } catch {
+            }
+            catch {
                 FadeOut(false);
             }
         }
 
         private void FinishGif(object sender, MouseButtonEventArgs e) {
             _stopped = true;
-        }
-
-
-        public void Dispose() {
-            Gif = null;
-
-            try {
-                Close();
-            } catch {
-                //Window already closed
-            }
-
-            GC.Collect();
         }
     }
 }

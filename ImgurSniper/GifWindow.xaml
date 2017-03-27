@@ -9,12 +9,12 @@
         ShowActivated="False" Focusable="False" ShowInTaskbar="False"
         mc:Ignorable="d" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize"
         Title="Snipe a Screenshot!" WindowStartupLocation="Manual" Loaded="WindowLoaded">
-    
+
     <Grid>
         <Grid x:Name="grid" MouseDown="StartDrawing" MouseUp="ReleaseRectangle" MouseMove="DrawRectangle">
             <Border x:Name="selectionRectangle" Margin="9999"
-                BorderBrush="DarkGray" BorderThickness="1">
-                <Rectangle Fill="Gray" Opacity="0.3"/>
+                    BorderBrush="DarkGray" BorderThickness="1">
+                <Rectangle Fill="Gray" Opacity="0.3" />
             </Border>
 
             <Grid x:Name="ContentGrid" Opacity="0" Background="Black">
@@ -23,8 +23,8 @@
                         <BeginStoryboard>
                             <Storyboard Name="FadeIn">
                                 <DoubleAnimation Name="FadeInAnimation"
-                                     Storyboard.TargetProperty="(Grid.Opacity)"
-                                     From="0" To="0.3" Duration="0:0:0.25"/>
+                                                 Storyboard.TargetProperty="(Grid.Opacity)"
+                                                 From="0" To="0.3" Duration="0:0:0.25" />
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
@@ -54,7 +54,7 @@
 
         <Canvas Name="PaintSurface" MouseDown="BeginPaint" MouseMove="Paint" MouseUp="StopPaint" IsEnabled="False">
             <Canvas.Background>
-                <SolidColorBrush Color="White" Opacity="0"/>
+                <SolidColorBrush Color="White" Opacity="0" />
             </Canvas.Background>
         </Canvas>
 
@@ -62,25 +62,27 @@
             <StackPanel Orientation="Horizontal">
                 <Border Background="Gray" Name="DrawIcon" Width="50" Height="50">
                     <Border.CornerRadius>12</Border.CornerRadius>
-                    <md:PackIcon Kind="Pencil" Width="40" Height="40" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <md:PackIcon Kind="Pencil" Width="40" Height="40" VerticalAlignment="Center"
+                                 HorizontalAlignment="Center" />
                 </Border>
                 <Border Background="Transparent" Name="CropIcon" Width="50" Height="50">
                     <Border.CornerRadius>12</Border.CornerRadius>
-                    <md:PackIcon Kind="Crop" Width="40" Height="40" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <md:PackIcon Kind="Crop" Width="40" Height="40" VerticalAlignment="Center"
+                                 HorizontalAlignment="Center" />
                 </Border>
             </StackPanel>
         </Grid>
 
         <toasty:Toasty x:Name="toast"
-            Height="30"
-            VerticalAlignment="Bottom"
-            Duration="0:0:0:3.3"
-            Message="Whoops! Something went wrong!"
-            FontFamily="Segoe UI"
-            FontWeight="Bold"
-            MessageColor="White"
-            Background="#F44336"
-            FontSize="13"
-            Visibility="Collapsed"/>
+                       Height="30"
+                       VerticalAlignment="Bottom"
+                       Duration="0:0:0:3.3"
+                       Message="Whoops! Something went wrong!"
+                       FontFamily="Segoe UI"
+                       FontWeight="Bold"
+                       MessageColor="White"
+                       Background="#F44336"
+                       FontSize="13"
+                       Visibility="Collapsed" />
     </Grid>
 </Window>

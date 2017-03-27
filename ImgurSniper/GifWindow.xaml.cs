@@ -1,7 +1,4 @@
-﻿using ImgurSniper.Properties;
-using mrousavy;
-using System;
-using System.IO;
+﻿using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,16 +8,18 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Shapes;
 using System.Windows.Threading;
+using ImgurSniper.Properties;
+using mrousavy;
 using Cursors = System.Windows.Input.Cursors;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
-using Path = System.Windows.Shapes.Path;
 using Point = System.Windows.Point;
 using Rectangle = System.Drawing.Rectangle;
 
 namespace ImgurSniper {
     /// <summary>
-    /// Interaction logic for GifWindow.xaml
+    ///     Interaction logic for GifWindow.xaml
     /// </summary>
     public partial class GifWindow : IDisposable {
         private bool _drag;
@@ -28,15 +27,6 @@ namespace ImgurSniper {
         public byte[] CroppedGif;
         public Point From, To;
         public string HwndName;
-        //Magnifyer for Performance reasons disabled
-        //private bool _enableMagnifyer = false;
-
-
-        //Size of current Mouse Location screen
-        public static Rectangle Screen => System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position).Bounds;
-
-        //Size of whole Screen Array
-        public static Rectangle AllScreens => SystemInformation.VirtualScreen;
 
 
         public GifWindow(bool allMonitors) {
@@ -51,6 +41,17 @@ namespace ImgurSniper {
             Position(allMonitors);
             //LoadConfig();
         }
+
+        //Magnifyer for Performance reasons disabled
+        //private bool _enableMagnifyer = false;
+
+
+        //Size of current Mouse Location screen
+        public static Rectangle Screen
+            => System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position).Bounds;
+
+        //Size of whole Screen Array
+        public static Rectangle AllScreens => SystemInformation.VirtualScreen;
 
         //Position Window correctly
         private void Position(bool allMonitors) {
@@ -67,8 +68,8 @@ namespace ImgurSniper {
                 toast.Margin = new Thickness(
                     workArea.Left,
                     workArea.Top,
-                    (SystemParameters.VirtualScreenWidth - workArea.Right),
-                    (SystemParameters.VirtualScreenHeight - SystemParameters.PrimaryScreenHeight));
+                    SystemParameters.VirtualScreenWidth - workArea.Right,
+                    SystemParameters.VirtualScreenHeight - SystemParameters.PrimaryScreenHeight);
             }
         }
 
@@ -87,6 +88,9 @@ namespace ImgurSniper {
 
             Activate();
             Focus();
+
+
+            //TODO: Better Hotkeys (Window only, not Global)
 
             #region Escape
 
@@ -135,9 +139,7 @@ namespace ImgurSniper {
             try {
                 //Register Global Ctrl + Z Hotkey
                 HotKey ctrlZHotKey = new HotKey(ModifierKeys.Control, Key.Z, this);
-                ctrlZHotKey.HotKeyPressed += delegate {
-                    CtrlZ();
-                };
+                ctrlZHotKey.HotKeyPressed += delegate { CtrlZ(); };
             } catch {
                 //Register Ctrl + Z Hotkey for this Window if Global Hotkey fails
                 KeyDown += (o, ke) => {
@@ -174,10 +176,10 @@ namespace ImgurSniper {
             //Hide in Alt + Tab Switcher View
             WindowInteropHelper wndHelper = new WindowInteropHelper(this);
 
-            int exStyle = (int)WinAPI.GetWindowLong(wndHelper.Handle, (int)WinAPI.GetWindowLongFields.GWL_EXSTYLE);
+            int exStyle = (int)WinAPI.GetWindowLong(wndHelper.Handle, (int)WinAPI.GetWindowLongFields.GwlExstyle);
 
-            exStyle |= (int)WinAPI.ExtendedWindowStyles.WS_EX_TOOLWINDOW;
-            WinAPI.SetWindowLong(wndHelper.Handle, (int)WinAPI.GetWindowLongFields.GWL_EXSTYLE, (IntPtr)exStyle);
+            exStyle |= (int)WinAPI.ExtendedWindowStyles.WsExToolwindow;
+            WinAPI.SetWindowLong(wndHelper.Handle, (int)WinAPI.GetWindowLongFields.GwlExstyle, (IntPtr)exStyle);
         }
 
         private static Rectangle GetRectFromHandle(IntPtr whandle) {
@@ -278,8 +280,8 @@ namespace ImgurSniper {
                 await Task.Delay(50);
 
                 //Send Window to back, so WinAPI.User32.WindowFromPoint does not detect ImgurSniper as Window
-                WinAPI.User32.SetWindowPos(new WindowInteropHelper(this).Handle, WinAPI.HWND_BOTTOM, 0, 0, 0, 0,
-                    WinAPI.SWP_NOMOVE | WinAPI.SWP_NOSIZE | WinAPI.SWP_NOACTIVATE);
+                WinAPI.User32.SetWindowPos(new WindowInteropHelper(this).Handle, WinAPI.HwndBottom, 0, 0, 0, 0,
+                    WinAPI.SwpNomove | WinAPI.SwpNosize | WinAPI.SwpNoactivate);
 
                 IntPtr whandle = WinAPI.User32.WindowFromPoint(point);
 
@@ -398,10 +400,10 @@ namespace ImgurSniper {
         }
 
 
-
         private void CtrlZ() {
-            if(PaintSurface.Children.Count > 0)
+            if(PaintSurface.Children.Count > 0) {
                 PaintSurface.Children.RemoveAt(PaintSurface.Children.Count - 1);
+            }
         }
 
         #endregion

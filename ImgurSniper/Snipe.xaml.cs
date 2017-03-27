@@ -1,6 +1,4 @@
-﻿using ImgurSniper.Properties;
-using mrousavy;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -11,41 +9,33 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using ImgurSniper.Properties;
+using mrousavy;
 using Application = System.Windows.Application;
 using Clipboard = System.Windows.Clipboard;
+using MessageBox = System.Windows.MessageBox;
 
 namespace ImgurSniper {
     /// <summary>
     ///     Interaction logic for Snipe.xaml
     /// </summary>
     public partial class Snipe {
+        private static readonly Action ActionTroubleshoot =
+            delegate { Process.Start(Path.Combine(FileIO._programFiles, "ImgurSniper.UI.exe"), "Troubleshooting"); };
+
+        private static Notification _internalNotification;
         private int _counter;
-        private bool _gif;
         private string _dir;
+        private bool _gif;
         private ImgurIO _imgur;
         private NotifyIcon _nicon;
-
-        private static readonly Action ActionTroubleshoot = delegate {
-            Process.Start(Path.Combine(FileIO._programFiles, "ImgurSniper.UI.exe"), "Troubleshooting");
-        };
-
-        private static Notification Notification {
-            get {
-                return _internalNotification;
-            }
-            set {
-                _internalNotification?.Close();
-
-                _internalNotification = value;
-            }
-        }
-        private static Notification _internalNotification;
 
         public Snipe() {
             InitializeComponent();
 
 #if DEBUG
-            Notification = new Notification("ImgurSniper initialized!", Notification.NotificationType.Success, true, null);
+            Notification = new Notification("ImgurSniper initialized!", Notification.NotificationType.Success, true,
+                null);
             Notification.Show();
 #endif
             Initialize();
@@ -53,6 +43,15 @@ namespace ImgurSniper {
             Position();
 
             Start();
+        }
+
+        private static Notification Notification {
+            get { return _internalNotification; }
+            set {
+                _internalNotification?.Close();
+
+                _internalNotification = value;
+            }
         }
 
         //Initialize important Variables
@@ -90,8 +89,9 @@ namespace ImgurSniper {
                     //To definetly be sure, arg is a File
                     if(File.Exists(arg) && (arg.Contains("/") || arg.Contains("\\"))) {
                         //In debug mode, the vshost exe is passed as argument
-                        if(!arg.ToLower().EndsWith("exe"))
+                        if(!arg.ToLower().EndsWith("exe")) {
                             uploadFiles.Add(arg);
+                        }
                     }
 
                     if(arg.ToLower().Contains("gif")) {
@@ -118,10 +118,10 @@ namespace ImgurSniper {
             //Hide in Alt + Tab Switcher View
             WindowInteropHelper wndHelper = new WindowInteropHelper(this);
 
-            int exStyle = (int)WinAPI.GetWindowLong(wndHelper.Handle, (int)WinAPI.GetWindowLongFields.GWL_EXSTYLE);
+            int exStyle = (int)WinAPI.GetWindowLong(wndHelper.Handle, (int)WinAPI.GetWindowLongFields.GwlExstyle);
 
-            exStyle |= (int)WinAPI.ExtendedWindowStyles.WS_EX_TOOLWINDOW;
-            WinAPI.SetWindowLong(wndHelper.Handle, (int)WinAPI.GetWindowLongFields.GWL_EXSTYLE, (IntPtr)exStyle);
+            exStyle |= (int)WinAPI.ExtendedWindowStyles.WsExToolwindow;
+            WinAPI.SetWindowLong(wndHelper.Handle, (int)WinAPI.GetWindowLongFields.GwlExstyle, (IntPtr)exStyle);
         }
 
         private void UpdateCheck() {
@@ -161,9 +161,7 @@ namespace ImgurSniper {
 
             ContextMenu menu = new ContextMenu();
 
-            menu.MenuItems.Add(strings.gif, delegate {
-                Crop(false, true);
-            });
+            menu.MenuItems.Add(strings.gif, delegate { Crop(false, true); });
 
             menu.MenuItems.Add("-");
 
@@ -257,7 +255,8 @@ namespace ImgurSniper {
                         try {
                             //e.g. "Uploading Images (123KB) (1 of 2)"
                             //SuccessToast.Show(string.Format(strings.uploadingFiles, kb, index, files.Count), TimeSpan.FromDays(10));
-                            Notification.contentLabel.Text = string.Format(strings.uploadingFiles, kb, index, files.Count);
+                            Notification.contentLabel.Text = string.Format(strings.uploadingFiles, kb, index,
+                                files.Count);
                         } catch(Exception e) {
                             Debug.Write(e.Message);
                             //this image was not uploaded
@@ -270,7 +269,8 @@ namespace ImgurSniper {
                     Notification.Close();
                 } catch {
                     //Unsupported File Type? Internet connection error?
-                    Notification = new Notification(strings.errorInstantUpload, Notification.NotificationType.Error, true, ActionTroubleshoot);
+                    Notification = new Notification(strings.errorInstantUpload, Notification.NotificationType.Error,
+                        true, ActionTroubleshoot);
                     await Notification.ShowAsync();
                     //await ErrorToast.ShowAsync(strings.errorInstantUpload, TimeSpan.FromSeconds(5));
                 }
@@ -284,7 +284,8 @@ namespace ImgurSniper {
                     string kb = $"{byteImg.Length / 1024d:0.#}";
 
                     //e.g. "Uploading Image (123KB)"
-                    Notification = new Notification(string.Format(strings.uploading, kb), Notification.NotificationType.Progress, false, null);
+                    Notification = new Notification(string.Format(strings.uploading, kb),
+                        Notification.NotificationType.Progress, false, null);
                     Notification.Show();
                     //SuccessToast.Show(string.Format(strings.uploading, kb), TimeSpan.FromDays(10));
 
@@ -294,7 +295,8 @@ namespace ImgurSniper {
                     Notification.Close();
                 } catch {
                     //Unsupported File Type? Internet connection error?
-                    Notification = new Notification(strings.errorInstantUpload, Notification.NotificationType.Error, true, ActionTroubleshoot);
+                    Notification = new Notification(strings.errorInstantUpload, Notification.NotificationType.Error,
+                        true, ActionTroubleshoot);
                     await Notification.ShowAsync();
                     //await ErrorToast.ShowAsync(strings.errorInstantUpload, TimeSpan.FromSeconds(5));
                 }
@@ -397,7 +399,7 @@ namespace ImgurSniper {
                             ActionTroubleshoot);
                         await Notification.ShowAsync();
 
-                        System.Windows.MessageBox.Show(string.Format(strings.otherErrorMsg, ex.Message),
+                        MessageBox.Show(string.Format(strings.otherErrorMsg, ex.Message),
                             strings.errorMsg);
                         //ErrorToast.Show(string.Format(strings.otherErrorMsg, ex),
                         //    TimeSpan.FromSeconds(3.5));
@@ -472,7 +474,7 @@ namespace ImgurSniper {
                             ActionTroubleshoot);
                         await Notification.ShowAsync();
 
-                        System.Windows.MessageBox.Show(string.Format(strings.otherErrorMsg, ex.Message),
+                        MessageBox.Show(string.Format(strings.otherErrorMsg, ex.Message),
                             strings.errorMsg);
                         //ErrorToast.Show(string.Format(strings.otherErrorMsg, ex),
                         //    TimeSpan.FromSeconds(3.5));
@@ -492,21 +494,21 @@ namespace ImgurSniper {
                 Clipboard.SetText(link);
                 PlayBlop();
 
-                Action action = delegate {
-                    Process.Start(link);
-                };
+                Action action = delegate { Process.Start(link); };
 
                 if(FileIO.OpenAfterUpload) {
                     Process.Start(link);
                     action = null;
                 }
 
-                Notification = new Notification(strings.linkclipboard, Notification.NotificationType.Success, true, action);
+                Notification = new Notification(strings.linkclipboard, Notification.NotificationType.Success, true,
+                    action);
                 await Notification.ShowAsync();
                 //await SuccessToast.ShowAsync(strings.linkclipboard,
                 //    TimeSpan.FromSeconds(3));
             } else {
-                Notification = new Notification(string.Format(strings.uploadingError, link), Notification.NotificationType.Error, true, ActionTroubleshoot);
+                Notification = new Notification(string.Format(strings.uploadingError, link),
+                    Notification.NotificationType.Error, true, ActionTroubleshoot);
                 await Notification.ShowAsync();
                 //await ErrorToast.ShowAsync(string.Format(strings.uploadingError, link),
                 //    TimeSpan.FromSeconds(5));
@@ -521,9 +523,7 @@ namespace ImgurSniper {
             Clipboard.SetText(link);
             PlayBlop();
 
-            Action action = delegate {
-                Process.Start(link);
-            };
+            Action action = delegate { Process.Start(link); };
 
             if(FileIO.OpenAfterUpload) {
                 Process.Start(link);

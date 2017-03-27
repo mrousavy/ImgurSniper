@@ -1,13 +1,14 @@
-﻿using MaterialDesignThemes.Wpf;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using MaterialDesignThemes.Wpf;
 using str = ImgurSniper.UI.Properties.strings;
 
 namespace ImgurSniper.UI {
     public partial class MainWindow {
         #region Dialogs
+
         //Show a Material Design Yes/No Dialog
         private async Task<bool> ShowAskDialog(string message) {
             bool choice = false;
@@ -35,7 +36,7 @@ namespace ImgurSniper.UI {
                 Foreground = Brushes.Gray,
                 Width = 60,
                 Margin = new Thickness(3),
-                Style = (Style)FindResource("MaterialDesignFlatButton")
+                Style = (Style) FindResource("MaterialDesignFlatButton")
             };
             yes.Click += delegate {
                 choice = true;
@@ -46,7 +47,7 @@ namespace ImgurSniper.UI {
                 Foreground = Brushes.Gray,
                 Width = 60,
                 Margin = new Thickness(3),
-                Style = (Style)FindResource("MaterialDesignFlatButton")
+                Style = (Style) FindResource("MaterialDesignFlatButton")
             };
             no.Click += delegate {
                 choice = false;
@@ -94,12 +95,10 @@ namespace ImgurSniper.UI {
                 Foreground = Brushes.Gray,
                 Width = 60,
                 Margin = new Thickness(3),
-                Style = (Style)FindResource("MaterialDesignFlatButton"),
+                Style = (Style) FindResource("MaterialDesignFlatButton"),
                 HorizontalAlignment = HorizontalAlignment.Right
             };
-            ok.Click += delegate {
-                CloseDia();
-            };
+            ok.Click += delegate { CloseDia(); };
 
             vPanel.Children.Add(header);
             vPanel.Children.Add(content);
@@ -141,6 +140,7 @@ namespace ImgurSniper.UI {
         private void CloseDia() {
             DialogHost.CloseDialogCommand.Execute(null, DialogHost);
         }
+
         #endregion
     }
 }

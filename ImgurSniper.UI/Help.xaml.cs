@@ -2,7 +2,7 @@
 
 namespace ImgurSniper.UI {
     /// <summary>
-    /// Interaction logic for Help.xaml
+    ///     Interaction logic for Help.xaml
     /// </summary>
     public partial class Help : Window {
         public Help() {

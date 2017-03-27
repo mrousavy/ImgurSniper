@@ -6,30 +6,33 @@ using System.Windows.Media.Animation;
 
 namespace ImgurSniper {
     /// <summary>
-    /// Interaction logic for Notification.xaml
+    ///     Interaction logic for Notification.xaml
     /// </summary>
     public partial class Notification : Window {
-        private double _top;
-        private double _left;
-        private bool _autoHide;
-        private TaskCompletionSource<bool> _task = new TaskCompletionSource<bool>();
+        public enum NotificationType {
+            Progress,
+            Success,
+            Error
+        }
 
-        public enum NotificationType { Progress, Success, Error }
+        private readonly double _left;
+        private readonly TaskCompletionSource<bool> _task = new TaskCompletionSource<bool>();
+        private bool _autoHide;
 
         public Notification(string text, NotificationType type, bool autoHide, Action onClick) {
             InitializeComponent();
 
             _left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width;
-            _top = SystemParameters.WorkArea.Top + SystemParameters.WorkArea.Height;
+            double top = SystemParameters.WorkArea.Top + SystemParameters.WorkArea.Height;
 
             Left = _left;
-            Top = _top - Height - 10;
+            Top = top - Height - 10;
 
             _autoHide = autoHide;
 
             contentLabel.Text = text;
 
-            switch(type) {
+            switch (type) {
                 case NotificationType.Error:
                     errorIcon.Visibility = Visibility.Visible;
                     break;
@@ -41,12 +44,13 @@ namespace ImgurSniper {
                     break;
             }
 
-            if(onClick != null) {
+            if (onClick != null) {
                 NotificationContent.Cursor = Cursors.Hand;
                 NotificationContent.MouseDown += delegate {
                     try {
                         onClick.Invoke();
-                    } catch { }
+                    }
+                    catch {}
                     FadeOut();
                 };
             }
@@ -56,7 +60,7 @@ namespace ImgurSniper {
         private async void Window_Loaded(object sender, RoutedEventArgs e) {
             FadeIn();
 
-            if(_autoHide) {
+            if (_autoHide) {
                 await Task.Delay(3000);
 
                 FadeOut();
@@ -92,7 +96,8 @@ namespace ImgurSniper {
             fadeOut.Completed += delegate {
                 try {
                     _task.SetResult(true);
-                } catch { }
+                }
+                catch {}
                 base.Close();
             };
 
@@ -115,6 +120,7 @@ namespace ImgurSniper {
         private void Close_MouseEnter(object sender, MouseEventArgs e) {
             CloseIcon.BeginAnimation(OpacityProperty, Animations.FadeIn);
         }
+
         private void Close_MouseLeave(object sender, MouseEventArgs e) {
             CloseIcon.BeginAnimation(OpacityProperty, Animations.FadeOut);
         }

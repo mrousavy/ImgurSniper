@@ -1,6 +1,4 @@
-﻿using ImgurSniper.Properties;
-using mrousavy;
-using System;
+﻿using System;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -13,6 +11,8 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using ImgurSniper.Properties;
+using mrousavy;
 using Cursors = System.Windows.Input.Cursors;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Path = System.Windows.Shapes.Path;
@@ -29,15 +29,6 @@ namespace ImgurSniper {
         public byte[] CroppedImage;
         public Point From, To;
         public string HwndName;
-        //Magnifyer for Performance reasons disabled
-        //private bool _enableMagnifyer = false;
-
-
-        //Size of current Mouse Location screen
-        public static Rectangle Screen => System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position).Bounds;
-
-        //Size of whole Screen Array
-        public static Rectangle AllScreens => SystemInformation.VirtualScreen;
 
 
         public ScreenshotWindow(bool allMonitors) {
@@ -53,6 +44,17 @@ namespace ImgurSniper {
             //LoadConfig();
         }
 
+        //Magnifyer for Performance reasons disabled
+        //private bool _enableMagnifyer = false;
+
+
+        //Size of current Mouse Location screen
+        public static Rectangle Screen
+            => System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position).Bounds;
+
+        //Size of whole Screen Array
+        public static Rectangle AllScreens => SystemInformation.VirtualScreen;
+
         //Position Window correctly
         private void Position(bool allMonitors) {
             Rectangle size = allMonitors ? AllScreens : Screen;
@@ -65,7 +67,9 @@ namespace ImgurSniper {
 
             if(allMonitors) {
                 Rect workArea = SystemParameters.WorkArea;
-                toast.Margin = new Thickness(workArea.Left, workArea.Top, (SystemParameters.VirtualScreenWidth - workArea.Right), (SystemParameters.VirtualScreenHeight - SystemParameters.PrimaryScreenHeight));
+                toast.Margin = new Thickness(workArea.Left, workArea.Top,
+                    SystemParameters.VirtualScreenWidth - workArea.Right,
+                    SystemParameters.VirtualScreenHeight - SystemParameters.PrimaryScreenHeight);
             }
         }
 
@@ -84,6 +88,8 @@ namespace ImgurSniper {
 
             Activate();
             Focus();
+
+            //TODO: Better Hotkeys (Window only, not Global)
 
             #region Escape
 
@@ -132,9 +138,7 @@ namespace ImgurSniper {
             try {
                 //Register Global Ctrl + Z Hotkey
                 HotKey ctrlZHotKey = new HotKey(ModifierKeys.Control, Key.Z, this);
-                ctrlZHotKey.HotKeyPressed += delegate {
-                    CtrlZ();
-                };
+                ctrlZHotKey.HotKeyPressed += delegate { CtrlZ(); };
             } catch {
                 //Register Ctrl + Z Hotkey for this Window if Global Hotkey fails
                 KeyDown += (o, ke) => {
@@ -171,10 +175,10 @@ namespace ImgurSniper {
             //Hide in Alt + Tab Switcher View
             WindowInteropHelper wndHelper = new WindowInteropHelper(this);
 
-            int exStyle = (int)WinAPI.GetWindowLong(wndHelper.Handle, (int)WinAPI.GetWindowLongFields.GWL_EXSTYLE);
+            int exStyle = (int)WinAPI.GetWindowLong(wndHelper.Handle, (int)WinAPI.GetWindowLongFields.GwlExstyle);
 
-            exStyle |= (int)WinAPI.ExtendedWindowStyles.WS_EX_TOOLWINDOW;
-            WinAPI.SetWindowLong(wndHelper.Handle, (int)WinAPI.GetWindowLongFields.GWL_EXSTYLE, (IntPtr)exStyle);
+            exStyle |= (int)WinAPI.ExtendedWindowStyles.WsExToolwindow;
+            WinAPI.SetWindowLong(wndHelper.Handle, (int)WinAPI.GetWindowLongFields.GwlExstyle, (IntPtr)exStyle);
         }
 
         private static Rectangle GetRectFromHandle(IntPtr whandle) {
@@ -232,20 +236,6 @@ namespace ImgurSniper {
             SelectedMode.BeginAnimation(OpacityProperty, anim);
         }
 
-        //Play Camera Shutter Sound
-        private static void PlayShutter() {
-            try {
-                MediaPlayer player = new MediaPlayer { Volume = 30 };
-
-                string path = System.IO.Path.Combine(FileIO._programFiles, "Resources\\Camera_Shutter.wav");
-
-                player.Open(new Uri(path));
-                player.Play();
-            } catch {
-                // ignored
-            }
-        }
-
         //Make image of whole Window with Ctrl + A
         private void SelectAllCmd() {
             selectionRectangle.Margin = new Thickness(0);
@@ -288,8 +278,8 @@ namespace ImgurSniper {
                 await Task.Delay(50);
 
                 //Send Window to back, so WinAPI.User32.WindowFromPoint does not detect ImgurSniper as Window
-                WinAPI.User32.SetWindowPos(new WindowInteropHelper(this).Handle, WinAPI.HWND_BOTTOM, 0, 0, 0, 0,
-                    WinAPI.SWP_NOMOVE | WinAPI.SWP_NOSIZE | WinAPI.SWP_NOACTIVATE);
+                WinAPI.User32.SetWindowPos(new WindowInteropHelper(this).Handle, WinAPI.HwndBottom, 0, 0, 0, 0,
+                    WinAPI.SwpNomove | WinAPI.SwpNosize | WinAPI.SwpNoactivate);
 
                 IntPtr whandle = WinAPI.User32.WindowFromPoint(point);
 
@@ -408,10 +398,10 @@ namespace ImgurSniper {
         }
 
 
-
         private void CtrlZ() {
-            if(PaintSurface.Children.Count > 0)
+            if(PaintSurface.Children.Count > 0) {
                 PaintSurface.Children.RemoveAt(PaintSurface.Children.Count - 1);
+            }
         }
 
         #endregion
@@ -488,12 +478,9 @@ namespace ImgurSniper {
                 MemoryStream stream = new MemoryStream();
 
                 Screenshot.GetScreenshot(size)
-                    .Save(stream,
-                        FileIO.UsePNG ? ImageFormat.Png : ImageFormat.Jpeg);
+                    .Save(stream, FileIO.UsePNG ? ImageFormat.Png : ImageFormat.Jpeg);
 
                 CroppedImage = stream.ToArray();
-
-                PlayShutter();
 
                 return true;
             } catch {

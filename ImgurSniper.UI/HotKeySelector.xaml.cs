@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace ImgurSniper.UI {
     /// <summary>
-    /// Interaction logic for HotKeySelector.xaml
+    ///     Interaction logic for HotKeySelector.xaml
     /// </summary>
     public partial class HotKeySelector : Window {
         public Key key;
@@ -15,9 +15,10 @@ namespace ImgurSniper.UI {
         private void SelectKey(object sender, KeyEventArgs e) {
             key = e.Key;
 
-            if(key == Key.Escape) {
+            if (key == Key.Escape) {
                 DialogResult = false;
-            } else {
+            }
+            else {
                 DialogResult = true;
             }
         }

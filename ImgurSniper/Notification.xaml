@@ -1,48 +1,63 @@
 ﻿<Window x:Class="ImgurSniper.Notification"
-		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:md="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
-		mc:Ignorable="d"
-		
-		WindowStyle="None" Background="Transparent" ResizeMode="NoResize" AllowsTransparency="True" WindowStartupLocation="Manual" Opacity="1" Topmost="True" ShowActivated="False" ShowInTaskbar="False"
-		
-		Height="110" Width="300" Loaded="Window_Loaded" MouseEnter="Window_MouseEnter" MouseLeave="Window_MouseLeave">
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:md="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+        mc:Ignorable="d"
 
-	<md:Card Background="{DynamicResource MaterialDesignPaper}"  Margin="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" UniformCornerRadius="3">
+        WindowStyle="None" Background="Transparent" ResizeMode="NoResize" AllowsTransparency="True"
+        WindowStartupLocation="Manual" Opacity="1" Topmost="True" ShowActivated="False" ShowInTaskbar="False"
 
-		<!--Shadow Effect-->
-		<md:Card.Effect>
-			<DropShadowEffect BlurRadius="3" Direction="-90" RenderingBias="Quality" ShadowDepth="1" Color="Gray" Opacity="0.2"/>
-		</md:Card.Effect>
-		<Grid>
-			<!--Notification Content-->
-			<StackPanel>
-				<!--Title Bar (Header)-->
-				<StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,5,0">
-					<Image Source="Logo.ico" Height="23" Width="23" Margin="5"></Image>
-					<Label Margin="3" FontSize="13.5">ImgurSniper</Label>
-				</StackPanel>
+        Height="110" Width="300" Loaded="Window_Loaded" MouseEnter="Window_MouseEnter" MouseLeave="Window_MouseLeave">
 
-				<!--Content (Text)-->
-				<StackPanel Orientation="Horizontal" Margin="10,0,10,10" VerticalAlignment="Center" Width="280" Name="NotificationContent">
+    <md:Card Background="{DynamicResource MaterialDesignPaper}" Margin="1" VerticalAlignment="Stretch"
+             HorizontalAlignment="Stretch" UniformCornerRadius="3">
 
-					<Grid Margin="10" Height="25" Width="25">
-						<ProgressBar x:Name="progressBar" IsIndeterminate="True"  Style="{StaticResource MaterialDesignCircularProgressBar}" Value="35" VerticalAlignment="Center" Visibility="Collapsed"/>
-						<md:PackIcon x:Name="successIcon" Kind="CheckCircle" Foreground="#2196F3" Height="25" Width="25" Visibility="Collapsed"/>
-						<md:PackIcon x:Name="errorIcon" Kind="CloseCircle" Foreground="#F44336" Height="25" Width="25" Visibility="Collapsed"/>
-					</Grid>
+        <!--Shadow Effect-->
+        <md:Card.Effect>
+            <DropShadowEffect BlurRadius="3" Direction="-90" RenderingBias="Quality" ShadowDepth="1" Color="Gray"
+                              Opacity="0.2" />
+        </md:Card.Effect>
+        <Grid>
+            <!--Notification Content-->
+            <StackPanel>
+                <!--Title Bar (Header)-->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left"
+                            Margin="5,5,5,0">
+                    <Image Source="Logo.ico" Height="23" Width="23" Margin="5" />
+                    <Label Margin="3" FontSize="13.5">ImgurSniper</Label>
+                </StackPanel>
 
-					<TextBlock Foreground="#616161" x:Name="contentLabel" VerticalAlignment="Center" Width="225" Margin="10" FontSize="12" x:FieldModifier="public" TextWrapping="Wrap">Test</TextBlock>
-				</StackPanel>
-			</StackPanel>
+                <!--Content (Text)-->
+                <StackPanel Orientation="Horizontal" Margin="10,0,10,10" VerticalAlignment="Center" Width="280"
+                            Name="NotificationContent">
+
+                    <Grid Margin="10" Height="25" Width="25">
+                        <ProgressBar x:Name="progressBar" IsIndeterminate="True"
+                                     Style="{StaticResource MaterialDesignCircularProgressBar}" Value="35"
+                                     VerticalAlignment="Center" Visibility="Collapsed" />
+                        <md:PackIcon x:Name="successIcon" Kind="CheckCircle" Foreground="#2196F3" Height="25"
+                                     Width="25" Visibility="Collapsed" />
+                        <md:PackIcon x:Name="errorIcon" Kind="CloseCircle" Foreground="#F44336" Height="25" Width="25"
+                                     Visibility="Collapsed" />
+                    </Grid>
+
+                    <TextBlock Foreground="#616161" x:Name="contentLabel" VerticalAlignment="Center" Width="225"
+                               Margin="10" FontSize="12" x:FieldModifier="public" TextWrapping="Wrap">
+                        Test
+                    </TextBlock>
+                </StackPanel>
+            </StackPanel>
 
 
-			<!--Close "Button"-->
-			<Border CornerRadius="10" Height="12" Width="12" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right" Background="#FD5E4E" MouseDown="Window_Close" Cursor="Hand" x:Name="Btn_Close" Opacity="0" MouseEnter="Close_MouseEnter" MouseLeave="Close_MouseLeave">
-				<md:PackIcon Kind="WindowClose" Width="10" Height="10" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#222222" x:Name="CloseIcon" Opacity="0" />
-			</Border>
-		</Grid>
-	</md:Card>
+            <!--Close "Button"-->
+            <Border CornerRadius="10" Height="12" Width="12" Margin="5" VerticalAlignment="Top"
+                    HorizontalAlignment="Right" Background="#FD5E4E" MouseDown="Window_Close" Cursor="Hand"
+                    x:Name="Btn_Close" Opacity="0" MouseEnter="Close_MouseEnter" MouseLeave="Close_MouseLeave">
+                <md:PackIcon Kind="WindowClose" Width="10" Height="10" VerticalAlignment="Center"
+                             HorizontalAlignment="Center" Foreground="#222222" x:Name="CloseIcon" Opacity="0" />
+            </Border>
+        </Grid>
+    </md:Card>
 </Window>

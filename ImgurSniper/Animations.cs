@@ -4,22 +4,6 @@ using System.Windows.Media.Animation;
 
 namespace ImgurSniper {
     internal static class Animations {
-        public static DoubleAnimation GetBrightenAnimation(double opacity) {
-            return new DoubleAnimation {
-                To = 1,
-                From = opacity,
-                Duration = TimeSpan.FromMilliseconds(300)
-            };
-        }
-        public static DoubleAnimation GetDarkenAnimation(double opacity) {
-            return new DoubleAnimation {
-                To = 0.5,
-                From = opacity,
-                Duration = TimeSpan.FromMilliseconds(200)
-            };
-        }
-
-
         //Animation Templates
         internal static DoubleAnimation FadeOut {
             get {
@@ -31,6 +15,7 @@ namespace ImgurSniper {
                 return anim;
             }
         }
+
         internal static DoubleAnimation FadeIn {
             get {
                 DoubleAnimation anim = new DoubleAnimation {
@@ -40,6 +25,22 @@ namespace ImgurSniper {
                 };
                 return anim;
             }
+        }
+
+        public static DoubleAnimation GetBrightenAnimation(double opacity) {
+            return new DoubleAnimation {
+                To = 1,
+                From = opacity,
+                Duration = TimeSpan.FromMilliseconds(300)
+            };
+        }
+
+        public static DoubleAnimation GetDarkenAnimation(double opacity) {
+            return new DoubleAnimation {
+                To = 0.5,
+                From = opacity,
+                Duration = TimeSpan.FromMilliseconds(200)
+            };
         }
     }
 }

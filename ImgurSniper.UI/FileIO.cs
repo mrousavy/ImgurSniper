@@ -1,10 +1,11 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Security.AccessControl;
+using System.Security.Principal;
 using System.Windows.Input;
+using Newtonsoft.Json;
 
 namespace ImgurSniper.UI {
     public static class FileIO {
@@ -283,7 +284,6 @@ namespace ImgurSniper.UI {
             }
         }
 
-
         //Frames per Second of GIF Capture
         public static int GifFps {
             get {
@@ -316,7 +316,6 @@ namespace ImgurSniper.UI {
             }
         }
 
-
         public static Settings JsonConfig {
             get {
                 Exists();
@@ -335,9 +334,6 @@ namespace ImgurSniper.UI {
             =>
                 Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper",
                     "config.json");
-
-        //Path to Installation Folder
-        public static string _programFiles => AppDomain.CurrentDomain.BaseDirectory;
 
         //Version of ImgurSniper
         public static string _fileVersion {
@@ -361,58 +357,28 @@ namespace ImgurSniper.UI {
             }
         }
 
-        //Resets User Settings
-        public static void WipeUserData() {
-            JsonConfig = new Settings();
-        }
-
-        public class Settings {
-            public DateTime LastChecked = DateTime.Now;
-
-            public int CurrentCommits = 999;
-            public int GifLength = 10000;
-            public int GifFps = 10;
-
-            public bool AllMonitors = true;
-            public bool ImgurAfterSnipe = true;
-            public bool IsInContextMenu = false;
-            public bool MagnifyingGlassEnabled = true;
-            public bool OpenAfterUpload = true;
-            public bool RunOnBoot = true;
-            public bool SaveImages;
-            public bool UsePNG = true;
-            public bool UsePrint = false;
-            public bool UpdateAvailable = false;
-            public bool AutoUpdate = true;
-
-            public string Language = "en";
-            public string SaveImagesPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "ImgurSniperImages");
-
-            public Key ShortcutImgKey = Key.X;
-            public Key ShortcutGifKey = Key.G;
-        }
-
         //Check for Write Access to Directory
         public static bool CanWrite(string path) {
             try {
-                var writeAllow = false;
-                var writeDeny = false;
-                var accessControlList = Directory.GetAccessControl(path);
-                if(accessControlList == null)
+                bool writeAllow = false;
+                bool writeDeny = false;
+                DirectorySecurity accessControlList = Directory.GetAccessControl(path);
+                AuthorizationRuleCollection accessRules = accessControlList?.GetAccessRules(true, true,
+                    typeof(SecurityIdentifier));
+                if(accessRules == null) {
                     return false;
-                var accessRules = accessControlList.GetAccessRules(true, true, typeof(System.Security.Principal.SecurityIdentifier));
-                if(accessRules == null)
-                    return false;
+                }
 
                 foreach(FileSystemAccessRule rule in accessRules) {
-                    if((FileSystemRights.Write & rule.FileSystemRights) != FileSystemRights.Write)
+                    if((FileSystemRights.Write & rule.FileSystemRights) != FileSystemRights.Write) {
                         continue;
+                    }
 
-                    if(rule.AccessControlType == AccessControlType.Allow)
+                    if(rule.AccessControlType == AccessControlType.Allow) {
                         writeAllow = true;
-                    else if(rule.AccessControlType == AccessControlType.Deny)
+                    } else if(rule.AccessControlType == AccessControlType.Deny) {
                         writeDeny = true;
+                    }
                 }
 
                 return writeAllow && !writeDeny;
@@ -421,15 +387,38 @@ namespace ImgurSniper.UI {
             }
         }
 
+        public class Settings {
+            public bool AllMonitors = true;
+            public bool AutoUpdate = true;
+
+            public int CurrentCommits = 999;
+            public int GifFps = 10;
+            public int GifLength = 10000;
+            public bool ImgurAfterSnipe = true;
+            public bool IsInContextMenu;
+
+            public string Language = "en";
+            public DateTime LastChecked = DateTime.Now;
+            public bool MagnifyingGlassEnabled = true;
+            public bool OpenAfterUpload = true;
+            public bool RunOnBoot = true;
+            public bool SaveImages;
+
+            public string SaveImagesPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "ImgurSniperImages");
+
+            public Key ShortcutGifKey = Key.G;
+
+            public Key ShortcutImgKey = Key.X;
+            public bool UpdateAvailable;
+            public bool UsePNG = true;
+            public bool UsePrint;
+        }
+
         #region Imgur Account
-
-        //Does Imgur Refresh Token exist?
-        public static bool TokenExists => File.Exists(TokenPath);
-
         //Path to Imgur User Refresh Token
         public static string TokenPath
-            =>
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper",
+            => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper",
                     "refreshtoken.imgurtoken");
 
         public static string ReadRefreshToken() {
@@ -454,7 +443,6 @@ namespace ImgurSniper.UI {
                 File.Delete(TokenPath);
             }
         }
-
         #endregion
     }
 }

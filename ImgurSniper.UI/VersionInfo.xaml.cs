@@ -1,15 +1,16 @@
-﻿using Octokit;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using Octokit;
 
 namespace ImgurSniper.UI {
     /// <summary>
-    /// Interaction logic for VersionInfo.xaml
+    ///     Interaction logic for VersionInfo.xaml
     /// </summary>
     public partial class VersionInfo : Window {
         private IReadOnlyList<GitHubCommit> _commits;
-        private int latest;
-        public bool skipped = false;
+        private readonly int latest;
+        public bool skipped;
 
         public VersionInfo(IReadOnlyList<GitHubCommit> commits, int currentCommits) {
             InitializeComponent();
@@ -21,10 +22,10 @@ namespace ImgurSniper.UI {
 
             //commits = null and currentCommits = ?? in DEBUG
             int commitNr = 50;
-            for(int i = 0; i < 50 - 4; i++) {
+            for (int i = 0; i < 50 - 4; i++) {
                 listview.Items.Add(new VersionInfoItem {
                     Version = "v" + commitNr,
-                    Date = $"{System.DateTime.Now:dd.MM}",
+                    Date = $"{DateTime.Now:dd.MM}",
                     Message = "\"Updated Something! (this is debug and not release 123)\""
                 });
 

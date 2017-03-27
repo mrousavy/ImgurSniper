@@ -140,8 +140,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>strings.resx</DependentUpon>
     </Compile>
-    <Compile Include="SystemMetrics.cs" />
-    <Compile Include="Templates.cs" />
     <Compile Include="WinAPI.cs" />
     <Page Include="GifRecorder.xaml">
       <SubType>Designer</SubType>
@@ -209,11 +207,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Blop.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Camera_Shutter.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
