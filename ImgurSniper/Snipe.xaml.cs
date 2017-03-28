@@ -27,15 +27,15 @@ namespace ImgurSniper {
         private int _counter;
         private string _dir;
         private bool _gif;
-        private ImgurIO _imgur;
         private NotifyIcon _nicon;
+        private ImgurIO _imgur;
 
         public Snipe() {
             InitializeComponent();
 
-#if DEBUG
             Notification = new Notification("ImgurSniper initialized!", Notification.NotificationType.Success, true,
                 null);
+#if DEBUG
             Notification.Show();
 #endif
             Initialize();
@@ -413,6 +413,9 @@ namespace ImgurSniper {
                     }
                 }
             }
+
+            Notification = null;
+            GC.Collect();
         }
 
         //Open GIF Capture Window
@@ -495,6 +498,9 @@ namespace ImgurSniper {
                     }
                 }
             }
+
+            Notification = null;
+            GC.Collect();
         }
 
         //Upload byte[] to imgur and give user a response
@@ -514,12 +520,14 @@ namespace ImgurSniper {
                 Notification = new Notification(strings.linkclipboard, Notification.NotificationType.Success, true,
                     action);
                 await Notification.ShowAsync();
+
                 //await SuccessToast.ShowAsync(strings.linkclipboard,
                 //    TimeSpan.FromSeconds(3));
             } else {
                 Notification = new Notification(string.Format(strings.uploadingError, link),
                     Notification.NotificationType.Error, true, ActionTroubleshoot);
                 await Notification.ShowAsync();
+
                 //await ErrorToast.ShowAsync(string.Format(strings.uploadingError, link),
                 //    TimeSpan.FromSeconds(5));
             }

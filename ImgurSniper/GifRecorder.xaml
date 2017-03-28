@@ -19,8 +19,11 @@
         <DockPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="5,0,5,0">
             <ProgressBar x:Name="ProgressBar" VerticalAlignment="Center" HorizontalAlignment="Left" />
 
-            <md:PackIcon Kind="CheckCircle" Foreground="#2196F3" Height="25" Width="25" VerticalAlignment="Center"
-                         HorizontalAlignment="Right" DockPanel.Dock="Right" MouseDown="FinishGif" Cursor="Hand" />
+            <Border Background="White" Width="25" Height="25" CornerRadius="25" VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right">
+                
+                <md:PackIcon Kind="CheckCircle" Width="25" Height="25" Foreground="#2196F3" MouseDown="FinishGif" Cursor="Hand" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                
+            </Border>
         </DockPanel>
     </DockPanel>
 </Window>

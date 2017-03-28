@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Imgur.API.Authentication.Impl;
@@ -14,18 +15,18 @@ namespace ImgurSniper {
         ///     Login to Imgur with OAuth2
         /// </summary>
         public ImgurIO() {
-            _client = new ImgurClient(ClientID, ClientSecret);
+            _client = new ImgurClient(ClientId, ClientSecret);
 
-            if (FileIO.TokenExists) {
+            if(FileIO.TokenExists) {
                 Login();
             }
         }
 
-        public static string ClientID => "766263aaa4c9882";
+        public static string ClientId => "766263aaa4c9882";
 
         public static string ClientSecret => "1f16f21e51e499422fb90ae670a1974e88f7c6ae";
 
-
+        //Login to Imgur Account
         private async void Login() {
             try {
                 OAuth2Endpoint endpoint = new OAuth2Endpoint(_client);
@@ -34,8 +35,7 @@ namespace ImgurSniper {
                 IOAuth2Token token = await endpoint.GetTokenByRefreshTokenAsync(refreshToken);
 
                 _client.SetOAuth2Token(token);
-            }
-            catch {
+            } catch {
                 // ignored
             }
         }
@@ -50,7 +50,7 @@ namespace ImgurSniper {
             ImageEndpoint endpoint = new ImageEndpoint(_client);
 
             IImage image;
-            using (MemoryStream stream = new MemoryStream(bimage)) {
+            using(MemoryStream stream = new MemoryStream(bimage)) {
                 string title = string.IsNullOrWhiteSpace(windowName)
                     ? strings.uploadTitle
                     : $"{windowName}  -  (" + strings.uploadTitle + ")";
@@ -73,7 +73,7 @@ namespace ImgurSniper {
             KeyValuePair<string, string> pair;
 
             //Logged in User = Album ID for uploads
-            if (_client.OAuth2Token != null) {
+            if(_client.OAuth2Token != null) {
                 pair = new KeyValuePair<string, string>(album.Id, album.Id);
             }
             //Not Logged in User = Album Delete Has (Anonymous Albums)
