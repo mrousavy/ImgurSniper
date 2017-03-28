@@ -40,9 +40,9 @@
 			<StackPanel Orientation="Horizontal" Margin="5,0,15,5"
 						HorizontalAlignment="Right" VerticalAlignment="Top">
 				<Image Width="100" Margin="10" RenderOptions.BitmapScalingMode="HighQuality"
-					   Source="Resources/mrousavy.png" />
+					   Source="Resources/mrousavy.png" Cursor="Hand" MouseDown="Image_OpenGitHub"/>
 				<Image Width="30" Margin="10" RenderOptions.BitmapScalingMode="HighQuality"
-					   Source="Resources/Logo.png" />
+					   Source="Resources/Logo.png" Cursor="Hand" MouseDown="Image_OpenRepository"/>
 			</StackPanel>
 
 

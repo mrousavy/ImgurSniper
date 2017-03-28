@@ -456,6 +456,14 @@ namespace ImgurSniper.UI {
             } catch { }
         }
 
+        private void Image_OpenRepository(object sender, MouseButtonEventArgs e) {
+            Process.Start("http://www.github.com/mrousavy/ImgurSniper");
+        }
+
+        private void Image_OpenGitHub(object sender, MouseButtonEventArgs e) {
+            Process.Start("http://www.github.com/mrousavy");
+        }
+
 
         //TODO: Custom Title Bar (Mac OSX Title bar?)
         //private async void Window_Maximize(object sender, MouseButtonEventArgs e) {

@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
-using System.Windows;
 using Size = System.Drawing.Size;
 
 namespace ImgurSniper {
@@ -37,7 +34,7 @@ namespace ImgurSniper {
 
                 if(GetCursorInfo(out pci)) {
                     if(pci.flags == CURSOR_SHOWING) {
-                        DrawIcon(g.GetHdc(), pci.ptScreenPos.x, pci.ptScreenPos.y, pci.hCursor);
+                        DrawIcon(g.GetHdc(), pci.ptScreenPos.x - size.X, pci.ptScreenPos.y - size.Y, pci.hCursor);
                         g.ReleaseHdc();
                     }
                 }
