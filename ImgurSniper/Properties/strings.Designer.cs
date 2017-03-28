@@ -280,7 +280,7 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error uploading GIF to Imgur!.
+        ///   Looks up a localized string similar to Error creating/uploading GIF to Imgur!.
         /// </summary>
         internal static string uploadingErrorGif {
             get {

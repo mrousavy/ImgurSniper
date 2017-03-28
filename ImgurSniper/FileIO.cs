@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
 using System.Security.AccessControl;
@@ -13,11 +14,7 @@ namespace ImgurSniper {
         //Value whether ImgurSniper should strech over all screens or not
         public static bool AllMonitors {
             get {
-                try {
-                    return JsonConfig.AllMonitors;
-                } catch {
-                    return true;
-                }
+                return JsonConfig.AllMonitors;
             }
             set {
                 Settings settings = JsonConfig;
@@ -26,18 +23,14 @@ namespace ImgurSniper {
             }
         }
 
-        //Value whether ImgurSniper should use PNG Image Format
-        public static bool UsePNG {
+        //The Image Format for normal Images
+        public static ImageFormat ImageFormat {
             get {
-                try {
-                    return JsonConfig.UsePNG;
-                } catch {
-                    return false;
-                }
+                return JsonConfig.ImageFormat;
             }
             set {
                 Settings settings = JsonConfig;
-                settings.UsePNG = value;
+                settings.ImageFormat = value;
                 JsonConfig = settings;
             }
         }
@@ -45,11 +38,7 @@ namespace ImgurSniper {
         //Value whether ImgurSniper should open the uploaded Image in Browser after upload
         public static bool OpenAfterUpload {
             get {
-                try {
-                    return JsonConfig.OpenAfterUpload;
-                } catch {
-                    return true;
-                }
+                return JsonConfig.OpenAfterUpload;
             }
             set {
                 Settings settings = JsonConfig;
@@ -61,11 +50,7 @@ namespace ImgurSniper {
         //Key for ImgurSniper Image Shortcut
         public static Key ShortcutImgKey {
             get {
-                try {
-                    return JsonConfig.ShortcutImgKey;
-                } catch {
-                    return Key.X;
-                }
+                return JsonConfig.ShortcutImgKey;
             }
             set {
                 Settings settings = JsonConfig;
@@ -77,11 +62,7 @@ namespace ImgurSniper {
         //Key for ImgurSniper GIF Shortcut
         public static Key ShortcutGifKey {
             get {
-                try {
-                    return JsonConfig.ShortcutGifKey;
-                } catch {
-                    return Key.G;
-                }
+                return JsonConfig.ShortcutGifKey;
             }
             set {
                 Settings settings = JsonConfig;
@@ -93,11 +74,7 @@ namespace ImgurSniper {
         //Use PrintKey for ImgurSniper Shortcut?
         public static bool UsePrint {
             get {
-                try {
-                    return JsonConfig.UsePrint;
-                } catch {
-                    return false;
-                }
+                return JsonConfig.UsePrint;
             }
             set {
                 Settings settings = JsonConfig;
@@ -109,14 +86,10 @@ namespace ImgurSniper {
         //The Path where images should be saved (if enabled)
         public static string SaveImagesPath {
             get {
-                try {
-                    string path = JsonConfig.SaveImagesPath;
-                    string ret = CanWrite(path) ? path : ConfigPath;
+                string path = JsonConfig.SaveImagesPath;
+                string ret = CanWrite(path) ? path : ConfigPath;
 
-                    return ret;
-                } catch {
-                    return ConfigPath;
-                }
+                return ret;
             }
             set {
                 Settings settings = JsonConfig;
@@ -128,11 +101,7 @@ namespace ImgurSniper {
         //Value wether Images should be saved or not
         public static bool SaveImages {
             get {
-                try {
-                    return JsonConfig.SaveImages;
-                } catch {
-                    return false;
-                }
+                return JsonConfig.SaveImages;
             }
             set {
                 Settings settings = JsonConfig;
@@ -144,11 +113,7 @@ namespace ImgurSniper {
         //Value wether upload Images to Imgur or copy to Clipboard
         public static bool ImgurAfterSnipe {
             get {
-                try {
-                    return JsonConfig.ImgurAfterSnipe;
-                } catch {
-                    return true;
-                }
+                return JsonConfig.ImgurAfterSnipe;
             }
             set {
                 Settings settings = JsonConfig;
@@ -160,11 +125,7 @@ namespace ImgurSniper {
         //Last Time, ImgurSniper checked for Updates
         public static DateTime LastChecked {
             get {
-                try {
-                    return JsonConfig.LastChecked;
-                } catch {
-                    return DateTime.Now;
-                }
+                return JsonConfig.LastChecked;
             }
             set {
                 Settings settings = JsonConfig;
@@ -176,11 +137,7 @@ namespace ImgurSniper {
         //Text Language
         public static string Language {
             get {
-                try {
-                    return JsonConfig.Language;
-                } catch {
-                    return "en";
-                }
+                return JsonConfig.Language;
             }
             set {
                 Settings settings = JsonConfig;
@@ -192,11 +149,7 @@ namespace ImgurSniper {
         //Frames per Second of GIF Capture
         public static int GifFps {
             get {
-                try {
-                    return JsonConfig.GifFps;
-                } catch {
-                    return 10;
-                }
+                return JsonConfig.GifFps;
             }
             set {
                 Settings settings = JsonConfig;
@@ -208,11 +161,7 @@ namespace ImgurSniper {
         //Maximum GIF Length in Milliseconds
         public static int GifLength {
             get {
-                try {
-                    return JsonConfig.GifLength;
-                } catch {
-                    return 10000;
-                }
+                return JsonConfig.GifLength;
             }
             set {
                 Settings settings = JsonConfig;
@@ -257,10 +206,10 @@ namespace ImgurSniper {
                 "config.json");
 
         //Path to Installation Folder
-        public static string _programFiles => AppDomain.CurrentDomain.BaseDirectory;
+        public static string ProgramFiles => AppDomain.CurrentDomain.BaseDirectory;
 
         //Version of ImgurSniper
-        public static string _fileVersion {
+        public static string FileVersion {
             get {
                 Assembly assembly = Assembly.GetExecutingAssembly();
                 FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
@@ -269,7 +218,7 @@ namespace ImgurSniper {
         }
 
         //Salt for Cipher Encryption
-        private static string _passPhrase => "ImgurSniper v" + _fileVersion + " User-Login File_PassPhrase :)";
+        private static string PassPhrase => "ImgurSniper v" + FileVersion + " User-Login File_PassPhrase :)";
 
         private static void Exists() {
             if(!Directory.Exists(ConfigPath)) {
@@ -326,17 +275,18 @@ namespace ImgurSniper {
             public bool MagnifyingGlassEnabled = true;
             public bool OpenAfterUpload = true;
             public bool RunOnBoot = true;
-            public bool SaveImages;
+            public bool SaveImages = false;
 
             public string SaveImagesPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "ImgurSniperImages");
 
             public Key ShortcutGifKey = Key.G;
-
             public Key ShortcutImgKey = Key.X;
+
+            public ImageFormat ImageFormat = ImageFormat.Png;
+
             public bool UpdateAvailable = false;
-            public bool UsePNG = true;
-            public bool UsePrint;
+            public bool UsePrint = false;
         }
 
         #region Imgur Account
@@ -356,7 +306,7 @@ namespace ImgurSniper {
             }
 
             string token = File.ReadAllText(TokenPath);
-            token = Cipher.Decrypt(token, _passPhrase);
+            token = Cipher.Decrypt(token, PassPhrase);
 
             return token;
         }

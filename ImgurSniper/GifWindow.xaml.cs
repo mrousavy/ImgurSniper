@@ -11,7 +11,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using ImgurSniper.Properties;
-using mrousavy;
 using Cursors = System.Windows.Input.Cursors;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Point = System.Windows.Point;
@@ -27,6 +26,7 @@ namespace ImgurSniper {
         public byte[] CroppedGif;
         public Point From, To;
         public string HwndName;
+        public bool Error = true;
 
 
         public GifWindow(bool allMonitors) {
@@ -114,6 +114,7 @@ namespace ImgurSniper {
             switch(e.Key) {
                 case Key.Escape:
                     //Close
+                    Error = false;
                     CloseSnap(false, 0);
                     break;
                 case Key.Space:

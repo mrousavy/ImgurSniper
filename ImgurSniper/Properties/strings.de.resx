@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -60,8 +59,7 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-              xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -206,6 +204,6 @@ Wollen Sie eine detaillierte Fehlermeldung sehen?
     <value>GIF</value>
   </data>
   <data name="uploadingErrorGif" xml:space="preserve">
-    <value>Beim hochladen des GIFs ist ein Fehler aufgetreten!</value>
+    <value>Beim erstellen/hochladen des GIFs ist ein Fehler aufgetreten!</value>
   </data>
 </root>

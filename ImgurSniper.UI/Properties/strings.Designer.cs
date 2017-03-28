@@ -332,7 +332,7 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image Format.
+        ///   Looks up a localized string similar to Image Format:.
         /// </summary>
         public static string imgFormat {
             get {

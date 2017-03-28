@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
 using System.Security.AccessControl;
@@ -9,30 +10,10 @@ using Newtonsoft.Json;
 
 namespace ImgurSniper.UI {
     public static class FileIO {
-        //Value whether Magnifying Glass should be enabled or not
-        public static bool MagnifyingGlassEnabled {
-            get {
-                try {
-                    return JsonConfig.MagnifyingGlassEnabled;
-                } catch {
-                    return false;
-                }
-            }
-            set {
-                Settings settings = JsonConfig;
-                settings.MagnifyingGlassEnabled = value;
-                JsonConfig = settings;
-            }
-        }
-
         //Value whether ImgurSniper should strech over all screens or not
         public static bool AllMonitors {
             get {
-                try {
-                    return JsonConfig.AllMonitors;
-                } catch {
-                    return true;
-                }
+                return JsonConfig.AllMonitors;
             }
             set {
                 Settings settings = JsonConfig;
@@ -41,18 +22,14 @@ namespace ImgurSniper.UI {
             }
         }
 
-        //Value whether ImgurSniper should use PNG Image Format
-        public static bool UsePNG {
+        //The Image Format for normal Images
+        public static ImageFormat ImageFormat {
             get {
-                try {
-                    return JsonConfig.UsePNG;
-                } catch {
-                    return false;
-                }
+                return JsonConfig.ImageFormat;
             }
             set {
                 Settings settings = JsonConfig;
-                settings.UsePNG = value;
+                settings.ImageFormat = value;
                 JsonConfig = settings;
             }
         }
@@ -60,11 +37,7 @@ namespace ImgurSniper.UI {
         //Value whether ImgurSniper should open the uploaded Image in Browser after upload
         public static bool OpenAfterUpload {
             get {
-                try {
-                    return JsonConfig.OpenAfterUpload;
-                } catch {
-                    return true;
-                }
+                return JsonConfig.OpenAfterUpload;
             }
             set {
                 Settings settings = JsonConfig;
@@ -73,30 +46,10 @@ namespace ImgurSniper.UI {
             }
         }
 
-        //Value whether ImgurSniper should automatically search for Updates
-        public static bool AutoUpdate {
-            get {
-                try {
-                    return JsonConfig.AutoUpdate;
-                } catch {
-                    return true;
-                }
-            }
-            set {
-                Settings settings = JsonConfig;
-                settings.AutoUpdate = value;
-                JsonConfig = settings;
-            }
-        }
-
         //Key for ImgurSniper Image Shortcut
         public static Key ShortcutImgKey {
             get {
-                try {
-                    return JsonConfig.ShortcutImgKey;
-                } catch {
-                    return Key.X;
-                }
+                return JsonConfig.ShortcutImgKey;
             }
             set {
                 Settings settings = JsonConfig;
@@ -108,11 +61,7 @@ namespace ImgurSniper.UI {
         //Key for ImgurSniper GIF Shortcut
         public static Key ShortcutGifKey {
             get {
-                try {
-                    return JsonConfig.ShortcutGifKey;
-                } catch {
-                    return Key.G;
-                }
+                return JsonConfig.ShortcutGifKey;
             }
             set {
                 Settings settings = JsonConfig;
@@ -124,11 +73,7 @@ namespace ImgurSniper.UI {
         //Use PrintKey for ImgurSniper Shortcut?
         public static bool UsePrint {
             get {
-                try {
-                    return JsonConfig.UsePrint;
-                } catch {
-                    return false;
-                }
+                return JsonConfig.UsePrint;
             }
             set {
                 Settings settings = JsonConfig;
@@ -140,14 +85,10 @@ namespace ImgurSniper.UI {
         //The Path where images should be saved (if enabled)
         public static string SaveImagesPath {
             get {
-                try {
-                    string path = JsonConfig.SaveImagesPath;
-                    string ret = CanWrite(path) ? path : ConfigPath;
+                string path = JsonConfig.SaveImagesPath;
+                string ret = CanWrite(path) ? path : ConfigPath;
 
-                    return ret;
-                } catch {
-                    return ConfigPath;
-                }
+                return ret;
             }
             set {
                 Settings settings = JsonConfig;
@@ -159,11 +100,7 @@ namespace ImgurSniper.UI {
         //Value wether Images should be saved or not
         public static bool SaveImages {
             get {
-                try {
-                    return JsonConfig.SaveImages;
-                } catch {
-                    return false;
-                }
+                return JsonConfig.SaveImages;
             }
             set {
                 Settings settings = JsonConfig;
@@ -172,30 +109,10 @@ namespace ImgurSniper.UI {
             }
         }
 
-        //Value wether run ImgurSniper as a Background Task on Boot or not
-        public static bool RunOnBoot {
-            get {
-                try {
-                    return JsonConfig.RunOnBoot;
-                } catch {
-                    return true;
-                }
-            }
-            set {
-                Settings settings = JsonConfig;
-                settings.RunOnBoot = value;
-                JsonConfig = settings;
-            }
-        }
-
         //Value wether upload Images to Imgur or copy to Clipboard
         public static bool ImgurAfterSnipe {
             get {
-                try {
-                    return JsonConfig.ImgurAfterSnipe;
-                } catch {
-                    return true;
-                }
+                return JsonConfig.ImgurAfterSnipe;
             }
             set {
                 Settings settings = JsonConfig;
@@ -204,46 +121,10 @@ namespace ImgurSniper.UI {
             }
         }
 
-        //Value wether "Upload Image to Imgur" is already in Registry
-        public static bool IsInContextMenu {
-            get {
-                try {
-                    return JsonConfig.IsInContextMenu;
-                } catch {
-                    return false;
-                }
-            }
-            set {
-                Settings settings = JsonConfig;
-                settings.IsInContextMenu = value;
-                JsonConfig = settings;
-            }
-        }
-
-        //Count of Commits for this ImgurSniper Version (for checking for Updates)
-        public static int CurrentCommits {
-            get {
-                try {
-                    return JsonConfig.CurrentCommits;
-                } catch {
-                    return 999;
-                }
-            }
-            set {
-                Settings settings = JsonConfig;
-                settings.CurrentCommits = value;
-                JsonConfig = settings;
-            }
-        }
-
         //Last Time, ImgurSniper checked for Updates
         public static DateTime LastChecked {
             get {
-                try {
-                    return JsonConfig.LastChecked;
-                } catch {
-                    return DateTime.Now;
-                }
+                return JsonConfig.LastChecked;
             }
             set {
                 Settings settings = JsonConfig;
@@ -252,30 +133,10 @@ namespace ImgurSniper.UI {
             }
         }
 
-        //Is an Update Available and not yet downloaded?
-        public static bool UpdateAvailable {
-            get {
-                try {
-                    return JsonConfig.UpdateAvailable;
-                } catch {
-                    return false;
-                }
-            }
-            set {
-                Settings settings = JsonConfig;
-                settings.UpdateAvailable = value;
-                JsonConfig = settings;
-            }
-        }
-
         //Text Language
         public static string Language {
             get {
-                try {
-                    return JsonConfig.Language;
-                } catch {
-                    return "en";
-                }
+                return JsonConfig.Language;
             }
             set {
                 Settings settings = JsonConfig;
@@ -287,11 +148,7 @@ namespace ImgurSniper.UI {
         //Frames per Second of GIF Capture
         public static int GifFps {
             get {
-                try {
-                    return JsonConfig.GifFps;
-                } catch {
-                    return 10;
-                }
+                return JsonConfig.GifFps;
             }
             set {
                 Settings settings = JsonConfig;
@@ -303,15 +160,83 @@ namespace ImgurSniper.UI {
         //Maximum GIF Length in Milliseconds
         public static int GifLength {
             get {
-                try {
-                    return JsonConfig.GifLength;
-                } catch {
-                    return 10000;
-                }
+                return JsonConfig.GifLength;
             }
             set {
                 Settings settings = JsonConfig;
                 settings.GifLength = value;
+                JsonConfig = settings;
+            }
+        }
+
+        //Value whether Magnifying Glass should be enabled or not
+        public static bool MagnifyingGlassEnabled {
+            get {
+                return JsonConfig.MagnifyingGlassEnabled;
+            }
+            set {
+                Settings settings = JsonConfig;
+                settings.MagnifyingGlassEnabled = value;
+                JsonConfig = settings;
+            }
+        }
+
+        //Value whether ImgurSniper should automatically search for Updates
+        public static bool AutoUpdate {
+            get {
+                return JsonConfig.AutoUpdate;
+            }
+            set {
+                Settings settings = JsonConfig;
+                settings.AutoUpdate = value;
+                JsonConfig = settings;
+            }
+        }
+
+        //Value wether run ImgurSniper as a Background Task on Boot or not
+        public static bool RunOnBoot {
+            get {
+                return JsonConfig.RunOnBoot;
+            }
+            set {
+                Settings settings = JsonConfig;
+                settings.RunOnBoot = value;
+                JsonConfig = settings;
+            }
+        }
+
+        //Value wether "Upload Image to Imgur" is already in Registry
+        public static bool IsInContextMenu {
+            get {
+                return JsonConfig.IsInContextMenu;
+            }
+            set {
+                Settings settings = JsonConfig;
+                settings.IsInContextMenu = value;
+                JsonConfig = settings;
+            }
+        }
+
+        //Count of Commits for this ImgurSniper Version (for checking for Updates)
+        public static int CurrentCommits {
+            get {
+                return JsonConfig.CurrentCommits;
+            }
+            set {
+                Settings settings = JsonConfig;
+                settings.CurrentCommits = value;
+                JsonConfig = settings;
+            }
+        }
+
+        //Is an Update Available and not yet downloaded?
+        public static bool UpdateAvailable {
+            get {
+                return JsonConfig.UpdateAvailable;
+            }
+            set {
+                Settings settings = JsonConfig;
+                settings.UpdateAvailable = value;
                 JsonConfig = settings;
             }
         }
@@ -336,7 +261,7 @@ namespace ImgurSniper.UI {
                     "config.json");
 
         //Version of ImgurSniper
-        public static string _fileVersion {
+        public static string FileVersion {
             get {
                 Assembly assembly = Assembly.GetExecutingAssembly();
                 FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
@@ -345,7 +270,7 @@ namespace ImgurSniper.UI {
         }
 
         //Salt for Cipher Encryption
-        private static string _passPhrase => "ImgurSniper v" + _fileVersion + " User-Login File_PassPhrase :)";
+        private static string PassPhrase => "ImgurSniper v" + FileVersion + " User-Login File_PassPhrase :)";
 
         private static void Exists() {
             if(!Directory.Exists(ConfigPath)) {
@@ -395,26 +320,26 @@ namespace ImgurSniper.UI {
             public int GifFps = 10;
             public int GifLength = 10000;
             public bool ImgurAfterSnipe = true;
-            public bool IsInContextMenu;
+            public bool IsInContextMenu = false;
 
             public string Language = "en";
             public DateTime LastChecked = DateTime.Now;
             public bool MagnifyingGlassEnabled = true;
             public bool OpenAfterUpload = true;
             public bool RunOnBoot = true;
-            public bool SaveImages;
+            public bool SaveImages = false;
 
             public string SaveImagesPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "ImgurSniperImages");
 
             public Key ShortcutGifKey = Key.G;
-
             public Key ShortcutImgKey = Key.X;
-            public bool UpdateAvailable;
-            public bool UsePNG = true;
-            public bool UsePrint;
-        }
 
+            public ImageFormat ImageFormat = ImageFormat.Png;
+
+            public bool UpdateAvailable = false;
+            public bool UsePrint = false;
+        }
         #region Imgur Account
         //Path to Imgur User Refresh Token
         public static string TokenPath
@@ -428,13 +353,13 @@ namespace ImgurSniper.UI {
             }
 
             string token = File.ReadAllText(TokenPath);
-            token = Cipher.Decrypt(token, _passPhrase);
+            token = Cipher.Decrypt(token, PassPhrase);
 
             return token;
         }
 
         public static void WriteRefreshToken(string token) {
-            string encrToken = Cipher.Encrypt(token, _passPhrase);
+            string encrToken = Cipher.Encrypt(token, PassPhrase);
             File.WriteAllText(TokenPath, encrToken);
         }
 

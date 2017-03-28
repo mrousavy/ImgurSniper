@@ -53,8 +53,7 @@ namespace ImgurSniper {
 
             try {
                 Close();
-            }
-            catch {
+            } catch {
                 //Window already closed
             }
 
@@ -67,8 +66,7 @@ namespace ImgurSniper {
             fadeOut.Completed += delegate {
                 try {
                     DialogResult = result;
-                }
-                catch {
+                } catch {
                     Close();
                 }
             };
@@ -83,7 +81,7 @@ namespace ImgurSniper {
                 #region Method 1: Timer
 
                 int currentFrames = 0;
-                int totalFrames = (int) (_fps * (_gifLength.TotalMilliseconds / 1000D));
+                int totalFrames = (int)(_fps * (_gifLength.TotalMilliseconds / 1000D));
                 MemoryStream stream;
                 MemoryStream gifStream = new MemoryStream();
                 // ReSharper disable once PossibleLossOfFraction
@@ -96,11 +94,11 @@ namespace ImgurSniper {
                     new Thread(() => {
                         try {
                             //Finish GIF
-                            if (_stopped || currentFrames >= totalFrames) {
+                            if(_stopped || currentFrames >= totalFrames) {
                                 _timer.Stop();
 
                                 GifBitmapEncoder encoder = new GifBitmapEncoder();
-                                foreach (BitmapFrame frame in bitmapframes) {
+                                foreach(BitmapFrame frame in bitmapframes) {
                                     encoder.Frames.Add(frame);
                                 }
 
@@ -115,7 +113,9 @@ namespace ImgurSniper {
                             //Add Frames
                             stream = new MemoryStream();
 
-                            Screenshot.GetScreenshotWithMouse(_size).Save(stream, ImageFormat.Gif);
+                            using(Bitmap tmp = Screenshot.GetScreenshotWithMouse(_size)) {
+                                tmp.Save(stream, ImageFormat.Gif);
+                            }
 
                             BitmapFrame bitmap = BitmapFrame.Create(
                                 stream,
@@ -127,11 +127,10 @@ namespace ImgurSniper {
                             currentFrames++;
 
                             Dispatcher.BeginInvoke(new Action(delegate { ProgressBar.Value = currentFrames; }));
-                        }
-                        catch {
+                        } catch {
                             Dispatcher.BeginInvoke(new Action(delegate {
-                                FadeOut(false);
                                 _timer.Stop();
+                                FadeOut(false);
                             }));
                         }
                     }).Start();
@@ -192,8 +191,7 @@ namespace ImgurSniper {
                 //};
 
                 #endregion
-            }
-            catch {
+            } catch {
                 FadeOut(false);
             }
         }

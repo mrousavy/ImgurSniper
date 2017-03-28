@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using ImgurSniper.Properties;
-using mrousavy;
 using Cursors = System.Windows.Input.Cursors;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
@@ -30,6 +29,7 @@ namespace ImgurSniper {
         public byte[] CroppedImage;
         public Point From, To;
         public string HwndName;
+        public bool Error;
 
 
         public ScreenshotWindow(bool allMonitors) {
@@ -115,6 +115,7 @@ namespace ImgurSniper {
             switch(e.Key) {
                 case Key.Escape:
                     //Close
+                    Error = false;
                     CloseSnap(false, 0);
                     break;
                 case Key.Space:
@@ -425,7 +426,7 @@ namespace ImgurSniper {
                 MemoryStream stream = new MemoryStream();
 
                 Screenshot.GetScreenshot(size)
-                    .Save(stream, FileIO.UsePNG ? ImageFormat.Png : ImageFormat.Jpeg);
+                    .Save(stream, FileIO.ImageFormat);
 
                 CroppedImage = stream.ToArray();
 

@@ -240,19 +240,16 @@
 										 Content="{x:Static Member=cultureStrings:strings.allMonitor}" />
 
 							<!--HEADER: Image Format-->
-							<Label Margin="10,5,5,5" FontSize="15"
+								<Label Margin="10,5,5,5" FontSize="15"
 								   Content="{x:Static Member=cultureStrings:strings.imgFormat}" />
-							<RadioButton GroupName="ImageFormatGroup" Tag="PNG"
-										 FontSize="14" Margin="15,0,0,0" x:Name="PngRadio"
-										 VerticalAlignment="Bottom" Foreground="Gray" Click="ImgFormatClick"
-										 ToolTip="{x:Static Member=cultureStrings:strings.usePNG}"
-										 Content="PNG" />
 
-							<RadioButton GroupName="ImageFormatGroup" Tag="JPEG" IsChecked="True"
-										 FontSize="14" Margin="15,0,0,0" x:Name="JpegRadio"
-										 VerticalAlignment="Bottom" Foreground="Gray" Click="ImgFormatClick"
-										 ToolTip="{x:Static Member=cultureStrings:strings.useJPEG}"
-										 Content="JPEG" />
+								<ComboBox x:Name="ImageFormatBox" FontSize="13" Margin="15,0,0,0" VerticalAlignment="Center" Foreground="Gray" Width="50" SelectionChanged="ImageFormatBoxChanged" HorizontalAlignment="Left">
+									<ComboBoxItem>Jpeg</ComboBoxItem>
+									<ComboBoxItem>Png</ComboBoxItem>
+									<ComboBoxItem>Gif</ComboBoxItem>
+									<ComboBoxItem>Tiff</ComboBoxItem>
+								</ComboBox>
+								
 
 
 							<!--HEADER: Update-->

@@ -21,7 +21,7 @@ namespace ImgurSniper {
     /// </summary>
     public partial class Snipe {
         private static readonly Action ActionTroubleshoot =
-            delegate { Process.Start(Path.Combine(FileIO._programFiles, "ImgurSniper.UI.exe"), "Troubleshooting"); };
+            delegate { Process.Start(Path.Combine(FileIO.ProgramFiles, "ImgurSniper.UI.exe"), "Troubleshooting"); };
 
         private static Notification _internalNotification;
         private int _counter;
@@ -128,7 +128,7 @@ namespace ImgurSniper {
 #if !DEBUG
             try {
                 if((DateTime.Now - FileIO.LastChecked) > TimeSpan.FromDays(2))
-                    Process.Start(Path.Combine(FileIO._programFiles, "ImgurSniper.UI.exe"), "Update");
+                    Process.Start(Path.Combine(FileIO.ProgramFiles, "ImgurSniper.UI.exe"), "Update");
             } catch { }
 #endif
         }
@@ -167,7 +167,7 @@ namespace ImgurSniper {
 
             menu.MenuItems.Add(strings.help, delegate {
                 try {
-                    Process.Start(Path.Combine(FileIO._programFiles, "ImgurSniper.UI.exe"), "Help");
+                    Process.Start(Path.Combine(FileIO.ProgramFiles, "ImgurSniper.UI.exe"), "Help");
                 } catch {
                     // ignored
                 }
@@ -175,7 +175,7 @@ namespace ImgurSniper {
 
             menu.MenuItems.Add(strings.settings, delegate {
                 try {
-                    Process.Start(Path.Combine(FileIO._programFiles, "ImgurSniper.UI.exe"));
+                    Process.Start(Path.Combine(FileIO.ProgramFiles, "ImgurSniper.UI.exe"));
                 } catch {
                     // ignored
                 }
@@ -355,7 +355,7 @@ namespace ImgurSniper {
                             try {
                                 //Save File with unique name
                                 long time = DateTime.Now.ToFileTimeUtc();
-                                string extension = FileIO.UsePNG ? ".png" : ".jpeg";
+                                string extension = "." + FileIO.ImageFormat.ToString().ToLower();
                                 string filename = _dir + $"\\Snipe_{time}{extension}";
                                 File.WriteAllBytes(filename, window.CroppedImage);
 
@@ -403,6 +403,13 @@ namespace ImgurSniper {
                             strings.errorMsg);
                         //ErrorToast.Show(string.Format(strings.otherErrorMsg, ex),
                         //    TimeSpan.FromSeconds(3.5));
+                    }
+                } else {
+                    if(window.Error) {
+                        Notification = new Notification(strings.uploadingErrorGif, Notification.NotificationType.Error,
+                            true,
+                            ActionTroubleshoot);
+                        await Notification.ShowAsync();
                     }
                 }
             }
@@ -480,9 +487,12 @@ namespace ImgurSniper {
                         //    TimeSpan.FromSeconds(3.5));
                     }
                 } else {
-                    Notification = new Notification(strings.uploadingErrorGif, Notification.NotificationType.Error, true,
-                        ActionTroubleshoot);
-                    await Notification.ShowAsync();
+                    if(window.Error) {
+                        Notification = new Notification(strings.uploadingErrorGif, Notification.NotificationType.Error,
+                            true,
+                            ActionTroubleshoot);
+                        await Notification.ShowAsync();
+                    }
                 }
             }
         }
@@ -567,7 +577,7 @@ namespace ImgurSniper {
             try {
                 MediaPlayer player = new MediaPlayer { Volume = 30 };
 
-                string path = Path.Combine(FileIO._programFiles, "Resources\\Blop.wav");
+                string path = Path.Combine(FileIO.ProgramFiles, "Resources\\Blop.wav");
 
                 player.Open(new Uri(path));
                 player.Play();
