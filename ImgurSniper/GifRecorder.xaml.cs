@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Threading;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
@@ -18,6 +19,7 @@ namespace ImgurSniper {
         private readonly Rectangle _size;
         private TimeSpan _gifLength;
         private bool _stopped;
+        private readonly bool _progressIndicatorEnabled;
         private Timer _timer;
 
         public byte[] Gif;
@@ -36,7 +38,15 @@ namespace ImgurSniper {
             Outline.Width = Width;
             Outline.Height = Height;
 
-            ProgressBar.Width = size.Width - 40;
+            int progressBarWidth = size.Width - 40;
+            _progressIndicatorEnabled = progressBarWidth > 0;
+
+            if(_progressIndicatorEnabled) {
+                ProgressBar.Width = progressBarWidth;
+            } else {
+                ProgressBar.Visibility = Visibility.Collapsed;
+                DoneButton.Visibility = Visibility.Collapsed;
+            }
 
             //Space for ProgressBar
             Height += 30;
@@ -87,7 +97,8 @@ namespace ImgurSniper {
                 // ReSharper disable once PossibleLossOfFraction
                 _timer = new Timer(1000 / _fps);
 
-                ProgressBar.Maximum = totalFrames;
+                if(_progressIndicatorEnabled)
+                    ProgressBar.Maximum = totalFrames;
 
                 //Every Frame
                 _timer.Elapsed += delegate {
@@ -126,7 +137,8 @@ namespace ImgurSniper {
 
                             currentFrames++;
 
-                            Dispatcher.BeginInvoke(new Action(delegate { ProgressBar.Value = currentFrames; }));
+                            if(_progressIndicatorEnabled)
+                                Dispatcher.BeginInvoke(new Action(delegate { ProgressBar.Value = currentFrames; }));
                         } catch {
                             Dispatcher.BeginInvoke(new Action(delegate {
                                 _timer.Stop();

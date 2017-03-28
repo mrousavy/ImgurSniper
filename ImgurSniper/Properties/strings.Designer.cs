@@ -88,7 +88,9 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An unknown Error occured in ImgurSniper.UI!\nImgurSniper has to shut down!\nWould you like to see a detailed Exception Info? ({0}).
+        ///   Looks up a localized string similar to An unknown Error occured in ImgurSniper.UI!
+        ///ImgurSniper has to shut down!
+        ///Would you like to see a detailed Exception Info? ({0}).
         /// </summary>
         internal static string error {
             get {
@@ -205,7 +207,9 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Message: {0}\n\n.
+        ///   Looks up a localized string similar to Message: {0}
+        ///
+        ///.
         /// </summary>
         internal static string msg {
             get {

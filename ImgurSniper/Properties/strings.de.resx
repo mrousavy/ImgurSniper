@@ -124,7 +124,9 @@
     <value>Ctrl + Shift + {0}</value>
   </data>
   <data name="error" xml:space="preserve">
-    <value>Ein unbekannter Fehler in ImgurSniper.UI ist aufgetreten!\nImgurSniper wurde beendet!\nMöchten Sie detaillierte Informationen über die Fehlermeldung erhalten? ({0})</value>
+    <value>Ein unbekannter Fehler in ImgurSniper.UI ist aufgetreten!
+ImgurSniper wurde beendet!
+Möchten Sie detaillierte Informationen über die Fehlermeldung erhalten? ({0})</value>
   </data>
   <data name="exit" xml:space="preserve">
     <value>Beenden</value>
@@ -142,7 +144,9 @@
     <value>Link zum Bild wurde in die Zwischenablage kopiert.</value>
   </data>
   <data name="msg" xml:space="preserve">
-    <value>Nachricht: {0}\n\n</value>
+    <value>Nachricht: {0}
+
+</value>
   </data>
   <data name="otherErrorMsg" xml:space="preserve">
     <value>EIn unbekannter Fehler ist aufgetreten!\nDetaillierte Fehlermeldung: {0}</value>

@@ -124,7 +124,9 @@
     <value>Ctrl + Shift + {0}</value>
   </data>
   <data name="error" xml:space="preserve">
-    <value>An unknown Error occured in ImgurSniper.UI!\nImgurSniper has to shut down!\nWould you like to see a detailed Exception Info? ({0})</value>
+    <value>An unknown Error occured in ImgurSniper.UI!
+ImgurSniper has to shut down!
+Would you like to see a detailed Exception Info? ({0})</value>
   </data>
   <data name="errorInstantUpload" xml:space="preserve">
     <value>Error uploading File(s), make sure to check your Internet connection and see if the File is a valid Image file!</value>
@@ -145,7 +147,9 @@
     <value>Link to Imgur has been copied to your Clipboard!</value>
   </data>
   <data name="msg" xml:space="preserve">
-    <value>Message: {0}\n\n</value>
+    <value>Message: {0}
+
+</value>
   </data>
   <data name="otherErrorMsg" xml:space="preserve">
     <value>An unknown Error occured! (Show this to the Smart Computer Apes: {0})</value>
