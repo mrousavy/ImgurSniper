@@ -1,5 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Windows;
 using System.Windows.Markup;
@@ -12,11 +15,11 @@ namespace ImgurSniper {
     public partial class App {
         public App() {
             DispatcherUnhandledException += (sender, e) => {
-                if (MessageBox.Show($"{strings.unhandledError}({e.Exception.Message})",
+                if(MessageBox.Show($"{strings.unhandledError}({e.Exception.Message})",
                         "ImgurSniper Error",
                         MessageBoxButton.YesNo,
                         MessageBoxImage.Error) == MessageBoxResult.Yes) {
-                    if (MessageBox.Show("Do you want to help out and fix a bug in ImgurSniper?" + "\n" +
+                    if(MessageBox.Show("Do you want to help out and fix a bug in ImgurSniper?" + "\n" +
                                         "Please explain how the Problem you encountered can be replicated, and what the Error Message said!",
                             "Do you want to help ImgurSniper bugfixing?",
                             MessageBoxButton.YesNo,
@@ -34,7 +37,12 @@ namespace ImgurSniper {
                         MessageBoxImage.Error);
                 }
 
-                Process.GetCurrentProcess().Kill();
+                try {
+                    string[] argumentsArray = Environment.GetCommandLineArgs();
+                    string arguments = argumentsArray.Aggregate("", (current, arg) => current + (arg + " "));
+
+                    Process.Start(Assembly.GetCallingAssembly().Location, arguments);
+                } catch { }
             };
 
             string language = FileIO.Language;
