@@ -254,14 +254,26 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An unknown Error occured in ImgurSniper.UI!
-        ///ImgurSniper has to shut down!
-        ///Would you like to see a detailed Exception Info?
-        ///.
+        ///   Looks up a localized string similar to Oh no! Sorry about that, it seems like ImgurSniper ran into an unexpected Error!
+        ///But no worries, you can help out and get this Problem fixed asap!
+        ///Do you want to help out and submit a ticket?
+        ///(If you click yes, a new Browser Window opens).
         /// </summary>
         internal static string unhandledError {
             get {
                 return ResourceManager.GetString("unhandledError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An unknown Error occured in ImgurSniper.
+        ///Error Message: &quot;{0}&quot;
+        ///
+        ///Do you want to see more details about that Error?.
+        /// </summary>
+        internal static string unhandledErrorDescription {
+            get {
+                return ResourceManager.GetString("unhandledErrorDescription", resourceCulture);
             }
         }
         

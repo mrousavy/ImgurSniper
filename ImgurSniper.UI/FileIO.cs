@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.IO;
@@ -6,7 +7,6 @@ using System.Reflection;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Windows.Input;
-using Newtonsoft.Json;
 
 namespace ImgurSniper.UI {
     public static class FileIO {
@@ -322,7 +322,7 @@ namespace ImgurSniper.UI {
             public bool ImgurAfterSnipe = true;
             public bool IsInContextMenu = false;
 
-            public string Language = "en";
+            public string Language = null;
             public DateTime LastChecked = DateTime.Now;
             public bool MagnifyingGlassEnabled = true;
             public bool OpenAfterUpload = true;

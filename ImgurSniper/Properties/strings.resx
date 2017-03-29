@@ -176,10 +176,10 @@ Would you like to see a detailed Exception Info? ({0})</value>
     <value>Whoops, something went wrong!</value>
   </data>
   <data name="unhandledError" xml:space="preserve">
-    <value>An unknown Error occured in ImgurSniper.UI!
-ImgurSniper has to shut down!
-Would you like to see a detailed Exception Info?
-</value>
+    <value>Oh no! Sorry about that, it seems like ImgurSniper ran into an unexpected Error!
+But no worries, you can help out and get this Problem fixed asap!
+Do you want to help out and submit a ticket?
+(If you click yes, a new Browser Window opens)</value>
   </data>
   <data name="help" xml:space="preserve">
     <value>Help</value>
@@ -210,5 +210,11 @@ Would you like to see a detailed Exception Info?
   </data>
   <data name="uploadingErrorGif" xml:space="preserve">
     <value>Error creating/uploading GIF to Imgur!</value>
+  </data>
+  <data name="unhandledErrorDescription" xml:space="preserve">
+    <value>An unknown Error occured in ImgurSniper.
+Error Message: "{0}"
+
+Do you want to see more details about that Error?</value>
   </data>
 </root>

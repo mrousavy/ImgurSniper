@@ -318,11 +318,6 @@ Pro Tip: Drücken Sie im Snipe Modus Strg + A um einen Screenshot vom ganzen Mon
   <data name="trayServiceNotRunning" xml:space="preserve">
     <value>ImgurSniper Hintergrundservice ist nicht gestartet!</value>
   </data>
-  <data name="unhandledError" xml:space="preserve">
-    <value>Ein schwerwiegender unbekannter Fehler in ImgurSniper ist aufgetreten!
-Wollen Sie eine detaillierte Fehlermeldung sehen?
-</value>
-  </data>
   <data name="unknownError" xml:space="preserve">
     <value>Ein unbekannter Fehler ist aufgetreten!
 Zeige dies den klugen Computer Affen: {0}</value>
@@ -433,5 +428,17 @@ zu langsam für den Imgur Dienst.</value>
     <value>Um ein animiertes GIF zu teilen, drücken Sie Ihren GIF Hotkey (Standard: Strg + Shift + G) oder Klicken Sie mit der Rechten Maustaste auf das ImgurSniper Tray Logo (Rechte Seite der Taskleiste), und wählen Sie "GIF". Statt dass Sie ein starres Bild teilen, können Sie nun eine kurze Aufnahme teilen!
 
 Sobald Sie den gewünschten Bereich ausgewählt haben, beginnt ImgurSniper mit der Aufnahme des GIFs. Die Blaue Leiste unter dem Grauen Rahmen zeigt den Fortschritt der verstrichenen Zeit (Sobald diese Leiste voll ist, wird die Aufnahme automatisch beendet.) Um die Aufnahme manuell zu beenden, drücken Sie einfach den Haken nehmen der Blauen Leiste. Ihr GIF wird nun auf Imgur hochgeladen.</value>
+  </data>
+  <data name="unhandledError" xml:space="preserve">
+    <value>Oh nein! Ein Unbekannter Fehler ist aufgetreten!
+Keine Sorge, dieser Fehler kann mit Ihrer Hilfe so schnell wie möglich behoben werden.
+Wollen Sie helfen, den Fehler zu beheben indem Sie ein Formular detailreich ausfüllen?
+(Klicken Sie Ja, wird ein neues Browser Fenster geöffnet)</value>
+  </data>
+  <data name="unhandledErrorDescription" xml:space="preserve">
+    <value>Ein unbekannter Fehler in ImgurSniper ist aufgetreten.
+Die Fehlermeldung lautet wie folgt: "{0}"
+
+Wollen Sie mehr Details über den Fehler sehen?</value>
   </data>
 </root>

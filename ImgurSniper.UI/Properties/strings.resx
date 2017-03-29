@@ -248,12 +248,6 @@ Do you want to restart ImgurSniper now?</value>
   <data name="language" xml:space="preserve">
     <value>Language</value>
   </data>
-  <data name="unhandledError" xml:space="preserve">
-    <value>An unknown Error occured in ImgurSniper.UI!
-ImgurSniper has to shut down!
-Would you like to see a detailed Exception Info?
-</value>
-  </data>
   <data name="loggedIn" xml:space="preserve">
     <value>Successfully logged in! Hi, {0}!</value>
   </data>
@@ -433,5 +427,17 @@ is too slow for the Imgur Service.</value>
     <value>To snipe a new GIF you have to press your GIF Hotkey (Default: Ctrl + Shift + G) or right-click the ImgurSniper Tray Icon (right side of your Taskbar) and hit "GIF". Instead of sharing a single Image, you now can share a short Screen Recording!
 
 As soon as you selected your desired area, ImgurSniper will start recording the GIF. The blue Progress Bar below the grey Area will show you the Progress of the GIF (Once the Progress Bar is full, the screen recording will automatically stop and begin uploading the GIF.) To stop recording manually, you have to click the blue Check Button right next to the Progress Bar. Your GIF is then being uploaded to Imgur.</value>
+  </data>
+  <data name="unhandledErrorDescription" xml:space="preserve">
+    <value>An unknown Error occured in ImgurSniper.
+Error Message: "{0}"
+
+Do you want to see more details about that Error?</value>
+  </data>
+  <data name="unhandledError" xml:space="preserve">
+    <value>Oh no! Sorry about that, it seems like ImgurSniper ran into an unexpected Error!
+But no worries, you can help out and get this Problem fixed asap!
+Do you want to help out and submit a ticket?
+(If you click yes, a new Browser Window opens)</value>
   </data>
 </root>

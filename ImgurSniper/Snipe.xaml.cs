@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ImgurSniper.Properties;
+using mrousavy;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -10,9 +12,6 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using ImgurSniper.Properties;
-using mrousavy;
-using MaterialDesignThemes.Wpf;
 using Application = System.Windows.Application;
 using Clipboard = System.Windows.Clipboard;
 using MessageBox = System.Windows.MessageBox;
@@ -40,6 +39,7 @@ namespace ImgurSniper {
 #if DEBUG
             Notification.Show();
 #endif
+
             Initialize();
 
             Position();
@@ -166,7 +166,7 @@ namespace ImgurSniper {
 
             //Icons
             Image iconGif = null, iconHelp = null, iconSettings = null, iconExit = null;
-            
+
             try {
                 iconGif = Image.FromFile("Resources\\iconGif.png");
                 iconHelp = Image.FromFile("Resources\\iconHelp.png");

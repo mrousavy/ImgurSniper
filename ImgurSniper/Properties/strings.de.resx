@@ -173,9 +173,10 @@ Möchten Sie detaillierte Informationen über die Fehlermeldung erhalten? ({0})<
     <value>Whoops, etwas ist schiefgelaufen!</value>
   </data>
   <data name="unhandledError" xml:space="preserve">
-    <value>Ein schwerwiegender unbekannter Fehler in ImgurSniper ist aufgetreten!
-Wollen Sie eine detaillierte Fehlermeldung sehen?
-</value>
+    <value>Oh nein! Ein Unbekannter Fehler ist aufgetreten!
+Keine Sorge, dieser Fehler kann mit Ihrer Hilfe so schnell wie möglich behoben werden.
+Wollen Sie helfen, den Fehler zu beheben indem Sie ein Formular detailreich ausfüllen?
+(Klicken Sie Ja, wird ein neues Browser Fenster geöffnet)</value>
   </data>
   <data name="help" xml:space="preserve">
     <value>Hilfe</value>
@@ -209,5 +210,11 @@ Wollen Sie eine detaillierte Fehlermeldung sehen?
   </data>
   <data name="uploadingErrorGif" xml:space="preserve">
     <value>Beim erstellen/hochladen des GIFs ist ein Fehler aufgetreten!</value>
+  </data>
+  <data name="unhandledErrorDescription" xml:space="preserve">
+    <value>Ein unbekannter Fehler in ImgurSniper ist aufgetreten.
+Die Fehlermeldung lautet wie folgt: "{0}"
+
+Wollen Sie mehr Details über den Fehler sehen?</value>
   </data>
 </root>
