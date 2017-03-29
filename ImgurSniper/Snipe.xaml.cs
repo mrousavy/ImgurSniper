@@ -165,10 +165,16 @@ namespace ImgurSniper {
             ContextMenuStrip contextMenu = new ContextMenuStrip();
 
             //Icons
-            Image iconGif = Image.FromFile("Resources\\iconGif.png");
-            Image iconHelp = Image.FromFile("Resources\\iconHelp.png");
-            Image iconSettings = Image.FromFile("Resources\\iconSettings.png");
-            Image iconExit = Image.FromFile("Resources\\iconExit.png");
+            Image iconGif = null, iconHelp = null, iconSettings = null, iconExit = null;
+            
+            try {
+                iconGif = Image.FromFile("Resources\\iconGif.png");
+                iconHelp = Image.FromFile("Resources\\iconHelp.png");
+                iconSettings = Image.FromFile("Resources\\iconSettings.png");
+                iconExit = Image.FromFile("Resources\\iconExit.png");
+            } catch {
+                //Images not found
+            }
 
             //Item: GIF
             ToolStripItem gifMenuItem = contextMenu.Items.Add(strings.gif);
@@ -231,10 +237,10 @@ namespace ImgurSniper {
                 _nicon.Dispose();
                 _nicon = null;
 
-                iconGif.Dispose();
-                iconHelp.Dispose();
-                iconSettings.Dispose();
-                iconExit.Dispose();
+                iconGif?.Dispose();
+                iconHelp?.Dispose();
+                iconSettings?.Dispose();
+                iconExit?.Dispose();
             };
         }
 
