@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ImgurSniper.Properties;
 using mrousavy;
+using MaterialDesignThemes.Wpf;
 using Application = System.Windows.Application;
 using Clipboard = System.Windows.Clipboard;
 using MessageBox = System.Windows.MessageBox;
@@ -159,32 +161,55 @@ namespace ImgurSniper {
                 //ignored
             }
 
-            ContextMenu menu = new ContextMenu();
 
-            menu.MenuItems.Add(strings.gif, delegate { Crop(false, true); });
+            ContextMenuStrip contextMenu = new ContextMenuStrip();
 
-            menu.MenuItems.Add("-");
+            //Icons
+            Image iconGif = Image.FromFile("Resources\\iconGif.png");
+            Image iconHelp = Image.FromFile("Resources\\iconHelp.png");
+            Image iconSettings = Image.FromFile("Resources\\iconSettings.png");
+            Image iconExit = Image.FromFile("Resources\\iconExit.png");
 
-            menu.MenuItems.Add(strings.help, delegate {
+            //Item: GIF
+            ToolStripItem gifMenuItem = contextMenu.Items.Add(strings.gif);
+            gifMenuItem.Image = iconGif;
+            gifMenuItem.Click += delegate { Crop(false, true); };
+            gifMenuItem.Font = new Font(gifMenuItem.Font, gifMenuItem.Font.Style | System.Drawing.FontStyle.Bold);
+
+            //Item: -
+            contextMenu.Items.Add(new ToolStripSeparator());
+
+            //Item: Help
+            ToolStripItem helpMenuItem = contextMenu.Items.Add(strings.help);
+            helpMenuItem.Image = iconHelp;
+            helpMenuItem.Click += delegate {
                 try {
                     Process.Start(Path.Combine(FileIO.ProgramFiles, "ImgurSniper.UI.exe"), "Help");
                 } catch {
                     // ignored
                 }
-            });
+            };
 
-            menu.MenuItems.Add(strings.settings, delegate {
+            //Item: Settings
+            ToolStripItem settingsMenuItem = contextMenu.Items.Add(strings.settings);
+            settingsMenuItem.Image = iconSettings;
+            settingsMenuItem.Click += delegate {
                 try {
                     Process.Start(Path.Combine(FileIO.ProgramFiles, "ImgurSniper.UI.exe"));
                 } catch {
                     // ignored
                 }
-            });
-            menu.MenuItems.Add(strings.exit, delegate { Application.Current.Shutdown(); });
+            };
 
+            //Item: Exit
+            ToolStripItem exitMenuItem = contextMenu.Items.Add(strings.exit);
+            exitMenuItem.Image = iconExit;
+            exitMenuItem.Click += delegate { Application.Current.Shutdown(); };
+
+            //NotifyIcon
             _nicon = new NotifyIcon {
                 Icon = Properties.Resources.Logo,
-                ContextMenu = menu,
+                ContextMenuStrip = contextMenu,
                 Visible = true,
                 Text = strings.clickorpress +
                        (usePrint ? strings.printKeyShortcut : string.Format(strings.ctrlShiftShortcut, imgKey)) +
@@ -205,6 +230,11 @@ namespace ImgurSniper {
                 _nicon.Visible = false;
                 _nicon.Dispose();
                 _nicon = null;
+
+                iconGif.Dispose();
+                iconHelp.Dispose();
+                iconSettings.Dispose();
+                iconExit.Dispose();
             };
         }
 
