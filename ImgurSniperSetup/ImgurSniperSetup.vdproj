@@ -15,20 +15,26 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_1BC82DB0801962020A98E4D0850A3B0E"
-        "OwnerKey" = "8:_CA5E9FACB5FD4A37B56A05954A72D719"
+        "MsmKey" = "8:_1067FDE1293D4BCEA51711CFFD2F4FB8"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_1BC82DB0801962020A98E4D0850A3B0E"
-        "OwnerKey" = "8:_CCFFB22825EF452281F2341B341CB11B"
+        "OwnerKey" = "8:_A954771F50AC499190FC402CECF6B3F2"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1BC82DB0801962020A98E4D0850A3B0E"
+        "OwnerKey" = "8:_75AFEA8668A74446A83A818B7662AE38"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_20E5E63D41088C7D22017BF331E101EF"
-        "OwnerKey" = "8:_CA5E9FACB5FD4A37B56A05954A72D719"
+        "OwnerKey" = "8:_75AFEA8668A74446A83A818B7662AE38"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -40,31 +46,31 @@
         "Entry"
         {
         "MsmKey" = "8:_366C873E10489C1B1AD97771C5BE9C76"
-        "OwnerKey" = "8:_CA5E9FACB5FD4A37B56A05954A72D719"
+        "OwnerKey" = "8:_A954771F50AC499190FC402CECF6B3F2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_366C873E10489C1B1AD97771C5BE9C76"
-        "OwnerKey" = "8:_CCFFB22825EF452281F2341B341CB11B"
+        "OwnerKey" = "8:_75AFEA8668A74446A83A818B7662AE38"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_463007E40A00C9321F103EFBD84571F2"
-        "OwnerKey" = "8:_CA5E9FACB5FD4A37B56A05954A72D719"
+        "OwnerKey" = "8:_A954771F50AC499190FC402CECF6B3F2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_463007E40A00C9321F103EFBD84571F2"
-        "OwnerKey" = "8:_CCFFB22825EF452281F2341B341CB11B"
+        "OwnerKey" = "8:_75AFEA8668A74446A83A818B7662AE38"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_4E28969035DA32E0C8FE65A2F1ACB812"
-        "OwnerKey" = "8:_CA5E9FACB5FD4A37B56A05954A72D719"
+        "OwnerKey" = "8:_75AFEA8668A74446A83A818B7662AE38"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -75,14 +81,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_56D4A490C3314FDAB81B0BF1141AC7A0"
+        "MsmKey" = "8:_6FE760FA3D7BF0047E966A70A6BC545A"
+        "OwnerKey" = "8:_75AFEA8668A74446A83A818B7662AE38"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_75AFEA8668A74446A83A818B7662AE38"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_6FE760FA3D7BF0047E966A70A6BC545A"
-        "OwnerKey" = "8:_CA5E9FACB5FD4A37B56A05954A72D719"
+        "MsmKey" = "8:_8088F03C60BD4ACD915CCFE5F32D2355"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -94,61 +106,79 @@
         "Entry"
         {
         "MsmKey" = "8:_89953E028EA1DAE531C85C508B8B867E"
-        "OwnerKey" = "8:_CA5E9FACB5FD4A37B56A05954A72D719"
+        "OwnerKey" = "8:_75AFEA8668A74446A83A818B7662AE38"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_8F172436BD8F0477A11DFDEAAD7A2CB0"
-        "OwnerKey" = "8:_CA5E9FACB5FD4A37B56A05954A72D719"
+        "OwnerKey" = "8:_A954771F50AC499190FC402CECF6B3F2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_8F172436BD8F0477A11DFDEAAD7A2CB0"
-        "OwnerKey" = "8:_CCFFB22825EF452281F2341B341CB11B"
+        "OwnerKey" = "8:_75AFEA8668A74446A83A818B7662AE38"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_97FAAC5613A54037880CF89F79F63351"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_9AE1275C435044A093EDD38EFC6F58E6"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_9D50DD2557ADA3E988A6C3415D1978D5"
-        "OwnerKey" = "8:_CA5E9FACB5FD4A37B56A05954A72D719"
+        "OwnerKey" = "8:_A954771F50AC499190FC402CECF6B3F2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_9D50DD2557ADA3E988A6C3415D1978D5"
-        "OwnerKey" = "8:_CCFFB22825EF452281F2341B341CB11B"
+        "OwnerKey" = "8:_75AFEA8668A74446A83A818B7662AE38"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_AFCC929FFE20407D84E08B5BE56AC081"
+        "MsmKey" = "8:_A954771F50AC499190FC402CECF6B3F2"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_AFC9A606900648269AD9FC36F1AC3437"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_B065307953670081760842E47F1C03BB"
-        "OwnerKey" = "8:_CCFFB22825EF452281F2341B341CB11B"
+        "OwnerKey" = "8:_A954771F50AC499190FC402CECF6B3F2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_C30D88FF15831BCB0EC0B7746F86A4D9"
-        "OwnerKey" = "8:_56D4A490C3314FDAB81B0BF1141AC7A0"
+        "OwnerKey" = "8:_9AE1275C435044A093EDD38EFC6F58E6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_C30D88FF15831BCB0EC0B7746F86A4D9"
-        "OwnerKey" = "8:_AFCC929FFE20407D84E08B5BE56AC081"
+        "OwnerKey" = "8:_8088F03C60BD4ACD915CCFE5F32D2355"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_C30D88FF15831BCB0EC0B7746F86A4D9"
-        "OwnerKey" = "8:_CA5E9FACB5FD4A37B56A05954A72D719"
+        "OwnerKey" = "8:_A954771F50AC499190FC402CECF6B3F2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -160,25 +190,13 @@
         "Entry"
         {
         "MsmKey" = "8:_C30D88FF15831BCB0EC0B7746F86A4D9"
-        "OwnerKey" = "8:_20E5E63D41088C7D22017BF331E101EF"
+        "OwnerKey" = "8:_75AFEA8668A74446A83A818B7662AE38"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_C30D88FF15831BCB0EC0B7746F86A4D9"
-        "OwnerKey" = "8:_CCFFB22825EF452281F2341B341CB11B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_CA5E9FACB5FD4A37B56A05954A72D719"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_CCFFB22825EF452281F2341B341CB11B"
-        "OwnerKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_20E5E63D41088C7D22017BF331E101EF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -189,20 +207,20 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_DDB4C12307394526932D6A6F9C881F8A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_E93695BF24148F06FFC97FF6B2450434"
-        "OwnerKey" = "8:_CA5E9FACB5FD4A37B56A05954A72D719"
+        "OwnerKey" = "8:_75AFEA8668A74446A83A818B7662AE38"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_E93695BF24148F06FFC97FF6B2450434"
         "OwnerKey" = "8:_6FE760FA3D7BF0047E966A70A6BC545A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_AFCC929FFE20407D84E08B5BE56AC081"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -214,25 +232,19 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_56D4A490C3314FDAB81B0BF1141AC7A0"
+        "OwnerKey" = "8:_9AE1275C435044A093EDD38EFC6F58E6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E93695BF24148F06FFC97FF6B2450434"
+        "OwnerKey" = "8:_8088F03C60BD4ACD915CCFE5F32D2355"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_6FE760FA3D7BF0047E966A70A6BC545A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4E28969035DA32E0C8FE65A2F1ACB812"
+        "OwnerKey" = "8:_B065307953670081760842E47F1C03BB"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -262,13 +274,37 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_20E5E63D41088C7D22017BF331E101EF"
+        "OwnerKey" = "8:_463007E40A00C9321F103EFBD84571F2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_463007E40A00C9321F103EFBD84571F2"
+        "OwnerKey" = "8:_A954771F50AC499190FC402CECF6B3F2"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_E93695BF24148F06FFC97FF6B2450434"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_6FE760FA3D7BF0047E966A70A6BC545A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_4E28969035DA32E0C8FE65A2F1ACB812"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_20E5E63D41088C7D22017BF331E101EF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -280,19 +316,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_CA5E9FACB5FD4A37B56A05954A72D719"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B065307953670081760842E47F1C03BB"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_CCFFB22825EF452281F2341B341CB11B"
+        "OwnerKey" = "8:_75AFEA8668A74446A83A818B7662AE38"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -367,31 +391,31 @@
     {
         "CustomAction"
         {
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_1680A55023D246EA9A0C29EF9C81E866"
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_2DBE9A4CD8654920BA497BD9866B87A5"
             {
-            "Name" = "8:Primary output from ImgurSniper.UI (Release Any CPU)"
+            "Name" = "8:Primary output from Cleanup (Release Any CPU)"
             "Condition" = "8:"
-            "Object" = "8:_CA5E9FACB5FD4A37B56A05954A72D719"
-            "FileType" = "3:2"
-            "InstallAction" = "3:2"
-            "Arguments" = "8:Installer"
-            "EntryPoint" = "8:"
-            "Sequence" = "3:1"
-            "Identifier" = "8:_FBE0ED5A_042E_4F59_B479_BDA609575A2C"
-            "InstallerClass" = "11:FALSE"
-            "CustomActionData" = "8:"
-            }
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_AE52D09233F342A6B982D655D6DA31CA"
-            {
-            "Name" = "8:Cleanup"
-            "Condition" = "8:"
-            "Object" = "8:_56D4A490C3314FDAB81B0BF1141AC7A0"
+            "Object" = "8:_8088F03C60BD4ACD915CCFE5F32D2355"
             "FileType" = "3:2"
             "InstallAction" = "3:4"
             "Arguments" = "8:"
             "EntryPoint" = "8:"
             "Sequence" = "3:1"
-            "Identifier" = "8:_8D0E94E0_D0C5_47BC_BBF1_AF2B44FFD0B3"
+            "Identifier" = "8:_40E1E183_93A1_4E93_AB12_AC0985F81A4F"
+            "InstallerClass" = "11:FALSE"
+            "CustomActionData" = "8:"
+            }
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_C27AEC6DA5974EE4BD90584171DB2D0E"
+            {
+            "Name" = "8:Primary output from ImgurSniper.UI (Release Any CPU)"
+            "Condition" = "8:"
+            "Object" = "8:_75AFEA8668A74446A83A818B7662AE38"
+            "FileType" = "3:2"
+            "InstallAction" = "3:2"
+            "Arguments" = "8:Installer"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_F88B5DAA_6CAF_4D98_BA02_0CCE322BAE21"
             "InstallerClass" = "11:FALSE"
             "CustomActionData" = "8:"
             }
@@ -410,7 +434,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:v4.5                "
+                "FrameworkVersion" = "8:v4.5                   "
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=395269"
                 }
@@ -418,6 +442,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1067FDE1293D4BCEA51711CFFD2F4FB8"
+            {
+            "SourcePath" = "8:..\\ImgurSniper\\Resources\\iconExit.png"
+            "TargetName" = "8:iconExit.png"
+            "Tag" = "8:"
+            "Folder" = "8:_6770CE43AA0D4C23AC49EB574822C974"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1BC82DB0801962020A98E4D0850A3B0E"
             {
             "AssemblyRegister" = "3:1"
@@ -666,6 +710,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_97FAAC5613A54037880CF89F79F63351"
+            {
+            "SourcePath" = "8:..\\ImgurSniper\\Resources\\iconGif.png"
+            "TargetName" = "8:iconGif.png"
+            "Tag" = "8:"
+            "Folder" = "8:_6770CE43AA0D4C23AC49EB574822C974"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9D50DD2557ADA3E988A6C3415D1978D5"
             {
             "AssemblyRegister" = "3:1"
@@ -690,6 +754,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AFC9A606900648269AD9FC36F1AC3437"
+            {
+            "SourcePath" = "8:..\\ImgurSniper\\Resources\\iconHelp.png"
+            "TargetName" = "8:iconHelp.png"
+            "Tag" = "8:"
+            "Folder" = "8:_6770CE43AA0D4C23AC49EB574822C974"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B065307953670081760842E47F1C03BB"
@@ -748,6 +832,26 @@
             {
             "SourcePath" = "8:..\\ImgurSniper\\Resources\\Blop.wav"
             "TargetName" = "8:Blop.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_6770CE43AA0D4C23AC49EB574822C974"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DDB4C12307394526932D6A6F9C881F8A"
+            {
+            "SourcePath" = "8:..\\ImgurSniper\\Resources\\iconSettings.png"
+            "TargetName" = "8:iconSettings.png"
             "Tag" = "8:"
             "Folder" = "8:_6770CE43AA0D4C23AC49EB574822C974"
             "Condition" = "8:"
@@ -857,15 +961,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ImgurSniper"
-        "ProductCode" = "8:{9DF0C203-2E9A-42CF-A785-83EA64DE019F}"
-        "PackageCode" = "8:{295FBEF7-81A9-4703-8016-A0FCE7BAE57F}"
+        "ProductCode" = "8:{F7B69850-FF70-4E6D-8DD0-56CF8F4BB9AA}"
+        "PackageCode" = "8:{F061D35C-BF9C-49EB-854C-F06825D70B23}"
         "UpgradeCode" = "8:{92522F6A-ED07-4D68-A8DB-8C766884DD1F}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.63"
+        "ProductVersion" = "8:1.0.64"
         "Manufacturer" = "8:mrousavy"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://github.com/mrousavy/ImgurSniper"
@@ -978,7 +1082,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_3591BCC386C84D7BA494F9215D36D140"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_4A0B9459D6BA4DE4ABF68F94F08E7A98"
             {
             "Name" = "8:ImgurSniper"
             "Arguments" = "8:"
@@ -986,13 +1090,41 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_CCFFB22825EF452281F2341B341CB11B"
+            "Target" = "8:_A954771F50AC499190FC402CECF6B3F2"
+            "Folder" = "8:_C92603EEDB644EF2906351E98FB045F2"
+            "WorkingFolder" = "8:_3A469D3976FA4679A5D41BBD45AD8162"
+            "Icon" = "8:_85507D71A37C4DB8BCE5C363E2CF45E4"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_4DEA50B5F1E44D2CB7D8D37454992FD7"
+            {
+            "Name" = "8:ImgurSniper Settings"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_75AFEA8668A74446A83A818B7662AE38"
+            "Folder" = "8:_C92603EEDB644EF2906351E98FB045F2"
+            "WorkingFolder" = "8:_3A469D3976FA4679A5D41BBD45AD8162"
+            "Icon" = "8:_85507D71A37C4DB8BCE5C363E2CF45E4"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_E7FBA173F9A24D2CAFE0EE0825AFA069"
+            {
+            "Name" = "8:ImgurSniper"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_A954771F50AC499190FC402CECF6B3F2"
             "Folder" = "8:_30150239989F4F52BB8E3B68E2642E18"
             "WorkingFolder" = "8:_3A469D3976FA4679A5D41BBD45AD8162"
             "Icon" = "8:_85507D71A37C4DB8BCE5C363E2CF45E4"
             "Feature" = "8:"
             }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_AB32472CA80E4C32A377D223110CEF5C"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_FF49794C946446BEBAE6465046DE9FF9"
             {
             "Name" = "8:ImgurSniper Settings"
             "Arguments" = "8:"
@@ -1000,35 +1132,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_CA5E9FACB5FD4A37B56A05954A72D719"
-            "Folder" = "8:_C92603EEDB644EF2906351E98FB045F2"
-            "WorkingFolder" = "8:_3A469D3976FA4679A5D41BBD45AD8162"
-            "Icon" = "8:_85507D71A37C4DB8BCE5C363E2CF45E4"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_DF147713B5CE48A4AB2F0B4868618585"
-            {
-            "Name" = "8:ImgurSniper"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_CCFFB22825EF452281F2341B341CB11B"
-            "Folder" = "8:_C92603EEDB644EF2906351E98FB045F2"
-            "WorkingFolder" = "8:_3A469D3976FA4679A5D41BBD45AD8162"
-            "Icon" = "8:_85507D71A37C4DB8BCE5C363E2CF45E4"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_FE4D723F48BE43AA865BE80F19FC53E4"
-            {
-            "Name" = "8:ImgurSniper Settings"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_CA5E9FACB5FD4A37B56A05954A72D719"
+            "Target" = "8:_75AFEA8668A74446A83A818B7662AE38"
             "Folder" = "8:_30150239989F4F52BB8E3B68E2642E18"
             "WorkingFolder" = "8:_3A469D3976FA4679A5D41BBD45AD8162"
             "Icon" = "8:_85507D71A37C4DB8BCE5C363E2CF45E4"
@@ -1469,7 +1573,35 @@
                 {
                 }
             }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_56D4A490C3314FDAB81B0BF1141AC7A0"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_75AFEA8668A74446A83A818B7662AE38"
+            {
+            "SourcePath" = "8:..\\ImgurSniper.UI\\obj\\Release\\ImgurSniper.UI.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_3A469D3976FA4679A5D41BBD45AD8162"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:Release|Any CPU"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{CE496908-66AD-419A-8903-7CA8A8902DC1}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_8088F03C60BD4ACD915CCFE5F32D2355"
             {
             "SourcePath" = "8:..\\Cleanup\\obj\\Release\\Cleanup.exe"
             "TargetName" = "8:"
@@ -1492,6 +1624,34 @@
             "OutputConfiguration" = "8:Release|Any CPU"
             "OutputGroupCanonicalName" = "8:Built"
             "OutputProjectGuid" = "8:{98225C44-F760-4A53-AB5C-062875AF7D1F}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_9AE1275C435044A093EDD38EFC6F58E6"
+            {
+            "SourcePath" = "8:..\\AddToContextMenu\\obj\\Release\\AddToContextMenu.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_3A469D3976FA4679A5D41BBD45AD8162"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:Release|Any CPU"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{82FEAF8B-BEB8-4C5A-B694-D0B708844843}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {
@@ -1525,63 +1685,7 @@
                 {
                 }
             }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_AFCC929FFE20407D84E08B5BE56AC081"
-            {
-            "SourcePath" = "8:..\\AddToContextMenu\\obj\\Release\\AddToContextMenu.exe"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3A469D3976FA4679A5D41BBD45AD8162"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:Release|Any CPU"
-            "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{82FEAF8B-BEB8-4C5A-B694-D0B708844843}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-            }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_CA5E9FACB5FD4A37B56A05954A72D719"
-            {
-            "SourcePath" = "8:..\\ImgurSniper.UI\\obj\\Release\\ImgurSniper.UI.exe"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3A469D3976FA4679A5D41BBD45AD8162"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:Release|Any CPU"
-            "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{CE496908-66AD-419A-8903-7CA8A8902DC1}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-            }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_CCFFB22825EF452281F2341B341CB11B"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A954771F50AC499190FC402CECF6B3F2"
             {
             "SourcePath" = "8:..\\ImgurSniper\\obj\\Release\\ImgurSniper.exe"
             "TargetName" = "8:"
