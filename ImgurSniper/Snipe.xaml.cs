@@ -168,10 +168,10 @@ namespace ImgurSniper {
             Image iconGif = null, iconHelp = null, iconSettings = null, iconExit = null;
 
             try {
-                iconGif = Image.FromFile("Resources\\iconGif.png");
-                iconHelp = Image.FromFile("Resources\\iconHelp.png");
-                iconSettings = Image.FromFile("Resources\\iconSettings.png");
-                iconExit = Image.FromFile("Resources\\iconExit.png");
+                iconGif = Image.FromFile(Path.Combine(FileIO.ProgramFiles, "Resources", "iconGif.png");
+                iconHelp = Image.FromFile(Path.Combine(FileIO.ProgramFiles, "Resources", "iconHelp.png");
+                iconSettings = Image.FromFile(Path.Combine(FileIO.ProgramFiles, "Resources", "iconSettings.png");
+                iconExit = Image.FromFile(Path.Combine(FileIO.ProgramFiles, "Resources", "iconExit.png");
             } catch {
                 //Images not found
             }
