@@ -1,5 +1,4 @@
-﻿using ImgurSniper.Properties;
-using System;
+﻿using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using ImgurSniper.Properties;
 using Cursors = System.Windows.Input.Cursors;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Point = System.Windows.Point;
@@ -246,6 +246,14 @@ namespace ImgurSniper {
                 int fromY = hwnd.Top;
                 int toX = hwnd.Right;
                 int toY = hwnd.Bottom;
+
+                Point pointFrom = PointFromScreen(new Point(fromX, fromY));
+                fromX = (int)pointFrom.X;
+                fromY = (int)pointFrom.Y;
+
+                Point pointTo = PointFromScreen(new Point(toX, toY));
+                toX = (int)pointTo.X;
+                toY = (int)pointTo.Y;
 
                 Crop(fromX, fromY, toX, toY);
             };

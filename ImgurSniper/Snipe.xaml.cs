@@ -1,6 +1,4 @@
-﻿using ImgurSniper.Properties;
-using mrousavy;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -12,6 +10,8 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using ImgurSniper.Properties;
+using mrousavy;
 using Application = System.Windows.Application;
 using Clipboard = System.Windows.Clipboard;
 using MessageBox = System.Windows.MessageBox;
@@ -168,10 +168,10 @@ namespace ImgurSniper {
             Image iconGif = null, iconHelp = null, iconSettings = null, iconExit = null;
 
             try {
-                iconGif = Image.FromFile(Path.Combine(FileIO.ProgramFiles, "Resources", "iconGif.png");
-                iconHelp = Image.FromFile(Path.Combine(FileIO.ProgramFiles, "Resources", "iconHelp.png");
-                iconSettings = Image.FromFile(Path.Combine(FileIO.ProgramFiles, "Resources", "iconSettings.png");
-                iconExit = Image.FromFile(Path.Combine(FileIO.ProgramFiles, "Resources", "iconExit.png");
+                iconGif = Image.FromFile(Path.Combine(FileIO.ProgramFiles, "Resources", "iconGif.png"));
+                iconHelp = Image.FromFile(Path.Combine(FileIO.ProgramFiles, "Resources", "iconHelp.png"));
+                iconSettings = Image.FromFile(Path.Combine(FileIO.ProgramFiles, "Resources", "iconSettings.png"));
+                iconExit = Image.FromFile(Path.Combine(FileIO.ProgramFiles, "Resources", "iconExit.png"));
             } catch {
                 //Images not found
             }

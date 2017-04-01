@@ -246,6 +246,14 @@ namespace ImgurSniper {
                 int toX = hwnd.Right;
                 int toY = hwnd.Bottom;
 
+                Point pointFrom = PointFromScreen(new Point(fromX, fromY));
+                fromX = (int)pointFrom.X;
+                fromY = (int)pointFrom.Y;
+
+                Point pointTo = PointFromScreen(new Point(toX, toY));
+                toX = (int)pointTo.X;
+                toY = (int)pointTo.Y;
+
                 Crop(fromX, fromY, toX, toY);
             };
 
