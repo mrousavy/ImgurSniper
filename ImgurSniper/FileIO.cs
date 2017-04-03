@@ -170,6 +170,18 @@ namespace ImgurSniper {
             }
         }
 
+        //Show Mouse Cursor on Screenshot
+        public static bool ShowMouse {
+            get {
+                return JsonConfig.ShowMouse;
+            }
+            set {
+                Settings settings = JsonConfig;
+                settings.ShowMouse = value;
+                JsonConfig = settings;
+            }
+        }
+
         public static Settings JsonConfig {
             get {
                 try {
@@ -263,30 +275,30 @@ namespace ImgurSniper {
         public class Settings {
             public bool AllMonitors = true;
             public bool AutoUpdate = true;
-
-            public int CurrentCommits = 999;
-            public int GifFps = 10;
-            public int GifLength = 10000;
+            public bool ShowMouse = false;
+            public bool UpdateAvailable = false;
+            public bool UsePrint = false;
             public bool ImgurAfterSnipe = true;
             public bool IsInContextMenu = false;
-
-            public string Language = "en";
-            public DateTime LastChecked = DateTime.Now;
             public bool MagnifyingGlassEnabled = true;
             public bool OpenAfterUpload = true;
             public bool RunOnBoot = true;
             public bool SaveImages = false;
 
+            public int CurrentCommits = 999;
+            public int GifFps = 10;
+            public int GifLength = 10000;
+
+            public string Language = null;
             public string SaveImagesPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "ImgurSniperImages");
 
             public Key ShortcutGifKey = Key.G;
             public Key ShortcutImgKey = Key.X;
 
-            public ImageFormat ImageFormat = ImageFormat.Png;
+            public DateTime LastChecked = DateTime.Now;
 
-            public bool UpdateAvailable = false;
-            public bool UsePrint = false;
+            public ImageFormat ImageFormat = ImageFormat.Png;
         }
 
         #region Imgur Account

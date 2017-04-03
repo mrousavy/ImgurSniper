@@ -77,6 +77,17 @@ namespace ImgurSniper.UI {
             } catch { }
         }
 
+
+        private void ShowMouseBox_Check(object sender, RoutedEventArgs e) {
+            CheckBox box = sender as CheckBox;
+            if(box == null) {
+                return;
+            }
+            try {
+                FileIO.ShowMouse = box.IsChecked == true;
+            } catch { }
+        }
+
         private void Magnifying_Checkbox(object sender, RoutedEventArgs e) {
             CheckBox box = sender as CheckBox;
             if(box == null) {

@@ -715,6 +715,15 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show Mouse.
+        /// </summary>
+        public static string showMouse {
+            get {
+                return ResourceManager.GetString("showMouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sign in.
         /// </summary>
         public static string singIn {

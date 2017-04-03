@@ -441,4 +441,7 @@ Die Fehlermeldung lautet wie folgt: "{0}"
 
 Wollen Sie mehr Details über den Fehler sehen?</value>
   </data>
+  <data name="showMouse" xml:space="preserve">
+    <value>Zeige Maus</value>
+  </data>
 </root>

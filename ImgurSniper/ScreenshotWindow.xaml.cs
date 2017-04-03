@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using ImgurSniper.Properties;
+using Brushes = System.Windows.Media.Brushes;
 using Cursors = System.Windows.Input.Cursors;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
@@ -432,8 +435,15 @@ namespace ImgurSniper {
             try {
                 MemoryStream stream = new MemoryStream();
 
-                Screenshot.GetScreenshot(size)
-                    .Save(stream, FileIO.ImageFormat);
+                if(FileIO.ShowMouse) {
+                    using(Bitmap tmp = Screenshot.GetScreenshotWithMouse(size)) {
+                        tmp.Save(stream, FileIO.ImageFormat);
+                    }
+                } else {
+                    using(Bitmap tmp = Screenshot.GetScreenshot(size)) {
+                        tmp.Save(stream, FileIO.ImageFormat);
+                    }
+                }
 
                 CroppedImage = stream.ToArray();
 

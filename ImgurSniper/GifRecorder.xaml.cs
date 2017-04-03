@@ -87,6 +87,7 @@ namespace ImgurSniper {
             try {
                 //Each Frame with TimeStamp
                 List<BitmapFrame> bitmapframes = new List<BitmapFrame>();
+                bool showMouse = FileIO.ShowMouse;
 
                 #region Method 1: Timer
 
@@ -124,14 +125,21 @@ namespace ImgurSniper {
                             //Add Frames
                             stream = new MemoryStream();
 
-                            using(Bitmap tmp = Screenshot.GetScreenshotWithMouse(_size)) {
-                                tmp.Save(stream, ImageFormat.Gif);
+                            if(showMouse) {
+                                using(Bitmap tmp = Screenshot.GetScreenshotWithMouse(_size)) {
+                                    tmp.Save(stream, ImageFormat.Gif);
+                                }
+                            } else {
+                                using(Bitmap tmp = Screenshot.GetScreenshot(_size)) {
+                                    tmp.Save(stream, ImageFormat.Gif);
+                                }
                             }
 
+
                             BitmapFrame bitmap = BitmapFrame.Create(
-                                stream,
-                                BitmapCreateOptions.PreservePixelFormat,
-                                BitmapCacheOption.OnLoad);
+                                    stream,
+                                    BitmapCreateOptions.PreservePixelFormat,
+                                    BitmapCacheOption.OnLoad);
 
                             bitmapframes.Add(bitmap);
 
