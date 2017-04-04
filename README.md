@@ -3,9 +3,9 @@
 **ImgurSniper** is a small and lightweight tool that is designed to make **sharing Images** way **easier and faster** by instantly uploading them to [imgur](http://www.imgur.com)!
 
 # Downloads
-### [⇩ Imgur Sniper v1.0.5.5 (11.455 KB) (Full Setup) (Recommended)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperSetup.zip?raw=true)
+### [⇩ Imgur Sniper (11 MB) (Full Setup) (Recommended)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperSetup.zip?raw=true)
 
-#### [⇩ Imgur Sniper v1.0.5.5 (10.818 KB) (Archive)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.zip?raw=true)
+#### [⇩ Imgur Sniper (10 MB) (Archive)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.zip?raw=true)
 
 #### [View all Releases](https://github.com/mrousavy/ImgurSniper/releases)
 
