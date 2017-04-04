@@ -372,20 +372,9 @@ namespace ImgurSniper {
         private async Task CaptureImage() {
             using(ScreenshotWindow window = new ScreenshotWindow(FileIO.AllMonitors)) {
                 window.ShowDialog();
-
+                
                 if(window.DialogResult == true) {
-                    //10 MB = 10.485.760 Bytes      => Imgur's max. File Size
-                    if(window.CroppedImage.Length >= 10485760) {
-                        Notification = new Notification(strings.imgTooBig, Notification.NotificationType.Error, true,
-                            ActionTroubleshoot);
-                        await Notification.ShowAsync();
-                        //await ErrorToast.ShowAsync(strings.imgToBig, TimeSpan.FromSeconds(3));
-                        return;
-                    }
-
                     try {
-                        bool imgurAfterSnipe = FileIO.ImgurAfterSnipe;
-
                         //Config: Save Image locally?
                         if(FileIO.SaveImages) {
                             try {
@@ -410,8 +399,19 @@ namespace ImgurSniper {
                             }
                         }
 
+                        bool imgurAfterSnipe = FileIO.ImgurAfterSnipe;
+                        
                         //Config: Upload Image to Imgur or Copy to Clipboard?
                         if(imgurAfterSnipe) {
+                            //10 MB = 10.485.760 Bytes      => Imgur's max. File Size
+                            if(window.CroppedImage.Length >= 10485760) {
+                                Notification = new Notification(strings.imgTooBig, Notification.NotificationType.Error, true,
+                                    ActionTroubleshoot);
+                                await Notification.ShowAsync();
+                                //await ErrorToast.ShowAsync(strings.imgToBig, TimeSpan.FromSeconds(3));
+                                return;
+                            }
+                            
                             string kb = $"{window.CroppedImage.Length / 1024d:0.#}";
                             Notification = new Notification(string.Format(strings.uploading, kb),
                                 Notification.NotificationType.Progress, false, null);
@@ -460,15 +460,6 @@ namespace ImgurSniper {
                 window.ShowDialog();
 
                 if(window.DialogResult == true) {
-                    //10 MB = 10.485.760 Bytes      => Imgur's max. File Size
-                    if(window.CroppedGif.Length >= 10485760) {
-                        Notification = new Notification(strings.imgTooBigGif, Notification.NotificationType.Error, true,
-                            ActionTroubleshoot);
-                        await Notification.ShowAsync();
-                        //await ErrorToast.ShowAsync(strings.imgToBig, TimeSpan.FromSeconds(3));
-                        return;
-                    }
-
                     try {
                         bool imgurAfterSnipe = FileIO.ImgurAfterSnipe;
 
@@ -497,6 +488,15 @@ namespace ImgurSniper {
 
                         //Config: Upload Image to Imgur or Copy to Clipboard?
                         if(imgurAfterSnipe) {
+                            //10 MB = 10.485.760 Bytes      => Imgur's max. File Size
+                            if(window.CroppedGif.Length >= 10485760) {
+                                Notification = new Notification(strings.imgTooBigGif, Notification.NotificationType.Error, true,
+                                    ActionTroubleshoot);
+                                await Notification.ShowAsync();
+                                //await ErrorToast.ShowAsync(strings.imgToBig, TimeSpan.FromSeconds(3));
+                                return;
+                            }
+                            
                             string kb = $"{window.CroppedGif.Length / 1024d:0.#}";
                             Notification = new Notification(string.Format(strings.uploadingGif, kb),
                                 Notification.NotificationType.Progress, false, null);
