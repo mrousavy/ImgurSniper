@@ -45,8 +45,8 @@ You can now **share the Link** that has been **copied to your Clipboard** with e
 - Upload your Images as **PNG Format** for higher quality, or **JPEG Format** for faster uploads (Pro Tip: Enable "Upload Images in high Quality" [here](https://imgur.com/account/settings) for high quality Screenshots!)
 
 ## Settings
-<img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/Images/ImgurSniper.UI.png">
+<img src="http://i.imgur.com/P6x8uMc.png">
 
-<img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/Images/ImgurSniper.UI.Update.png">
+<img src="http://i.imgur.com/3996TB7.png">
 
-<img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/Images/ImgurSniper.UI.Help.png">
+<img src="http://i.imgur.com/FSeCfjV.png">

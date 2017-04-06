@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using Timer = System.Timers.Timer;
 
 namespace ImgurSniper {
@@ -41,7 +42,7 @@ namespace ImgurSniper {
             int progressBarWidth = size.Width - 40;
             _progressIndicatorEnabled = progressBarWidth > 0;
 
-            if(_progressIndicatorEnabled) {
+            if (_progressIndicatorEnabled) {
                 ProgressBar.Width = progressBarWidth;
             } else {
                 ProgressBar.Visibility = Visibility.Collapsed;
@@ -98,7 +99,7 @@ namespace ImgurSniper {
                 // ReSharper disable once PossibleLossOfFraction
                 _timer = new Timer(1000 / _fps);
 
-                if(_progressIndicatorEnabled)
+                if (_progressIndicatorEnabled)
                     ProgressBar.Maximum = totalFrames;
 
                 //Every Frame
@@ -106,11 +107,12 @@ namespace ImgurSniper {
                     new Thread(() => {
                         try {
                             //Finish GIF
-                            if(_stopped || currentFrames >= totalFrames) {
+                            if (_stopped || currentFrames >= totalFrames) {
                                 _timer.Stop();
 
                                 GifBitmapEncoder encoder = new GifBitmapEncoder();
-                                foreach(BitmapFrame frame in bitmapframes) {
+
+                                foreach (BitmapFrame frame in bitmapframes) {
                                     encoder.Frames.Add(frame);
                                 }
 
@@ -125,12 +127,12 @@ namespace ImgurSniper {
                             //Add Frames
                             stream = new MemoryStream();
 
-                            if(showMouse) {
-                                using(Bitmap tmp = Screenshot.GetScreenshotWithMouse(_size)) {
+                            if (showMouse) {
+                                using (Bitmap tmp = Screenshot.GetScreenshotWithMouse(_size)) {
                                     tmp.Save(stream, ImageFormat.Gif);
                                 }
                             } else {
-                                using(Bitmap tmp = Screenshot.GetScreenshot(_size)) {
+                                using (Bitmap tmp = Screenshot.GetScreenshot(_size)) {
                                     tmp.Save(stream, ImageFormat.Gif);
                                 }
                             }
@@ -145,7 +147,7 @@ namespace ImgurSniper {
 
                             currentFrames++;
 
-                            if(_progressIndicatorEnabled)
+                            if (_progressIndicatorEnabled)
                                 Dispatcher.BeginInvoke(new Action(delegate { ProgressBar.Value = currentFrames; }));
                         } catch {
                             Dispatcher.BeginInvoke(new Action(delegate {
