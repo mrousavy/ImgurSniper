@@ -1,6 +1,6 @@
-﻿using System;
+﻿using ImgurSniper.Properties;
+using System;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,7 +12,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
-using ImgurSniper.Properties;
 using Brushes = System.Windows.Media.Brushes;
 using Cursors = System.Windows.Input.Cursors;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
@@ -68,7 +67,7 @@ namespace ImgurSniper {
             Height = size.Height;
 
 
-            if(allMonitors) {
+            if (allMonitors) {
                 Rect workArea = SystemParameters.WorkArea;
                 toast.Margin = new Thickness(workArea.Left, workArea.Top,
                     SystemParameters.VirtualScreenWidth - workArea.Right,
@@ -114,7 +113,7 @@ namespace ImgurSniper {
 
         //All Keys
         private void Window_KeyDown(object sender, KeyEventArgs e) {
-            switch(e.Key) {
+            switch (e.Key) {
                 case Key.Escape:
                     //Close
                     Error = false;
@@ -126,12 +125,12 @@ namespace ImgurSniper {
                     break;
                 case Key.A:
                     //Select All
-                    if((Control.ModifierKeys & Keys.Control) == Keys.Control)
+                    if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
                         SelectAllCmd();
                     break;
                 case Key.Z:
                     //Undo
-                    if((Control.ModifierKeys & Keys.Control) == Keys.Control)
+                    if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
                         CtrlZ();
                     break;
             }
@@ -149,7 +148,7 @@ namespace ImgurSniper {
             SelectedMode.BeginAnimation(OpacityProperty, null);
 
             //Set correct Selected Mode Indicator
-            if(grid.IsEnabled) {
+            if (grid.IsEnabled) {
                 grid.CaptureMouse();
                 Cursor = Cursors.Cross;
                 CropIcon.Background = Brushes.Gray;
@@ -199,7 +198,7 @@ namespace ImgurSniper {
 
         //MouseDown Event
         private void StartDrawing(object sender, MouseButtonEventArgs e) {
-            switch(e.ChangedButton) {
+            switch (e.ChangedButton) {
                 case MouseButton.Right:
                     //!!Not yet fully implemented
                     RightClick();
@@ -240,7 +239,7 @@ namespace ImgurSniper {
 
                 const int nChars = 256;
                 StringBuilder buff = new StringBuilder(nChars);
-                if(WinAPI.User32.GetWindowText(whandle, buff, nChars) > 0) {
+                if (WinAPI.User32.GetWindowText(whandle, buff, nChars) > 0) {
                     HwndName = buff.ToString();
                 }
 
@@ -269,7 +268,7 @@ namespace ImgurSniper {
         //MouseUp Event
         private void ReleaseRectangle(object sender, MouseButtonEventArgs e) {
             //Only trigger on Left Mouse Button
-            if(e.ChangedButton != MouseButton.Left) {
+            if (e.ChangedButton != MouseButton.Left) {
                 return;
             }
 
@@ -287,7 +286,7 @@ namespace ImgurSniper {
             //    Magnifier(pos);
 
             //Draw Rectangle
-            if(_drag) {
+            if (_drag) {
                 //Set Crop Rectangle to Mouse Position
                 To = e.GetPosition(null);
 
@@ -316,8 +315,8 @@ namespace ImgurSniper {
 
         //Draw on the Window
         private void Paint(object sender, MouseEventArgs e) {
-            if(e.LeftButton == MouseButtonState.Pressed) {
-                if(_currentPath == null) {
+            if (e.LeftButton == MouseButtonState.Pressed) {
+                if (_currentPath == null) {
                     return;
                 }
 
@@ -329,7 +328,7 @@ namespace ImgurSniper {
 
         //Mouse Down Event - Begin Painting
         private void BeginPaint(object sender, MouseButtonEventArgs e) {
-            if(e.ButtonState == MouseButtonState.Pressed) {
+            if (e.ButtonState == MouseButtonState.Pressed) {
                 _startPos = e.GetPosition(null);
 
 
@@ -357,7 +356,7 @@ namespace ImgurSniper {
 
 
         private void CtrlZ() {
-            if(PaintSurface.Children.Count > 0) {
+            if (PaintSurface.Children.Count > 0) {
                 PaintSurface.Children.RemoveAt(PaintSurface.Children.Count - 1);
             }
         }
@@ -374,7 +373,7 @@ namespace ImgurSniper {
             int fromX = (int)Math.Min(From.X, To.X);
             int fromY = (int)Math.Min(From.Y, To.Y);
 
-            if(Math.Abs(To.X - From.X) < 9 || Math.Abs(To.Y - From.Y) < 9) {
+            if (Math.Abs(To.X - From.X) < 9 || Math.Abs(To.Y - From.Y) < 9) {
                 toast.Show(strings.imgSize, TimeSpan.FromSeconds(3.3));
                 selectionRectangle.Margin = new Thickness(99999);
             } else {
@@ -394,8 +393,8 @@ namespace ImgurSniper {
             anim.Completed += async delegate {
                 grid.Opacity = 0;
                 //For render complete
-                Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.ContextIdle, null);
-                await Task.Delay(50);
+                await Dispatcher.InvokeAsync(new Action(() => { }), DispatcherPriority.ContextIdle);
+                await Task.Delay(100);
 
                 Crop(fromX, fromY, toX, toY);
             };
@@ -422,7 +421,7 @@ namespace ImgurSniper {
             //Assuming from Point is already top left and not bottom right
             bool result = MakeImage(new Rectangle(fromX, fromY, w, h));
 
-            if(!result) {
+            if (!result) {
                 toast.Show(strings.whoops, TimeSpan.FromSeconds(3.3));
                 CloseSnap(false, 1500);
             } else {
@@ -435,12 +434,12 @@ namespace ImgurSniper {
             try {
                 MemoryStream stream = new MemoryStream();
 
-                if(FileIO.ShowMouse) {
-                    using(Bitmap tmp = Screenshot.GetScreenshotWithMouse(size)) {
+                if (FileIO.ShowMouse) {
+                    using (Bitmap tmp = Screenshot.GetScreenshotWithMouse(size)) {
                         tmp.Save(stream, FileIO.ImageFormat);
                     }
                 } else {
-                    using(Bitmap tmp = Screenshot.GetScreenshot(size)) {
+                    using (Bitmap tmp = Screenshot.GetScreenshot(size)) {
                         tmp.Save(stream, FileIO.ImageFormat);
                     }
                 }
