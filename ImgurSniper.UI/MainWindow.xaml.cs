@@ -91,6 +91,7 @@ namespace ImgurSniper.UI {
                 bool SaveImages = settings.SaveImages;
                 bool ImgurAfterSnipe = settings.ImgurAfterSnipe;
                 bool AutoUpdate = settings.AutoUpdate;
+                bool ShowMouse = settings.ShowMouse;
                 int gifFps = settings.GifFps;
                 int gifLength = settings.GifLength / 1000;
                 string language = settings.Language;
@@ -153,6 +154,11 @@ namespace ImgurSniper.UI {
                 //Auto search for Updates
                 if(AutoUpdate) {
                     AutoUpdateBox.IsChecked = true;
+                }
+                
+                //Show Mouse Cursor on Image Capture
+                if(ShowMouse) {
+                    ShowMouseBox.IsChecked = true;   
                 }
 
                 //Enable or Disable Magnifying Glass (WIP)
