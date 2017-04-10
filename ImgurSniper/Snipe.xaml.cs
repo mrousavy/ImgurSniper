@@ -34,9 +34,9 @@ namespace ImgurSniper {
         public Snipe() {
             InitializeComponent();
 
+#if DEBUG
             Notification = new Notification("ImgurSniper initialized!", Notification.NotificationType.Success, true,
                 null);
-#if DEBUG
             Notification.Show();
 #endif
 
