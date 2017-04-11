@@ -49,8 +49,7 @@ namespace ImgurSniper {
                 NotificationContent.MouseDown += delegate {
                     try {
                         onClick.Invoke();
-                    }
-                    catch {}
+                    } catch { }
                     FadeOut();
                 };
             }
@@ -96,8 +95,8 @@ namespace ImgurSniper {
             fadeOut.Completed += delegate {
                 try {
                     _task.SetResult(true);
-                }
-                catch {}
+                } catch { }
+                Snipe.DisposeNotification.Invoke();
                 base.Close();
             };
 

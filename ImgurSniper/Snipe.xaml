@@ -3,11 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:toasty="clr-namespace:Toast;assembly=Toast"
-        xmlns:local="clr-namespace:ImgurSniper" AllowsTransparency="True"
-        ShowActivated="False" Focusable="False" ShowInTaskbar="False"
-        mc:Ignorable="d" WindowStyle="None" Background="Transparent" Topmost="True"
-        Visibility="Visible" WindowStartupLocation="Manual" Loaded="Window_Loaded"
-        Title="Snipe a new Image" Height="30" Width="200" Opacity="1">
-    <Grid x:Name="grid" />
-</Window>
+        
+        AllowsTransparency="True" ShowActivated="False" Focusable="False"
+        ShowInTaskbar="False" mc:Ignorable="d" WindowStyle="None"
+        Background="Transparent" Topmost="True" Visibility="Collapsed"
+        WindowStartupLocation="Manual" WindowState="Minimized"
+        Loaded="Window_Loaded" Height="0" Width="0"/>
