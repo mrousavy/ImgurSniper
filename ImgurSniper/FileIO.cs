@@ -5,9 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Security.AccessControl;
 using System.Security.Principal;
-using System.Windows;
 using System.Windows.Input;
-using Newtonsoft.Json;
 
 namespace ImgurSniper {
     public static class FileIO {
@@ -16,22 +14,12 @@ namespace ImgurSniper {
             get {
                 return JsonConfig.AllMonitors;
             }
-            set {
-                Settings settings = JsonConfig;
-                settings.AllMonitors = value;
-                JsonConfig = settings;
-            }
         }
 
         //The Image Format for normal Images
         public static ImageFormat ImageFormat {
             get {
                 return JsonConfig.ImageFormat;
-            }
-            set {
-                Settings settings = JsonConfig;
-                settings.ImageFormat = value;
-                JsonConfig = settings;
             }
         }
 
@@ -40,22 +28,12 @@ namespace ImgurSniper {
             get {
                 return JsonConfig.OpenAfterUpload;
             }
-            set {
-                Settings settings = JsonConfig;
-                settings.OpenAfterUpload = value;
-                JsonConfig = settings;
-            }
         }
 
         //Key for ImgurSniper Image Shortcut
         public static Key ShortcutImgKey {
             get {
                 return JsonConfig.ShortcutImgKey;
-            }
-            set {
-                Settings settings = JsonConfig;
-                settings.ShortcutImgKey = value;
-                JsonConfig = settings;
             }
         }
 
@@ -64,22 +42,12 @@ namespace ImgurSniper {
             get {
                 return JsonConfig.ShortcutGifKey;
             }
-            set {
-                Settings settings = JsonConfig;
-                settings.ShortcutGifKey = value;
-                JsonConfig = settings;
-            }
         }
 
         //Use PrintKey for ImgurSniper Shortcut?
         public static bool UsePrint {
             get {
                 return JsonConfig.UsePrint;
-            }
-            set {
-                Settings settings = JsonConfig;
-                settings.UsePrint = value;
-                JsonConfig = settings;
             }
         }
 
@@ -91,22 +59,12 @@ namespace ImgurSniper {
 
                 return ret;
             }
-            set {
-                Settings settings = JsonConfig;
-                settings.SaveImagesPath = value;
-                JsonConfig = settings;
-            }
         }
 
         //Value wether Images should be saved or not
         public static bool SaveImages {
             get {
                 return JsonConfig.SaveImages;
-            }
-            set {
-                Settings settings = JsonConfig;
-                settings.SaveImages = value;
-                JsonConfig = settings;
             }
         }
 
@@ -115,22 +73,12 @@ namespace ImgurSniper {
             get {
                 return JsonConfig.ImgurAfterSnipe;
             }
-            set {
-                Settings settings = JsonConfig;
-                settings.ImgurAfterSnipe = value;
-                JsonConfig = settings;
-            }
         }
 
         //Last Time, ImgurSniper checked for Updates
         public static DateTime LastChecked {
             get {
                 return JsonConfig.LastChecked;
-            }
-            set {
-                Settings settings = JsonConfig;
-                settings.LastChecked = value;
-                JsonConfig = settings;
             }
         }
 
@@ -139,22 +87,12 @@ namespace ImgurSniper {
             get {
                 return JsonConfig.Language;
             }
-            set {
-                Settings settings = JsonConfig;
-                settings.Language = value;
-                JsonConfig = settings;
-            }
         }
 
         //Frames per Second of GIF Capture
         public static int GifFps {
             get {
                 return JsonConfig.GifFps;
-            }
-            set {
-                Settings settings = JsonConfig;
-                settings.GifFps = value;
-                JsonConfig = settings;
             }
         }
 
@@ -163,11 +101,6 @@ namespace ImgurSniper {
             get {
                 return JsonConfig.GifLength;
             }
-            set {
-                Settings settings = JsonConfig;
-                settings.GifLength = value;
-                JsonConfig = settings;
-            }
         }
 
         //Show Mouse Cursor on Screenshot
@@ -175,40 +108,9 @@ namespace ImgurSniper {
             get {
                 return JsonConfig.ShowMouse;
             }
-            set {
-                Settings settings = JsonConfig;
-                settings.ShowMouse = value;
-                JsonConfig = settings;
-            }
         }
 
-        public static Settings JsonConfig {
-            get {
-                try {
-                    Exists();
-                    return JsonConvert.DeserializeObject<Settings>(File.ReadAllText(ConfigFile));
-                } catch {
-                    MessageBox.Show(
-                        "An Error occured, please make sure that you have\nread and Write Access to the following Path:\n" +
-                        ConfigFile,
-                        "Fatal ImgurSniper Configuration File Error");
-                    throw new Exception(
-                        "An Error occured, please make sure that you have\nread and Write Access to the following Path:\n" +
-                        ConfigFile);
-                }
-            }
-            set {
-                try {
-                    Exists();
-                    File.WriteAllText(ConfigFile, JsonConvert.SerializeObject(value));
-                } catch {
-                    MessageBox.Show(
-                        "An Error occured, please make sure that you have\nread and Write Access to the following Path:\n" +
-                        ConfigFile,
-                        "Fatal ImgurSniper Configuration File Error");
-                }
-            }
-        }
+        public static Settings JsonConfig;
 
         public static string ConfigPath
             => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper");
@@ -232,12 +134,12 @@ namespace ImgurSniper {
         //Salt for Cipher Encryption
         private static string PassPhrase => "ImgurSniper v" + FileVersion + " User-Login File_PassPhrase :)";
 
-        private static void Exists() {
-            if(!Directory.Exists(ConfigPath)) {
+        public static void Exists() {
+            if (!Directory.Exists(ConfigPath)) {
                 Directory.CreateDirectory(ConfigPath);
             }
 
-            if(!File.Exists(ConfigFile)) {
+            if (!File.Exists(ConfigFile)) {
                 File.WriteAllText(ConfigFile, "{}");
             }
         }
@@ -250,18 +152,18 @@ namespace ImgurSniper {
                 DirectorySecurity accessControlList = Directory.GetAccessControl(path);
                 AuthorizationRuleCollection accessRules = accessControlList?.GetAccessRules(true, true,
                     typeof(SecurityIdentifier));
-                if(accessRules == null) {
+                if (accessRules == null) {
                     return false;
                 }
 
-                foreach(FileSystemAccessRule rule in accessRules) {
-                    if((FileSystemRights.Write & rule.FileSystemRights) != FileSystemRights.Write) {
+                foreach (FileSystemAccessRule rule in accessRules) {
+                    if ((FileSystemRights.Write & rule.FileSystemRights) != FileSystemRights.Write) {
                         continue;
                     }
 
-                    if(rule.AccessControlType == AccessControlType.Allow) {
+                    if (rule.AccessControlType == AccessControlType.Allow) {
                         writeAllow = true;
-                    } else if(rule.AccessControlType == AccessControlType.Deny) {
+                    } else if (rule.AccessControlType == AccessControlType.Deny) {
                         writeDeny = true;
                     }
                 }
@@ -312,7 +214,7 @@ namespace ImgurSniper {
                 "refreshtoken.imgurtoken");
 
         public static string ReadRefreshToken() {
-            if(!File.Exists(TokenPath)) {
+            if (!File.Exists(TokenPath)) {
                 File.Create(TokenPath);
                 return null;
             }

@@ -1,7 +1,9 @@
 ﻿using ImgurSniper.Properties;
+using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -13,8 +15,22 @@ namespace ImgurSniper {
     /// </summary>
     public partial class App {
         public App() {
+            LoadConfig();
+
             DispatcherUnhandledException += UnhandledException;
 
+            LoadLanguage();
+        }
+
+
+        //Load the config.json
+        private void LoadConfig() {
+            FileIO.Exists();
+            FileIO.JsonConfig = JsonConvert.DeserializeObject<FileIO.Settings>(File.ReadAllText(FileIO.ConfigFile));
+        }
+
+        //Set Language from Settings
+        private void LoadLanguage() {
             string language = FileIO.Language;
             Thread.CurrentThread.CurrentCulture = new CultureInfo(language);
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
@@ -25,7 +41,7 @@ namespace ImgurSniper {
 
         //Unhandled Exception User Message Boxes
         private void UnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
-            if(MessageBox.Show(strings.unhandledError,
+            if (MessageBox.Show(strings.unhandledError,
                     "Help fixing an ImgurSniper Bug?",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Question) == MessageBoxResult.Yes) {
@@ -33,7 +49,7 @@ namespace ImgurSniper {
             }
 
 
-            if(MessageBox.Show(String.Format(strings.unhandledErrorDescription, e.Exception.Message),
+            if (MessageBox.Show(String.Format(strings.unhandledErrorDescription, e.Exception.Message),
                 "ImgurSniper Error",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Error) == MessageBoxResult.Yes) {

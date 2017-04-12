@@ -444,4 +444,16 @@ Wollen Sie mehr Details über den Fehler sehen?</value>
   <data name="showMouse" xml:space="preserve">
     <value>Zeige Maus</value>
   </data>
+  <data name="apply" xml:space="preserve">
+    <value>Übernehmen</value>
+  </data>
+  <data name="applied" xml:space="preserve">
+    <value>Einstellungen übernommen!</value>
+  </data>
+  <data name="couldNotApply" xml:space="preserve">
+    <value>Einstellungen konnten nicht gespeichert werden!</value>
+  </data>
+  <data name="wantToApply" xml:space="preserve">
+    <value>Wollen Sie Ihre Einstellungen übernehmen?</value>
+  </data>
 </root>

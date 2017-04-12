@@ -300,7 +300,7 @@ namespace ImgurSniper {
 
                     await OpenAlbum(albumInfo.Key);
 
-                    Notification.Close();
+                    Notification?.Close();
                 } catch {
                     //Unsupported File Type? Internet connection error?
                     Notification = new Notification(strings.errorInstantUpload, Notification.NotificationType.Error,
@@ -326,7 +326,7 @@ namespace ImgurSniper {
                     string link = await _imgur.Upload(byteImg, "");
                     await HandleLink(link);
 
-                    Notification.Close();
+                    Notification?.Close();
                 } catch {
                     //Unsupported File Type? Internet connection error?
                     Notification = new Notification(strings.errorInstantUpload, Notification.NotificationType.Error,
@@ -419,7 +419,7 @@ namespace ImgurSniper {
                             string link = await _imgur.Upload(window.CroppedImage, window.HwndName);
                             await HandleLink(link);
 
-                            Notification.Close();
+                            Notification?.Close();
                         } else {
                             CopyClipboard(window.CroppedImage);
 
@@ -504,7 +504,7 @@ namespace ImgurSniper {
                             string link = await _imgur.Upload(window.CroppedGif, window.HwndName);
                             await HandleLink(link);
 
-                            Notification.Close();
+                            Notification?.Close();
                         } else {
                             CopyClipboard(window.CroppedGif);
 

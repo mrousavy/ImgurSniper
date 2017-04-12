@@ -8,9 +8,9 @@
 		xmlns:cultureStrings="clr-namespace:ImgurSniper.UI.Properties"
 		mc:Ignorable="d" MinHeight="500" MinWidth="575"
 		Title="{x:Static Member=cultureStrings:strings.title}" Height="590" Width="600"
+		Closing="Window_Closing" Loaded="Window_Loaded"
+		
 		Background="{DynamicResource MaterialDesignPaper}"
-
-
 		TextElement.Foreground="{DynamicResource MaterialDesignBody}"
 		TextElement.FontWeight="Medium"
 		TextElement.FontSize="14"
@@ -291,6 +291,8 @@
 								HorizontalAlignment="Right" VerticalAlignment="Bottom">
 						<!--<Button Margin="5" Click="Repair" x:Name="Btn_Repair"
 							Content="{x:Static Member=cultureStrings:strings.repair}"/>-->
+						<Button Margin="5" Click="Save" x:Name="Btn_Save" IsEnabled="False"
+								Content="{x:Static Member=cultureStrings:strings.apply}" />
 
 						<Button Margin="5" Click="Help" x:Name="Btn_Help"
 								Content="{x:Static Member=cultureStrings:strings.help}" />

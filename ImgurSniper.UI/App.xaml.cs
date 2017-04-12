@@ -1,7 +1,9 @@
 ﻿using ImgurSniper.UI.Properties;
+using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -14,6 +16,8 @@ namespace ImgurSniper.UI {
     /// </summary>
     public partial class App {
         public App() {
+            LoadConfig();
+
             DispatcherUnhandledException += UnhandledException;
 
             IsInstaller();
@@ -21,24 +25,30 @@ namespace ImgurSniper.UI {
             string language = FileIO.Language;
 
             //If language is not yet set manually, select system default
-            if(language != null) {
+            if (language != null) {
                 Thread.CurrentThread.CurrentCulture = new CultureInfo(language);
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
                 FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(
                     XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
             } else {
                 FileIO.Language = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+                FileIO.Save();
             }
         }
 
+        //Load from config.json
+        private void LoadConfig() {
+            FileIO.Exists();
+            FileIO.JsonConfig = JsonConvert.DeserializeObject<FileIO.Settings>(File.ReadAllText(FileIO.ConfigFile));
+        }
 
         private void IsInstaller() {
             //Restard if Argument "Installer" is passed (From CustomActions)
             //(Because Installer will wait for Process Exit)
             string[] args = Environment.GetCommandLineArgs();
-            if(args.Length > 0 && args.Contains("Installer")) {
+            if (args.Length > 0 && args.Contains("Installer")) {
                 string fileName = Assembly.GetEntryAssembly().Location;
-                if(fileName != null) {
+                if (fileName != null) {
                     Process.Start(fileName);
                 }
 
@@ -50,7 +60,7 @@ namespace ImgurSniper.UI {
 
         //Unhandled Exception User Message Boxes
         private void UnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
-            if(MessageBox.Show(strings.unhandledError,
+            if (MessageBox.Show(strings.unhandledError,
                     "Help fixing an ImgurSniper Bug?",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Question) == MessageBoxResult.Yes) {
@@ -58,7 +68,7 @@ namespace ImgurSniper.UI {
             }
 
 
-            if(MessageBox.Show(String.Format(strings.unhandledErrorDescription, e.Exception.Message),
+            if (MessageBox.Show(String.Format(strings.unhandledErrorDescription, e.Exception.Message),
                 "ImgurSniper Error",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Error) == MessageBoxResult.Yes) {

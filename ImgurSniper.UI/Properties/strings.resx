@@ -443,4 +443,16 @@ Do you want to help out and submit a ticket?
   <data name="showMouse" xml:space="preserve">
     <value>Show Mouse</value>
   </data>
+  <data name="apply" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="applied" xml:space="preserve">
+    <value>Your Settings were applied!</value>
+  </data>
+  <data name="couldNotApply" xml:space="preserve">
+    <value>Could not apply changes!</value>
+  </data>
+  <data name="wantToApply" xml:space="preserve">
+    <value>Do you want to apply the changes you made?</value>
+  </data>
 </root>

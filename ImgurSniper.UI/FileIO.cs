@@ -253,16 +253,7 @@ namespace ImgurSniper.UI {
             }
         }
 
-        public static Settings JsonConfig {
-            get {
-                Exists();
-                return JsonConvert.DeserializeObject<Settings>(File.ReadAllText(ConfigFile));
-            }
-            set {
-                Exists();
-                File.WriteAllText(ConfigFile, JsonConvert.SerializeObject(value));
-            }
-        }
+        public static Settings JsonConfig;
 
         public static string ConfigPath
             => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper");
@@ -284,12 +275,19 @@ namespace ImgurSniper.UI {
         //Salt for Cipher Encryption
         private static string PassPhrase => "ImgurSniper v" + FileVersion + " User-Login File_PassPhrase :)";
 
-        private static void Exists() {
-            if(!Directory.Exists(ConfigPath)) {
+
+        //Save current Config to config.json
+        public static void Save() {
+            Exists();
+            File.WriteAllText(ConfigFile, JsonConvert.SerializeObject(JsonConfig));
+        }
+
+        public static void Exists() {
+            if (!Directory.Exists(ConfigPath)) {
                 Directory.CreateDirectory(ConfigPath);
             }
 
-            if(!File.Exists(ConfigFile)) {
+            if (!File.Exists(ConfigFile)) {
                 File.WriteAllText(ConfigFile, "{}");
             }
         }
@@ -302,18 +300,18 @@ namespace ImgurSniper.UI {
                 DirectorySecurity accessControlList = Directory.GetAccessControl(path);
                 AuthorizationRuleCollection accessRules = accessControlList?.GetAccessRules(true, true,
                     typeof(SecurityIdentifier));
-                if(accessRules == null) {
+                if (accessRules == null) {
                     return false;
                 }
 
-                foreach(FileSystemAccessRule rule in accessRules) {
-                    if((FileSystemRights.Write & rule.FileSystemRights) != FileSystemRights.Write) {
+                foreach (FileSystemAccessRule rule in accessRules) {
+                    if ((FileSystemRights.Write & rule.FileSystemRights) != FileSystemRights.Write) {
                         continue;
                     }
 
-                    if(rule.AccessControlType == AccessControlType.Allow) {
+                    if (rule.AccessControlType == AccessControlType.Allow) {
                         writeAllow = true;
-                    } else if(rule.AccessControlType == AccessControlType.Deny) {
+                    } else if (rule.AccessControlType == AccessControlType.Deny) {
                         writeDeny = true;
                     }
                 }
@@ -359,7 +357,7 @@ namespace ImgurSniper.UI {
                     "refreshtoken.imgurtoken");
 
         public static string ReadRefreshToken() {
-            if(!File.Exists(TokenPath)) {
+            if (!File.Exists(TokenPath)) {
                 File.Create(TokenPath);
                 return null;
             }
@@ -376,7 +374,7 @@ namespace ImgurSniper.UI {
         }
 
         public static void DeleteToken() {
-            if(File.Exists(TokenPath)) {
+            if (File.Exists(TokenPath)) {
                 File.Delete(TokenPath);
             }
         }

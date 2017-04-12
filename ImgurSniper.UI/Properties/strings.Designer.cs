@@ -79,6 +79,24 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your Settings were applied!.
+        /// </summary>
+        public static string applied {
+            get {
+                return ResourceManager.GetString("applied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply.
+        /// </summary>
+        public static string apply {
+            get {
+                return ResourceManager.GetString("apply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Automatically search for Updates.
         /// </summary>
         public static string autoUpdate {
@@ -156,6 +174,15 @@ namespace ImgurSniper.UI.Properties {
         public static string copyClipboard {
             get {
                 return ResourceManager.GetString("copyClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not apply changes!.
+        /// </summary>
+        public static string couldNotApply {
+            get {
+                return ResourceManager.GetString("couldNotApply", resourceCulture);
             }
         }
         
@@ -941,6 +968,15 @@ namespace ImgurSniper.UI.Properties {
         public static string viewPics {
             get {
                 return ResourceManager.GetString("viewPics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to apply the changes you made?.
+        /// </summary>
+        public static string wantToApply {
+            get {
+                return ResourceManager.GetString("wantToApply", resourceCulture);
             }
         }
         

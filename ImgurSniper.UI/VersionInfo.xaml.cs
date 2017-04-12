@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Octokit;
+using System;
 using System.Collections.Generic;
 using System.Windows;
-using Octokit;
 
 namespace ImgurSniper.UI {
     /// <summary>
@@ -57,6 +57,7 @@ namespace ImgurSniper.UI {
             skipped = true;
             FileIO.CurrentCommits = latest;
             FileIO.UpdateAvailable = false;
+            FileIO.Save();
             DialogResult = false;
         }
 
