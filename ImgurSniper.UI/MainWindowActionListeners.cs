@@ -242,8 +242,10 @@ namespace ImgurSniper.UI {
         }
 
         //Save Changes Button
-        private void Save(object s, RoutedEventArgs e) {
+        private async void Save(object s, RoutedEventArgs e) {
             try {
+                Cursor = System.Windows.Input.Cursors.Wait;
+
                 FileIO.Save();
 
                 //Restart for applied changes
@@ -253,7 +255,7 @@ namespace ImgurSniper.UI {
                     try {
                         InstallerHelper.StartImgurSniper();
                     } catch {
-                        error_toast.Show(str.trayServiceNotRunning, TimeSpan.FromSeconds(3));
+                        await error_toast.ShowAsync(str.trayServiceNotRunning, TimeSpan.FromSeconds(3));
                     }
                 }
 
@@ -263,6 +265,7 @@ namespace ImgurSniper.UI {
             } catch {
                 error_toast.Show(str.couldNotApply, TimeSpan.FromSeconds(3));
             }
+            Cursor = System.Windows.Input.Cursors.Wait;
         }
 
         private void Help(object sender, RoutedEventArgs e) {
