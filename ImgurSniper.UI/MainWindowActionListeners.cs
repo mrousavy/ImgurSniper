@@ -265,7 +265,7 @@ namespace ImgurSniper.UI {
             } catch {
                 error_toast.Show(str.couldNotApply, TimeSpan.FromSeconds(3));
             }
-            Cursor = System.Windows.Input.Cursors.Wait;
+            Cursor = System.Windows.Input.Cursors.Arrow;
         }
 
         private void Help(object sender, RoutedEventArgs e) {
