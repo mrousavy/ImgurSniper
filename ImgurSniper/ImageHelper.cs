@@ -1,28 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImgurSniper {
-    internal class BitmapHelper {
-        public static MemoryStream CompressImage(Bitmap bitmap, ImageFormat format, long compression) {
-            if (bitmap == null) {
+    internal class ImageHelper {
+        public static MemoryStream CompressImage(Image image, ImageFormat format, long compression) {
+            if (image == null) {
                 throw new ArgumentNullException();
             }
 
-            ImageCodecInfo codec = GetEncoder(format); 
-            
-            System.Drawing.Imaging.Encoder encoder = System.Drawing.Imaging.Encoder.Quality;
+            ImageCodecInfo codec = GetEncoder(format);
+
+            System.Drawing.Imaging.Encoder encoder = Encoder.Quality;
             EncoderParameters parameters = new EncoderParameters(1);
             EncoderParameter parameter = new EncoderParameter(encoder, compression);
             parameters.Param[0] = parameter;
 
             MemoryStream stream = new MemoryStream();
-                bitmap.Save(stream, codec, parameters);
+            image.Save(stream, codec, parameters);
             return stream;
         }
 

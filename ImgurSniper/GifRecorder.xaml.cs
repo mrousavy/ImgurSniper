@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Gif.Components;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
@@ -103,31 +105,15 @@ namespace ImgurSniper {
 
                 //Every Frame
                 _timer.Elapsed += delegate {
-                    new Thread(() => {
+                    new Thread(async () => {
                         try {
                             //Finish GIF
                             if (_stopped || currentFrames >= totalFrames) {
                                 _timer.Stop();
 
-                                GifBitmapEncoder encoder = new GifBitmapEncoder();
+                                await Dispatcher.BeginInvoke(new Action(ShowProgressBar));
 
-                                foreach (Bitmap bitmap in bitmaps) {
-                                    using (MemoryStream compressedBitmap =
-                                        BitmapHelper.CompressImage(bitmap, ImageFormat.Gif, 90)) {
-
-                                        BitmapFrame frame = BitmapFrame.Create(
-                                            compressedBitmap,
-                                            BitmapCreateOptions.DelayCreation,
-                                            BitmapCacheOption.OnLoad);
-
-                                        encoder.Frames.Add(frame);
-                                    }
-                                    bitmap.Dispose();
-                                }
-
-                                encoder.Save(gifStream);
-
-                                Gif = gifStream.ToArray();
+                                await CreateGif(bitmaps);
 
                                 _timer.Dispose();
                                 return;
@@ -135,9 +121,9 @@ namespace ImgurSniper {
 
                             try {
                                 //Add Frames
-                                    bitmaps.Add(showMouse
-                                        ? Screenshot.GetScreenshotWithMouse(_size)
-                                        : Screenshot.GetScreenshot(_size));
+                                bitmaps.Add(showMouse
+                                    ? Screenshot.GetScreenshotWithMouse(_size)
+                                    : Screenshot.GetScreenshot(_size));
                             } catch {
                                 // frame skip
 
@@ -147,10 +133,10 @@ namespace ImgurSniper {
                                 currentFrames++;
 
                                 if (_progressIndicatorEnabled)
-                                    Dispatcher.BeginInvoke(new Action(delegate { ProgressBar.Value = currentFrames; }));
+                                    await Dispatcher.BeginInvoke(new Action(delegate { ProgressBar.Value = currentFrames; }));
                             }
                         } catch {
-                            Dispatcher.BeginInvoke(new Action(delegate {
+                            await Dispatcher.BeginInvoke(new Action(delegate {
                                 _timer.Stop();
                                 FadeOut(false);
                             }));
@@ -218,8 +204,72 @@ namespace ImgurSniper {
             }
         }
 
+
+        private async Task CreateGif(List<Bitmap> bitmaps) {
+            TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
+
+            new Thread(() => {
+                try {
+                    using (MemoryStream stream = new MemoryStream()) {
+                        AnimatedGifEncoder gifEncoder = new AnimatedGifEncoder();
+                        gifEncoder.SetRepeat(0);
+                        gifEncoder.SetFrameRate(_fps);
+                        gifEncoder.Start(stream);
+
+                        foreach (Bitmap bitmap in bitmaps) {
+                            using (Bitmap compressed = Image.FromStream(ImageHelper.CompressImage(bitmap, ImageFormat.Gif, 30)) as Bitmap) {
+                                gifEncoder.AddFrame(compressed);
+                            }
+                            bitmap.Dispose();
+                        }
+
+                        gifEncoder.Finish();
+
+                        GifBitmapEncoder encoder = new GifBitmapEncoder();
+                        //foreach (Bitmap bitmap in bitmaps) {
+                        //    using (MemoryStream compressedBitmap =
+                        //        BitmapHelper.CompressImage(bitmap, ImageFormat.Gif, 90)) {
+
+                        //        BitmapFrame frame = BitmapFrame.Create(
+                        //            compressedBitmap,
+                        //            BitmapCreateOptions.DelayCreation,
+                        //            BitmapCacheOption.OnLoad);
+
+                        //        encoder.Frames.Add(frame);
+                        //    }
+                        //    bitmap.Dispose();
+                        //}
+
+                        //encoder.Save(stream);
+
+
+                        Gif = stream.ToArray();
+
+                        tcs.SetResult(true);
+                    }
+                } catch {
+                    tcs.SetResult(false);
+                }
+            }).Start();
+
+            await tcs.Task;
+        }
+
         private void FinishGif(object sender, MouseButtonEventArgs e) {
+            ShowProgressBar();
             _stopped = true;
+        }
+
+        private void ShowProgressBar() {
+            DoubleAnimation fadeOut = Animations.FadeOut;
+            fadeOut.Completed += delegate {
+                OkButton.Visibility = Visibility.Collapsed;
+
+
+                CircularProgressBar.Visibility = Visibility.Visible;
+                CircularProgressBar.BeginAnimation(OpacityProperty, Animations.FadeIn);
+            };
+            OkButton.BeginAnimation(OpacityProperty, fadeOut);
         }
     }
 }

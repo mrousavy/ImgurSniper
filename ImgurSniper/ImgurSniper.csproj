@@ -79,10 +79,6 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hotkeys, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GlobalHotkeys.1.0.0.6\lib\Hotkeys.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Imgur.API, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Imgur.API.4.0.1\lib\net45\Imgur.API.dll</HintPath>
       <Private>True</Private>
@@ -133,6 +129,12 @@
     <Compile Include="GifWindow.xaml.cs">
       <DependentUpon>GifWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Libraries\Hotkeys\HotKey.cs" />
+    <Compile Include="Libraries\Hotkeys\HotKeyWinApi.cs" />
+    <Compile Include="Libraries\NGif\AnimatedGifEncoder.cs" />
+    <Compile Include="Libraries\NGif\GifDecoder.cs" />
+    <Compile Include="Libraries\NGif\LZWEncoder.cs" />
+    <Compile Include="Libraries\NGif\NeuQuant.cs" />
     <Compile Include="Notification.xaml.cs">
       <DependentUpon>Notification.xaml</DependentUpon>
     </Compile>
@@ -193,7 +195,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\strings.de.resx" />
     <EmbeddedResource Include="Properties\strings.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
@@ -245,6 +247,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

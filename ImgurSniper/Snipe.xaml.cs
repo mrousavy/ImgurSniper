@@ -1,5 +1,5 @@
-﻿using ImgurSniper.Properties;
-using mrousavy;
+﻿using Hotkeys;
+using ImgurSniper.Properties;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

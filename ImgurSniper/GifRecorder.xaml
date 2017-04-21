@@ -20,9 +20,13 @@
             <ProgressBar x:Name="ProgressBar" VerticalAlignment="Center" HorizontalAlignment="Left" />
 
             <Border Background="White" Width="25" Height="25" CornerRadius="25" VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right" x:Name="DoneButton" Cursor="Hand" MouseDown="FinishGif">
-                
-                <md:PackIcon Kind="CheckCircle" Width="25" Height="25" Foreground="#2196F3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                
+
+                <Grid>
+                    <md:PackIcon x:Name="OkButton" Kind="CheckCircle" Width="25" Height="25" Foreground="#2196F3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+
+                    <ProgressBar x:Name="CircularProgressBar" Value="35" IsIndeterminate="True"
+                        Style="{StaticResource MaterialDesignCircularProgressBar}" Visibility="Collapsed" Opacity="0"/>
+                </Grid>
             </Border>
         </DockPanel>
     </DockPanel>

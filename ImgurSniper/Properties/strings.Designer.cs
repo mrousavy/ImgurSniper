@@ -22,7 +22,7 @@ namespace ImgurSniper.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class strings {
+    public class strings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace ImgurSniper.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ImgurSniper.Properties.strings", typeof(strings).Assembly);
@@ -51,7 +51,7 @@ namespace ImgurSniper.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Click or Press .
         /// </summary>
-        internal static string clickorpress {
+        public static string clickorpress {
             get {
                 return ResourceManager.GetString("clickorpress", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
-        internal static string close {
+        public static string close {
             get {
                 return ResourceManager.GetString("close", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Ctrl + Shift + {0}.
         /// </summary>
-        internal static string ctrlShiftShortcut {
+        public static string ctrlShiftShortcut {
             get {
                 return ResourceManager.GetString("ctrlShiftShortcut", resourceCulture);
             }
@@ -92,7 +92,7 @@ namespace ImgurSniper.Properties {
         ///ImgurSniper has to shut down!
         ///Would you like to see a detailed Exception Info? ({0}).
         /// </summary>
-        internal static string error {
+        public static string error {
             get {
                 return ResourceManager.GetString("error", resourceCulture);
             }
@@ -101,7 +101,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Error uploading File(s), make sure to check your Internet connection and see if the File is a valid Image file!.
         /// </summary>
-        internal static string errorInstantUpload {
+        public static string errorInstantUpload {
             get {
                 return ResourceManager.GetString("errorInstantUpload", resourceCulture);
             }
@@ -110,7 +110,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to An unknown Error occured!.
         /// </summary>
-        internal static string errorMsg {
+        public static string errorMsg {
             get {
                 return ResourceManager.GetString("errorMsg", resourceCulture);
             }
@@ -119,7 +119,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Exit.
         /// </summary>
-        internal static string exit {
+        public static string exit {
             get {
                 return ResourceManager.GetString("exit", resourceCulture);
             }
@@ -128,7 +128,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to GIF.
         /// </summary>
-        internal static string gif {
+        public static string gif {
             get {
                 return ResourceManager.GetString("gif", resourceCulture);
             }
@@ -137,7 +137,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Help.
         /// </summary>
-        internal static string help {
+        public static string help {
             get {
                 return ResourceManager.GetString("help", resourceCulture);
             }
@@ -146,7 +146,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Image was copied to your Clipboard!.
         /// </summary>
-        internal static string imgclipboard {
+        public static string imgclipboard {
             get {
                 return ResourceManager.GetString("imgclipboard", resourceCulture);
             }
@@ -155,7 +155,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to GIF was copied to your Clipboard!.
         /// </summary>
-        internal static string imgclipboardGif {
+        public static string imgclipboardGif {
             get {
                 return ResourceManager.GetString("imgclipboardGif", resourceCulture);
             }
@@ -164,7 +164,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The Image Width and/or Height is too small!.
         /// </summary>
-        internal static string imgSize {
+        public static string imgSize {
             get {
                 return ResourceManager.GetString("imgSize", resourceCulture);
             }
@@ -173,7 +173,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Image Size exceeds 12 MB! (Try smaller Images or use .JPEG!).
         /// </summary>
-        internal static string imgTooBig {
+        public static string imgTooBig {
             get {
                 return ResourceManager.GetString("imgTooBig", resourceCulture);
             }
@@ -182,7 +182,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to GIF Size exceeds 12 MB! (Try smaller/shorter GIFs!).
         /// </summary>
-        internal static string imgTooBigGif {
+        public static string imgTooBigGif {
             get {
                 return ResourceManager.GetString("imgTooBigGif", resourceCulture);
             }
@@ -191,7 +191,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Link to the Imgur Album has been copied to your Clipboard!.
         /// </summary>
-        internal static string linkAlbumClipboard {
+        public static string linkAlbumClipboard {
             get {
                 return ResourceManager.GetString("linkAlbumClipboard", resourceCulture);
             }
@@ -200,7 +200,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Link to Imgur has been copied to your Clipboard!.
         /// </summary>
-        internal static string linkclipboard {
+        public static string linkclipboard {
             get {
                 return ResourceManager.GetString("linkclipboard", resourceCulture);
             }
@@ -211,7 +211,7 @@ namespace ImgurSniper.Properties {
         ///
         ///.
         /// </summary>
-        internal static string msg {
+        public static string msg {
             get {
                 return ResourceManager.GetString("msg", resourceCulture);
             }
@@ -220,7 +220,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to An unknown Error occured! (Show this to the Smart Computer Apes: {0}).
         /// </summary>
-        internal static string otherErrorMsg {
+        public static string otherErrorMsg {
             get {
                 return ResourceManager.GetString("otherErrorMsg", resourceCulture);
             }
@@ -229,7 +229,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to the Print Key.
         /// </summary>
-        internal static string printKeyShortcut {
+        public static string printKeyShortcut {
             get {
                 return ResourceManager.GetString("printKeyShortcut", resourceCulture);
             }
@@ -238,7 +238,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
-        internal static string settings {
+        public static string settings {
             get {
                 return ResourceManager.GetString("settings", resourceCulture);
             }
@@ -247,7 +247,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to  to Snipe a new Image.
         /// </summary>
-        internal static string toSnipeNew {
+        public static string toSnipeNew {
             get {
                 return ResourceManager.GetString("toSnipeNew", resourceCulture);
             }
@@ -259,7 +259,7 @@ namespace ImgurSniper.Properties {
         ///Do you want to help out and submit a ticket?
         ///(If you click yes, a new Browser Window opens).
         /// </summary>
-        internal static string unhandledError {
+        public static string unhandledError {
             get {
                 return ResourceManager.GetString("unhandledError", resourceCulture);
             }
@@ -271,7 +271,7 @@ namespace ImgurSniper.Properties {
         ///
         ///Do you want to see more details about that Error?.
         /// </summary>
-        internal static string unhandledErrorDescription {
+        public static string unhandledErrorDescription {
             get {
                 return ResourceManager.GetString("unhandledErrorDescription", resourceCulture);
             }
@@ -280,7 +280,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Uploading Image... ({0} KB).
         /// </summary>
-        internal static string uploading {
+        public static string uploading {
             get {
                 return ResourceManager.GetString("uploading", resourceCulture);
             }
@@ -289,7 +289,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Error uploading Image to Imgur! ({0}).
         /// </summary>
-        internal static string uploadingError {
+        public static string uploadingError {
             get {
                 return ResourceManager.GetString("uploadingError", resourceCulture);
             }
@@ -298,7 +298,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Error creating/uploading GIF to Imgur!.
         /// </summary>
-        internal static string uploadingErrorGif {
+        public static string uploadingErrorGif {
             get {
                 return ResourceManager.GetString("uploadingErrorGif", resourceCulture);
             }
@@ -307,7 +307,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Uploading Image... ({0} KB) ({1} of {2}).
         /// </summary>
-        internal static string uploadingFiles {
+        public static string uploadingFiles {
             get {
                 return ResourceManager.GetString("uploadingFiles", resourceCulture);
             }
@@ -316,7 +316,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Uploading GIF... ({0} KB).
         /// </summary>
-        internal static string uploadingGif {
+        public static string uploadingGif {
             get {
                 return ResourceManager.GetString("uploadingGif", resourceCulture);
             }
@@ -325,7 +325,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Upload with ImgurSniper.
         /// </summary>
-        internal static string uploadTitle {
+        public static string uploadTitle {
             get {
                 return ResourceManager.GetString("uploadTitle", resourceCulture);
             }
@@ -334,7 +334,7 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Whoops, something went wrong!.
         /// </summary>
-        internal static string whoops {
+        public static string whoops {
             get {
                 return ResourceManager.GetString("whoops", resourceCulture);
             }
