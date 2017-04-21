@@ -7,7 +7,7 @@ using Size = System.Drawing.Size;
 
 namespace ImgurSniper {
     internal class Screenshot {
-        private const int CURSOR_SHOWING = 0x00000001;
+        private const int CursorShowing = 0x00000001;
 
         //Get a normal Screenshot
         public static Bitmap GetScreenshot(Rectangle coordinates) {
@@ -33,7 +33,7 @@ namespace ImgurSniper {
                 pci.cbSize = Marshal.SizeOf(typeof(CURSORINFO));
 
                 if(GetCursorInfo(out pci)) {
-                    if(pci.flags == CURSOR_SHOWING) {
+                    if(pci.flags == CursorShowing) {
                         DrawIcon(g.GetHdc(), pci.ptScreenPos.x - size.X, pci.ptScreenPos.y - size.Y, pci.hCursor);
                         g.ReleaseHdc();
                     }

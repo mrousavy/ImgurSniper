@@ -87,14 +87,13 @@ namespace ImgurSniper {
         private void Record() {
             try {
                 //Each Frame with TimeStamp
-                List<BitmapFrame> bitmapframes = new List<BitmapFrame>();
+                List<Bitmap> bitmaps = new List<Bitmap>();
                 bool showMouse = FileIO.ShowMouse;
 
                 #region Method 1: Timer
 
                 int currentFrames = 0;
                 int totalFrames = (int)(_fps * (_gifLength.TotalMilliseconds / 1000D));
-                MemoryStream stream;
                 MemoryStream gifStream = new MemoryStream();
                 // ReSharper disable once PossibleLossOfFraction
                 _timer = new Timer(1000 / _fps);
@@ -112,8 +111,18 @@ namespace ImgurSniper {
 
                                 GifBitmapEncoder encoder = new GifBitmapEncoder();
 
-                                foreach (BitmapFrame frame in bitmapframes) {
-                                    encoder.Frames.Add(frame);
+                                foreach (Bitmap bitmap in bitmaps) {
+                                    using (MemoryStream compressedBitmap =
+                                        BitmapHelper.CompressImage(bitmap, ImageFormat.Gif, 90)) {
+
+                                        BitmapFrame frame = BitmapFrame.Create(
+                                            compressedBitmap,
+                                            BitmapCreateOptions.DelayCreation,
+                                            BitmapCacheOption.OnLoad);
+
+                                        encoder.Frames.Add(frame);
+                                    }
+                                    bitmap.Dispose();
                                 }
 
                                 encoder.Save(gifStream);
@@ -124,31 +133,22 @@ namespace ImgurSniper {
                                 return;
                             }
 
-                            //Add Frames
-                            stream = new MemoryStream();
+                            try {
+                                //Add Frames
+                                    bitmaps.Add(showMouse
+                                        ? Screenshot.GetScreenshotWithMouse(_size)
+                                        : Screenshot.GetScreenshot(_size));
+                            } catch {
+                                // frame skip
 
-                            if (showMouse) {
-                                using (Bitmap tmp = Screenshot.GetScreenshotWithMouse(_size)) {
-                                    tmp.Save(stream, ImageFormat.Gif);
-                                }
-                            } else {
-                                using (Bitmap tmp = Screenshot.GetScreenshot(_size)) {
-                                    tmp.Save(stream, ImageFormat.Gif);
-                                }
+                                // Add last frame as current in case of frame skip
+                                bitmaps.Add(bitmaps[bitmaps.Count - 1]);
+                            } finally {
+                                currentFrames++;
+
+                                if (_progressIndicatorEnabled)
+                                    Dispatcher.BeginInvoke(new Action(delegate { ProgressBar.Value = currentFrames; }));
                             }
-
-
-                            BitmapFrame bitmap = BitmapFrame.Create(
-                                    stream,
-                                    BitmapCreateOptions.PreservePixelFormat,
-                                    BitmapCacheOption.OnLoad);
-
-                            bitmapframes.Add(bitmap);
-
-                            currentFrames++;
-
-                            if (_progressIndicatorEnabled)
-                                Dispatcher.BeginInvoke(new Action(delegate { ProgressBar.Value = currentFrames; }));
                         } catch {
                             Dispatcher.BeginInvoke(new Action(delegate {
                                 _timer.Stop();
