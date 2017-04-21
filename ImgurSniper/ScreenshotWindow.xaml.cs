@@ -432,15 +432,17 @@ namespace ImgurSniper {
         //"Crop" Rectangle
         private bool MakeImage(Rectangle size) {
             try {
-                MemoryStream stream = new MemoryStream();
+                MemoryStream stream;
 
                 if (FileIO.ShowMouse) {
                     using (Bitmap tmp = Screenshot.GetScreenshotWithMouse(size)) {
-                        tmp.Save(stream, FileIO.ImageFormat);
+                        //Change 50 to whatever compression is needed
+                        stream = ImageHelper.CompressImage(tmp, FileIO.ImageFormat, FileIO.Compression);
                     }
                 } else {
                     using (Bitmap tmp = Screenshot.GetScreenshot(size)) {
-                        tmp.Save(stream, FileIO.ImageFormat);
+                        //Change 50 to whatever compression is needed
+                        stream = ImageHelper.CompressImage(tmp, FileIO.ImageFormat, FileIO.Compression);
                     }
                 }
 

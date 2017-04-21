@@ -13,7 +13,7 @@ namespace ImgurSniper {
 
             ImageCodecInfo codec = GetEncoder(format);
 
-            System.Drawing.Imaging.Encoder encoder = Encoder.Quality;
+            Encoder encoder = Encoder.Quality;
             EncoderParameters parameters = new EncoderParameters(1);
             EncoderParameter parameter = new EncoderParameter(encoder, compression);
             parameters.Param[0] = parameter;

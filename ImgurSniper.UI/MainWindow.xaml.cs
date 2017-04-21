@@ -91,6 +91,7 @@ namespace ImgurSniper.UI {
                 bool ShowMouse = settings.ShowMouse;
                 int gifFps = settings.GifFps;
                 int gifLength = settings.GifLength / 1000;
+                long compression = settings.Compression;
                 string language = settings.Language;
                 string SaveImagesPath = settings.SaveImagesPath;
                 Key imgKey = settings.ShortcutImgKey;
@@ -193,6 +194,11 @@ namespace ImgurSniper.UI {
                 GifLengthSlider.Value = gifLength;
                 GifLengthSlider.ValueChanged += SliderGifLength_Changed;
                 GifLengthLabel.Content = string.Format(str.gifLengthVal, gifLength);
+
+                //Set Quality in %
+                QualitySlider.Value = compression;
+                QualitySlider.ValueChanged += QualitySlider_ValueChanged;
+                QualityLabel.Content = compression + "%";
             } catch {
                 await ShowOkDialog(str.couldNotLoad, string.Format(str.errorConfig, FileIO.ConfigPath));
             }

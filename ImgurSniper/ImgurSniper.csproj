@@ -122,7 +122,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Animations.cs" />
-    <Compile Include="BitmapHelper.cs" />
+    <Compile Include="ImageHelper.cs" />
     <Compile Include="GifRecorder.xaml.cs">
       <DependentUpon>GifRecorder.xaml</DependentUpon>
     </Compile>

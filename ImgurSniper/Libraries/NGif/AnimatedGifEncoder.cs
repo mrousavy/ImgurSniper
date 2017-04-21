@@ -294,12 +294,13 @@ namespace Gif.Components {
             //		int type = image.GetType().;
             if ((w != width) || (h != height)) {
                 // create new image with right size/format
-                Image temp =
-                    new Bitmap(width, height);
-                Graphics g = Graphics.FromImage(temp);
-                g.DrawImage(image, 0, 0);
-                image = temp;
-                g.Dispose();
+                using (Image temp =
+                    new Bitmap(width, height)) {
+                    using (Graphics g = Graphics.FromImage(temp)) {
+                        g.DrawImage(image, 0, 0);
+                        image = temp;
+                    }
+                }
             }
             /*
 				ToDo:
@@ -307,16 +308,17 @@ namespace Gif.Components {
 			*/
             pixels = new Byte[3 * image.Width * image.Height];
             int count = 0;
-            Bitmap tempBitmap = new Bitmap(image);
-            for (int th = 0; th < image.Height; th++) {
-                for (int tw = 0; tw < image.Width; tw++) {
-                    Color color = tempBitmap.GetPixel(tw, th);
-                    pixels[count] = color.R;
-                    count++;
-                    pixels[count] = color.G;
-                    count++;
-                    pixels[count] = color.B;
-                    count++;
+            using (Bitmap tempBitmap = (Bitmap)image) {
+                for (int th = 0; th < image.Height; th++) {
+                    for (int tw = 0; tw < image.Width; tw++) {
+                        Color color = tempBitmap.GetPixel(tw, th);
+                        pixels[count] = color.R;
+                        count++;
+                        pixels[count] = color.G;
+                        count++;
+                        pixels[count] = color.B;
+                        count++;
+                    }
                 }
             }
 

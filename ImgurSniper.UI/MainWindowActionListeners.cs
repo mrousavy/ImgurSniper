@@ -241,6 +241,16 @@ namespace ImgurSniper.UI {
             }
         }
 
+        private void QualitySlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
+            if (sender is Slider slider) {
+                int value = (int)slider.Value;
+                FileIO.Compression = value;
+                Btn_Save.IsEnabled = true;
+
+                QualityLabel.Content = value + "%";
+            }
+        }
+
         //Save Changes Button
         private async void Save(object s, RoutedEventArgs e) {
             try {

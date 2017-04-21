@@ -251,10 +251,19 @@
 									<ComboBoxItem>Gif</ComboBoxItem>
 									<ComboBoxItem>Tiff</ComboBoxItem>
 								</ComboBox>
-								
+
+                            <StackPanel Orientation="Horizontal">
+                                <Label Margin="10,5,5,5" FontSize="14"
+								   Content="{x:Static Member=cultureStrings:strings.quality}" />
+
+                                <Slider Maximum="100" Minimum="1" Width="200" HorizontalAlignment="Left"
+											VerticalAlignment="Center" Margin="10,0,0,0" x:Name="QualitySlider"/>
+
+                                <Label Margin="10,5,5,5" FontSize="13" VerticalAlignment="Center" x:Name="QualityLabel">90%</Label>
+                            </StackPanel>
 
 
-							<!--HEADER: Update-->
+                            <!--HEADER: Update-->
 							<Label Margin="10,5,5,5" FontSize="15"
 								   Content="{x:Static Member=cultureStrings:strings.update}" />
 

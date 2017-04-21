@@ -706,6 +706,15 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quality:.
+        /// </summary>
+        public static string quality {
+            get {
+                return ResourceManager.GetString("quality", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Repair.
         /// </summary>
         public static string repair {

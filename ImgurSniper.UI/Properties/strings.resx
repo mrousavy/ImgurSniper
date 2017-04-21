@@ -455,4 +455,7 @@ Do you want to help out and submit a ticket?
   <data name="wantToApply" xml:space="preserve">
     <value>Do you want to apply the changes you made?</value>
   </data>
+  <data name="quality" xml:space="preserve">
+    <value>Quality:</value>
+  </data>
 </root>

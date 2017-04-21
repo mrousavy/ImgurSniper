@@ -456,4 +456,7 @@ Wollen Sie mehr Details über den Fehler sehen?</value>
   <data name="wantToApply" xml:space="preserve">
     <value>Wollen Sie Ihre Einstellungen übernehmen?</value>
   </data>
+  <data name="quality" xml:space="preserve">
+    <value>Qualität:</value>
+  </data>
 </root>

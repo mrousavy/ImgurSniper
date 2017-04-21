@@ -1,5 +1,4 @@
-﻿using Gif.Components;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -211,37 +210,42 @@ namespace ImgurSniper {
             new Thread(() => {
                 try {
                     using (MemoryStream stream = new MemoryStream()) {
-                        AnimatedGifEncoder gifEncoder = new AnimatedGifEncoder();
-                        gifEncoder.SetRepeat(0);
-                        gifEncoder.SetFrameRate(_fps);
-                        gifEncoder.Start(stream);
+                        //NGif vs GifBitmapEncoder: 
+                        //  NGif is slower
+                        //  GifBitmapEncoder is not made for creating GIFs
 
-                        foreach (Bitmap bitmap in bitmaps) {
-                            using (Bitmap compressed = Image.FromStream(ImageHelper.CompressImage(bitmap, ImageFormat.Gif, 30)) as Bitmap) {
-                                gifEncoder.AddFrame(compressed);
-                            }
-                            bitmap.Dispose();
-                        }
+                        #region NGif
+                        //AnimatedGifEncoder gifEncoder = new AnimatedGifEncoder();
+                        //gifEncoder.SetRepeat(0);
+                        //gifEncoder.SetFrameRate(_fps);
+                        //gifEncoder.Start(stream);
 
-                        gifEncoder.Finish();
-
-                        GifBitmapEncoder encoder = new GifBitmapEncoder();
                         //foreach (Bitmap bitmap in bitmaps) {
-                        //    using (MemoryStream compressedBitmap =
-                        //        BitmapHelper.CompressImage(bitmap, ImageFormat.Gif, 90)) {
-
-                        //        BitmapFrame frame = BitmapFrame.Create(
-                        //            compressedBitmap,
-                        //            BitmapCreateOptions.DelayCreation,
-                        //            BitmapCacheOption.OnLoad);
-
-                        //        encoder.Frames.Add(frame);
+                        //    using (Bitmap compressed = Image.FromStream(ImageHelper.CompressImage(bitmap, ImageFormat.Gif, 30)) as Bitmap) {
+                        //        gifEncoder.AddFrame(compressed);
                         //    }
                         //    bitmap.Dispose();
                         //}
 
-                        //encoder.Save(stream);
+                        //gifEncoder.Finish();
+                        #endregion
 
+                        #region GifBitmapEncoder
+                        GifBitmapEncoder encoder = new GifBitmapEncoder();
+                        foreach (Bitmap bitmap in bitmaps) {
+                            MemoryStream compressed = ImageHelper.CompressImage(bitmap, ImageFormat.Gif, 30);
+                            BitmapFrame frame = BitmapFrame.Create(
+                                compressed,
+                                BitmapCreateOptions.DelayCreation,
+                                BitmapCacheOption.OnLoad);
+
+                            encoder.Frames.Add(frame);
+                        }
+                        encoder.Save(stream);
+
+                        //Clean unclosed Streams up
+                        GC.Collect();
+                        #endregion
 
                         Gif = stream.ToArray();
 
