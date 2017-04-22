@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ImageMagick;
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Timer = System.Timers.Timer;
 
@@ -26,7 +25,7 @@ namespace ImgurSniper {
         private int _currentFrames, _totalFrames;
         private readonly IntPtr _desktop = NativeMethods.GetDesktopWindow();
         private readonly bool _showMouse = FileIO.ShowMouse;
-        private List<Image> _images;
+        private MagickImageCollection _images;
 
         public byte[] Gif;
 
@@ -63,20 +62,6 @@ namespace ImgurSniper {
             };
         }
 
-
-        public void Dispose() {
-            Gif = null;
-
-            try {
-                Close();
-            } catch {
-                //Window already closed
-            }
-
-            GC.Collect();
-        }
-
-
         private void FadeOut(bool result) {
             DoubleAnimation fadeOut = Animations.FadeOut;
             fadeOut.Completed += delegate {
@@ -92,7 +77,7 @@ namespace ImgurSniper {
         private void Record() {
             try {
                 //Each Frame with TimeStamp
-                _images = new List<Image>();
+                _images = new MagickImageCollection();
 
                 #region Method 1: Timer
 
@@ -171,24 +156,47 @@ namespace ImgurSniper {
             }
         }
 
-
+        //Capture 1 Screenshot, 1 Frame
         private async void Frame() {
             try {
                 //Finish GIF
                 if (_stopped || _currentFrames >= _totalFrames) {
                     _timer.Stop();
 
+                    //Show Progressing Progress Indicator
                     await Dispatcher.BeginInvoke(new Action(ShowProgressBar));
 
-                    await CreateGif(_images);
+                    //Finalize Gif
+                    await CreateGif();
 
+                    //Dispose the Timer and finish GIF Recording
                     _timer.Dispose();
                     return;
                 }
 
                 try {
                     //Add Frames
-                    _images.Add(Screenshot.GetScreenshotNative(_desktop, _size, _showMouse));
+
+
+                    #region Compressed
+                    using (MemoryStream stream = ImageHelper.CompressImage(Screenshot.GetScreenshotNative(_desktop, _size, _showMouse), ImageFormat.Gif, 30)) {
+                        MagickImage image = new MagickImage(stream) {
+                            AnimationDelay = 100 / FileIO.GifFps,
+                            Quality = 30
+                        };
+                        _images.Add(image);
+                    }
+                    #endregion
+
+                    #region Raw
+                    //using (MemoryStream stream = new MemoryStream()) {
+                    //    Screenshot.GetScreenshotNative(_desktop, _size, _showMouse).Save(stream, ImageFormat.Gif);
+                    //    MagickImage image = new MagickImage(stream) {
+                    //        AnimationDelay = 100 / _fps
+                    //    };
+                    //    _images.Add(image);
+                    //}
+                    #endregion
                 } catch {
                     // frame skip
                 } finally {
@@ -206,55 +214,79 @@ namespace ImgurSniper {
         }
 
 
-        private async Task CreateGif(List<Image> images) {
+        private async Task CreateGif() {
             TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
 
             new Thread(() => {
                 try {
-                    using (MemoryStream stream = new MemoryStream()) {
-                        //NGif vs GifBitmapEncoder: 
-                        //  NGif is slower
-                        //  GifBitmapEncoder is not made for creating GIFs
+                    //NGif vs GifBitmapEncoder vs Magick.NET: 
+                    //  NGif is slower
+                    //  GifBitmapEncoder is not made for creating GIFs
+                    //  Magick.NET is easier to use and especially made for creating GIFs
 
-                        #region NGif
-                        //AnimatedGifEncoder gifEncoder = new AnimatedGifEncoder();
-                        //gifEncoder.SetRepeat(0);
-                        //gifEncoder.SetFrameRate(_fps);
-                        //gifEncoder.Start(stream);
+                    #region NGif
+                    //using (MemoryStream stream = new MemoryStream()) {
+                    //AnimatedGifEncoder gifEncoder = new AnimatedGifEncoder();
+                    //gifEncoder.SetRepeat(0);
+                    //gifEncoder.SetFrameRate(_fps);
+                    //gifEncoder.Start(stream);
 
-                        //foreach (Bitmap bitmap in bitmaps) {
-                        //    using (Bitmap compressed = Image.FromStream(ImageHelper.CompressImage(bitmap, ImageFormat.Gif, 30)) as Bitmap) {
-                        //        gifEncoder.AddFrame(compressed);
-                        //    }
-                        //    bitmap.Dispose();
-                        //}
+                    //foreach (Bitmap bitmap in bitmaps) {
+                    //    using (Bitmap compressed = Image.FromStream(ImageHelper.CompressImage(bitmap, ImageFormat.Gif, 30)) as Bitmap) {
+                    //        gifEncoder.AddFrame(compressed);
+                    //    }
+                    //    bitmap.Dispose();
+                    //}
 
-                        //gifEncoder.Finish();
-                        #endregion
+                    //gifEncoder.Finish();
 
-                        #region GifBitmapEncoder
-                        GifBitmapEncoder encoder = new GifBitmapEncoder();
+                    //Gif = stream.ToArray();
+                    //}
+                    #endregion
 
-                        foreach (Image bitmap in images) {
-                            MemoryStream compressed = ImageHelper.CompressImage(bitmap, ImageFormat.Gif, 30);
-                            BitmapFrame frame = BitmapFrame.Create(
-                                compressed,
-                                BitmapCreateOptions.DelayCreation,
-                                BitmapCacheOption.OnLoad);
+                    #region GifBitmapEncoder
+                    //using (MemoryStream stream = new MemoryStream()) {
+                    //GifBitmapEncoder encoder = new GifBitmapEncoder();
 
-                            encoder.Frames.Add(frame);
-                        }
+                    //foreach (Image bitmap in images) {
+                    //    MemoryStream compressed = ImageHelper.CompressImage(bitmap, ImageFormat.Gif, 30);
+                    //    BitmapFrame frame = BitmapFrame.Create(
+                    //        compressed,
+                    //        BitmapCreateOptions.DelayCreation,
+                    //        BitmapCacheOption.OnLoad);
 
-                        encoder.Save(stream);
+                    //    encoder.Frames.Add(frame);
+                    //}
 
-                        //Clean unclosed Streams up
-                        GC.Collect();
-                        #endregion
+                    //encoder.Save(stream);
 
-                        Gif = stream.ToArray();
+                    //Gif = stream.ToArray();
+                    //}
+                    #endregion
 
-                        tcs.SetResult(true);
-                    }
+                    #region Magick.NET
+
+                    // Reduce colors
+                    QuantizeSettings settings = new QuantizeSettings() {
+                        Colors = 128
+                    };
+                    _images.Quantize(settings);
+
+                    // Optimize GIF
+                    _images.OptimizePlus();
+
+                    // "Save" GIF
+                    Gif = _images.ToByteArray();
+
+                    // Dispose GIF
+                    _images.Clear();
+                    _images.Dispose();
+                    #endregion
+
+                    //Cleanup
+                    GC.Collect();
+
+                    tcs.SetResult(true);
                 } catch {
                     tcs.SetResult(false);
                 }
@@ -279,5 +311,26 @@ namespace ImgurSniper {
             };
             OkButton.BeginAnimation(OpacityProperty, fadeOut);
         }
+
+
+        //IDisposable
+        public void Dispose() {
+            Gif = null;
+
+            _images?.Clear();
+            _images?.Dispose();
+
+            _timer?.Dispose();
+            _timer = null;
+
+            try {
+                Close();
+            } catch {
+                //Window already closed
+            }
+
+            GC.Collect();
+        }
+
     }
 }

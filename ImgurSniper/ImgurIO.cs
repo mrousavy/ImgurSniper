@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-using Imgur.API.Authentication.Impl;
+﻿using Imgur.API.Authentication.Impl;
 using Imgur.API.Endpoints.Impl;
 using Imgur.API.Models;
 using ImgurSniper.Properties;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace ImgurSniper {
     public class ImgurIO {
@@ -17,7 +16,7 @@ namespace ImgurSniper {
         public ImgurIO() {
             _client = new ImgurClient(ClientId, ClientSecret);
 
-            if(FileIO.TokenExists) {
+            if (FileIO.TokenExists) {
                 Login();
             }
         }
@@ -50,10 +49,10 @@ namespace ImgurSniper {
             ImageEndpoint endpoint = new ImageEndpoint(_client);
 
             IImage image;
-            using(MemoryStream stream = new MemoryStream(bimage)) {
+            using (MemoryStream stream = new MemoryStream(bimage)) {
                 string title = string.IsNullOrWhiteSpace(windowName)
                     ? strings.uploadTitle
-                    : $"{windowName}  -  (" + strings.uploadTitle + ")";
+                    : $"{windowName}  -  ({strings.uploadTitle})";
                 image = await endpoint.UploadImageStreamAsync(stream, null,
                     title,
                     "https://mrousavy.github.io/ImgurSniper");
@@ -73,7 +72,7 @@ namespace ImgurSniper {
             KeyValuePair<string, string> pair;
 
             //Logged in User = Album ID for uploads
-            if(_client.OAuth2Token != null) {
+            if (_client.OAuth2Token != null) {
                 pair = new KeyValuePair<string, string>(album.Id, album.Id);
             }
             //Not Logged in User = Album Delete Has (Anonymous Albums)
