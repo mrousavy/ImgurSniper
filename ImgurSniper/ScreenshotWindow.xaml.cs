@@ -243,20 +243,7 @@ namespace ImgurSniper {
                     HwndName = buff.ToString();
                 }
 
-                int fromX = hwnd.Left;
-                int fromY = hwnd.Top;
-                int toX = hwnd.Right;
-                int toY = hwnd.Bottom;
-
-                Point pointFrom = PointFromScreen(new Point(fromX, fromY));
-                fromX = (int)pointFrom.X;
-                fromY = (int)pointFrom.Y;
-
-                Point pointTo = PointFromScreen(new Point(toX, toY));
-                toX = (int)pointTo.X;
-                toY = (int)pointTo.Y;
-
-                Crop(fromX, fromY, toX, toY);
+                Crop(whandle, 0, 0, hwnd.Width, hwnd.Height, false);
             };
 
             anim.From = grid.Opacity;
@@ -396,7 +383,7 @@ namespace ImgurSniper {
                 await Dispatcher.InvokeAsync(new Action(() => { }), DispatcherPriority.ContextIdle);
                 await Task.Delay(100);
 
-                Crop(fromX, fromY, toX, toY);
+                Crop(NativeMethods.GetDesktopWindow(), fromX, fromY, toX, toY, true);
             };
 
             anim.From = grid.Opacity;
@@ -406,20 +393,22 @@ namespace ImgurSniper {
         }
 
         //Make Image from custom Coords
-        private void Crop(int fromX, int fromY, int toX, int toY) {
+        private void Crop(IntPtr ptr, int fromX, int fromY, int toX, int toY, bool pointToScreen) {
             //Point to screen for Users with different DPI
-            Point xy = PointToScreen(new Point(fromX, fromY));
-            fromX = (int)xy.X;
-            fromY = (int)xy.Y;
-            Point wh = PointToScreen(new Point(toX, toY));
-            toX = (int)wh.X;
-            toY = (int)wh.Y;
+            if (pointToScreen) {
+                Point xy = PointToScreen(new Point(fromX, fromY));
+                fromX = (int)xy.X;
+                fromY = (int)xy.Y;
+                Point wh = PointToScreen(new Point(toX, toY));
+                toX = (int)wh.X;
+                toY = (int)wh.Y;
+            }
 
             int w = toX - fromX;
             int h = toY - fromY;
 
             //Assuming from Point is already top left and not bottom right
-            bool result = MakeImage(new Rectangle(fromX, fromY, w, h));
+            bool result = MakeImage(ptr, new Rectangle(fromX, fromY, w, h));
 
             if (!result) {
                 toast.Show(strings.whoops, TimeSpan.FromSeconds(3.3));
@@ -430,20 +419,16 @@ namespace ImgurSniper {
         }
 
         //"Crop" Rectangle
-        private bool MakeImage(Rectangle size) {
+        private bool MakeImage(IntPtr ptr, Rectangle size) {
             try {
                 MemoryStream stream;
 
-                if (FileIO.ShowMouse) {
-                    using (Bitmap tmp = Screenshot.GetScreenshotWithMouse(size)) {
-                        //Change 50 to whatever compression is needed
-                        stream = ImageHelper.CompressImage(tmp, FileIO.ImageFormat, FileIO.Compression);
-                    }
+                Image img = Screenshot.GetScreenshotNative(ptr, size, FileIO.ShowMouse);
+                if (FileIO.Compression < 100) {
+                    stream = ImageHelper.CompressImage(img, FileIO.ImageFormat, FileIO.Compression);
                 } else {
-                    using (Bitmap tmp = Screenshot.GetScreenshot(size)) {
-                        //Change 50 to whatever compression is needed
-                        stream = ImageHelper.CompressImage(tmp, FileIO.ImageFormat, FileIO.Compression);
-                    }
+                    stream = new MemoryStream();
+                    img.Save(stream, FileIO.ImageFormat);
                 }
 
                 CroppedImage = stream.ToArray();

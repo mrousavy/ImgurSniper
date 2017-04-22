@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace ImgurSniper {
     internal class ImageHelper {
-        public static MemoryStream CompressImage(Image image, ImageFormat format, long compression) {
+        public static MemoryStream CompressImage(Image image, ImageFormat format, byte compression) {
             if (image == null) {
                 throw new ArgumentNullException();
             }
@@ -15,7 +15,7 @@ namespace ImgurSniper {
 
             Encoder encoder = Encoder.Quality;
             EncoderParameters parameters = new EncoderParameters(1);
-            EncoderParameter parameter = new EncoderParameter(encoder, compression);
+            EncoderParameter parameter = new EncoderParameter(encoder, (long)compression);
             parameters.Param[0] = parameter;
 
             MemoryStream stream = new MemoryStream();

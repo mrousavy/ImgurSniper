@@ -243,7 +243,7 @@ namespace ImgurSniper.UI {
 
         private void QualitySlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
             if (sender is Slider slider) {
-                int value = (int)slider.Value;
+                byte value = (byte)slider.Value;
                 FileIO.Compression = value;
                 Btn_Save.IsEnabled = true;
 

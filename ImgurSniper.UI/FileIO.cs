@@ -254,7 +254,7 @@ namespace ImgurSniper.UI {
         }
 
         //Compression of Image (0 being lowest, 100 being highest Quality)
-        public static long Compression {
+        public static byte Compression {
             get => JsonConfig.Compression;
             set {
                 Settings settings = JsonConfig;
@@ -345,11 +345,11 @@ namespace ImgurSniper.UI {
             public bool RunOnBoot = true;
             public bool SaveImages = false;
 
+            public byte Compression = 90;
+
             public int CurrentCommits = 999;
             public int GifFps = 10;
             public int GifLength = 10000;
-
-            public long Compression = 90;
 
             public string Language = null;
             public string SaveImagesPath = Path.Combine(

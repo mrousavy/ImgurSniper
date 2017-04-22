@@ -23,6 +23,10 @@ namespace ImgurSniper {
         private bool _stopped;
         private readonly bool _progressIndicatorEnabled;
         private Timer _timer;
+        private int _currentFrames, _totalFrames;
+        private readonly IntPtr _desktop = NativeMethods.GetDesktopWindow();
+        private readonly bool _showMouse = FileIO.ShowMouse;
+        private List<Image> _images;
 
         public byte[] Gif;
 
@@ -88,59 +92,23 @@ namespace ImgurSniper {
         private void Record() {
             try {
                 //Each Frame with TimeStamp
-                List<Bitmap> bitmaps = new List<Bitmap>();
-                bool showMouse = FileIO.ShowMouse;
+                _images = new List<Image>();
 
                 #region Method 1: Timer
 
-                int currentFrames = 0;
-                int totalFrames = (int)(_fps * (_gifLength.TotalMilliseconds / 1000D));
-                MemoryStream gifStream = new MemoryStream();
+                _currentFrames = 0;
+                _totalFrames = (int)(_fps * (_gifLength.TotalMilliseconds / 1000D));
                 // ReSharper disable once PossibleLossOfFraction
                 _timer = new Timer(1000 / _fps);
 
                 if (_progressIndicatorEnabled)
-                    ProgressBar.Maximum = totalFrames;
+                    ProgressBar.Maximum = _totalFrames;
+
+                ThreadStart action = new ThreadStart(Frame);
 
                 //Every Frame
                 _timer.Elapsed += delegate {
-                    new Thread(async () => {
-                        try {
-                            //Finish GIF
-                            if (_stopped || currentFrames >= totalFrames) {
-                                _timer.Stop();
-
-                                await Dispatcher.BeginInvoke(new Action(ShowProgressBar));
-
-                                await CreateGif(bitmaps);
-
-                                _timer.Dispose();
-                                return;
-                            }
-
-                            try {
-                                //Add Frames
-                                bitmaps.Add(showMouse
-                                    ? Screenshot.GetScreenshotWithMouse(_size)
-                                    : Screenshot.GetScreenshot(_size));
-                            } catch {
-                                // frame skip
-
-                                // Add last frame as current in case of frame skip
-                                bitmaps.Add(bitmaps[bitmaps.Count - 1]);
-                            } finally {
-                                currentFrames++;
-
-                                if (_progressIndicatorEnabled)
-                                    await Dispatcher.BeginInvoke(new Action(delegate { ProgressBar.Value = currentFrames; }));
-                            }
-                        } catch {
-                            await Dispatcher.BeginInvoke(new Action(delegate {
-                                _timer.Stop();
-                                FadeOut(false);
-                            }));
-                        }
-                    }).Start();
+                    new Thread(action).Start();
                 };
 
                 _timer.Disposed += delegate { Dispatcher.BeginInvoke(new Action(delegate { FadeOut(true); })); };
@@ -204,7 +172,41 @@ namespace ImgurSniper {
         }
 
 
-        private async Task CreateGif(List<Bitmap> bitmaps) {
+        private async void Frame() {
+            try {
+                //Finish GIF
+                if (_stopped || _currentFrames >= _totalFrames) {
+                    _timer.Stop();
+
+                    await Dispatcher.BeginInvoke(new Action(ShowProgressBar));
+
+                    await CreateGif(_images);
+
+                    _timer.Dispose();
+                    return;
+                }
+
+                try {
+                    //Add Frames
+                    _images.Add(Screenshot.GetScreenshotNative(_desktop, _size, _showMouse));
+                } catch {
+                    // frame skip
+                } finally {
+                    _currentFrames++;
+
+                    if (_progressIndicatorEnabled)
+                        await Dispatcher.BeginInvoke(new Action(delegate { ProgressBar.Value = _currentFrames; }));
+                }
+            } catch {
+                await Dispatcher.BeginInvoke(new Action(delegate {
+                    _timer.Stop();
+                    FadeOut(false);
+                }));
+            }
+        }
+
+
+        private async Task CreateGif(List<Image> images) {
             TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
 
             new Thread(() => {
@@ -232,7 +234,8 @@ namespace ImgurSniper {
 
                         #region GifBitmapEncoder
                         GifBitmapEncoder encoder = new GifBitmapEncoder();
-                        foreach (Bitmap bitmap in bitmaps) {
+
+                        foreach (Image bitmap in images) {
                             MemoryStream compressed = ImageHelper.CompressImage(bitmap, ImageFormat.Gif, 30);
                             BitmapFrame frame = BitmapFrame.Create(
                                 compressed,
@@ -241,6 +244,7 @@ namespace ImgurSniper {
 
                             encoder.Frames.Add(frame);
                         }
+
                         encoder.Save(stream);
 
                         //Clean unclosed Streams up

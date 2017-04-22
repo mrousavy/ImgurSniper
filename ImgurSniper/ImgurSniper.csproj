@@ -122,6 +122,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Animations.cs" />
+    <Compile Include="CaptureHelpers.cs" />
+    <Compile Include="CursorData.cs" />
     <Compile Include="ImageHelper.cs" />
     <Compile Include="GifRecorder.xaml.cs">
       <DependentUpon>GifRecorder.xaml</DependentUpon>
@@ -135,6 +137,8 @@
     <Compile Include="Libraries\NGif\GifDecoder.cs" />
     <Compile Include="Libraries\NGif\LZWEncoder.cs" />
     <Compile Include="Libraries\NGif\NeuQuant.cs" />
+    <Compile Include="NativeMethods.cs" />
+    <Compile Include="NativeStructs.cs" />
     <Compile Include="Notification.xaml.cs">
       <DependentUpon>Notification.xaml</DependentUpon>
     </Compile>
