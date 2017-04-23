@@ -170,7 +170,7 @@ Would you like to see a detailed Exception Info? ({0})</value>
     <value>Error uploading Image to Imgur! ({0})</value>
   </data>
   <data name="uploadTitle" xml:space="preserve">
-    <value>Upload with ImgurSniper</value>
+    <value>Uploaded with ImgurSniper</value>
   </data>
   <data name="whoops" xml:space="preserve">
     <value>Whoops, something went wrong!</value>
