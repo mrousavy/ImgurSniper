@@ -1,5 +1,7 @@
 ﻿using ImageMagick;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -22,10 +24,12 @@ namespace ImgurSniper {
         private bool _stopped;
         private readonly bool _progressIndicatorEnabled;
         private Timer _timer;
-        private int _currentFrames, _totalFrames;
+        private int _currentFrames, _totalFrames, _lastFrameTime;
         private readonly IntPtr _desktop = NativeMethods.GetDesktopWindow();
         private readonly bool _showMouse = FileIO.ShowMouse;
-        private MagickImageCollection _images;
+        //private MagickImageCollection _images;
+        private List<Tuple<Image, int>> _images;
+        private Stopwatch _stopwatch;
 
         public byte[] Gif;
 
@@ -77,7 +81,8 @@ namespace ImgurSniper {
         private void Record() {
             try {
                 //Each Frame with TimeStamp
-                _images = new MagickImageCollection();
+                //_images = new MagickImageCollection();
+                _images = new List<Tuple<Image, int>>();
 
                 #region Method 1: Timer
 
@@ -89,7 +94,8 @@ namespace ImgurSniper {
                 if (_progressIndicatorEnabled)
                     ProgressBar.Maximum = _totalFrames;
 
-                ThreadStart action = new ThreadStart(Frame);
+                _stopwatch = new Stopwatch();
+                ThreadStart action = Frame;
 
                 //Every Frame
                 _timer.Elapsed += delegate {
@@ -158,6 +164,9 @@ namespace ImgurSniper {
 
         //Capture 1 Screenshot, 1 Frame
         private async void Frame() {
+            if (!_stopwatch.IsRunning)
+                _stopwatch.Start();
+
             try {
                 //Finish GIF
                 if (_stopped || _currentFrames >= _totalFrames) {
@@ -177,15 +186,14 @@ namespace ImgurSniper {
                 try {
                     //Add Frames
 
-
+                    #region MagickImage
                     #region Compressed
-                    using (MemoryStream stream = ImageHelper.CompressImage(Screenshot.GetScreenshotNative(_desktop, _size, _showMouse), ImageFormat.Gif, 30)) {
-                        MagickImage image = new MagickImage(stream) {
-                            AnimationDelay = 100 / FileIO.GifFps,
-                            Quality = 30
-                        };
-                        _images.Add(image);
-                    }
+                    //MemoryStream stream = ImageHelper.CompressImage(Screenshot.GetScreenshotNative(_desktop, _size, _showMouse), ImageFormat.Gif, 30);
+                    //MagickImage image = new MagickImage(stream) {
+                    //    AnimationDelay = 100 / FileIO.GifFps,
+                    //    Quality = 30
+                    //};
+                    //_images.Add(image);
                     #endregion
 
                     #region Raw
@@ -196,7 +204,33 @@ namespace ImgurSniper {
                     //    };
                     //    _images.Add(image);
                     //}
+
                     #endregion
+                    #endregion
+
+                    #region Image
+                    int delay;
+                    int elapsed = (int)_stopwatch.ElapsedMilliseconds;
+
+                    if (_lastFrameTime != 0)
+                        delay = elapsed - _lastFrameTime;
+                    else
+                        delay = 1;
+                    #region Compressed
+                    //Error? Image is missing a frame
+                    //MemoryStream stream =
+                    //    ImageHelper.CompressImage(Screenshot.GetScreenshotNative(_desktop, _size, _showMouse),
+                    //        ImageFormat.Gif, 30);
+                    //Image img = Image.FromStream(stream);
+                    //_images.Add(new Tuple<Image, int>(img, delay));
+                    #endregion
+
+                    #region Raw
+                    _images.Add(new Tuple<Image, int>(Screenshot.GetScreenshotNative(_desktop, _size, _showMouse), delay));
+                    #endregion
+                    _lastFrameTime = elapsed;
+                    #endregion
+
                 } catch {
                     // frame skip
                 } finally {
@@ -219,10 +253,11 @@ namespace ImgurSniper {
 
             new Thread(() => {
                 try {
-                    //NGif vs GifBitmapEncoder vs Magick.NET: 
+                    //NGif vs GifBitmapEncoder vs Magick.NET vs GifWriter: 
                     //  NGif is slower
                     //  GifBitmapEncoder is not made for creating GIFs
                     //  Magick.NET is easier to use and especially made for creating GIFs
+                    //  GifWriter has better handling for Frame Delay and minimal Code
 
                     #region NGif
                     //using (MemoryStream stream = new MemoryStream()) {
@@ -266,21 +301,31 @@ namespace ImgurSniper {
 
                     #region Magick.NET
 
-                    // Reduce colors
-                    QuantizeSettings settings = new QuantizeSettings() {
-                        Colors = 128
-                    };
-                    _images.Quantize(settings);
+                    //// Reduce colors
+                    //QuantizeSettings settings = new QuantizeSettings() {
+                    //    Colors = 128
+                    //};
+                    //_images.Quantize(settings);
 
-                    // Optimize GIF
-                    _images.OptimizePlus();
+                    //// Optimize GIF
+                    //_images.OptimizePlus();
 
-                    // "Save" GIF
-                    Gif = _images.ToByteArray();
+                    //// "Save" GIF
+                    //Gif = _images.ToByteArray();
 
-                    // Dispose GIF
-                    _images.Clear();
-                    _images.Dispose();
+                    //// Dispose GIF
+                    //_images.Clear();
+                    //_images.Dispose();
+                    #endregion
+
+                    #region GifWriter
+                    using (MemoryStream stream = new MemoryStream()) {
+                        using (GifWriter writer = new GifWriter(stream, 1000 / _fps)) {
+                            foreach (Tuple<Image, int> tuple in _images)
+                                writer.WriteFrame(tuple.Item1, tuple.Item2);
+                            Gif = stream.ToArray();
+                        }
+                    }
                     #endregion
 
                     //Cleanup
@@ -318,7 +363,7 @@ namespace ImgurSniper {
             Gif = null;
 
             _images?.Clear();
-            _images?.Dispose();
+            //_images?.Dispose();
 
             _timer?.Dispose();
             _timer = null;

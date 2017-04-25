@@ -138,6 +138,7 @@
       <DependentUpon>GifWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ImgurUploader.cs" />
+    <Compile Include="Libraries\GifWriter\GifWriter.cs" />
     <Compile Include="Libraries\Hotkeys\HotKey.cs" />
     <Compile Include="Libraries\Hotkeys\HotKeyWinApi.cs" />
     <Compile Include="Libraries\NGif\AnimatedGifEncoder.cs" />
