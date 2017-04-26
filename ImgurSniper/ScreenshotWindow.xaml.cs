@@ -1,4 +1,7 @@
-﻿using ImgurSniper.Properties;
+﻿using ImgurSniper.Libraries.Helper;
+using ImgurSniper.Libraries.Native;
+using ImgurSniper.Libraries.ScreenCapture;
+using ImgurSniper.Properties;
 using System;
 using System.Drawing;
 using System.IO;
@@ -99,14 +102,14 @@ namespace ImgurSniper {
             //Hide in Alt + Tab Switcher View
             WindowInteropHelper wndHelper = new WindowInteropHelper(this);
 
-            int exStyle = (int)WinAPI.GetWindowLong(wndHelper.Handle, (int)WinAPI.GetWindowLongFields.GwlExstyle);
+            int exStyle = (int)NativeMethods.GetWindowLong(wndHelper.Handle, (int)NativeMethods.GetWindowLongFields.GwlExstyle);
 
-            exStyle |= (int)WinAPI.ExtendedWindowStyles.WsExToolwindow;
-            WinAPI.SetWindowLong(wndHelper.Handle, (int)WinAPI.GetWindowLongFields.GwlExstyle, (IntPtr)exStyle);
+            exStyle |= (int)NativeMethods.ExtendedWindowStyles.WsExToolwindow;
+            NativeMethods.SetWindowLong(wndHelper.Handle, (int)NativeMethods.GetWindowLongFields.GwlExstyle, (IntPtr)exStyle);
         }
 
         private static Rectangle GetRectFromHandle(IntPtr whandle) {
-            Rectangle windowSize = WinAPI.GetWindowRectangle(whandle);
+            Rectangle windowSize = NativeMethods.GetWindowRectangle(whandle);
 
             return windowSize;
         }
@@ -214,7 +217,7 @@ namespace ImgurSniper {
         private void RightClick() {
             Cursor = Cursors.Hand;
 
-            WinAPI.User32.GetCursorPos(out WinAPI.POINT point);
+            NativeMethods.GetCursorPos(out NativeStructs.POINT point);
 
             DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
 
@@ -227,19 +230,19 @@ namespace ImgurSniper {
                 await Task.Delay(50);
 
                 //Send Window to back, so WinAPI.User32.WindowFromPoint does not detect ImgurSniper as Window
-                WinAPI.User32.SetWindowPos(new WindowInteropHelper(this).Handle, WinAPI.HwndBottom, 0, 0, 0, 0,
-                    WinAPI.SwpNomove | WinAPI.SwpNosize | WinAPI.SwpNoactivate);
+                NativeMethods.SetWindowPos(new WindowInteropHelper(this).Handle, NativeMethods.HwndBottom, 0, 0, 0, 0,
+                    NativeMethods.SwpNomove | NativeMethods.SwpNosize | NativeMethods.SwpNoactivate);
 
-                IntPtr whandle = WinAPI.User32.WindowFromPoint(point);
+                IntPtr whandle = NativeMethods.WindowFromPoint(point);
 
-                WinAPI.User32.SetForegroundWindow(whandle);
-                WinAPI.User32.SetActiveWindow(whandle);
+                NativeMethods.SetForegroundWindow(whandle);
+                NativeMethods.SetActiveWindow(whandle);
 
                 Rectangle hwnd = GetRectFromHandle(whandle);
 
                 const int nChars = 256;
                 StringBuilder buff = new StringBuilder(nChars);
-                if (WinAPI.User32.GetWindowText(whandle, buff, nChars) > 0) {
+                if (NativeMethods.GetWindowText(whandle, buff, nChars) > 0) {
                     HwndName = buff.ToString();
                 }
 
@@ -423,7 +426,7 @@ namespace ImgurSniper {
             try {
                 MemoryStream stream;
 
-                Image img = Screenshot.GetScreenshotNative(ptr, size, FileIO.ShowMouse);
+                Image img = ScreenCapture.GetScreenshotNative(ptr, size, FileIO.ShowMouse);
                 if (FileIO.Compression < 100) {
                     stream = ImageHelper.CompressImage(img, FileIO.ImageFormat, FileIO.Compression);
                 } else {

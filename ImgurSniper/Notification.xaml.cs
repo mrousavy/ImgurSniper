@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImgurSniper.Libraries.Helper;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;

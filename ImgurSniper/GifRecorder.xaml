@@ -8,7 +8,7 @@
         ForceCursor="True" Background="Transparent"
         ShowActivated="False" Focusable="False" ShowInTaskbar="False" Topmost="True"
         mc:Ignorable="d" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize"
-        Title="Capturing your GIF.." WindowStartupLocation="Manual">
+        Title="Capturing your GIF.." WindowStartupLocation="Manual" Loaded="Window_Loaded">
 
     <DockPanel>
         <Border DockPanel.Dock="Top" BorderThickness="2" BorderBrush="Gray" x:Name="Outline"
@@ -19,7 +19,7 @@
         <DockPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="5,0,5,0">
             <ProgressBar x:Name="ProgressBar" VerticalAlignment="Center" HorizontalAlignment="Left" />
 
-            <Border Background="White" Width="25" Height="25" CornerRadius="25" VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right" x:Name="DoneButton" Cursor="Hand" MouseDown="FinishGif">
+            <Border Background="White" Width="25" Height="25" CornerRadius="25" VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right" x:Name="DoneButton" Cursor="Hand" MouseDown="StopGifClick">
 
                 <Grid>
                     <md:PackIcon x:Name="OkButton" Kind="CheckCircle" Width="25" Height="25" Foreground="#2196F3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>

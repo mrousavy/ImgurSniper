@@ -1,4 +1,5 @@
-﻿using ImgurSniper.Properties;
+﻿using ImgurSniper.Libraries.Helper;
+using ImgurSniper.Properties;
 using Newtonsoft.Json;
 using System;
 using System.Diagnostics;

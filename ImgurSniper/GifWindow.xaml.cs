@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ImgurSniper.Libraries.Helper;
+using ImgurSniper.Libraries.Native;
+using ImgurSniper.Properties;
+using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using ImgurSniper.Properties;
 using Cursors = System.Windows.Input.Cursors;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Point = System.Windows.Point;
@@ -63,7 +65,7 @@ namespace ImgurSniper {
             Height = size.Height;
 
 
-            if(allMonitors) {
+            if (allMonitors) {
                 Rect workArea = SystemParameters.WorkArea;
                 toast.Margin = new Thickness(
                     workArea.Left,
@@ -97,21 +99,21 @@ namespace ImgurSniper {
             //Hide in Alt + Tab Switcher View
             WindowInteropHelper wndHelper = new WindowInteropHelper(this);
 
-            int exStyle = (int)WinAPI.GetWindowLong(wndHelper.Handle, (int)WinAPI.GetWindowLongFields.GwlExstyle);
+            int exStyle = (int)NativeMethods.GetWindowLong(wndHelper.Handle, (int)NativeMethods.GetWindowLongFields.GwlExstyle);
 
-            exStyle |= (int)WinAPI.ExtendedWindowStyles.WsExToolwindow;
-            WinAPI.SetWindowLong(wndHelper.Handle, (int)WinAPI.GetWindowLongFields.GwlExstyle, (IntPtr)exStyle);
+            exStyle |= (int)NativeMethods.ExtendedWindowStyles.WsExToolwindow;
+            NativeMethods.SetWindowLong(wndHelper.Handle, (int)NativeMethods.GetWindowLongFields.GwlExstyle, (IntPtr)exStyle);
         }
 
         private static Rectangle GetRectFromHandle(IntPtr whandle) {
-            Rectangle windowSize = WinAPI.GetWindowRectangle(whandle);
+            Rectangle windowSize = NativeMethods.GetWindowRectangle(whandle);
 
             return windowSize;
         }
 
         //All Keys
         private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e) {
-            switch(e.Key) {
+            switch (e.Key) {
                 case Key.Escape:
                     //Close
                     Error = false;
@@ -123,12 +125,12 @@ namespace ImgurSniper {
                     break;
                 case Key.A:
                     //Select All
-                    if((Control.ModifierKeys & Keys.Control) == Keys.Control)
+                    if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
                         SelectAllCmd();
                     break;
                 case Key.Z:
                     //Undo
-                    if((Control.ModifierKeys & Keys.Control) == Keys.Control)
+                    if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
                         CtrlZ();
                     break;
             }
@@ -146,7 +148,7 @@ namespace ImgurSniper {
             SelectedMode.BeginAnimation(OpacityProperty, null);
 
             //Set correct Selected Mode Indicator
-            if(grid.IsEnabled) {
+            if (grid.IsEnabled) {
                 grid.CaptureMouse();
                 Cursor = Cursors.Cross;
                 CropIcon.Background = Brushes.Gray;
@@ -196,7 +198,7 @@ namespace ImgurSniper {
 
         //MouseDown Event
         private void StartDrawing(object sender, MouseButtonEventArgs e) {
-            switch(e.ChangedButton) {
+            switch (e.ChangedButton) {
                 case MouseButton.Right:
                     //!!Not yet fully implemented
                     RightClick();
@@ -212,8 +214,8 @@ namespace ImgurSniper {
         private void RightClick() {
             Cursor = Cursors.Hand;
 
-            WinAPI.POINT point = new WinAPI.POINT(0, 0);
-            WinAPI.User32.GetCursorPos(out point);
+            NativeStructs.POINT point = new NativeStructs.POINT(0, 0);
+            NativeMethods.GetCursorPos(out point);
 
             DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.15));
 
@@ -226,19 +228,19 @@ namespace ImgurSniper {
                 await Task.Delay(50);
 
                 //Send Window to back, so WinAPI.User32.WindowFromPoint does not detect ImgurSniper as Window
-                WinAPI.User32.SetWindowPos(new WindowInteropHelper(this).Handle, WinAPI.HwndBottom, 0, 0, 0, 0,
-                    WinAPI.SwpNomove | WinAPI.SwpNosize | WinAPI.SwpNoactivate);
+                NativeMethods.SetWindowPos(new WindowInteropHelper(this).Handle, NativeMethods.HwndBottom, 0, 0, 0, 0,
+                    NativeMethods.SwpNomove | NativeMethods.SwpNosize | NativeMethods.SwpNoactivate);
 
-                IntPtr whandle = WinAPI.User32.WindowFromPoint(point);
+                IntPtr whandle = NativeMethods.WindowFromPoint(point);
 
-                WinAPI.User32.SetForegroundWindow(whandle);
-                WinAPI.User32.SetActiveWindow(whandle);
+                NativeMethods.SetForegroundWindow(whandle);
+                NativeMethods.SetActiveWindow(whandle);
 
                 Rectangle hwnd = GetRectFromHandle(whandle);
 
                 const int nChars = 256;
                 StringBuilder buff = new StringBuilder(nChars);
-                if(WinAPI.User32.GetWindowText(whandle, buff, nChars) > 0) {
+                if (NativeMethods.GetWindowText(whandle, buff, nChars) > 0) {
                     HwndName = buff.ToString();
                 }
 
@@ -267,7 +269,7 @@ namespace ImgurSniper {
         //MouseUp Event
         private void ReleaseRectangle(object sender, MouseButtonEventArgs e) {
             //Only trigger on Left Mouse Button
-            if(e.ChangedButton != MouseButton.Left) {
+            if (e.ChangedButton != MouseButton.Left) {
                 return;
             }
 
@@ -285,7 +287,7 @@ namespace ImgurSniper {
             //    Magnifier(pos);
 
             //Draw Rectangle
-            if(_drag) {
+            if (_drag) {
                 //Set Crop Rectangle to Mouse Position
                 To = e.GetPosition(null);
 
@@ -314,8 +316,8 @@ namespace ImgurSniper {
 
         //Draw on the Window
         private void Paint(object sender, MouseEventArgs e) {
-            if(e.LeftButton == MouseButtonState.Pressed) {
-                if(_currentPath == null) {
+            if (e.LeftButton == MouseButtonState.Pressed) {
+                if (_currentPath == null) {
                     return;
                 }
 
@@ -327,7 +329,7 @@ namespace ImgurSniper {
 
         //Mouse Down Event - Begin Painting
         private void BeginPaint(object sender, MouseButtonEventArgs e) {
-            if(e.ButtonState == MouseButtonState.Pressed) {
+            if (e.ButtonState == MouseButtonState.Pressed) {
                 _startPos = e.GetPosition(null);
 
 
@@ -355,7 +357,7 @@ namespace ImgurSniper {
 
 
         private void CtrlZ() {
-            if(PaintSurface.Children.Count > 0) {
+            if (PaintSurface.Children.Count > 0) {
                 PaintSurface.Children.RemoveAt(PaintSurface.Children.Count - 1);
             }
         }
@@ -372,7 +374,7 @@ namespace ImgurSniper {
             int fromX = (int)Math.Min(From.X, To.X);
             int fromY = (int)Math.Min(From.Y, To.Y);
 
-            if(Math.Abs(To.X - From.X) < 9 || Math.Abs(To.Y - From.Y) < 9) {
+            if (Math.Abs(To.X - From.X) < 9 || Math.Abs(To.Y - From.Y) < 9) {
                 toast.Show(strings.imgSize, TimeSpan.FromSeconds(3.3));
                 selectionRectangle.Margin = new Thickness(99999);
             } else {
@@ -429,11 +431,7 @@ namespace ImgurSniper {
 
         //"Crop" Rectangle
         private void StartGif(Rectangle size) {
-            //Stop recording after 10 Secs
-            //CHANGE THIS IF YOU WANT LONGER CAPTURES
-            TimeSpan recordingLength = TimeSpan.FromMilliseconds(FileIO.GifLength);
-
-            using(GifRecorder recorder = new GifRecorder(size, recordingLength)) {
+            using (GifRecorder recorder = new GifRecorder(size)) {
                 bool? result = recorder.ShowDialog();
 
                 CroppedGif = recorder.Gif;

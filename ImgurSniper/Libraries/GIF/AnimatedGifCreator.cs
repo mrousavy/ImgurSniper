@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImgurSniper.Libraries.Helper;
+using System;
 using System.Drawing;
 using System.IO;
 
@@ -37,7 +38,7 @@ namespace ImgurSniper.Libraries.GIF {
         }
 
         public void AddFrame(string path, GIFQuality quality = GIFQuality.Default) {
-            using (Image img = ImageHelpers.LoadImage(path)) {
+            using (Image img = ImageHelper.LoadImage(path)) {
                 AddFrame(img, quality);
             }
         }

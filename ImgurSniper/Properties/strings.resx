@@ -217,4 +217,7 @@ Error Message: "{0}"
 
 Do you want to see more details about that Error?</value>
   </data>
+  <data name="loggingIn" xml:space="preserve">
+    <value>Logging into Imgur Account...</value>
+  </data>
 </root>

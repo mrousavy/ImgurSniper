@@ -1,0 +1,187 @@
+﻿using ImgurSniper.Libraries.Cache;
+using ImgurSniper.Libraries.FFmpeg;
+using ImgurSniper.Libraries.GIF;
+using ImgurSniper.Libraries.Helper;
+using System;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Threading;
+
+namespace ImgurSniper.Libraries.ScreenCapture {
+    public class ScreenRecorder : IDisposable {
+
+        public bool IsRecording { get; private set; }
+
+        public int FPS {
+            get {
+                return fps;
+            }
+            set {
+                if (!IsRecording) {
+                    fps = value;
+                    UpdateInfo();
+                }
+            }
+        }
+
+        public float DurationSeconds {
+            get {
+                return durationSeconds;
+            }
+            set {
+                if (!IsRecording) {
+                    durationSeconds = value;
+                    UpdateInfo();
+                }
+            }
+        }
+
+        public Rectangle CaptureRectangle {
+            get {
+                return captureRectangle;
+            }
+            private set {
+                if (!IsRecording) {
+                    captureRectangle = value;
+                }
+            }
+        }
+
+        public string CachePath { get; private set; }
+
+        public ScreencastOptions Options { get; set; }
+
+        public event Action RecordingStarted;
+
+        public delegate void ProgressEventHandler(int progress);
+        public event ProgressEventHandler EncodingProgressChanged;
+
+        private int fps, delay, frameCount, previousProgress;
+        private float durationSeconds;
+        private Screenshot screenshot;
+        private Rectangle captureRectangle;
+        private ImageCache imgCache;
+        private FFmpegHelper ffmpegCli;
+        private bool stopRequest;
+
+        public ScreenRecorder(ScreencastOptions options, Screenshot screenshot, Rectangle captureRectangle) {
+            if (string.IsNullOrEmpty(options.OutputPath)) {
+                throw new Exception("Screen recorder cache path is empty.");
+            }
+
+            FPS = FileIO.GifFps;
+            DurationSeconds = options.Duration;
+            CaptureRectangle = captureRectangle;
+            CachePath = options.OutputPath;
+
+            Options = options;
+
+            ffmpegCli = new FFmpegHelper(Options);
+            ffmpegCli.RecordingStarted += OnRecordingStarted;
+
+            this.screenshot = screenshot;
+        }
+
+        private void UpdateInfo() {
+            delay = 1000 / fps;
+            frameCount = (int)(fps * durationSeconds);
+        }
+
+        public void StartRecording() {
+            if (!IsRecording) {
+                IsRecording = true;
+                stopRequest = false;
+
+                ffmpegCli.Record();
+            }
+
+            IsRecording = false;
+        }
+
+        private void RecordUsingCache() {
+            try {
+                for (int i = 0; !stopRequest && (frameCount == 0 || i < frameCount); i++) {
+                    Stopwatch timer = Stopwatch.StartNew();
+
+                    Image img = screenshot.CaptureRectangle(CaptureRectangle);
+                    //DebugHelper.WriteLine("Screen capture: " + (int)timer.ElapsedMilliseconds);
+
+                    imgCache.AddImageAsync(img);
+
+                    if (!stopRequest && (frameCount == 0 || i + 1 < frameCount)) {
+                        int sleepTime = delay - (int)timer.ElapsedMilliseconds;
+
+                        if (sleepTime > 0) {
+                            Thread.Sleep(sleepTime);
+                        } else if (sleepTime < 0) {
+                            // Need to handle FPS drops
+                        }
+                    }
+                }
+            } finally {
+                imgCache.Finish();
+            }
+        }
+
+        public void StopRecording() {
+            stopRequest = true;
+
+            if (ffmpegCli != null) {
+                ffmpegCli.Close();
+            }
+        }
+
+        public void SaveAsGIF(string path, GIFQuality quality) {
+            if (imgCache != null && imgCache is HardDiskCache && !IsRecording) {
+                Helpers.CreateDirectoryFromFilePath(path);
+
+                HardDiskCache hdCache = imgCache as HardDiskCache;
+
+                using (AnimatedGifCreator gifEncoder = new AnimatedGifCreator(path, delay)) {
+                    int i = 0;
+                    int count = hdCache.Count;
+
+                    foreach (Image img in hdCache.GetImageEnumerator()) {
+                        i++;
+                        OnEncodingProgressChanged((int)((float)i / count * 100));
+
+                        using (img) {
+                            gifEncoder.AddFrame(img, quality);
+                        }
+                    }
+                }
+            }
+        }
+
+        public bool FFmpegEncodeAsGIF(string path) {
+            Helpers.CreateDirectoryFromFilePath(path);
+            return ffmpegCli.EncodeGIF(Options.OutputPath, path);
+        }
+
+        public void EncodeUsingCommandLine(VideoEncoder encoder, string sourceFilePath, string targetFilePath) {
+            if (!string.IsNullOrEmpty(sourceFilePath) && File.Exists(sourceFilePath)) {
+                encoder.Encode(sourceFilePath, targetFilePath);
+            }
+        }
+
+        protected void OnRecordingStarted() {
+            if (RecordingStarted != null) {
+                RecordingStarted();
+            }
+        }
+
+        protected void OnEncodingProgressChanged(int progress) {
+            if (EncodingProgressChanged != null && progress != previousProgress) {
+                EncodingProgressChanged(progress);
+                previousProgress = progress;
+            }
+        }
+
+        public void Dispose() {
+            if (imgCache != null) {
+                imgCache.Dispose();
+            }
+        }
+    }
+}

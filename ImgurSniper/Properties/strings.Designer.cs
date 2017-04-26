@@ -207,6 +207,15 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Logging into Imgur Account....
+        /// </summary>
+        public static string loggingIn {
+            get {
+                return ResourceManager.GetString("loggingIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Message: {0}
         ///
         ///.
@@ -323,7 +332,7 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload with ImgurSniper.
+        ///   Looks up a localized string similar to Uploaded with ImgurSniper.
         /// </summary>
         public static string uploadTitle {
             get {

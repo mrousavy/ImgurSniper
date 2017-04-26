@@ -2,9 +2,8 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Threading.Tasks;
 
-namespace ImgurSniper {
+namespace ImgurSniper.Libraries.GifWriter {
     /// <summary>
     /// Creates a GIF using .Net GIF encoding and additional animation headers.
     /// </summary>
@@ -106,26 +105,26 @@ namespace ImgurSniper {
             Writer.Write("GIF".ToCharArray()); // File type
             Writer.Write("89a".ToCharArray()); // File Version
 
-            Writer.Write((short) (DefaultWidth == 0 ? Width : DefaultWidth)); // Initial Logical Width
-            Writer.Write((short) (DefaultHeight == 0 ? Height : DefaultHeight)); // Initial Logical Height
+            Writer.Write((short)(DefaultWidth == 0 ? Width : DefaultWidth)); // Initial Logical Width
+            Writer.Write((short)(DefaultHeight == 0 ? Height : DefaultHeight)); // Initial Logical Height
 
             SourceGif.Position = SourceGlobalColorInfoPosition;
-            Writer.Write((byte) SourceGif.ReadByte()); // Global Color Table Info
-            Writer.Write((byte) 0); // Background Color Index
-            Writer.Write((byte) 0); // Pixel aspect ratio
+            Writer.Write((byte)SourceGif.ReadByte()); // Global Color Table Info
+            Writer.Write((byte)0); // Background Color Index
+            Writer.Write((byte)0); // Pixel aspect ratio
             WriteColorTable(SourceGif, Writer);
 
             // App Extension Header for Repeating
             if (Repeat == -1)
                 return;
 
-            Writer.Write(unchecked((short) 0xff21)); // Application Extension Block Identifier
-            Writer.Write((byte) 0x0b); // Application Block Size
+            Writer.Write(unchecked((short)0xff21)); // Application Extension Block Identifier
+            Writer.Write((byte)0x0b); // Application Block Size
             Writer.Write("NETSCAPE2.0".ToCharArray()); // Application Identifier
-            Writer.Write((byte) 3); // Application block length
-            Writer.Write((byte) 1);
-            Writer.Write((short) Repeat); // Repeat count for images.
-            Writer.Write((byte) 0); // terminator
+            Writer.Write((byte)3); // Application block length
+            Writer.Write((byte)1);
+            Writer.Write((short)Repeat); // Repeat count for images.
+            Writer.Write((byte)0); // terminator
         }
 
         static void WriteColorTable(Stream SourceGif, BinaryWriter Writer) {
@@ -140,12 +139,12 @@ namespace ImgurSniper {
             var blockhead = new byte[8];
             SourceGif.Read(blockhead, 0, blockhead.Length); // Reading source GCE
 
-            Writer.Write(unchecked((short) 0xf921)); // Identifier
-            Writer.Write((byte) 0x04); // Block Size
-            Writer.Write((byte) (blockhead[3] & 0xf7 | 0x08)); // Setting disposal flag
-            Writer.Write((short) (FrameDelay / 10)); // Setting frame delay
+            Writer.Write(unchecked((short)0xf921)); // Identifier
+            Writer.Write((byte)0x04); // Block Size
+            Writer.Write((byte)(blockhead[3] & 0xf7 | 0x08)); // Setting disposal flag
+            Writer.Write((short)(FrameDelay / 10)); // Setting frame delay
             Writer.Write(blockhead[6]); // Transparent color index
-            Writer.Write((byte) 0); // Terminator
+            Writer.Write((byte)0); // Terminator
         }
 
         static void WriteImageBlock(Stream SourceGif, BinaryWriter Writer, bool IncludeColorTable, int X, int Y,
@@ -154,17 +153,17 @@ namespace ImgurSniper {
             var header = new byte[11];
             SourceGif.Read(header, 0, header.Length);
             Writer.Write(header[0]); // Separator
-            Writer.Write((short) X); // Position X
-            Writer.Write((short) Y); // Position Y
-            Writer.Write((short) Width); // Width
-            Writer.Write((short) Height); // Height
+            Writer.Write((short)X); // Position X
+            Writer.Write((short)Y); // Position Y
+            Writer.Write((short)Width); // Width
+            Writer.Write((short)Height); // Height
 
             if (IncludeColorTable) // If first frame, use global color table - else use local
             {
                 SourceGif.Position = SourceGlobalColorInfoPosition;
-                Writer.Write((byte) (SourceGif.ReadByte() & 0x3f | 0x80)); // Enabling local color table
+                Writer.Write((byte)(SourceGif.ReadByte() & 0x3f | 0x80)); // Enabling local color table
                 WriteColorTable(SourceGif, Writer);
-            } else Writer.Write((byte) (header[9] & 0x07 | 0x07)); // Disabling local color table
+            } else Writer.Write((byte)(header[9] & 0x07 | 0x07)); // Disabling local color table
 
             Writer.Write(header[10]); // LZW Min Code Size
 
@@ -176,12 +175,12 @@ namespace ImgurSniper {
                 var imgData = new byte[dataLength];
                 SourceGif.Read(imgData, 0, dataLength);
 
-                Writer.Write((byte) dataLength);
+                Writer.Write((byte)dataLength);
                 Writer.Write(imgData, 0, dataLength);
                 dataLength = SourceGif.ReadByte();
             }
 
-            Writer.Write((byte) 0); // Terminator
+            Writer.Write((byte)0); // Terminator
         }
 
         #endregion
@@ -191,7 +190,7 @@ namespace ImgurSniper {
         /// </summary>
         public void Dispose() {
             // Complete File
-            _writer.Write((byte) 0x3b); // File Trailer
+            _writer.Write((byte)0x3b); // File Trailer
 
             _writer.BaseStream.Dispose();
             _writer.Dispose();

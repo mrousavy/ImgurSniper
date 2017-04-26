@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using ImgurSniper.Libraries.FFmpeg;
+using ImgurSniper.Libraries.Helper;
+using ImgurSniper.Libraries.ScreenCapture;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Threading;
@@ -8,33 +9,27 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
-using Timer = System.Timers.Timer;
 
 namespace ImgurSniper {
     /// <summary>
     ///     Interaction logic for GifRecorder.xaml
     /// </summary>
     public partial class GifRecorder : IDisposable {
-        private readonly int _fps = FileIO.GifFps;
         private readonly Rectangle _size;
-        private TimeSpan _gifLength;
-        private bool _stopped;
         private readonly bool _progressIndicatorEnabled;
-        private Timer _timer;
-        private int _currentFrames, _totalFrames, _lastFrameTime;
-        private readonly IntPtr _desktop = NativeMethods.GetDesktopWindow();
-        private readonly bool _showMouse = FileIO.ShowMouse;
-        //private MagickImageCollection _images;
-        private List<Tuple<Image, int>> _images;
-        private Stopwatch _stopwatch;
+        private ScreenRecorder _recorder;
+        private string _outputMp4, _outputGif;
+        private System.Timers.Timer _progressTimer;
+        private int _elapsed = 0;
+        private CancellationTokenSource cts;
+        private bool _stopRequested = false;
 
         public byte[] Gif;
 
-        public GifRecorder(Rectangle size, TimeSpan gifLength) {
+        public GifRecorder(Rectangle size) {
             InitializeComponent();
 
             _size = size;
-            _gifLength = gifLength;
 
             Left = size.Left - 2;
             Top = size.Top - 2;
@@ -54,279 +49,141 @@ namespace ImgurSniper {
                 DoneButton.Visibility = Visibility.Collapsed;
             }
 
+            ProgressBar.Maximum = FileIO.GifLength / 50;
+            cts = new CancellationTokenSource();
+
             //Space for ProgressBar
             Height += 30;
+        }
 
-            Loaded += delegate {
-                BeginAnimation(OpacityProperty, Animations.FadeIn);
-                Record();
-            };
+        private void Window_Loaded(object sender, RoutedEventArgs e) {
+            BeginAnimation(OpacityProperty, Animations.FadeIn);
+            StartRecording();
         }
 
         private void FadeOut(bool result) {
+            Dispatcher.Invoke(() => {
+                DoubleAnimation fadeOut = Animations.FadeOut;
+                fadeOut.Completed += delegate {
+                    try {
+                        DialogResult = result;
+                    } catch {
+                        Close();
+                    }
+                };
+                BeginAnimation(OpacityProperty, fadeOut);
+            });
+        }
+
+        private void ShowProgressBar() {
             DoubleAnimation fadeOut = Animations.FadeOut;
             fadeOut.Completed += delegate {
-                try {
-                    DialogResult = result;
-                } catch {
-                    Close();
-                }
+                OkButton.Visibility = Visibility.Collapsed;
+
+                CircularProgressBar.Visibility = Visibility.Visible;
+                CircularProgressBar.BeginAnimation(OpacityProperty, Animations.FadeIn);
             };
-            BeginAnimation(OpacityProperty, fadeOut);
+            OkButton.BeginAnimation(OpacityProperty, fadeOut);
         }
 
-        private void Record() {
+        private void UpdateProgress(object sender, System.Timers.ElapsedEventArgs e) {
             try {
-                //Each Frame with TimeStamp
-                //_images = new MagickImageCollection();
-                _images = new List<Tuple<Image, int>>();
+                Dispatcher.Invoke(() => {
+                    if (_recorder == null || !_recorder.IsRecording) {
+                        _progressTimer.Dispose();
+                        return;
+                    }
 
-                #region Method 1: Timer
-
-                _currentFrames = 0;
-                _totalFrames = (int)(_fps * (_gifLength.TotalMilliseconds / 1000D));
-                // ReSharper disable once PossibleLossOfFraction
-                _timer = new Timer(1000 / _fps);
-
-                if (_progressIndicatorEnabled)
-                    ProgressBar.Maximum = _totalFrames;
-
-                _stopwatch = new Stopwatch();
-                ThreadStart action = Frame;
-
-                //Every Frame
-                _timer.Elapsed += delegate {
-                    new Thread(action).Start();
-                };
-
-                _timer.Disposed += delegate { Dispatcher.BeginInvoke(new Action(delegate { FadeOut(true); })); };
-
-                _timer.Start();
-
-                #endregion
-
-                #region Method 2: Async ForLoop
-
-                //for(int i = 0; i < 1000; i++) {
-                //    MemoryStream stream = new MemoryStream();
-
-                //    Screenshot.MediaImageToDrawingImage(Screenshot.getScreenshot(size))
-                //        .Save(stream, ImageFormat.Gif);
-
-                //    BitmapFrame bitmap = BitmapFrame.Create(
-                //        stream,
-                //        BitmapCreateOptions.PreservePixelFormat,
-                //        BitmapCacheOption.OnLoad);
-
-                //    encoder.Frames.Add(bitmap);
-                //}
-
-                #endregion
-
-                #region Method 3: Expression Encoder .WMV
-
-                //Path for temporary WMV
-                //string tmp = Path.Combine(
-                //    @"C:\Users\b4dpi\Documents\ImgurSniper",
-                //    "imgursnipertempvid.wav");
-
-                //if(File.Exists(tmp))
-                //    File.Delete(tmp);
-
-                ////Initialize Capture job
-                //ScreenCaptureJob screenCaptureJob = new ScreenCaptureJob {
-                //    CaptureRectangle = size,
-                //    ShowFlashingBoundary = true,
-                //    ScreenCaptureVideoProfile = { FrameRate = FileIO.GifFps },
-                //    CaptureMouseCursor = true,
-                //    OutputScreenCaptureFileName = tmp,
-                //    Duration = duration
-                //};
-                //screenCaptureJob.ShowFlashingBoundary = false;
-
-                ////Record
-                //screenCaptureJob.Start();
-
-                //screenCaptureJob.ScreenCaptureFinished += delegate {
-                //    GifBitmapEncoder encoder = new GifBitmapEncoder();
-
-                //    Close();
-                //};
-
-                #endregion
+                    ProgressBar.Value = _elapsed++;
+                });
             } catch {
-                FadeOut(false);
+                // cannot use dispatcher on this window anymore
             }
         }
 
-        //Capture 1 Screenshot, 1 Frame
-        private async void Frame() {
-            if (!_stopwatch.IsRunning)
-                _stopwatch.Start();
+        private async void StopGifClick(object sender, MouseButtonEventArgs e) {
+            _stopRequested = true;
+            cts.Cancel();
 
-            try {
-                //Finish GIF
-                if (_stopped || _currentFrames >= _totalFrames) {
-                    _timer.Stop();
+            await StopRecording();
+        }
 
-                    //Show Progressing Progress Indicator
-                    await Dispatcher.BeginInvoke(new Action(ShowProgressBar));
-
-                    //Finalize Gif
-                    await CreateGif();
-
-                    //Dispose the Timer and finish GIF Recording
-                    _timer.Dispose();
-                    return;
-                }
-
+        //Start Recording Video
+        private void StartRecording() {
+            new Thread(() => {
                 try {
-                    //Add Frames
+                    _outputMp4 = Path.Combine(Path.GetTempPath(), "screencapture.mp4");
+                    if (File.Exists(_outputMp4))
+                        File.Delete(_outputMp4);
+                    _outputGif = Path.Combine(Path.GetTempPath(), "screencapture.gif");
+                    if (File.Exists(_outputGif))
+                        File.Delete(_outputGif);
 
-                    #region MagickImage
-                    #region Compressed
-                    //MemoryStream stream = ImageHelper.CompressImage(Screenshot.GetScreenshotNative(_desktop, _size, _showMouse), ImageFormat.Gif, 30);
-                    //MagickImage image = new MagickImage(stream) {
-                    //    AnimationDelay = 100 / FileIO.GifFps,
-                    //    Quality = 30
-                    //};
-                    //_images.Add(image);
-                    #endregion
+                    Screenshot screenshot = new Screenshot() {
+                        CaptureCursor = true,
+                        RemoveOutsideScreenArea = true,
+                        CaptureShadow = true,
+                        CaptureClientArea = false,
+                        AutoHideTaskbar = false,
+                        ShadowOffset = 20
+                    };
 
-                    #region Raw
-                    //using (MemoryStream stream = new MemoryStream()) {
-                    //    Screenshot.GetScreenshotNative(_desktop, _size, _showMouse).Save(stream, ImageFormat.Gif);
-                    //    MagickImage image = new MagickImage(stream) {
-                    //        AnimationDelay = 100 / _fps
-                    //    };
-                    //    _images.Add(image);
-                    //}
+                    string ffmpegPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "ffmpeg.exe");
 
-                    #endregion
-                    #endregion
+                    FFmpegOptions ffmpeg = new FFmpegOptions(ffmpegPath) {
+                        VideoCodec = FFmpegVideoCodec.gif
+                    };
 
-                    #region Image
-                    int delay;
-                    int elapsed = (int)_stopwatch.ElapsedMilliseconds;
+                    ScreencastOptions options = new ScreencastOptions {
+                        CaptureArea = _size,
+                        DrawCursor = true,
+                        GIFFPS = FileIO.GifFps,
+                        ScreenRecordFPS = 30,
+                        OutputPath = _outputMp4,
+                        FFmpeg = ffmpeg,
+                        Duration = FileIO.GifLength / 1000f
+                    };
+                    _recorder = new ScreenRecorder(options, screenshot, _size);
 
-                    if (_lastFrameTime != 0)
-                        delay = elapsed - _lastFrameTime;
-                    else
-                        delay = 1;
-                    #region Compressed
-                    //Error? Image is missing a frame && garbage leak
-                    //MemoryStream stream =
-                    //    ImageHelper.CompressImage(Screenshot.GetScreenshotNative(_desktop, _size, _showMouse),
-                    //        ImageFormat.Gif, 30);
-                    //Image img = Image.FromStream(stream);
-                    //_images.Add(new Tuple<Image, int>(img, delay));
-                    #endregion
+                    //If Progressbar is enabled
+                    if (_progressIndicatorEnabled) {
+                        _recorder.RecordingStarted += delegate {
+                            //Update Progress
+                            _progressTimer = new System.Timers.Timer {
+                                Interval = 50
+                            };
+                            _progressTimer.Elapsed += UpdateProgress;
+                            _progressTimer.Start();
+                        };
+                    }
 
-                    #region Raw
-                    _images.Add(new Tuple<Image, int>(Screenshot.GetScreenshotNative(_desktop, _size, _showMouse), delay));
-                    #endregion
-                    _lastFrameTime = elapsed;
-                    #endregion
-
+                    _recorder.StartRecording();
                 } catch {
-                    // frame skip
-                } finally {
-                    _currentFrames++;
-
-                    if (_progressIndicatorEnabled)
-                        await Dispatcher.BeginInvoke(new Action(delegate { ProgressBar.Value = _currentFrames; }));
-                }
-            } catch {
-                await Dispatcher.BeginInvoke(new Action(delegate {
-                    _timer.Stop();
                     FadeOut(false);
-                }));
-            }
+                }
+
+                if (!_stopRequested)
+                    Dispatcher.Invoke(StopRecording);
+            }).Start();
         }
 
+        //Stop recording Video, begin encoding as GIF and Save
+        private async Task StopRecording() {
+            ShowProgressBar();
 
-        private async Task CreateGif() {
             TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
 
             new Thread(() => {
                 try {
-                    //NGif vs GifBitmapEncoder vs Magick.NET vs GifWriter: 
-                    //  NGif is slower
-                    //  GifBitmapEncoder is not made for creating GIFs
-                    //  Magick.NET is easier to use and especially made for creating GIFs
-                    //  GifWriter has better handling for Frame Delay and minimal Code
+                    _recorder.StopRecording();
 
-                    #region NGif
-                    //using (MemoryStream stream = new MemoryStream()) {
-                    //AnimatedGifEncoder gifEncoder = new AnimatedGifEncoder();
-                    //gifEncoder.SetRepeat(0);
-                    //gifEncoder.SetFrameRate(_fps);
-                    //gifEncoder.Start(stream);
+                    //MP4 -> GIF
+                    _recorder.FFmpegEncodeAsGIF(_outputGif);
 
-                    //foreach (Bitmap bitmap in bitmaps) {
-                    //    using (Bitmap compressed = Image.FromStream(ImageHelper.CompressImage(bitmap, ImageFormat.Gif, 30)) as Bitmap) {
-                    //        gifEncoder.AddFrame(compressed);
-                    //    }
-                    //    bitmap.Dispose();
-                    //}
+                    Gif = File.ReadAllBytes(_outputGif);
 
-                    //gifEncoder.Finish();
-
-                    //Gif = stream.ToArray();
-                    //}
-                    #endregion
-
-                    #region GifBitmapEncoder
-                    //using (MemoryStream stream = new MemoryStream()) {
-                    //GifBitmapEncoder encoder = new GifBitmapEncoder();
-
-                    //foreach (Image bitmap in images) {
-                    //    MemoryStream compressed = ImageHelper.CompressImage(bitmap, ImageFormat.Gif, 30);
-                    //    BitmapFrame frame = BitmapFrame.Create(
-                    //        compressed,
-                    //        BitmapCreateOptions.DelayCreation,
-                    //        BitmapCacheOption.OnLoad);
-
-                    //    encoder.Frames.Add(frame);
-                    //}
-
-                    //encoder.Save(stream);
-
-                    //Gif = stream.ToArray();
-                    //}
-                    #endregion
-
-                    #region Magick.NET
-
-                    //// Reduce colors
-                    //QuantizeSettings settings = new QuantizeSettings() {
-                    //    Colors = 128
-                    //};
-                    //_images.Quantize(settings);
-
-                    //// Optimize GIF
-                    //_images.OptimizePlus();
-
-                    //// "Save" GIF
-                    //Gif = _images.ToByteArray();
-
-                    //// Dispose GIF
-                    //_images.Clear();
-                    //_images.Dispose();
-                    #endregion
-
-                    #region GifWriter
-                    using (MemoryStream stream = new MemoryStream()) {
-                        using (GifWriter writer = new GifWriter(stream, 1000 / _fps)) {
-                            foreach (Tuple<Image, int> tuple in _images)
-                                writer.WriteFrame(tuple.Item1, tuple.Item2);
-                            Gif = stream.ToArray();
-                        }
-                    }
-                    #endregion
-
-                    //Cleanup
-                    GC.Collect();
+                    _recorder.Dispose();
+                    _recorder = null;
 
                     tcs.SetResult(true);
                 } catch {
@@ -335,23 +192,21 @@ namespace ImgurSniper {
             }).Start();
 
             await tcs.Task;
+
+            MakeGif();
         }
 
-        private void FinishGif(object sender, MouseButtonEventArgs e) {
-            ShowProgressBar();
-            _stopped = true;
-        }
+        private void MakeGif() {
+            if (_recorder.IsRecording || !File.Exists(_outputGif))
+                FadeOut(false);
 
-        private void ShowProgressBar() {
-            DoubleAnimation fadeOut = Animations.FadeOut;
-            fadeOut.Completed += delegate {
-                OkButton.Visibility = Visibility.Collapsed;
+            try {
+                Gif = File.ReadAllBytes(_outputGif);
 
-
-                CircularProgressBar.Visibility = Visibility.Visible;
-                CircularProgressBar.BeginAnimation(OpacityProperty, Animations.FadeIn);
-            };
-            OkButton.BeginAnimation(OpacityProperty, fadeOut);
+                FadeOut(true);
+            } catch {
+                FadeOut(false);
+            }
         }
 
 
@@ -359,20 +214,27 @@ namespace ImgurSniper {
         public void Dispose() {
             Gif = null;
 
-
-            foreach (Tuple<Image, int> tuple in _images) {
-                try {
-                    tuple.Item1.Dispose();
-                } catch {
-                    // could not dispose
+            try {
+                if (File.Exists(_outputGif)) {
+                    File.Delete(_outputGif);
                 }
+                if (File.Exists(_outputMp4)) {
+                    File.Delete(_outputMp4);
+                }
+            } catch {
+                // could not delete
             }
 
-            _images?.Clear();
-            //_images?.Dispose();
 
-            _timer?.Dispose();
-            _timer = null;
+            try {
+                if (_recorder != null && _recorder.IsRecording)
+                    _recorder.StopRecording();
+            } catch {
+                // unexpected error on stop recording
+            }
+
+            _recorder?.Dispose();
+            _recorder = null;
 
             try {
                 Close();
