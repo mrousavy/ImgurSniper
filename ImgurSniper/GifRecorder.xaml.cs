@@ -1,16 +1,13 @@
-﻿using ImageMagick;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
-using System.Windows.Threading;
 using Timer = System.Timers.Timer;
 
 namespace ImgurSniper {
@@ -217,7 +214,7 @@ namespace ImgurSniper {
                     else
                         delay = 1;
                     #region Compressed
-                    //Error? Image is missing a frame
+                    //Error? Image is missing a frame && garbage leak
                     //MemoryStream stream =
                     //    ImageHelper.CompressImage(Screenshot.GetScreenshotNative(_desktop, _size, _showMouse),
                     //        ImageFormat.Gif, 30);
@@ -361,6 +358,15 @@ namespace ImgurSniper {
         //IDisposable
         public void Dispose() {
             Gif = null;
+
+
+            foreach (Tuple<Image, int> tuple in _images) {
+                try {
+                    tuple.Item1.Dispose();
+                } catch {
+                    // could not dispose
+                }
+            }
 
             _images?.Clear();
             //_images?.Dispose();
