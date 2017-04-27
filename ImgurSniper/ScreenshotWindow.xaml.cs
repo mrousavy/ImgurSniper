@@ -26,7 +26,7 @@ namespace ImgurSniper {
     /// <summary>
     ///     Interaction logic for ScreenshotWindow.xaml
     /// </summary>
-    public partial class ScreenshotWindow {
+    public partial class ScreenshotWindow : IDisposable {
         private bool _drag;
 
         public byte[] CroppedImage;
@@ -397,7 +397,7 @@ namespace ImgurSniper {
             CroppedImage = null;
 
             try {
-                Close();
+                Dispatcher.Invoke(Close);
             } catch {
                 //Window already closed
             }

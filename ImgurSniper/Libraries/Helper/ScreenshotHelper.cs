@@ -83,8 +83,8 @@ namespace ImgurSniper.Libraries.Helper {
 #if DEBUG
             bool tooBig = false;
 #else
-                            //10 MB = 10.485.760 Bytes      => Imgur's max. File Size
-                            bool tooBig = image.Length >= 10485760;
+            //10 MB = 10.485.760 Bytes => Imgur's max. File Size
+            bool tooBig = image.Length >= 10485760;
 #endif
             if (tooBig) {
                 //Could not upload to imgur
@@ -99,9 +99,6 @@ namespace ImgurSniper.Libraries.Helper {
             //Upload Binary
             string link = await imgur.Upload(image, hwndName);
             await ClipboardHelper.CopyLink(link);
-
-            Notification?.Close();
-
         }
     }
 }

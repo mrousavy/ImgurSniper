@@ -10,6 +10,8 @@ using System.Windows.Input;
 
 namespace ImgurSniper.Libraries.Start {
     public static class StartTray {
+        private static HotKey imgHotKey = null, gifHotKey = null;
+
         public static async Task Initialize() {
             TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
 
@@ -17,7 +19,6 @@ namespace ImgurSniper.Libraries.Start {
             Key gifKey = ConfigHelper.ShortcutGifKey;
             bool usePrint = ConfigHelper.UsePrint;
 
-            HotKey imgHotKey = null;
             try {
                 imgHotKey = usePrint
                     ? new HotKey(ModifierKeys.None, Key.PrintScreen)
@@ -27,7 +28,7 @@ namespace ImgurSniper.Libraries.Start {
                 //ignored
             }
             try {
-                HotKey gifHotKey = new HotKey(ModifierKeys.Control | ModifierKeys.Shift, gifKey);
+                gifHotKey = new HotKey(ModifierKeys.Control | ModifierKeys.Shift, gifKey);
                 gifHotKey.HotKeyPressed += OpenFromShortcutGif;
             } catch {
                 //ignored
@@ -114,25 +115,15 @@ namespace ImgurSniper.Libraries.Start {
         }
 
         private static void OpenFromShortcutGif(HotKey obj = null) {
-            if (obj != null)
-                obj.HotKeyPressed -= OpenFromShortcutGif;
-
             using (GifWindow window = new GifWindow()) {
                 window.ShowDialog();
             }
-
-            if (obj != null)
-                obj.HotKeyPressed += OpenFromShortcutGif;
         }
 
         private static void OpenFromShortcutImg(HotKey obj = null) {
-            if (obj != null)
-                obj.HotKeyPressed += OpenFromShortcutImg;
-
-            new ScreenshotWindow().ShowDialog();
-
-            if (obj != null)
-                obj.HotKeyPressed += OpenFromShortcutImg;
+            using (ScreenshotWindow window = new ScreenshotWindow()) {
+                window.ShowDialog();
+            }
         }
     }
 }

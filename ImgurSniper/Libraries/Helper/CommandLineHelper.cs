@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace ImgurSniper.Libraries.Helper {
-    public static class CommandLineHelpers {
+    public static class CommandLineHelper {
         public enum Argument {
             Snipe,
             Autostart,
@@ -45,15 +45,15 @@ namespace ImgurSniper.Libraries.Helper {
     }
 
     public struct CommandlineArgs {
-        public CommandLineHelpers.Argument Argument;
+        public CommandLineHelper.Argument Argument;
         public List<string> UploadFiles;
 
-        public CommandlineArgs(CommandLineHelpers.Argument argument, List<string> uploadFiles) {
+        public CommandlineArgs(CommandLineHelper.Argument argument, List<string> uploadFiles) {
             Argument = argument;
             UploadFiles = uploadFiles;
         }
 
-        public CommandlineArgs(CommandLineHelpers.Argument argument) {
+        public CommandlineArgs(CommandLineHelper.Argument argument) {
             Argument = argument;
             UploadFiles = null;
         }

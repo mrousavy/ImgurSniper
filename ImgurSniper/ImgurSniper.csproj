@@ -132,7 +132,7 @@
     <Compile Include="Libraries\FFmpeg\FFmpegOptions.cs" />
     <Compile Include="Libraries\Helper\Animations.cs" />
     <Compile Include="Libraries\Helper\CaptureHelpers.cs" />
-    <Compile Include="Libraries\Helper\CommandLineHelpers.cs" />
+    <Compile Include="Libraries\Helper\CommandLineHelper.cs" />
     <Compile Include="Libraries\Helper\CursorData.cs" />
     <Compile Include="Libraries\Helper\Extensions.cs" />
     <Compile Include="Libraries\Helper\Helpers.cs" />

@@ -14,22 +14,22 @@ namespace ImgurSniper {
         }
 
         private async void StartWithArguments() {
-            CommandlineArgs args = CommandLineHelpers.GetCommandlineArguments();
+            CommandlineArgs args = CommandLineHelper.GetCommandlineArguments();
 
             switch (args.Argument) {
-                case CommandLineHelpers.Argument.Autostart:
+                case CommandLineHelper.Argument.Autostart:
                     //Tray with Hotkeys
                     await StartTray.Initialize();
                     break;
-                case CommandLineHelpers.Argument.GIF:
+                case CommandLineHelper.Argument.GIF:
                     //GIF Recording Capture
                     new GifWindow().ShowDialog();
                     break;
-                case CommandLineHelpers.Argument.Snipe:
+                case CommandLineHelper.Argument.Snipe:
                     //Normal Image Capture
                     new ScreenshotWindow().ShowDialog();
                     break;
-                case CommandLineHelpers.Argument.Upload:
+                case CommandLineHelper.Argument.Upload:
                     //Context Menu Instant Upload
                     if (args.UploadFiles.Count > 1)
                         await StartUpload.UploadMultiple(args.UploadFiles);
