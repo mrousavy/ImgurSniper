@@ -142,6 +142,11 @@ namespace ImgurSniper {
                     };
                     ffmpegHelper.Start();
                     ffmpegHelper.WaitForExit();
+
+                    if (!File.Exists(ffmpegPath)) {
+                        FadeOut(false);
+                        return;
+                    }
                 }
 
                 FFmpegOptions ffmpeg = new FFmpegOptions(ffmpegPath) {
