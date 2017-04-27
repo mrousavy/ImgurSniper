@@ -41,10 +41,12 @@ namespace ImgurSniper.Libraries.Helper {
         }
 
         #region UI
-        public static async Task AnimateAsync(this UIElement element, DependencyProperty dp, double from, double to, int duration) {
+        public static async Task AnimateAsync(this UIElement element, DependencyProperty dp, double from, double to, int duration, int beginTime = 0) {
             TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
 
-            DoubleAnimation animation = new DoubleAnimation(from, to, TimeSpan.FromMilliseconds(duration));
+            DoubleAnimation animation = new DoubleAnimation(from, to, TimeSpan.FromMilliseconds(duration)) {
+                BeginTime = TimeSpan.FromMilliseconds(beginTime)
+            };
             animation.Completed += delegate {
                 tcs.SetResult(true);
             };
@@ -64,10 +66,12 @@ namespace ImgurSniper.Libraries.Helper {
             await tcs.Task;
         }
 
-        public static async void Animate(this UIElement element, DependencyProperty dp, double from, double to, int duration) {
+        public static async void Animate(this UIElement element, DependencyProperty dp, double from, double to, int duration, int beginTime = 0) {
             TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
 
-            DoubleAnimation animation = new DoubleAnimation(from, to, TimeSpan.FromMilliseconds(duration));
+            DoubleAnimation animation = new DoubleAnimation(from, to, TimeSpan.FromMilliseconds(duration)) {
+                BeginTime = TimeSpan.FromMilliseconds(beginTime)
+            };
             animation.Completed += delegate {
                 tcs.SetResult(true);
             };

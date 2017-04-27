@@ -97,9 +97,7 @@ namespace ImgurSniper {
             this.Animate(OpacityProperty, 1, 0, 100);
             await this.AnimateAsync(LeftProperty, Left, _left, 100);
 
-            try {
-                _task.SetResult(true);
-            } catch { }
+            _task.TrySetResult(true);
             GC.Collect();
             base.Close();
         }

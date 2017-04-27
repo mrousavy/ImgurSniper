@@ -3,7 +3,7 @@ using Imgur.API.Endpoints.Impl;
 using Imgur.API.Models;
 using ImgurSniper.Properties;
 using System;
-using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ImgurSniper.Libraries.Helper {
@@ -24,10 +24,11 @@ namespace ImgurSniper.Libraries.Helper {
         //Login to Imgur Account
         public async Task Login() {
             try {
-                OAuth2Endpoint endpoint = new OAuth2Endpoint(_client);
-
                 string refreshToken = ConfigHelper.ReadRefreshToken();
+                if (string.IsNullOrWhiteSpace(refreshToken))
+                    return;
 
+                OAuth2Endpoint endpoint = new OAuth2Endpoint(_client);
                 IOAuth2Token token = await endpoint.GetTokenByRefreshTokenAsync(refreshToken);
                 _client.SetOAuth2Token(token);
             } catch {
@@ -42,17 +43,17 @@ namespace ImgurSniper.Libraries.Helper {
         /// <param name="windowName">The name of the Window</param>
         /// <returns>The Link to the uploaded Image</returns>
         public async Task<string> Upload(byte[] bimage, string windowName = null) {
-            ImageEndpoint endpoint = new ImageEndpoint(_client);
+            int threadId = Thread.CurrentThread.ManagedThreadId;
 
-            IImage image;
-            using (MemoryStream stream = new MemoryStream(bimage)) {
-                string title = string.IsNullOrWhiteSpace(windowName)
-                    ? strings.uploadTitle
-                    : $"{windowName}  -  ({strings.uploadTitle})";
-                image = await endpoint.UploadImageStreamAsync(stream, null,
-                    title,
-                    "https://mrousavy.github.io/ImgurSniper");
-            }
+            ImgurClient client = new ImgurClient(ClientId, ClientSecret);
+
+            ImageEndpoint endpoint = new ImageEndpoint(client);
+
+            string title = string.IsNullOrWhiteSpace(windowName)
+                ? strings.uploadTitle
+                : $"{windowName}  -  ({strings.uploadTitle})";
+
+            IImage image = await endpoint.UploadImageBinaryAsync(bimage, null, title, "https://mrousavy.github.io/ImgurSniper");
             return image.Link;
         }
 
@@ -65,13 +66,10 @@ namespace ImgurSniper.Libraries.Helper {
         public async Task UploadToAlbum(byte[] bimage, string windowName, string albumId) {
             ImageEndpoint endpoint = new ImageEndpoint(_client);
 
-            IImage image;
-            using (MemoryStream stream = new MemoryStream(bimage)) {
-                string title = string.IsNullOrWhiteSpace(windowName)
-                    ? strings.uploadTitle
-                    : $"{windowName}  -  ({strings.uploadTitle})";
-                image = await endpoint.UploadImageStreamAsync(stream, albumId);
-            }
+            string title = string.IsNullOrWhiteSpace(windowName)
+                ? strings.uploadTitle
+                : $"{windowName}  -  ({strings.uploadTitle})";
+            await endpoint.UploadImageBinaryAsync(bimage, albumId);
         }
 
         /// <summary>

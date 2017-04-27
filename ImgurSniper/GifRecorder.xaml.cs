@@ -53,6 +53,10 @@ namespace ImgurSniper {
             }
         }
 
+        ~GifRecorder() {
+            Dispose();
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             BeginAnimation(OpacityProperty, Animations.FadeIn);
             new Thread(StartRecording).Start();
@@ -70,16 +74,14 @@ namespace ImgurSniper {
 
         //Fade window out
         private void FadeOut(bool result) {
-            Dispatcher.Invoke(() => {
-                DoubleAnimation fadeOut = Animations.FadeOut;
-                fadeOut.Completed += delegate {
-                    try {
-                        DialogResult = result;
-                    } catch {
-                        Close();
-                    }
-                };
-                BeginAnimation(OpacityProperty, fadeOut);
+            Dispatcher.Invoke(async () => {
+                await this.AnimateAsync(OpacityProperty, Animations.FadeOut);
+
+                try {
+                    DialogResult = result;
+                } catch {
+                    Close();
+                }
             });
         }
 
@@ -107,7 +109,7 @@ namespace ImgurSniper {
                     double elapsed = (currentTime - _startTime);
                     ProgressBar.Value = elapsed / 100;
 
-                    if (elapsed >= ConfigHelper.GifLength) {
+                    if (elapsed >= ConfigHelper.GifLength && !_stopRequested) {
                         StopRecording();
                         _progressTimer.Dispose();
                     }
@@ -137,9 +139,15 @@ namespace ImgurSniper {
                     Process ffmpegHelper = new Process {
                         StartInfo = new ProcessStartInfo {
                             Arguments = "install",
-                            FileName = Path.Combine(ConfigHelper.ProgramFiles, "FFmpegHelper.exe")
+                            FileName = Path.Combine(ConfigHelper.ProgramFiles, "FFmpegManager.exe")
                         }
                     };
+
+                    if (!File.Exists(ffmpegHelper.StartInfo.FileName)) {
+                        FadeOut(false);
+                        return;
+                    }
+
                     ffmpegHelper.Start();
                     ffmpegHelper.WaitForExit();
 
@@ -181,6 +189,8 @@ namespace ImgurSniper {
                 _startTime = DateTime.Now.TimeOfDay.TotalMilliseconds;
                 //Start Screen recording (block screen until StopRecording)
                 _recorder.StartRecording();
+
+                _stopRequested = true;
 
                 //Finish Gif (Convert)
                 MakeGif();

@@ -30,26 +30,5 @@
                 </Grid.Triggers>
             </Grid>
         </Grid>
-
-        <Canvas Name="PaintSurface" MouseDown="BeginPaint" MouseMove="Paint" MouseUp="StopPaint" IsEnabled="False">
-            <Canvas.Background>
-                <SolidColorBrush Color="White" Opacity="0" />
-            </Canvas.Background>
-        </Canvas>
-
-        <Grid Name="SelectedMode" Opacity="0">
-            <StackPanel Orientation="Horizontal">
-                <Border Background="Gray" Name="DrawIcon" Width="50" Height="50">
-                    <Border.CornerRadius>12</Border.CornerRadius>
-                    <md:PackIcon Kind="Pencil" Width="40" Height="40" VerticalAlignment="Center"
-                                 HorizontalAlignment="Center" />
-                </Border>
-                <Border Background="Transparent" Name="CropIcon" Width="50" Height="50">
-                    <Border.CornerRadius>12</Border.CornerRadius>
-                    <md:PackIcon Kind="Crop" Width="40" Height="40" VerticalAlignment="Center"
-                                 HorizontalAlignment="Center" />
-                </Border>
-            </StackPanel>
-        </Grid>
     </Grid>
 </Window>

@@ -23,13 +23,13 @@ namespace ImgurSniper.Libraries.Helper {
                 return new CommandlineArgs(Argument.Snipe);
 
             // "-autostart" or "/autostart" -> "autostart"
-            Regex regexParam = new Regex("^(-/)");
+            Regex regexParam = new Regex("^(-|/)");
             args = new List<string>(args.Select(arg => regexParam.Replace(arg, "")));
 
 #if DEBUG
-            string param = args[1];
+            string param = args.Count > 1 ? args[1] : null;
 #else
-            string param = args[0];
+            string param = args.Count > 0 ? args[0] : null;
 #endif
 
             switch (param) {

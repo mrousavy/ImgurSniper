@@ -1,5 +1,4 @@
 ﻿using ImgurSniper.Libraries.Helper;
-using ImgurSniper.Libraries.Start;
 using ImgurSniper.Properties;
 using Newtonsoft.Json;
 using System;
@@ -16,43 +15,27 @@ namespace ImgurSniper {
     ///     Interaction logic for App.xaml
     /// </summary>
     public partial class App {
+
         public App() {
             DispatcherUnhandledException += UnhandledException;
 
             LoadConfig();
 
             LoadLanguage();
+
+            UpdateCheck();
         }
 
-        //select startup by command line args
-        protected override void OnStartup(StartupEventArgs e) {
-            base.OnStartup(e);
-
-            CommandlineArgs args = CommandLineHelpers.GetCommandlineArguments();
-
-            switch (args.Argument) {
-                case CommandLineHelpers.Argument.Autostart:
-                    //Tray with Hotkeys
-                    StartTray.Initialize();
-                    break;
-                case CommandLineHelpers.Argument.GIF:
-                    //GIF Recording Capture
-                    StartGif.CaptureGif();
-                    break;
-                case CommandLineHelpers.Argument.Snipe:
-                    //Normal Image Capture
-                    StartImage.CaptureImage();
-                    break;
-                case CommandLineHelpers.Argument.Upload:
-                    //Context Menu Instant Upload
-                    if (args.UploadFiles.Count > 1)
-                        StartUpload.UploadMultiple(args.UploadFiles);
-                    else
-                        StartUpload.UploadSingle(args.UploadFiles[0]);
-                    break;
-            }
+        //Check for Updates
+        private void UpdateCheck() {
+#if !DEBUG
+            try {
+                //If automatically update, and last checked was more than 2 days ago
+                if (ConfigHelper.AutoUpdate && (DateTime.Now - ConfigHelper.LastChecked) > TimeSpan.FromDays(2))
+                    Process.Start(Path.Combine(ConfigHelper.ProgramFiles, "ImgurSniper.UI.exe"), "Update");
+            } catch { }
+#endif
         }
-
 
         //Load the config.json
         private static void LoadConfig() {
@@ -97,7 +80,7 @@ namespace ImgurSniper {
 
             try {
                 string[] argumentsArray = Environment.GetCommandLineArgs();
-                string arguments = argumentsArray.Aggregate("", (current, arg) => current + (arg + " "));
+                string arguments = argumentsArray.Aggregate("", (current, arg) => current + (arg.Contains(" ") ? "\"" + arg + "\" " : arg + " "));
                 string exePath = System.Reflection.Assembly.GetEntryAssembly().Location;
 
                 Process.Start(exePath, arguments);

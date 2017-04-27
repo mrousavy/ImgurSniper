@@ -120,9 +120,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="EntryWindow.xaml.cs">
+      <DependentUpon>EntryWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Libraries\Helper\ClipboardHelper.cs" />
-    <Compile Include="Libraries\Start\StartGif.cs" />
-    <Compile Include="Libraries\Start\StartImage.cs" />
+    <Compile Include="Libraries\Helper\ScreenshotHelper.cs" />
     <Compile Include="Libraries\Start\StartTray.cs" />
     <Compile Include="Libraries\FFmpeg\ExternalCLIManager.cs" />
     <Compile Include="Libraries\FFmpeg\FFmpegEnums.cs" />
@@ -159,6 +161,10 @@
     </Compile>
     <Compile Include="Libraries\ScreenCapture\ScreenRecorder.cs" />
     <Compile Include="Statics.cs" />
+    <Page Include="EntryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GifRecorder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

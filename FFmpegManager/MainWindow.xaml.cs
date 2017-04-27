@@ -42,7 +42,7 @@ namespace FFmpegManager {
             FadeIn();
 
             //remove dash or slash infront of param
-            Regex regexParam = new Regex("^(-/)");
+            Regex regexParam = new Regex("^(-|/)");
             List<string> args = new List<string>(Environment.GetCommandLineArgs().Select(arg => regexParam.Replace(arg, "")));
 
             if (args.Contains("install")) {
