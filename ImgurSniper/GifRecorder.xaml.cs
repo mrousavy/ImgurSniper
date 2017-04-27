@@ -196,6 +196,7 @@ namespace ImgurSniper {
                 MakeGif();
             } catch {
                 FadeOut(false);
+                return;
             }
 
             if (!_stopRequested)
@@ -252,7 +253,7 @@ namespace ImgurSniper {
             _recorder = null;
 
             try {
-                Close();
+                Dispatcher.Invoke(Close);
             } catch {
                 //Window already closed
             }

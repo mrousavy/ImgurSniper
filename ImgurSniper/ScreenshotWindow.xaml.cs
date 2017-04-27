@@ -353,7 +353,7 @@ namespace ImgurSniper {
             try {
                 Rectangle size = new Rectangle((int)from.X, (int)from.Y, w, h);
 
-                using (Image img = ScreenCapture.GetScreenshotNative(ptr, size, ConfigHelper.ShowMouse)) {
+                using (Image img = Screenshot.GetScreenshotNative(ptr, size, ConfigHelper.ShowMouse)) {
                     if (ConfigHelper.Compression < 100) {
                         using (MemoryStream stream = ImageHelper.CompressImage(img, ConfigHelper.ImageFormat, ConfigHelper.Compression)) {
                             CroppedImage = stream.ToArray();

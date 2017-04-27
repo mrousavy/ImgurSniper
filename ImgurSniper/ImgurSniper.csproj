@@ -187,7 +187,7 @@
     <Compile Include="Libraries\Helper\Cipher.cs" />
     <Compile Include="Libraries\Helper\ConfigHelper.cs" />
     <Compile Include="Libraries\Helper\ImgurUploader.cs" />
-    <Compile Include="Libraries\ScreenCapture\ScreenCapture.cs" />
+    <Compile Include="Libraries\ScreenCapture\Screenshot.cs" />
     <Compile Include="ScreenshotWindow.xaml.cs">
       <DependentUpon>ScreenshotWindow.xaml</DependentUpon>
     </Compile>

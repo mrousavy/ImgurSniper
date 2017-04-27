@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using Size = System.Drawing.Size;
 
 namespace ImgurSniper.Libraries.ScreenCapture {
-    internal class ScreenCapture {
+    internal class Screenshot {
         private const int CursorShowing = 0x00000001;
 
         //~10 ms Faster on 4480 x 1440 Size
