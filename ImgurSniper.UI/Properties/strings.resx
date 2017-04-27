@@ -177,9 +177,6 @@
   <data name="usePrint" xml:space="preserve">
     <value>Use Print Key as Shortcut</value>
   </data>
-  <data name="whenFinished" xml:space="preserve">
-    <value>When finished...</value>
-  </data>
   <data name="whereSnipe" xml:space="preserve">
     <value>Where to snipe</value>
   </data>

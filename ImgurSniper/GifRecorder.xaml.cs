@@ -2,6 +2,7 @@
 using ImgurSniper.Libraries.Helper;
 using ImgurSniper.Libraries.ScreenCapture;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Threading;
@@ -116,6 +117,7 @@ namespace ImgurSniper {
             }
         }
 
+        #region GIF
         //Start Recording Video
         private void StartRecording() {
             try {
@@ -130,9 +132,17 @@ namespace ImgurSniper {
                 //Path to FFmpeg.exe
                 string ffmpegPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "ffmpeg.exe");
 
-                //FFmpeg.exe must be in ../ImgurSniper/Resources/ffmpeg.exe
-                if (!File.Exists(ffmpegPath))
-                    FadeOut(false);
+                //FFmpeg.exe must be in ../ImgurSniper/Resources/ffmpeg.exe, install if not exists
+                if (!File.Exists(ffmpegPath)) {
+                    Process ffmpegHelper = new Process {
+                        StartInfo = new ProcessStartInfo {
+                            Arguments = "install",
+                            FileName = Path.Combine(ConfigHelper.ProgramFiles, "FFmpegHelper.exe")
+                        }
+                    };
+                    ffmpegHelper.Start();
+                    ffmpegHelper.WaitForExit();
+                }
 
                 FFmpegOptions ffmpeg = new FFmpegOptions(ffmpegPath) {
                     VideoCodec = FFmpegVideoCodec.gif
@@ -198,7 +208,7 @@ namespace ImgurSniper {
             else
                 FadeOut(true);
         }
-
+        #endregion
 
         //IDisposable
         public void Dispose() {

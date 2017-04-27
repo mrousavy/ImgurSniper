@@ -1,0 +1,35 @@
+﻿<Window x:Class="FFmpegManager.MainWindow"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+		xmlns:cultureStrings="clr-namespace:FFmpegManager.Properties"
+		mc:Ignorable="d" Cursor="Wait"
+		Title="MainWindow" Height="250" Width="400" Loaded="WindowLoaded"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Opacity="0"
+        
+		
+		TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+		TextElement.FontWeight="Medium"
+		TextElement.FontSize="14"
+		FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
+    <md:Card VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+             Background="{DynamicResource MaterialDesignPaper}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <ProgressBar Grid.Row="0" Width="250" Minimum="0" Maximum="100"
+                         Value="0" x:Name="Progress"
+                         VerticalAlignment="Bottom" Margin="0,0,0,10"/>
+            
+            <Label x:Name="StatusLabel" Grid.Row="1" FontSize="14"
+                   HorizontalAlignment="Center" VerticalAlignment="Top"
+                   Margin="0,10,0,0" Content="{x:Static Member=cultureStrings:strings.invalidParam}"/>
+		</Grid>
+	</md:Card>
+</Window>

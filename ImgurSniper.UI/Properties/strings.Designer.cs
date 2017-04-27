@@ -990,15 +990,6 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to When finished....
-        /// </summary>
-        public static string whenFinished {
-            get {
-                return ResourceManager.GetString("whenFinished", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Where to snipe.
         /// </summary>
         public static string whereSnipe {

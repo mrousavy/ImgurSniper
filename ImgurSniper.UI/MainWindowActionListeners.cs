@@ -524,28 +524,6 @@ namespace ImgurSniper.UI {
                 e.Cancel = false;
             }
         }
-
-        //Custom Title Bar (Mac OSX Title bar?)
-        //private async void Window_Maximize(object sender, MouseButtonEventArgs e) {
-        //    if(WindowState == WindowState.Normal) {
-        //        WindowState = WindowState.Maximized;
-        //    } else {
-        //        WindowState = WindowState.Normal;
-        //    }
-
-        //    WindowStyle = WindowStyle.SingleBorderWindow;
-        //}
-        //private void Window_Minimize(object sender, MouseButtonEventArgs e) {
-        //    WindowStyle = WindowStyle.SingleBorderWindow;
-        //    WindowState = WindowState.Minimized;
-        //}
-        //private void Window_Close(object sender, MouseButtonEventArgs e) {
-        //    Close();
-        //}
-        //private void Window_Move(object sender, MouseButtonEventArgs e) {
-        //    DragMove();
-        //}
-
         #endregion
     }
 }

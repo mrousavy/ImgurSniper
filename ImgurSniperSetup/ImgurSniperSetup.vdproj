@@ -28,6 +28,12 @@
         "Entry"
         {
         "MsmKey" = "8:_19C2CEF8F5830A227B421654688E26C1"
+        "OwnerKey" = "8:_6B25A017C4DF401AAA0A24B07A595282"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_19C2CEF8F5830A227B421654688E26C1"
         "OwnerKey" = "8:_A954771F50AC499190FC402CECF6B3F2"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -45,8 +51,20 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_6B25A017C4DF401AAA0A24B07A595282"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_6FE760FA3D7BF0047E966A70A6BC545A"
         "OwnerKey" = "8:_75AFEA8668A74446A83A818B7662AE38"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6FE760FA3D7BF0047E966A70A6BC545A"
+        "OwnerKey" = "8:_6B25A017C4DF401AAA0A24B07A595282"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -130,6 +148,12 @@
         "Entry"
         {
         "MsmKey" = "8:_AA0E32DB26C47923A4BA7FFA3323A385"
+        "OwnerKey" = "8:_6B25A017C4DF401AAA0A24B07A595282"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_AA0E32DB26C47923A4BA7FFA3323A385"
         "OwnerKey" = "8:_A954771F50AC499190FC402CECF6B3F2"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -143,6 +167,12 @@
         {
         "MsmKey" = "8:_C30D88FF15831BCB0EC0B7746F86A4D9"
         "OwnerKey" = "8:_75AFEA8668A74446A83A818B7662AE38"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C30D88FF15831BCB0EC0B7746F86A4D9"
+        "OwnerKey" = "8:_6B25A017C4DF401AAA0A24B07A595282"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -214,6 +244,12 @@
         "Entry"
         {
         "MsmKey" = "8:_E93695BF24148F06FFC97FF6B2450434"
+        "OwnerKey" = "8:_6B25A017C4DF401AAA0A24B07A595282"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E93695BF24148F06FFC97FF6B2450434"
         "OwnerKey" = "8:_6FE760FA3D7BF0047E966A70A6BC545A"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -221,6 +257,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_75AFEA8668A74446A83A818B7662AE38"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_6B25A017C4DF401AAA0A24B07A595282"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -422,7 +464,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:v4.5                            "
+                "FrameworkVersion" = "8:v4.5                             "
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=395269"
                 }
@@ -1590,6 +1632,34 @@
                 {
                 }
             }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_6B25A017C4DF401AAA0A24B07A595282"
+            {
+            "SourcePath" = "8:..\\FFmpegManager\\obj\\Release\\FFmpegManager.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_3A469D3976FA4679A5D41BBD45AD8162"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:Release|Any CPU"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{FFE83E16-5E55-485E-ACAC-99D585C74070}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_75AFEA8668A74446A83A818B7662AE38"
             {
             "SourcePath" = "8:..\\ImgurSniper.UI\\obj\\Release\\ImgurSniper.UI.exe"
@@ -1725,6 +1795,62 @@
             "OutputConfiguration" = "8:Release|Any CPU"
             "OutputGroupCanonicalName" = "8:Built"
             "OutputProjectGuid" = "8:{8ED6ECEF-039D-4BA1-87E3-E8EA7A8237C4}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B9869DC528D1488DB3E8F4296C966F60"
+            {
+            "SourcePath" = "8:"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_3A469D3976FA4679A5D41BBD45AD8162"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:Release|Any CPU"
+            "OutputGroupCanonicalName" = "8:LocalizedResourceDlls"
+            "OutputProjectGuid" = "8:{82FEAF8B-BEB8-4C5A-B694-D0B708844843}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_E2CD0A0D387C43F397F1CC202C4FD63A"
+            {
+            "SourcePath" = "8:"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_3A469D3976FA4679A5D41BBD45AD8162"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:Release|Any CPU"
+            "OutputGroupCanonicalName" = "8:LocalizedResourceDlls"
+            "OutputProjectGuid" = "8:{FFE83E16-5E55-485E-ACAC-99D585C74070}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddToContextMenu", "AddToCo
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ImgurSniperSetup", "ImgurSniperSetup\ImgurSniperSetup.vdproj", "{B012628C-2D4D-48A0-A760-70AD715AA1BC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFmpegManager", "FFmpegManager\FFmpegManager.csproj", "{FFE83E16-5E55-485E-ACAC-99D585C74070}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{82FEAF8B-BEB8-4C5A-B694-D0B708844843}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B012628C-2D4D-48A0-A760-70AD715AA1BC}.Debug|Any CPU.ActiveCfg = Debug
 		{B012628C-2D4D-48A0-A760-70AD715AA1BC}.Release|Any CPU.ActiveCfg = Release
+		{FFE83E16-5E55-485E-ACAC-99D585C74070}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFE83E16-5E55-485E-ACAC-99D585C74070}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFE83E16-5E55-485E-ACAC-99D585C74070}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFE83E16-5E55-485E-ACAC-99D585C74070}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

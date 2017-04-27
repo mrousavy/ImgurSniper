@@ -343,9 +343,6 @@ Zeige dies den klugen Computer Affen: {0}</value>
   <data name="version" xml:space="preserve">
     <value>Version</value>
   </data>
-  <data name="whenFinished" xml:space="preserve">
-    <value>Nach beenden...</value>
-  </data>
   <data name="whereSnipe" xml:space="preserve">
     <value>Snipe Bereich</value>
   </data>
