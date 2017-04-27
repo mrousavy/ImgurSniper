@@ -1,6 +1,5 @@
 ﻿using ImgurSniper.Libraries.Helper;
 using ImgurSniper.Libraries.Native;
-using ImgurSniper.Properties;
 using System;
 using System.Linq;
 using System.Text;
@@ -63,22 +62,9 @@ namespace ImgurSniper {
             Top = size.Top;
             Width = size.Width;
             Height = size.Height;
-
-
-            if (allMonitors) {
-                Rect workArea = SystemParameters.WorkArea;
-                toast.Margin = new Thickness(
-                    workArea.Left,
-                    workArea.Top,
-                    SystemParameters.VirtualScreenWidth - workArea.Right,
-                    SystemParameters.VirtualScreenHeight - SystemParameters.PrimaryScreenHeight);
-            }
         }
 
-        private async void WindowLoaded(object sender, RoutedEventArgs e) {
-            //this.CaptureMouse();
-            //grid.CaptureMouse();
-            //PaintSurface.CaptureMouse();
+        private void WindowLoaded(object sender, RoutedEventArgs e) {
             selectionRectangle.CaptureMouse();
 
             Rectangle bounds = System.Windows.Forms.Screen.PrimaryScreen.Bounds;
@@ -90,11 +76,6 @@ namespace ImgurSniper {
 
             Activate();
             Focus();
-
-            //Prevent short flash of Toast
-            await Task.Delay(100);
-            toast.Visibility = Visibility.Visible;
-
 
             //Hide in Alt + Tab Switcher View
             WindowInteropHelper wndHelper = new WindowInteropHelper(this);
@@ -375,7 +356,7 @@ namespace ImgurSniper {
             int fromY = (int)Math.Min(From.Y, To.Y);
 
             if (Math.Abs(To.X - From.X) < 9 || Math.Abs(To.Y - From.Y) < 9) {
-                toast.Show(strings.imgSize, TimeSpan.FromSeconds(3.3));
+                //Too Small
                 selectionRectangle.Margin = new Thickness(99999);
             } else {
                 Cursor = Cursors.Arrow;

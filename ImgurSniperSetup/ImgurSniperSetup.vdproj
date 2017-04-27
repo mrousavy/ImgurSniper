@@ -435,6 +435,20 @@
             "InstallerClass" = "11:FALSE"
             "CustomActionData" = "8:"
             }
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_A7642C5ADF0D4B93B62785E1C54DE410"
+            {
+            "Name" = "8:Primary output from FFmpegManager (Release Any CPU)"
+            "Condition" = "8:"
+            "Object" = "8:_6B25A017C4DF401AAA0A24B07A595282"
+            "FileType" = "3:2"
+            "InstallAction" = "3:4"
+            "Arguments" = "8:remove"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:2"
+            "Identifier" = "8:_B212312F_1D2E_45F4_A74F_FC42A5969D93"
+            "InstallerClass" = "11:FALSE"
+            "CustomActionData" = "8:"
+            }
             "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_C27AEC6DA5974EE4BD90584171DB2D0E"
             {
             "Name" = "8:Primary output from ImgurSniper.UI (Release Any CPU)"
@@ -446,6 +460,20 @@
             "EntryPoint" = "8:"
             "Sequence" = "3:1"
             "Identifier" = "8:_F88B5DAA_6CAF_4D98_BA02_0CCE322BAE21"
+            "InstallerClass" = "11:FALSE"
+            "CustomActionData" = "8:"
+            }
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_C285F653F6E24F899093556CF8293663"
+            {
+            "Name" = "8:Primary output from FFmpegManager (Release Any CPU)"
+            "Condition" = "8:"
+            "Object" = "8:_6B25A017C4DF401AAA0A24B07A595282"
+            "FileType" = "3:2"
+            "InstallAction" = "3:2"
+            "Arguments" = "8:install"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:2"
+            "Identifier" = "8:_20866785_8669_4CBF_A0DD_BCF5E68A24A2"
             "InstallerClass" = "11:FALSE"
             "CustomActionData" = "8:"
             }

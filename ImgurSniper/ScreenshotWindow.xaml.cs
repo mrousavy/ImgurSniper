@@ -1,7 +1,6 @@
 ﻿using ImgurSniper.Libraries.Helper;
 using ImgurSniper.Libraries.Native;
 using ImgurSniper.Libraries.ScreenCapture;
-using ImgurSniper.Properties;
 using System;
 using System.Drawing;
 using System.IO;
@@ -52,7 +51,9 @@ namespace ImgurSniper {
 
             InitializeComponent();
 
-            Position(allMonitors);
+            Loaded += delegate {
+                Position(allMonitors);
+            };
             //LoadConfig();
         }
 
@@ -64,17 +65,9 @@ namespace ImgurSniper {
             Top = size.Top;
             Width = size.Width;
             Height = size.Height;
-
-
-            if (allMonitors) {
-                Rect workArea = SystemParameters.WorkArea;
-                toast.Margin = new Thickness(workArea.Left, workArea.Top,
-                    SystemParameters.VirtualScreenWidth - workArea.Right,
-                    SystemParameters.VirtualScreenHeight - SystemParameters.PrimaryScreenHeight);
-            }
         }
 
-        private async void WindowLoaded(object sender, RoutedEventArgs e) {
+        private void WindowLoaded(object sender, RoutedEventArgs e) {
             selectionRectangle.CaptureMouse();
 
             Rectangle bounds = System.Windows.Forms.Screen.PrimaryScreen.Bounds;
@@ -86,11 +79,6 @@ namespace ImgurSniper {
 
             Activate();
             Focus();
-
-            //Prevent short flash of Toast
-            await Task.Delay(100);
-            toast.Visibility = Visibility.Visible;
-
 
             //Hide in Alt + Tab Switcher View
             WindowInteropHelper wndHelper = new WindowInteropHelper(this);
@@ -351,7 +339,7 @@ namespace ImgurSniper {
             int fromY = (int)Math.Min(From.Y, To.Y);
 
             if (Math.Abs(To.X - From.X) < 9 || Math.Abs(To.Y - From.Y) < 9) {
-                toast.Show(strings.imgSize, TimeSpan.FromSeconds(3.3));
+                // Too small
                 selectionRectangle.Margin = new Thickness(99999);
             } else {
                 Cursor = Cursors.Arrow;
@@ -401,8 +389,7 @@ namespace ImgurSniper {
             bool result = MakeImage(ptr, new Rectangle(fromX, fromY, w, h));
 
             if (!result) {
-                toast.Show(strings.whoops, TimeSpan.FromSeconds(3.3));
-                CloseSnap(false, 1500);
+                CloseSnap(false, 0);
             } else {
                 DialogResult = true;
             }
@@ -430,7 +417,7 @@ namespace ImgurSniper {
         }
 
         //Close Window with fade out animation
-        private void CloseSnap(bool result, int delay) {
+        private void CloseSnap(bool result, int delay = 0) {
             DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.15));
             anim.Completed += delegate {
                 try {

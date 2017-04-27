@@ -1,7 +1,6 @@
 ﻿<Window x:Class="ImgurSniper.GifWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:toasty="clr-namespace:Toast;assembly=Toast"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:md="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
@@ -29,26 +28,6 @@
                         </BeginStoryboard>
                     </EventTrigger>
                 </Grid.Triggers>
-
-                <!--Unnecessary Things commented out for Performance Reasons-->
-
-                <!--<Grid x:Name="SnipperGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <Image Name="img" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Fill"/>
-                </Grid>-->
-
-                <!--<Label VerticalAlignment="Top" HorizontalAlignment="Center" Background="Black" Foreground="White" Name="coords" Opacity="0.3">x:0 | y:0</Label>-->
-                <!--<Grid x:Name="Magnifyer" Width="70" Height="70" Visibility="Collapsed" Margin="9999">
-                    <Ellipse Stroke="Gray" x:Name="MagnifyingEllipse" Width="70" Height="70"
-                 VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Ellipse.Fill>
-                            <VisualBrush ViewboxUnits="Absolute" Viewbox="0,0,50,50" x:Name="MagnifyerBrush"
-                             ViewportUnits="RelativeToBoundingBox" Viewport="0,0,1,1"/>
-                        </Ellipse.Fill>
-                    </Ellipse>
-                    <Label FontSize="25" Opacity="0.8" VerticalAlignment="Center" HorizontalAlignment="Center">✛</Label>
-                </Grid>-->
-
-                <!--<Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="MagnifyedImage"/>-->
             </Grid>
         </Grid>
 
@@ -72,17 +51,5 @@
                 </Border>
             </StackPanel>
         </Grid>
-
-        <toasty:Toasty x:Name="toast"
-                       Height="30"
-                       VerticalAlignment="Bottom"
-                       Duration="0:0:0:3.3"
-                       Message="Whoops! Something went wrong!"
-                       FontFamily="Segoe UI"
-                       FontWeight="Bold"
-                       MessageColor="White"
-                       Background="#F44336"
-                       FontSize="13"
-                       Visibility="Collapsed" />
     </Grid>
 </Window>
