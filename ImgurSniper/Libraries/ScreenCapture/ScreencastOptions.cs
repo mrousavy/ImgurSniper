@@ -9,8 +9,8 @@ using System.Text;
 namespace ImgurSniper.Libraries.ScreenCapture {
     public class ScreencastOptions {
         public string OutputPath { get; set; }
-        public int GIFFPS { get; set; }
-        public int ScreenRecordFPS { get; set; }
+        public int Giffps { get; set; }
+        public int ScreenRecordFps { get; set; }
         public Rectangle CaptureArea { get; set; }
         public float Duration { get; set; }
         public bool DrawCursor { get; set; }
@@ -32,7 +32,7 @@ namespace ImgurSniper.Libraries.ScreenCapture {
 
             if (FFmpeg.UseCustomCommands && !string.IsNullOrEmpty(FFmpeg.CustomCommands)) {
                 commands = FFmpeg.CustomCommands.
-                    Replace("$fps$", FFmpeg.VideoCodec == FFmpegVideoCodec.gif ? GIFFPS.ToString() : ScreenRecordFPS.ToString(), StringComparison.InvariantCultureIgnoreCase).
+                    Replace("$fps$", FFmpeg.VideoCodec == FFmpegVideoCodec.gif ? Giffps.ToString() : ScreenRecordFps.ToString(), StringComparison.InvariantCultureIgnoreCase).
                     Replace("$area_x$", CaptureArea.X.ToString(), StringComparison.InvariantCultureIgnoreCase).
                     Replace("$area_y$", CaptureArea.Y.ToString(), StringComparison.InvariantCultureIgnoreCase).
                     Replace("$area_width$", CaptureArea.Width.ToString(), StringComparison.InvariantCultureIgnoreCase).
@@ -61,11 +61,11 @@ namespace ImgurSniper.Libraries.ScreenCapture {
             if (isCustom) {
                 fps = "$fps$";
             } else {
-                fps = FFmpeg.VideoCodec == FFmpegVideoCodec.gif ? GIFFPS.ToString() : ScreenRecordFPS.ToString();
+                fps = FFmpeg.VideoCodec == FFmpegVideoCodec.gif ? Giffps.ToString() : ScreenRecordFps.ToString();
             }
 
             if (FFmpeg.IsVideoSourceSelected) {
-                if (FFmpeg.VideoSource.Equals(FFmpegHelper.SourceGDIGrab, StringComparison.InvariantCultureIgnoreCase)) {
+                if (FFmpeg.VideoSource.Equals(FFmpegHelper.SourceGdiGrab, StringComparison.InvariantCultureIgnoreCase)) {
                     // http://ffmpeg.org/ffmpeg-devices.html#gdigrab
                     args.AppendFormat("-f gdigrab -framerate {0} -offset_x {1} -offset_y {2} -video_size {3}x{4} -draw_mouse {5} -i desktop ",
                         fps, isCustom ? "$area_x$" : CaptureArea.X.ToString(), isCustom ? "$area_y$" : CaptureArea.Y.ToString(),
@@ -110,23 +110,23 @@ namespace ImgurSniper.Libraries.ScreenCapture {
                 switch (FFmpeg.VideoCodec) {
                     case FFmpegVideoCodec.libx264: // https://trac.ffmpeg.org/wiki/Encode/H.264
                     case FFmpegVideoCodec.libx265: // https://trac.ffmpeg.org/wiki/Encode/H.265
-                        args.AppendFormat("-preset {0} ", FFmpeg.X264_Preset);
+                        args.AppendFormat("-preset {0} ", FFmpeg.X264Preset);
                         args.AppendFormat("-tune {0} ", FFmpegTune.zerolatency);
-                        args.AppendFormat("-crf {0} ", FFmpeg.X264_CRF);
+                        args.AppendFormat("-crf {0} ", FFmpeg.X264Crf);
                         args.AppendFormat("-pix_fmt {0} ", "yuv420p"); // -pix_fmt yuv420p required otherwise can't stream in Chrome
                         break;
                     case FFmpegVideoCodec.libvpx: // https://trac.ffmpeg.org/wiki/Encode/VP8
                         args.AppendFormat("-deadline {0} ", "realtime");
-                        args.AppendFormat("-b:v {0}k ", FFmpeg.VPx_bitrate);
+                        args.AppendFormat("-b:v {0}k ", FFmpeg.VPxBitrate);
                         args.AppendFormat("-pix_fmt {0} ", "yuv420p"); // -pix_fmt yuv420p required otherwise causing issues in Chrome related to WebM transparency support
                         break;
                     case FFmpegVideoCodec.libxvid: // https://trac.ffmpeg.org/wiki/Encode/MPEG-4
-                        args.AppendFormat("-qscale:v {0} ", FFmpeg.XviD_qscale);
+                        args.AppendFormat("-qscale:v {0} ", FFmpeg.XviDQscale);
                         break;
                     case FFmpegVideoCodec.h264_nvenc: // https://trac.ffmpeg.org/wiki/HWAccelIntro#NVENC
                     case FFmpegVideoCodec.hevc_nvenc:
-                        args.AppendFormat("-preset {0} ", FFmpeg.NVENC_preset);
-                        args.AppendFormat("-b:v {0}k ", FFmpeg.NVENC_bitrate);
+                        args.AppendFormat("-preset {0} ", FFmpeg.NvencPreset);
+                        args.AppendFormat("-b:v {0}k ", FFmpeg.NvencBitrate);
                         args.AppendFormat("-pix_fmt {0} ", "yuv420p");
                         break;
                     case FFmpegVideoCodec.gif:
@@ -140,13 +140,13 @@ namespace ImgurSniper.Libraries.ScreenCapture {
             if (FFmpeg.IsAudioSourceSelected) {
                 switch (FFmpeg.AudioCodec) {
                     case FFmpegAudioCodec.libvoaacenc: // http://trac.ffmpeg.org/wiki/Encode/AAC
-                        args.AppendFormat("-c:a aac -strict -2 -ac 2 -b:a {0}k ", FFmpeg.AAC_bitrate); // -ac 2 required otherwise failing with 7.1
+                        args.AppendFormat("-c:a aac -strict -2 -ac 2 -b:a {0}k ", FFmpeg.AacBitrate); // -ac 2 required otherwise failing with 7.1
                         break;
                     case FFmpegAudioCodec.libvorbis: // http://trac.ffmpeg.org/wiki/TheoraVorbisEncodingGuide
-                        args.AppendFormat("-c:a libvorbis -qscale:a {0} ", FFmpeg.Vorbis_qscale);
+                        args.AppendFormat("-c:a libvorbis -qscale:a {0} ", FFmpeg.VorbisQscale);
                         break;
                     case FFmpegAudioCodec.libmp3lame: // http://trac.ffmpeg.org/wiki/Encode/MP3
-                        args.AppendFormat("-c:a libmp3lame -qscale:a {0} ", FFmpeg.MP3_qscale);
+                        args.AppendFormat("-c:a libmp3lame -qscale:a {0} ", FFmpeg.Mp3Qscale);
                         break;
                 }
             }

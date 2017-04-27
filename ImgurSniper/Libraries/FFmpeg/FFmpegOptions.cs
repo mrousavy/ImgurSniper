@@ -4,9 +4,9 @@ using System;
 namespace ImgurSniper.Libraries.FFmpeg {
     public class FFmpegOptions {
         // General
-        public bool OverrideCLIPath { get; set; } = false;
-        public string CLIPath { get; set; } = "";
-        public string VideoSource { get; set; } = FFmpegHelper.SourceGDIGrab;
+        public bool OverrideCliPath { get; set; } = false;
+        public string CliPath { get; set; } = "";
+        public string VideoSource { get; set; } = FFmpegHelper.SourceGdiGrab;
         public string AudioSource { get; set; } = FFmpegHelper.SourceNone;
         public FFmpegVideoCodec VideoCodec { get; set; } = FFmpegVideoCodec.libx264;
         public FFmpegAudioCodec AudioCodec { get; set; } = FFmpegAudioCodec.libvoaacenc;
@@ -16,29 +16,21 @@ namespace ImgurSniper.Libraries.FFmpeg {
         public bool ShowError { get; set; } = true;
 
         // Video
-        public FFmpegPreset X264_Preset { get; set; } = FFmpegPreset.ultrafast;
-        public int X264_CRF { get; set; } = 28;
-        public int VPx_bitrate { get; set; } = 3000; // kbit/s
-        public int XviD_qscale { get; set; } = 10;
-        public FFmpegNVENCPreset NVENC_preset { get; set; } = FFmpegNVENCPreset.llhp;
-        public int NVENC_bitrate { get; set; } = 3000; // kbit/s
-        public FFmpegPaletteGenStatsMode GIFStatsMode { get; set; } = FFmpegPaletteGenStatsMode.full;
-        public FFmpegPaletteUseDither GIFDither { get; set; } = FFmpegPaletteUseDither.sierra2_4a;
+        public FFmpegPreset X264Preset { get; set; } = FFmpegPreset.ultrafast;
+        public int X264Crf { get; set; } = 28;
+        public int VPxBitrate { get; set; } = 3000; // kbit/s
+        public int XviDQscale { get; set; } = 10;
+        public FFmpegNVENCPreset NvencPreset { get; set; } = FFmpegNVENCPreset.llhp;
+        public int NvencBitrate { get; set; } = 3000; // kbit/s
+        public FFmpegPaletteGenStatsMode GifStatsMode { get; set; } = FFmpegPaletteGenStatsMode.full;
+        public FFmpegPaletteUseDither GifDither { get; set; } = FFmpegPaletteUseDither.sierra2_4a;
 
         // Audio
-        public int AAC_bitrate { get; set; } = 128; // kbit/s
-        public int Vorbis_qscale { get; set; } = 3;
-        public int MP3_qscale { get; set; } = 4;
+        public int AacBitrate { get; set; } = 128; // kbit/s
+        public int VorbisQscale { get; set; } = 3;
+        public int Mp3Qscale { get; set; } = 4;
 
-        public string FFmpegPath {
-            get {
-                if (!string.IsNullOrEmpty(CLIPath)) {
-                    return Helpers.GetAbsolutePath(CLIPath);
-                }
-
-                return "";
-            }
-        }
+        public string FFmpegPath => !string.IsNullOrEmpty(CliPath) ? Helpers.GetAbsolutePath(CliPath) : "";
 
         public string Extension {
             get {
@@ -81,7 +73,7 @@ namespace ImgurSniper.Libraries.FFmpeg {
         }
 
         public FFmpegOptions(string ffmpegPath) {
-            CLIPath = Helpers.GetVariableFolderPath(ffmpegPath);
+            CliPath = Helpers.GetVariableFolderPath(ffmpegPath);
         }
     }
 }

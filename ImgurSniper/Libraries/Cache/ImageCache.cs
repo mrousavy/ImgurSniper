@@ -8,11 +8,11 @@ namespace ImgurSniper.Libraries.Cache {
     public abstract class ImageCache : IDisposable {
         public bool IsWorking { get; protected set; }
 
-        protected Thread task;
-        protected BlockingCollection<Image> imageQueue;
+        protected Thread Task;
+        protected BlockingCollection<Image> ImageQueue;
 
-        public ImageCache() {
-            imageQueue = new BlockingCollection<Image>();
+        protected ImageCache() {
+            ImageQueue = new BlockingCollection<Image>();
         }
 
         public void AddImageAsync(Image img) {
@@ -20,20 +20,20 @@ namespace ImgurSniper.Libraries.Cache {
                 StartConsumerThread();
             }
 
-            imageQueue.Add(img);
+            ImageQueue.Add(img);
         }
 
         protected virtual void StartConsumerThread() {
             if (!IsWorking) {
                 IsWorking = true;
 
-                task = new Thread(() => {
+                Task = new Thread(() => {
                     try {
-                        while (!imageQueue.IsCompleted) {
+                        while (!ImageQueue.IsCompleted) {
                             Image img = null;
 
                             try {
-                                img = imageQueue.Take();
+                                img = ImageQueue.Take();
 
                                 if (img != null) {
                                     //using (new DebugTimer("WriteFrame"))
@@ -41,7 +41,7 @@ namespace ImgurSniper.Libraries.Cache {
                                 }
                             } catch (InvalidOperationException) {
                             } finally {
-                                if (img != null) img.Dispose();
+                                img?.Dispose();
                             }
                         }
                     } finally {
@@ -49,7 +49,7 @@ namespace ImgurSniper.Libraries.Cache {
                     }
                 });
 
-                task.Start();
+                Task.Start();
             }
         }
 
@@ -57,17 +57,15 @@ namespace ImgurSniper.Libraries.Cache {
 
         public void Finish() {
             if (IsWorking) {
-                imageQueue.CompleteAdding();
-                task.Join();
+                ImageQueue.CompleteAdding();
+                Task.Join();
             }
 
             Dispose();
         }
 
         public virtual void Dispose() {
-            if (imageQueue != null) {
-                imageQueue.Dispose();
-            }
+            ImageQueue?.Dispose();
         }
     }
 }

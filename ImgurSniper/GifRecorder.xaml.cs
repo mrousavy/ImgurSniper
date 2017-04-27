@@ -5,7 +5,6 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
@@ -20,9 +19,8 @@ namespace ImgurSniper {
         private ScreenRecorder _recorder;
         private string _outputMp4, _outputGif;
         private System.Timers.Timer _progressTimer;
-        private int _elapsed = 0;
-        private CancellationTokenSource cts;
-        private bool _stopRequested = false;
+        private bool _stopRequested;
+        private double _startTime;
 
         public byte[] Gif;
 
@@ -44,23 +42,32 @@ namespace ImgurSniper {
 
             if (_progressIndicatorEnabled) {
                 ProgressBar.Width = progressBarWidth;
+                ProgressBar.Maximum = FileIO.GifLength / 100d;
+
+                //Space for ProgressBar
+                Height += 30;
             } else {
                 ProgressBar.Visibility = Visibility.Collapsed;
                 DoneButton.Visibility = Visibility.Collapsed;
             }
-
-            ProgressBar.Maximum = FileIO.GifLength / 50;
-            cts = new CancellationTokenSource();
-
-            //Space for ProgressBar
-            Height += 30;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             BeginAnimation(OpacityProperty, Animations.FadeIn);
-            StartRecording();
+            new Thread(StartRecording).Start();
         }
 
+        //OK Button click
+        private void StopGifClick(object sender, MouseButtonEventArgs e) {
+            if (_stopRequested)
+                return;
+
+            _stopRequested = true;
+
+            StopRecording();
+        }
+
+        //Fade window out
         private void FadeOut(bool result) {
             Dispatcher.Invoke(() => {
                 DoubleAnimation fadeOut = Animations.FadeOut;
@@ -75,6 +82,7 @@ namespace ImgurSniper {
             });
         }
 
+        //Show circular Progressing Indicator
         private void ShowProgressBar() {
             DoubleAnimation fadeOut = Animations.FadeOut;
             fadeOut.Completed += delegate {
@@ -94,119 +102,101 @@ namespace ImgurSniper {
                         return;
                     }
 
-                    ProgressBar.Value = _elapsed++;
+                    double currentTime = DateTime.Now.TimeOfDay.TotalMilliseconds;
+                    double elapsed = (currentTime - _startTime);
+                    ProgressBar.Value = elapsed / 100;
+
+                    if (elapsed >= FileIO.GifLength) {
+                        StopRecording();
+                        _progressTimer.Dispose();
+                    }
                 });
             } catch {
                 // cannot use dispatcher on this window anymore
             }
         }
 
-        private async void StopGifClick(object sender, MouseButtonEventArgs e) {
-            _stopRequested = true;
-            cts.Cancel();
-
-            await StopRecording();
-        }
-
         //Start Recording Video
         private void StartRecording() {
-            new Thread(() => {
-                try {
-                    _outputMp4 = Path.Combine(Path.GetTempPath(), "screencapture.mp4");
-                    if (File.Exists(_outputMp4))
-                        File.Delete(_outputMp4);
-                    _outputGif = Path.Combine(Path.GetTempPath(), "screencapture.gif");
-                    if (File.Exists(_outputGif))
-                        File.Delete(_outputGif);
-
-                    Screenshot screenshot = new Screenshot() {
-                        CaptureCursor = true,
-                        RemoveOutsideScreenArea = true,
-                        CaptureShadow = true,
-                        CaptureClientArea = false,
-                        AutoHideTaskbar = false,
-                        ShadowOffset = 20
-                    };
-
-                    string ffmpegPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "ffmpeg.exe");
-
-                    FFmpegOptions ffmpeg = new FFmpegOptions(ffmpegPath) {
-                        VideoCodec = FFmpegVideoCodec.gif
-                    };
-
-                    ScreencastOptions options = new ScreencastOptions {
-                        CaptureArea = _size,
-                        DrawCursor = true,
-                        GIFFPS = FileIO.GifFps,
-                        ScreenRecordFPS = 30,
-                        OutputPath = _outputMp4,
-                        FFmpeg = ffmpeg,
-                        Duration = FileIO.GifLength / 1000f
-                    };
-                    _recorder = new ScreenRecorder(options, screenshot, _size);
-
-                    //If Progressbar is enabled
-                    if (_progressIndicatorEnabled) {
-                        _recorder.RecordingStarted += delegate {
-                            //Update Progress
-                            _progressTimer = new System.Timers.Timer {
-                                Interval = 50
-                            };
-                            _progressTimer.Elapsed += UpdateProgress;
-                            _progressTimer.Start();
-                        };
-                    }
-
-                    _recorder.StartRecording();
-                } catch {
-                    FadeOut(false);
-                }
-
-                if (!_stopRequested)
-                    Dispatcher.Invoke(StopRecording);
-            }).Start();
-        }
-
-        //Stop recording Video, begin encoding as GIF and Save
-        private async Task StopRecording() {
-            ShowProgressBar();
-
-            TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
-
-            new Thread(() => {
-                try {
-                    _recorder.StopRecording();
-
-                    //MP4 -> GIF
-                    _recorder.FFmpegEncodeAsGIF(_outputGif);
-
-                    Gif = File.ReadAllBytes(_outputGif);
-
-                    _recorder.Dispose();
-                    _recorder = null;
-
-                    tcs.SetResult(true);
-                } catch {
-                    tcs.SetResult(false);
-                }
-            }).Start();
-
-            await tcs.Task;
-
-            MakeGif();
-        }
-
-        private void MakeGif() {
-            if (_recorder.IsRecording || !File.Exists(_outputGif))
-                FadeOut(false);
-
             try {
-                Gif = File.ReadAllBytes(_outputGif);
+                //Clear left junk
+                _outputMp4 = Path.Combine(Path.GetTempPath(), "screencapture.mp4");
+                if (File.Exists(_outputMp4))
+                    File.Delete(_outputMp4);
+                _outputGif = Path.Combine(Path.GetTempPath(), "screencapture.gif");
+                if (File.Exists(_outputGif))
+                    File.Delete(_outputGif);
 
-                FadeOut(true);
+                //Path to FFmpeg.exe
+                string ffmpegPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "ffmpeg.exe");
+
+                //FFmpeg.exe must be in ../ImgurSniper/Resources/ffmpeg.exe
+                if (!File.Exists(ffmpegPath))
+                    FadeOut(false);
+
+                FFmpegOptions ffmpeg = new FFmpegOptions(ffmpegPath) {
+                    VideoCodec = FFmpegVideoCodec.gif
+                };
+
+                //Parameters
+                ScreencastOptions options = new ScreencastOptions {
+                    CaptureArea = _size,
+                    DrawCursor = FileIO.ShowMouse,
+                    Giffps = FileIO.GifFps,
+                    ScreenRecordFps = 30,
+                    OutputPath = _outputMp4,
+                    FFmpeg = ffmpeg,
+                    //Dynamic Duration (Manual Stop)
+                    Duration = 0
+                };
+                _recorder = new ScreenRecorder(options);
+
+                //If Progressbar is enabled
+                if (_progressIndicatorEnabled) {
+                    _recorder.RecordingStarted += delegate {
+                        //Update Progress
+                        _progressTimer = new System.Timers.Timer {
+                            Interval = 100
+                        };
+                        _progressTimer.Elapsed += UpdateProgress;
+                        _progressTimer.Start();
+                    };
+                }
+
+                _startTime = DateTime.Now.TimeOfDay.TotalMilliseconds;
+                //Start Screen recording (block screen until StopRecording)
+                _recorder.StartRecording();
+
+                //Finish Gif (Convert)
+                MakeGif();
             } catch {
                 FadeOut(false);
             }
+
+            if (!_stopRequested)
+                Dispatcher.Invoke(StopRecording);
+        }
+
+        //Stop recording Video, begin encoding as GIF and Save
+        private void StopRecording() {
+            ShowProgressBar();
+            DoneButton.Cursor = Cursors.Arrow;
+
+            new Thread(_recorder.StopRecording).Start();
+        }
+
+        private void MakeGif() {
+            //MP4 -> GIF
+            bool success = _recorder.FFmpegEncodeAsGif(_outputGif);
+            Gif = File.ReadAllBytes(_outputGif);
+
+            _recorder.Dispose();
+            _recorder = null;
+
+            if (!success || !File.Exists(_outputGif) || (_recorder != null && _recorder.IsRecording))
+                FadeOut(false);
+            else
+                FadeOut(true);
         }
 
 

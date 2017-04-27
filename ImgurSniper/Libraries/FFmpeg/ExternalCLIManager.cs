@@ -4,18 +4,18 @@ using System.IO;
 using System.Text;
 
 namespace ImgurSniper.Libraries.FFmpeg {
-    public abstract class ExternalCLIManager : IDisposable {
+    public abstract class ExternalCliManager : IDisposable {
         public event DataReceivedEventHandler OutputDataReceived;
         public event DataReceivedEventHandler ErrorDataReceived;
 
-        protected Process process;
-        protected bool processRunning;
+        protected Process Process;
+        protected bool ProcessRunning;
 
         public virtual int Open(string path, string args = null) {
-            Console.WriteLine("CLI: \"{0}\" {1}", path, args);
+            Console.WriteLine($"CLI: \"{path}\" {args}");
 
             if (File.Exists(path)) {
-                using (process = new Process()) {
+                using (Process = new Process()) {
                     ProcessStartInfo psi = new ProcessStartInfo(path) {
                         UseShellExecute = false,
                         CreateNoWindow = true,
@@ -27,22 +27,22 @@ namespace ImgurSniper.Libraries.FFmpeg {
                         StandardOutputEncoding = Encoding.UTF8,
                         StandardErrorEncoding = Encoding.UTF8
                     };
-                    process.EnableRaisingEvents = true;
-                    if (psi.RedirectStandardOutput) process.OutputDataReceived += Cli_OutputDataReceived;
-                    if (psi.RedirectStandardError) process.ErrorDataReceived += Cli_ErrorDataReceived;
-                    process.StartInfo = psi;
-                    process.Start();
-                    if (psi.RedirectStandardOutput) process.BeginOutputReadLine();
-                    if (psi.RedirectStandardError) process.BeginErrorReadLine();
+                    Process.EnableRaisingEvents = true;
+                    if (psi.RedirectStandardOutput) Process.OutputDataReceived += Cli_OutputDataReceived;
+                    if (psi.RedirectStandardError) Process.ErrorDataReceived += Cli_ErrorDataReceived;
+                    Process.StartInfo = psi;
+                    Process.Start();
+                    if (psi.RedirectStandardOutput) Process.BeginOutputReadLine();
+                    if (psi.RedirectStandardError) Process.BeginErrorReadLine();
 
                     try {
-                        processRunning = true;
-                        process.WaitForExit();
+                        ProcessRunning = true;
+                        Process.WaitForExit();
                     } finally {
-                        processRunning = false;
+                        ProcessRunning = false;
                     }
 
-                    return process.ExitCode;
+                    return Process.ExitCode;
                 }
             }
 
@@ -62,21 +62,19 @@ namespace ImgurSniper.Libraries.FFmpeg {
         }
 
         public void WriteInput(string input) {
-            if (processRunning && process != null && process.StartInfo != null && process.StartInfo.RedirectStandardInput) {
-                process.StandardInput.WriteLine(input);
+            if (ProcessRunning && Process?.StartInfo != null && Process.StartInfo.RedirectStandardInput) {
+                Process.StandardInput.WriteLine(input);
             }
         }
 
         public virtual void Close() {
-            if (processRunning && process != null) {
-                process.CloseMainWindow();
+            if (ProcessRunning) {
+                Process?.CloseMainWindow();
             }
         }
 
         public void Dispose() {
-            if (process != null) {
-                process.Dispose();
-            }
+            Process?.Dispose();
         }
     }
 }

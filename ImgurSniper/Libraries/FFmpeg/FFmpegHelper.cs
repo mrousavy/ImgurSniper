@@ -9,22 +9,22 @@ using System.Text.RegularExpressions;
 using System.Windows;
 
 namespace ImgurSniper.Libraries.FFmpeg {
-    public class FFmpegHelper : ExternalCLIManager {
+    public class FFmpegHelper : ExternalCliManager {
         public const string SourceNone = "None";
-        public const string SourceGDIGrab = "GDI grab";
+        public const string SourceGdiGrab = "GDI grab";
         public const string SourceVideoDevice = "screen-capture-recorder";
         public const string SourceAudioDevice = "virtual-audio-capturer";
         public const string DeviceSetupPath = "Recorder-devices-setup.exe";
 
-        public const int libmp3lame_qscale_end = 9;
+        public const int Libmp3LameQscaleEnd = 9;
 
         public event Action RecordingStarted;
 
-        public StringBuilder Output { get; private set; }
-        public ScreencastOptions Options { get; private set; }
+        public StringBuilder Output { get; }
+        public ScreencastOptions Options { get; }
 
-        private bool recordingStarted;
-        private int closeTryCount = 0;
+        private bool _recordingStarted;
+        private int _closeTryCount;
 
         public FFmpegHelper(ScreencastOptions options) {
             Output = new StringBuilder();
@@ -39,8 +39,8 @@ namespace ImgurSniper.Libraries.FFmpeg {
                 if (!string.IsNullOrEmpty(e.Data)) {
                     Output.AppendLine(e.Data);
 
-                    if (!recordingStarted && e.Data.IndexOf("Press [q] to stop", StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                        recordingStarted = true;
+                    if (!_recordingStarted && e.Data.IndexOf("Press [q] to stop", StringComparison.InvariantCultureIgnoreCase) >= 0) {
+                        _recordingStarted = true;
                         OnRecordingStarted();
                     }
                 }
@@ -48,7 +48,7 @@ namespace ImgurSniper.Libraries.FFmpeg {
         }
 
         public bool Record() {
-            recordingStarted = false;
+            _recordingStarted = false;
             return Run(Options.FFmpeg.FFmpegPath, Options.GetFFmpegCommands());
         }
 
@@ -56,22 +56,21 @@ namespace ImgurSniper.Libraries.FFmpeg {
             RecordingStarted?.Invoke();
         }
 
-        public bool EncodeGIF(string input, string output) {
+        public bool EncodeGif(string input, string output) {
             bool result;
+            string dirName = Path.GetDirectoryName(Options.FFmpeg.FFmpegPath);
+            if (dirName == null)
+                throw new ArgumentNullException(nameof(dirName));
 
-            string palettePath = Path.Combine(Path.GetDirectoryName(Options.FFmpeg.FFmpegPath), "palette.png");
+            string palettePath = Path.Combine(dirName, "palette.png");
 
             try {
                 // https://ffmpeg.org/ffmpeg-filters.html#palettegen-1
-                result = Run(Options.FFmpeg.FFmpegPath, string.Format("-y -i \"{0}\" -vf \"palettegen=stats_mode={2}\" \"{1}\"", input, palettePath, Options.FFmpeg.GIFStatsMode));
+                result = Run(Options.FFmpeg.FFmpegPath, string.Format("-y -i \"{0}\" -vf \"palettegen=stats_mode={2}\" \"{1}\"", input, palettePath, Options.FFmpeg.GifStatsMode));
 
                 if (result) {
-                    if (File.Exists(palettePath)) {
-                        // https://ffmpeg.org/ffmpeg-filters.html#paletteuse
-                        result = Run(Options.FFmpeg.FFmpegPath, string.Format("-y -i \"{0}\" -i \"{1}\" -lavfi \"paletteuse=dither={3}\" \"{2}\"", input, palettePath, output, Options.FFmpeg.GIFDither));
-                    } else {
-                        result = false;
-                    }
+                    result = File.Exists(palettePath) &&
+                        Run(Options.FFmpeg.FFmpegPath, string.Format("-y -i \"{0}\" -i \"{1}\" -lavfi \"paletteuse=dither={3}\" \"{2}\"", input, palettePath, output, Options.FFmpeg.GifDither));
                 }
             } finally {
                 if (File.Exists(palettePath)) {
@@ -86,8 +85,14 @@ namespace ImgurSniper.Libraries.FFmpeg {
             int errorCode = Open(path, args);
             bool result = errorCode == 0;
             if (Options.FFmpeg.ShowError && !result) {
-                MessageBox.Show($"Error starting FFmpeg.exe! Details:\n\r{Output.ToString()}", "FFmpeg.exe error!", MessageBoxButton.OK, MessageBoxImage.Error);
-                throw new Exception("Error starting FFmpeg.exe!");
+                MessageBoxResult yesno = MessageBox.Show("FFmpeg encountered an unexpected Error!\n\rDo you want to see the FFmpeg Log?",
+                    "FFmpeg.exe error!", MessageBoxButton.YesNo, MessageBoxImage.Error);
+
+                if (yesno == MessageBoxResult.Yes) {
+                    string tmp = Path.GetTempFileName() + ".txt";
+                    File.WriteAllText(tmp, Output.ToString());
+                    Process.Start(tmp);
+                }
             }
             return result;
         }
@@ -96,10 +101,10 @@ namespace ImgurSniper.Libraries.FFmpeg {
             DirectShowDevices devices = new DirectShowDevices();
 
             if (File.Exists(Options.FFmpeg.FFmpegPath)) {
-                string arg = "-list_devices true -f dshow -i dummy";
+                const string arg = "-list_devices true -f dshow -i dummy";
                 Open(Options.FFmpeg.FFmpegPath, arg);
                 string output = Output.ToString();
-                string[] lines = output.Split(new string[] { "\r\n", "\n", Environment.NewLine }, StringSplitOptions.None);
+                string[] lines = output.Split(new[] { "\r\n", "\n", Environment.NewLine }, StringSplitOptions.None);
                 bool isVideo = true;
                 Regex regex = new Regex("\\[dshow @ \\w+\\]  \"(.+)\"", RegexOptions.Compiled | RegexOptions.CultureInvariant);
                 foreach (string line in lines) {
@@ -131,12 +136,12 @@ namespace ImgurSniper.Libraries.FFmpeg {
         }
 
         public override void Close() {
-            if (processRunning) {
-                if (closeTryCount >= 2) {
-                    process.Kill();
+            if (ProcessRunning) {
+                if (_closeTryCount >= 2) {
+                    Process.Kill();
                 } else {
                     WriteInput("q");
-                    closeTryCount++;
+                    _closeTryCount++;
                 }
             }
         }
