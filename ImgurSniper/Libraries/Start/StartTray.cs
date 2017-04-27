@@ -114,11 +114,25 @@ namespace ImgurSniper.Libraries.Start {
         }
 
         private static void OpenFromShortcutGif(HotKey obj = null) {
-            new GifWindow().ShowDialog();
+            if (obj != null)
+                obj.HotKeyPressed -= OpenFromShortcutGif;
+
+            using (GifWindow window = new GifWindow()) {
+                window.ShowDialog();
+            }
+
+            if (obj != null)
+                obj.HotKeyPressed += OpenFromShortcutGif;
         }
 
         private static void OpenFromShortcutImg(HotKey obj = null) {
+            if (obj != null)
+                obj.HotKeyPressed += OpenFromShortcutImg;
+
             new ScreenshotWindow().ShowDialog();
+
+            if (obj != null)
+                obj.HotKeyPressed += OpenFromShortcutImg;
         }
     }
 }

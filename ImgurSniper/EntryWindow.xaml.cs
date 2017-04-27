@@ -6,8 +6,10 @@ namespace ImgurSniper {
     /// <summary>
     /// Interaction logic for EntryWindow.xaml
     /// </summary>
-    public partial class EntryWindow : Window {
+    public partial class EntryWindow {
         public EntryWindow() {
+            Hide();
+
             StartWithArguments();
         }
 

@@ -149,7 +149,6 @@
     <Compile Include="Libraries\Native\NativeMethods.cs" />
     <Compile Include="Libraries\Native\NativeStructs.cs" />
     <Compile Include="Libraries\ScreenCapture\ScreencastOptions.cs" />
-    <Compile Include="Libraries\ScreenCapture\Screenshot.cs" />
     <Compile Include="Libraries\Start\StartUpload.cs" />
     <Compile Include="NotificationWindow.xaml.cs">
       <DependentUpon>NotificationWindow.xaml</DependentUpon>

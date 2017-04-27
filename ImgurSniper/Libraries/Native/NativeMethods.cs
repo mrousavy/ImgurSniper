@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Windows.Forms;
 using static ImgurSniper.Libraries.Helper.CaptureHelpers;
 using static ImgurSniper.Libraries.Native.NativeStructs;
 
@@ -51,8 +50,6 @@ namespace ImgurSniper.Libraries.Native {
         public static extern void SetLastError(int dwErrorCode);
         [DllImport("user32.dll")]
         public static extern IntPtr GetWindowLong(IntPtr hWnd, int nIndex);
-        [DllImport("user32.dll")]
-        public static extern IntPtr GetForegroundWindow();
         [DllImport("user32.dll")]
         public static extern IntPtr FindWindowEx(IntPtr parentHwnd, IntPtr childAfterHwnd, IntPtr className, string windowText);
         [DllImport("user32.dll")]
@@ -151,8 +148,6 @@ namespace ImgurSniper.Libraries.Native {
             return unchecked((int)intPtr.ToInt64());
         }
 
-        public static Rectangle GetScreenBounds() => SystemInformation.VirtualScreen;
-
         public static Point ScreenToClient(Point p) {
             int screenX = GetSystemMetrics(SystemMetric.SmXvirtualscreen);
             int screenY = GetSystemMetrics(SystemMetric.SmYvirtualscreen);
@@ -177,8 +172,7 @@ namespace ImgurSniper.Libraries.Native {
         }
 
         public static bool GetExtendedFrameBounds(IntPtr handle, out Rectangle rectangle) {
-            int result = DwmGetWindowAttribute(handle, (int)DwmWindowAttribute.ExtendedFrameBounds, out RECT rect,
-    Marshal.SizeOf(typeof(RECT)));
+            int result = DwmGetWindowAttribute(handle, (int)DwmWindowAttribute.ExtendedFrameBounds, out RECT rect, Marshal.SizeOf(typeof(RECT)));
             rectangle = rect;
             return result == 0;
         }
@@ -222,84 +216,7 @@ namespace ImgurSniper.Libraries.Native {
             return result;
         }
 
-        public static Rectangle GetClientRect(IntPtr handle) {
-            GetClientRect(handle, out RECT rect);
-            Point position = rect.Location;
-            ClientToScreen(handle, ref position);
-            return new Rectangle(position, rect.Size);
-        }
-
-        public static bool SetTaskbarVisibilityIfIntersect(bool visible, Rectangle rect) {
-            bool result = false;
-
-            IntPtr taskbarHandle = FindWindow("Shell_TrayWnd", null);
-
-            if (taskbarHandle != IntPtr.Zero) {
-                Rectangle taskbarRect = GetWindowRect(taskbarHandle);
-
-                if (rect.IntersectsWith(taskbarRect)) {
-                    ShowWindow(taskbarHandle, visible ? (int)WindowShowStyle.Show : (int)WindowShowStyle.Hide);
-                    result = true;
-                }
-
-                if (IsWindowsVista() || IsWindows7()) {
-                    IntPtr startHandle = FindWindowEx(IntPtr.Zero, IntPtr.Zero, (IntPtr)0xC017, null);
-
-                    if (startHandle != IntPtr.Zero) {
-                        Rectangle startRect = GetWindowRect(startHandle);
-
-                        if (rect.IntersectsWith(startRect)) {
-                            ShowWindow(startHandle, visible ? (int)WindowShowStyle.Show : (int)WindowShowStyle.Hide);
-                            result = true;
-                        }
-                    }
-                }
-            }
-
-            return result;
-        }
-
-        public static bool SetTaskbarVisibility(bool visible) {
-            IntPtr taskbarHandle = FindWindow("Shell_TrayWnd", null);
-
-            if (taskbarHandle != IntPtr.Zero) {
-                ShowWindow(taskbarHandle, visible ? (int)WindowShowStyle.Show : (int)WindowShowStyle.Hide);
-
-                if (IsWindowsVista() || IsWindows7()) {
-                    IntPtr startHandle = FindWindowEx(IntPtr.Zero, IntPtr.Zero, (IntPtr)0xC017, null);
-
-                    if (startHandle != IntPtr.Zero) {
-                        ShowWindow(startHandle, visible ? (int)WindowShowStyle.Show : (int)WindowShowStyle.Hide);
-                    }
-                }
-
-                return true;
-            }
-
-            return false;
-        }
-
-        public static Rectangle GetActiveScreenBounds() {
-            return Screen.FromPoint(GetCursorPosition()).Bounds;
-        }
-
         #region Custom Definitions
-        public enum WindowShowStyle : uint {
-            Hide = 0,
-            ShowNormal = 1,
-            ShowMinimized = 2,
-            ShowMaximized = 3,
-            Maximize = 3,
-            ShowNormalNoActivate = 4,
-            Show = 5,
-            Minimize = 6,
-            ShowMinNoActivate = 7,
-            ShowNoActivate = 8,
-            Restore = 9,
-            ShowDefault = 10,
-            ForceMinimized = 11
-        }
-
         [StructLayout(LayoutKind.Sequential)]
         public struct WindowInfo {
             public uint cbSize;

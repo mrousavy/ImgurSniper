@@ -26,21 +26,5 @@ namespace ImgurSniper.Libraries.Helper {
                 return anim;
             }
         }
-
-        public static DoubleAnimation GetBrightenAnimation(double opacity) {
-            return new DoubleAnimation {
-                To = 1,
-                From = opacity,
-                Duration = TimeSpan.FromMilliseconds(300)
-            };
-        }
-
-        public static DoubleAnimation GetDarkenAnimation(double opacity) {
-            return new DoubleAnimation {
-                To = 0.5,
-                From = opacity,
-                Duration = TimeSpan.FromMilliseconds(200)
-            };
-        }
     }
 }
