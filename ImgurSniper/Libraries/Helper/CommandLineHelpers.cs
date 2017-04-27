@@ -11,6 +11,8 @@ namespace ImgurSniper.Libraries.Helper {
             GIF,
             Upload
         }
+        private static string[] parameters = { "autostart", "gif", "upload" };
+
 
         /// <summary>
         /// Get Command line arguments from this Application
@@ -26,11 +28,8 @@ namespace ImgurSniper.Libraries.Helper {
             Regex regexParam = new Regex("^(-|/)");
             args = new List<string>(args.Select(arg => regexParam.Replace(arg, "")));
 
-#if DEBUG
-            string param = args.Count > 1 ? args[1] : null;
-#else
-            string param = args.Count > 0 ? args[0] : null;
-#endif
+            //Get Parameter from Arguments
+            string param = args.FirstOrDefault(arg => parameters.Contains(arg));
 
             switch (param) {
                 case "autostart":
