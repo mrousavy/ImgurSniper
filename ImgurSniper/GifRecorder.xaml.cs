@@ -42,7 +42,7 @@ namespace ImgurSniper {
 
             if (_progressIndicatorEnabled) {
                 ProgressBar.Width = progressBarWidth;
-                ProgressBar.Maximum = FileIO.GifLength / 100d;
+                ProgressBar.Maximum = ConfigHelper.GifLength / 100d;
 
                 //Space for ProgressBar
                 Height += 30;
@@ -106,7 +106,7 @@ namespace ImgurSniper {
                     double elapsed = (currentTime - _startTime);
                     ProgressBar.Value = elapsed / 100;
 
-                    if (elapsed >= FileIO.GifLength) {
+                    if (elapsed >= ConfigHelper.GifLength) {
                         StopRecording();
                         _progressTimer.Dispose();
                     }
@@ -141,8 +141,8 @@ namespace ImgurSniper {
                 //Parameters
                 ScreencastOptions options = new ScreencastOptions {
                     CaptureArea = _size,
-                    DrawCursor = FileIO.ShowMouse,
-                    Giffps = FileIO.GifFps,
+                    DrawCursor = ConfigHelper.ShowMouse,
+                    Giffps = ConfigHelper.GifFps,
                     ScreenRecordFps = 30,
                     OutputPath = _outputMp4,
                     FFmpeg = ffmpeg,

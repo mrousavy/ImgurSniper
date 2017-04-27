@@ -35,6 +35,13 @@ namespace ImgurSniper {
         public string HwndName;
         public bool Error;
 
+        //Size of current Mouse Location screen
+        public static Rectangle Screen
+            => System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position).Bounds;
+
+        //Size of whole Screen Array
+        public static Rectangle AllScreens => SystemInformation.VirtualScreen;
+
 
         public ScreenshotWindow(bool allMonitors) {
 #if DEBUG
@@ -48,17 +55,6 @@ namespace ImgurSniper {
             Position(allMonitors);
             //LoadConfig();
         }
-
-        //Magnifyer for Performance reasons disabled
-        //private bool _enableMagnifyer = false;
-
-
-        //Size of current Mouse Location screen
-        public static Rectangle Screen
-            => System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position).Bounds;
-
-        //Size of whole Screen Array
-        public static Rectangle AllScreens => SystemInformation.VirtualScreen;
 
         //Position Window correctly
         private void Position(bool allMonitors) {
@@ -79,9 +75,6 @@ namespace ImgurSniper {
         }
 
         private async void WindowLoaded(object sender, RoutedEventArgs e) {
-            //this.CaptureMouse();
-            //grid.CaptureMouse();
-            //PaintSurface.CaptureMouse();
             selectionRectangle.CaptureMouse();
 
             Rectangle bounds = System.Windows.Forms.Screen.PrimaryScreen.Bounds;
@@ -106,12 +99,6 @@ namespace ImgurSniper {
 
             exStyle |= (int)NativeMethods.ExtendedWindowStyles.WsExToolwindow;
             NativeMethods.SetWindowLong(wndHelper.Handle, (int)NativeMethods.GetWindowLongFields.GwlExstyle, (IntPtr)exStyle);
-        }
-
-        private static Rectangle GetRectFromHandle(IntPtr whandle) {
-            Rectangle windowSize = NativeMethods.GetWindowRectangle(whandle);
-
-            return windowSize;
         }
 
         //All Keys
@@ -164,11 +151,11 @@ namespace ImgurSniper {
             }
 
             //Fade Selected Mode View in
-            FadeSelectedModeIn();
+            FadeSelectedModeInAsync();
         }
 
         //Fade the Selected Mode (Drawing/Rectangle) in
-        private void FadeSelectedModeIn() {
+        private void FadeSelectedModeInAsync() {
             DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.25));
             anim.Completed += FadeSelectedModeOut;
             anim.From = SelectedMode.Opacity;
@@ -238,7 +225,7 @@ namespace ImgurSniper {
                 NativeMethods.SetForegroundWindow(whandle);
                 NativeMethods.SetActiveWindow(whandle);
 
-                Rectangle hwnd = GetRectFromHandle(whandle);
+                Rectangle hwnd = NativeMethods.GetWindowRectangle(whandle);
 
                 const int nChars = 256;
                 StringBuilder buff = new StringBuilder(nChars);
@@ -383,7 +370,7 @@ namespace ImgurSniper {
             anim.Completed += async delegate {
                 grid.Opacity = 0;
                 //For render complete
-                await Dispatcher.InvokeAsync(new Action(() => { }), DispatcherPriority.ContextIdle);
+                await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ContextIdle);
                 await Task.Delay(100);
 
                 Crop(NativeMethods.GetDesktopWindow(), fromX, fromY, toX, toY, true);
@@ -426,12 +413,12 @@ namespace ImgurSniper {
             try {
                 MemoryStream stream;
 
-                Image img = ScreenCapture.GetScreenshotNative(ptr, size, FileIO.ShowMouse);
-                if (FileIO.Compression < 100) {
-                    stream = ImageHelper.CompressImage(img, FileIO.ImageFormat, FileIO.Compression);
+                Image img = ScreenCapture.GetScreenshotNative(ptr, size, ConfigHelper.ShowMouse);
+                if (ConfigHelper.Compression < 100) {
+                    stream = ImageHelper.CompressImage(img, ConfigHelper.ImageFormat, ConfigHelper.Compression);
                 } else {
                     stream = new MemoryStream();
-                    img.Save(stream, FileIO.ImageFormat);
+                    img.Save(stream, ConfigHelper.ImageFormat);
                 }
 
                 CroppedImage = stream.ToArray();

@@ -28,9 +28,11 @@ namespace ImgurSniper.UI {
                 return;
             }
             try {
-                FileIO.ImgurAfterSnipe = button.Tag as string == "Imgur";
-                Btn_Save.IsEnabled = true;
-            } catch { }
+                ConfigHelper.ImgurAfterSnipe = button.Tag as string == "Imgur";
+                BtnSave.IsEnabled = true;
+            } catch {
+                // ignored
+            }
         }
 
         private void MonitorsClick(object sender, RoutedEventArgs e) {
@@ -39,29 +41,23 @@ namespace ImgurSniper.UI {
                 return;
             }
             try {
-                FileIO.AllMonitors = button.Tag as string == "All";
-                Btn_Save.IsEnabled = true;
-            } catch { }
+                ConfigHelper.AllMonitors = button.Tag as string == "All";
+                BtnSave.IsEnabled = true;
+            } catch {
+                // ignored
+            }
         }
 
         private void ImageFormatBoxChanged(object sender, SelectionChangedEventArgs e) {
 
             if (ImageFormatBox.SelectedItem is ComboBoxItem item) {
-                switch (item.Content as string) {
-                    case "Jpeg":
-                        FileIO.ImageFormat = ImageFormat.Jpeg;
-                        break;
-                    case "Png":
-                        FileIO.ImageFormat = ImageFormat.Png;
-                        break;
-                    case "Gif":
-                        FileIO.ImageFormat = ImageFormat.Gif;
-                        break;
-                    case "Tiff":
-                        FileIO.ImageFormat = ImageFormat.Tiff;
-                        break;
+                try {
+                    ConfigHelper.ImageFormat = (ImageFormat)Enum.Parse(typeof(ImageFormat), (string)item.Content);
+                } catch {
+                    // ignored
                 }
-                Btn_Save.IsEnabled = true;
+
+                BtnSave.IsEnabled = true;
             }
         }
 
@@ -71,13 +67,15 @@ namespace ImgurSniper.UI {
                 return;
             }
             try {
-                FileIO.SaveImages = box.IsChecked == true;
-                Btn_Save.IsEnabled = true;
+                ConfigHelper.SaveImages = box.IsChecked == true;
+                BtnSave.IsEnabled = true;
 
                 if (box.IsChecked.HasValue) {
                     PathPanel.IsEnabled = (bool)box.IsChecked;
                 }
-            } catch { }
+            } catch {
+                // ignored
+            }
         }
 
 
@@ -87,9 +85,11 @@ namespace ImgurSniper.UI {
                 return;
             }
             try {
-                FileIO.ShowMouse = box.IsChecked == true;
-                Btn_Save.IsEnabled = true;
-            } catch { }
+                ConfigHelper.ShowMouse = box.IsChecked == true;
+                BtnSave.IsEnabled = true;
+            } catch {
+                // ignored
+            }
         }
 
         private void Magnifying_Checkbox(object sender, RoutedEventArgs e) {
@@ -98,9 +98,11 @@ namespace ImgurSniper.UI {
                 return;
             }
             try {
-                FileIO.MagnifyingGlassEnabled = box.IsChecked == true;
-                Btn_Save.IsEnabled = true;
-            } catch { }
+                ConfigHelper.MagnifyingGlassEnabled = box.IsChecked == true;
+                BtnSave.IsEnabled = true;
+            } catch {
+                // ignored
+            }
         }
 
         private void OpenAfterUpload_Checkbox(object sender, RoutedEventArgs e) {
@@ -109,9 +111,11 @@ namespace ImgurSniper.UI {
                 return;
             }
             try {
-                FileIO.OpenAfterUpload = box.IsChecked == true;
-                Btn_Save.IsEnabled = true;
-            } catch { }
+                ConfigHelper.OpenAfterUpload = box.IsChecked == true;
+                BtnSave.IsEnabled = true;
+            } catch {
+                // ignored
+            }
         }
 
         private void AutoUpdate_Checkbox(object sender, RoutedEventArgs e) {
@@ -120,15 +124,17 @@ namespace ImgurSniper.UI {
                 return;
             }
             try {
-                FileIO.AutoUpdate = box.IsChecked == true;
-                Btn_Save.IsEnabled = true;
-            } catch { }
+                ConfigHelper.AutoUpdate = box.IsChecked == true;
+                BtnSave.IsEnabled = true;
+            } catch {
+                // ignored
+            }
         }
 
         private async void RunOnBoot_Checkbox(object sender, RoutedEventArgs e) {
             if (sender is CheckBox box) {
-                FileIO.RunOnBoot = box.IsChecked == true;
-                Btn_Save.IsEnabled = true;
+                ConfigHelper.RunOnBoot = box.IsChecked == true;
+                BtnSave.IsEnabled = true;
 
                 //Run proecess if not running
                 try {
@@ -141,7 +147,7 @@ namespace ImgurSniper.UI {
 
                     Helper.Autostart(choice);
                 } catch {
-                    error_toast.Show(str.trayServiceNotRunning, TimeSpan.FromSeconds(2));
+                    ErrorToast.Show(str.trayServiceNotRunning, TimeSpan.FromSeconds(2));
                 }
             }
         }
@@ -152,9 +158,11 @@ namespace ImgurSniper.UI {
                 return;
             }
             try {
-                FileIO.UsePrint = box.IsChecked == true;
-                Btn_Save.IsEnabled = true;
-            } catch { }
+                ConfigHelper.UsePrint = box.IsChecked == true;
+                BtnSave.IsEnabled = true;
+            } catch {
+                // ignored
+            }
         }
 
         private void HotkeyImgBoxMDown(object sender, RoutedEventArgs e) {
@@ -168,16 +176,20 @@ namespace ImgurSniper.UI {
 
                 try {
                     sel.Owner = this;
-                } catch { }
+                } catch {
+                    // ignored
+                }
 
                 bool? result = sel.ShowDialog();
 
                 if (result == true) {
-                    FileIO.ShortcutImgKey = sel.key;
-                    Btn_Save.IsEnabled = true;
+                    ConfigHelper.ShortcutImgKey = sel.key;
+                    BtnSave.IsEnabled = true;
                     HotkeyImgBox.Text = sel.key.ToString();
                 }
-            } catch { }
+            } catch {
+                // ignored
+            }
         }
 
         private void HotkeyGifBoxMDown(object sender, RoutedEventArgs e) {
@@ -191,22 +203,26 @@ namespace ImgurSniper.UI {
 
                 try {
                     sel.Owner = this;
-                } catch { }
+                } catch {
+                    // ignored
+                }
 
                 bool? result = sel.ShowDialog();
 
                 if (result == true) {
-                    FileIO.ShortcutGifKey = sel.key;
-                    Btn_Save.IsEnabled = true;
+                    ConfigHelper.ShortcutGifKey = sel.key;
+                    BtnSave.IsEnabled = true;
                     HotkeyGifBox.Text = sel.key.ToString();
                 }
-            } catch { }
+            } catch {
+                // ignored
+            }
         }
 
         private async void LanguageBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             if (sender is ComboBox box) {
                 try {
-                    FileIO.Language = (box.SelectedItem as ComboBoxItem).Name;
+                    ConfigHelper.Language = ((ComboBoxItem)box.SelectedItem).Name;
 
                     bool result = await ShowAskDialog(str.langChanged);
 
@@ -224,8 +240,8 @@ namespace ImgurSniper.UI {
         private void SliderGifLength_Changed(object sender, RoutedPropertyChangedEventArgs<double> e) {
             if (sender is Slider slider) {
                 int value = (int)slider.Value;
-                FileIO.GifLength = value * 1000;
-                Btn_Save.IsEnabled = true;
+                ConfigHelper.GifLength = value * 1000;
+                BtnSave.IsEnabled = true;
 
                 GifLengthLabel.Content = string.Format(str.gifLengthVal, value);
             }
@@ -234,8 +250,8 @@ namespace ImgurSniper.UI {
         private void SliderGifFps_Changed(object sender, RoutedPropertyChangedEventArgs<double> e) {
             if (sender is Slider slider) {
                 int value = (int)slider.Value;
-                FileIO.GifFps = value;
-                Btn_Save.IsEnabled = true;
+                ConfigHelper.GifFps = value;
+                BtnSave.IsEnabled = true;
 
                 GifFpsLabel.Content = string.Format(str.gifFpsVal, value);
             }
@@ -244,8 +260,8 @@ namespace ImgurSniper.UI {
         private void QualitySlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
             if (sender is Slider slider) {
                 byte value = (byte)slider.Value;
-                FileIO.Compression = value;
-                Btn_Save.IsEnabled = true;
+                ConfigHelper.Compression = value;
+                BtnSave.IsEnabled = true;
 
                 QualityLabel.Content = value + "%";
             }
@@ -256,24 +272,24 @@ namespace ImgurSniper.UI {
             try {
                 Cursor = System.Windows.Input.Cursors.Wait;
 
-                FileIO.Save();
+                ConfigHelper.Save();
 
                 //Restart for applied changes
                 InstallerHelper.KillImgurSniper(false);
                 //If not Tray Service, do not start
-                if (FileIO.RunOnBoot) {
+                if (ConfigHelper.RunOnBoot) {
                     try {
                         InstallerHelper.StartImgurSniper();
                     } catch {
-                        await error_toast.ShowAsync(str.trayServiceNotRunning, TimeSpan.FromSeconds(3));
+                        await ErrorToast.ShowAsync(str.trayServiceNotRunning, TimeSpan.FromSeconds(3));
                     }
                 }
 
-                success_toast.Show(str.applied, TimeSpan.FromSeconds(2));
+                SuccessToast.Show(str.applied, TimeSpan.FromSeconds(2));
 
-                Btn_Save.IsEnabled = false;
+                BtnSave.IsEnabled = false;
             } catch {
-                error_toast.Show(str.couldNotApply, TimeSpan.FromSeconds(3));
+                ErrorToast.Show(str.couldNotApply, TimeSpan.FromSeconds(3));
             }
             Cursor = System.Windows.Input.Cursors.Arrow;
         }
@@ -284,7 +300,9 @@ namespace ImgurSniper.UI {
 
             try {
                 help.Owner = this;
-            } catch { }
+            } catch {
+                // ignored
+            }
 
             help.Show();
         }
@@ -303,7 +321,7 @@ namespace ImgurSniper.UI {
 
                 Visibility = Visibility.Visible;
             } else {
-                error_toast.Show(str.imgurSniperNotFound,
+                ErrorToast.Show(str.imgurSniperNotFound,
                     TimeSpan.FromSeconds(3));
             }
         }
@@ -314,7 +332,7 @@ namespace ImgurSniper.UI {
             DoubleAnimation darken = Animations.GetDarkenAnimation(Opacity);
             DoubleAnimation brighten = Animations.GetBrightenAnimation(Opacity);
 
-            VersionInfo info = new VersionInfo(_commits, FileIO.CurrentCommits);
+            VersionInfo info = new VersionInfo(_commits, ConfigHelper.CurrentCommits);
 
             try {
                 info.Owner = this;
@@ -326,16 +344,16 @@ namespace ImgurSniper.UI {
                 bool? result = info.ShowDialog();
 
                 if (result == true) {
-                    FileIO.CurrentCommits = _commits.Count;
-                    FileIO.UpdateAvailable = false;
+                    ConfigHelper.CurrentCommits = _commits.Count;
+                    ConfigHelper.UpdateAvailable = false;
 
                     StackPanel panel = ShowProgressDialog();
                     Helper.Update(panel);
                 } else {
                     ChangeButtonState(true);
 
-                    if (info.skipped) {
-                        Btn_Update.IsEnabled = false;
+                    if (info.Skipped) {
+                        BtnUpdate.IsEnabled = false;
                     }
                 }
 
@@ -353,12 +371,12 @@ namespace ImgurSniper.UI {
             }
 
             //Show Progress Indicator
-            progressIndicator.BeginAnimation(OpacityProperty, Animations.FadeIn);
+            ProgressIndicator.BeginAnimation(OpacityProperty, Animations.FadeIn);
 
             await CheckForUpdates(true);
 
             //Hide Progress Indicator
-            progressIndicator.BeginAnimation(OpacityProperty, Animations.FadeOut);
+            ProgressIndicator.BeginAnimation(OpacityProperty, Animations.FadeOut);
 
             if (btn != null) {
                 btn.IsEnabled = true;
@@ -372,42 +390,44 @@ namespace ImgurSniper.UI {
                 DoubleAnimation fadeBtnOut = Animations.FadeOut;
                 fadeBtnOut.Completed += delegate {
                     DoubleAnimation fadePanelIn = Animations.FadeIn;
-                    fadePanelIn.Completed += delegate { Btn_SignIn.Visibility = Visibility.Collapsed; };
-                    Panel_PIN.Visibility = Visibility.Visible;
-                    Panel_PIN.BeginAnimation(OpacityProperty, fadePanelIn);
+                    fadePanelIn.Completed += delegate { BtnSignIn.Visibility = Visibility.Collapsed; };
+                    PanelPin.Visibility = Visibility.Visible;
+                    PanelPin.BeginAnimation(OpacityProperty, fadePanelIn);
                 };
-                Btn_SignIn.BeginAnimation(OpacityProperty, fadeBtnOut);
-            } catch { }
+                BtnSignIn.BeginAnimation(OpacityProperty, fadeBtnOut);
+            } catch {
+                // ignored
+            }
         }
 
         private void SignOut(object sender, RoutedEventArgs e) {
             DoubleAnimation fadeBtnOut = Animations.FadeOut;
-            Btn_ViewPics.BeginAnimation(OpacityProperty, fadeBtnOut);
+            BtnViewPics.BeginAnimation(OpacityProperty, fadeBtnOut);
 
             fadeBtnOut.Completed += delegate {
-                FileIO.DeleteToken();
+                ConfigHelper.DeleteToken();
 
                 DoubleAnimation fadeBtnIn = Animations.FadeIn;
-                Btn_ViewPics.BeginAnimation(OpacityProperty, fadeBtnIn);
+                BtnViewPics.BeginAnimation(OpacityProperty, fadeBtnIn);
 
                 fadeBtnIn.Completed += delegate {
-                    Btn_SignOut.Visibility = Visibility.Collapsed;
-                    Btn_ViewPics.Visibility = Visibility.Collapsed;
+                    BtnSignOut.Visibility = Visibility.Collapsed;
+                    BtnViewPics.Visibility = Visibility.Collapsed;
 
-                    Label_Account.Content = "Imgur Account";
+                    LabelAccount.Content = "Imgur Account";
                 };
-                Btn_SignIn.Visibility = Visibility.Visible;
-                Btn_SignIn.BeginAnimation(OpacityProperty, fadeBtnIn);
+                BtnSignIn.Visibility = Visibility.Visible;
+                BtnSignIn.BeginAnimation(OpacityProperty, fadeBtnIn);
             };
-            Btn_SignOut.BeginAnimation(OpacityProperty, fadeBtnOut);
+            BtnSignOut.BeginAnimation(OpacityProperty, fadeBtnOut);
         }
 
         private void ViewPics(object sender, RoutedEventArgs e) {
             Process.Start(_imgurhelper.UserUrl);
         }
 
-        private async void PINOk(object sender, RoutedEventArgs e) {
-            bool result = await _imgurhelper.Login(Box_PIN.Text);
+        private async void PinOk(object sender, RoutedEventArgs e) {
+            bool result = await _imgurhelper.Login(BoxPin.Text);
 
             if (!result) {
                 return;
@@ -415,26 +435,26 @@ namespace ImgurSniper.UI {
             DoubleAnimation fadePanelOut = Animations.FadeOut;
             fadePanelOut.Completed += delegate {
                 DoubleAnimation fadeBtnIn = Animations.FadeIn;
-                fadeBtnIn.Completed += delegate { Panel_PIN.Visibility = Visibility.Collapsed; };
-                Btn_SignOut.Visibility = Visibility.Visible;
-                Btn_SignOut.BeginAnimation(OpacityProperty, fadeBtnIn);
-                Btn_ViewPics.Visibility = Visibility.Visible;
-                Btn_ViewPics.BeginAnimation(OpacityProperty, fadeBtnIn);
+                fadeBtnIn.Completed += delegate { PanelPin.Visibility = Visibility.Collapsed; };
+                BtnSignOut.Visibility = Visibility.Visible;
+                BtnSignOut.BeginAnimation(OpacityProperty, fadeBtnIn);
+                BtnViewPics.Visibility = Visibility.Visible;
+                BtnViewPics.BeginAnimation(OpacityProperty, fadeBtnIn);
             };
-            Panel_PIN.BeginAnimation(OpacityProperty, fadePanelOut);
+            PanelPin.BeginAnimation(OpacityProperty, fadePanelOut);
 
             if (_imgurhelper.User != null) {
-                Label_Account.Content = string.Format(str.imgurAccSignedIn, _imgurhelper.User);
+                LabelAccount.Content = string.Format(str.imgurAccSignedIn, _imgurhelper.User);
 
-                Btn_SignIn.Visibility = Visibility.Collapsed;
-                Btn_SignOut.Visibility = Visibility.Visible;
-                Btn_ViewPics.Visibility = Visibility.Visible;
+                BtnSignIn.Visibility = Visibility.Collapsed;
+                BtnSignOut.Visibility = Visibility.Visible;
+                BtnViewPics.Visibility = Visibility.Visible;
             }
-            Box_PIN.Clear();
+            BoxPin.Clear();
         }
 
         private void Box_PIN_TextChanged(object sender, TextChangedEventArgs e) {
-            Btn_PinOk.IsEnabled = Box_PIN.Text.Length > 0;
+            BtnPinOk.IsEnabled = BoxPin.Text.Length > 0;
         }
 
         private void PathBox_Submit(object sender, KeyEventArgs e) {
@@ -452,7 +472,7 @@ namespace ImgurSniper.UI {
 
             fbd.Description = str.selectPath;
 
-            DialogResult result = fbd.ShowDialog();
+            fbd.ShowDialog();
 
             if (string.IsNullOrWhiteSpace(fbd.SelectedPath)) {
                 return;
@@ -464,11 +484,13 @@ namespace ImgurSniper.UI {
         private void SavePath() {
             try {
                 if (Directory.Exists(PathBox.Text)) {
-                    FileIO.SaveImagesPath = PathBox.Text;
+                    ConfigHelper.SaveImagesPath = PathBox.Text;
                 } else {
-                    error_toast.Show(str.pathNotExist, TimeSpan.FromSeconds(4));
+                    ErrorToast.Show(str.pathNotExist, TimeSpan.FromSeconds(4));
                 }
-            } catch { }
+            } catch {
+                // ignored
+            }
         }
 
         private void Image_OpenRepository(object sender, MouseButtonEventArgs e) {
@@ -486,7 +508,7 @@ namespace ImgurSniper.UI {
 
         //Ask for Save ?
         private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
-            if (Btn_Save.IsEnabled) {
+            if (BtnSave.IsEnabled) {
                 e.Cancel = true;
 
                 bool save = await ShowAskDialog(str.wantToApply);
@@ -495,7 +517,7 @@ namespace ImgurSniper.UI {
                     Save(null, null);
                     Close();
                 } else {
-                    Btn_Save.IsEnabled = false;
+                    BtnSave.IsEnabled = false;
                     Close();
                 }
             } else {
@@ -503,7 +525,7 @@ namespace ImgurSniper.UI {
             }
         }
 
-        //TODO: Custom Title Bar (Mac OSX Title bar?)
+        //Custom Title Bar (Mac OSX Title bar?)
         //private async void Window_Maximize(object sender, MouseButtonEventArgs e) {
         //    if(WindowState == WindowState.Normal) {
         //        WindowState = WindowState.Maximized;

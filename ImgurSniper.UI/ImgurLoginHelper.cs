@@ -47,15 +47,14 @@ namespace ImgurSniper.UI {
                 IOAuth2Token token = await _endpoint.GetTokenByPinAsync(pin);
                 _client.SetOAuth2Token(token);
 
-                FileIO.WriteRefreshToken(token.RefreshToken);
+                ConfigHelper.WriteRefreshToken(token.RefreshToken);
 
                 User = token.AccountUsername;
                 UserUrl = $"http://{User}.imgur.com/all/";
 
                 _success.Show(string.Format(strings.loggedIn, User), TimeSpan.FromSeconds(2));
                 return true;
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 _error.Show(string.Format(strings.wrongPin, ex.Message), TimeSpan.FromSeconds(2));
                 return false;
             }
@@ -67,8 +66,9 @@ namespace ImgurSniper.UI {
             try {
                 IOAuth2Token token = await _endpoint.GetTokenByRefreshTokenAsync(refreshToken);
                 username = token.AccountUsername;
+            } catch {
+                // ignored
             }
-            catch {}
 
             UserUrl = $"http://{username}.imgur.com/all/";
 

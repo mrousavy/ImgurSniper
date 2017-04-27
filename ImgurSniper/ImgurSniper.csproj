@@ -124,18 +124,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Libraries\Cache\HardDiskCache.cs" />
-    <Compile Include="Libraries\Cache\ImageCache.cs" />
     <Compile Include="Libraries\FFmpeg\ExternalCLIManager.cs" />
     <Compile Include="Libraries\FFmpeg\FFmpegEnums.cs" />
     <Compile Include="Libraries\FFmpeg\FFmpegHelper.cs" />
     <Compile Include="Libraries\FFmpeg\FFmpegOptions.cs" />
-    <Compile Include="Libraries\GIF\VideoEncoder.cs" />
     <Compile Include="Libraries\Helper\Animations.cs" />
     <Compile Include="Libraries\Helper\CaptureHelpers.cs" />
     <Compile Include="Libraries\Helper\CursorData.cs" />
     <Compile Include="Libraries\Helper\Extensions.cs" />
-    <Compile Include="Libraries\GIF\GifProperties.cs" />
     <Compile Include="Libraries\Helper\Helpers.cs" />
     <Compile Include="Libraries\Helper\ImageHelper.cs" />
     <Compile Include="GifRecorder.xaml.cs">
@@ -144,13 +140,6 @@
     <Compile Include="GifWindow.xaml.cs">
       <DependentUpon>GifWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Libraries\GifWriter\GifWriter.cs" />
-    <Compile Include="Libraries\GIF\AnimatedGifCreator.cs" />
-    <Compile Include="Libraries\GIF\GifClass.cs" />
-    <Compile Include="Libraries\GIF\GrayscaleQuantizer.cs" />
-    <Compile Include="Libraries\GIF\OctreeQuantizer.cs" />
-    <Compile Include="Libraries\GIF\PaletteQuantizer.cs" />
-    <Compile Include="Libraries\GIF\Quantizer.cs" />
     <Compile Include="Libraries\Helper\RegistryHelper.cs" />
     <Compile Include="Libraries\Hotkeys\HotKey.cs" />
     <Compile Include="Libraries\Hotkeys\HotKeyWinApi.cs" />
@@ -192,7 +181,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Libraries\Helper\Cipher.cs" />
-    <Compile Include="Libraries\Helper\FileIO.cs" />
+    <Compile Include="Libraries\Helper\ConfigHelper.cs" />
     <Compile Include="Libraries\Helper\ImgurIO.cs" />
     <Compile Include="Libraries\ScreenCapture\ScreenCapture.cs" />
     <Compile Include="ScreenshotWindow.xaml.cs">

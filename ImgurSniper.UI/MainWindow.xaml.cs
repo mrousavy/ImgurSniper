@@ -10,13 +10,13 @@ using System.Windows.Input;
 using str = ImgurSniper.UI.Properties.strings;
 
 namespace ImgurSniper.UI {
-    public partial class MainWindow : Window {
+    public partial class MainWindow {
         //Constructor
         public MainWindow() {
             InitializeComponent();
 
             //Update Loading Indicator
-            loadingDesc.Content = str.initializing;
+            LoadingDesc.Content = str.initializing;
 
             //Check for Commandline Arguments
             Arguments();
@@ -27,8 +27,8 @@ namespace ImgurSniper.UI {
             }
 
             //Initialize Helpers
-            Helper = new InstallerHelper(Path, DocPath, error_toast, success_toast, this);
-            _imgurhelper = new ImgurLoginHelper(error_toast, success_toast);
+            Helper = new InstallerHelper(Path, DocPath, ErrorToast, SuccessToast, this);
+            _imgurhelper = new ImgurLoginHelper(ErrorToast, SuccessToast);
         }
 
         //Command Line Args
@@ -62,52 +62,52 @@ namespace ImgurSniper.UI {
             PathBox.Text = DocPath;
 
             //Is "Upload to Imgur" entry in Windows Explorer Context Menu?
-            if (!FileIO.IsInContextMenu) {
+            if (!ConfigHelper.IsInContextMenu) {
                 Helper.AddToContextMenu();
-                FileIO.IsInContextMenu = true;
-                FileIO.Save();
+                ConfigHelper.IsInContextMenu = true;
+                ConfigHelper.Save();
 
                 //First time using ImgurSniper? Show Help Window
                 Help(null, null);
             }
 
             //Update Loading Indicator
-            loadingDesc.Content = str.loadConf;
+            LoadingDesc.Content = str.loadConf;
 
             #region Read Config
 
             try {
-                //Only 1x FileIO File read, optimized performance
-                FileIO.Settings settings = FileIO.JsonConfig;
+                //Only 1x ConfigHelper File read, optimized performance
+                ConfigHelper.Settings settings = ConfigHelper.JsonConfig;
 
-                bool AllMonitors = settings.AllMonitors;
-                bool OpenAfterUpload = settings.OpenAfterUpload;
-                bool UsePrint = settings.UsePrint;
-                bool RunOnBoot = settings.RunOnBoot;
+                bool allMonitors = settings.AllMonitors;
+                bool openAfterUpload = settings.OpenAfterUpload;
+                bool usePrint = settings.UsePrint;
+                bool runOnBoot = settings.RunOnBoot;
                 //bool Magnifyer = settings.MagnifyingGlassEnabled;
-                bool SaveImages = settings.SaveImages;
-                bool ImgurAfterSnipe = settings.ImgurAfterSnipe;
-                bool AutoUpdate = settings.AutoUpdate;
-                bool ShowMouse = settings.ShowMouse;
+                bool saveImages = settings.SaveImages;
+                bool imgurAfterSnipe = settings.ImgurAfterSnipe;
+                bool autoUpdate = settings.AutoUpdate;
+                bool showMouse = settings.ShowMouse;
                 int gifFps = settings.GifFps;
                 int gifLength = settings.GifLength / 1000;
                 long compression = settings.Compression;
                 string language = settings.Language;
-                string SaveImagesPath = settings.SaveImagesPath;
+                string saveImagesPath = settings.SaveImagesPath;
                 Key imgKey = settings.ShortcutImgKey;
                 Key gifKey = settings.ShortcutGifKey;
                 ImageFormat format = settings.ImageFormat;
 
                 //Path to Saved Images
-                if (string.IsNullOrWhiteSpace(SaveImagesPath)) {
+                if (string.IsNullOrWhiteSpace(saveImagesPath)) {
                     PathBox.Text = DocPath;
                 } else {
                     //Create Pictures\ImgurSniperImages Path
                     try {
-                        if (!Directory.Exists(SaveImagesPath)) {
-                            Directory.CreateDirectory(SaveImagesPath);
+                        if (!Directory.Exists(saveImagesPath)) {
+                            Directory.CreateDirectory(saveImagesPath);
                         }
-                        PathBox.Text = SaveImagesPath;
+                        PathBox.Text = saveImagesPath;
                     } catch {
                         PathBox.Text = "";
                     }
@@ -131,31 +131,31 @@ namespace ImgurSniper.UI {
                 }
 
                 //Current or All Monitors
-                if (AllMonitors) {
+                if (allMonitors) {
                     MultiMonitorRadio.IsChecked = true;
                 } else {
                     CurrentMonitorRadio.IsChecked = true;
                 }
 
                 //Open Image in Browser after upload
-                OpenAfterUploadBox.IsChecked = OpenAfterUpload;
+                OpenAfterUploadBox.IsChecked = openAfterUpload;
 
                 //Use Print Key instead of default Shortcut
-                PrintKeyBox.IsChecked = UsePrint;
+                PrintKeyBox.IsChecked = usePrint;
 
                 //Run ImgurSniper on boot
-                if (RunOnBoot) {
-                    this.RunOnBoot.IsChecked = true;
+                if (runOnBoot) {
+                    RunOnBoot.IsChecked = true;
                     Helper.Autostart(true);
                 }
 
                 //Auto search for Updates
-                if (AutoUpdate) {
+                if (autoUpdate) {
                     AutoUpdateBox.IsChecked = true;
                 }
 
                 //Show Mouse Cursor on Image Capture
-                if (ShowMouse) {
+                if (showMouse) {
                     ShowMouseBox.IsChecked = true;
                 }
 
@@ -163,10 +163,10 @@ namespace ImgurSniper.UI {
                 //MagnifyingGlassBox.IsChecked = Magnifyer;
 
                 //Save Images on Snap
-                SaveBox.IsChecked = SaveImages;
+                SaveBox.IsChecked = saveImages;
 
                 //Upload to Imgur or Copy to Clipboard after Snipe
-                if (ImgurAfterSnipe) {
+                if (imgurAfterSnipe) {
                     ImgurRadio.IsChecked = true;
                 } else {
                     ClipboardRadio.IsChecked = true;
@@ -200,7 +200,7 @@ namespace ImgurSniper.UI {
                 QualitySlider.ValueChanged += QualitySlider_ValueChanged;
                 QualityLabel.Content = compression + "%";
             } catch {
-                await ShowOkDialog(str.couldNotLoad, string.Format(str.errorConfig, FileIO.ConfigPath));
+                await ShowOkDialog(str.couldNotLoad, string.Format(str.errorConfig, ConfigHelper.ConfigPath));
             }
 
             #endregion
@@ -211,22 +211,22 @@ namespace ImgurSniper.UI {
                     InstallerHelper.StartImgurSniper();
                 }
             } catch {
-                error_toast.Show(str.trayServiceNotRunning, TimeSpan.FromSeconds(2));
+                ErrorToast.Show(str.trayServiceNotRunning, TimeSpan.FromSeconds(2));
             }
 
             //Update Loading Indicator
-            loadingDesc.Content = str.contactImgur;
+            LoadingDesc.Content = str.contactImgur;
 
-            string refreshToken = FileIO.ReadRefreshToken();
+            string refreshToken = ConfigHelper.ReadRefreshToken();
             //name = null if refreshToken = null or any error occured in Login
             string name = await _imgurhelper.LoggedInUser(refreshToken);
 
             if (name != null) {
-                Label_Account.Content = string.Format(str.imgurAccSignedIn, name);
+                LabelAccount.Content = string.Format(str.imgurAccSignedIn, name);
 
-                Btn_SignIn.Visibility = Visibility.Collapsed;
-                Btn_ViewPics.Visibility = Visibility.Visible;
-                Btn_SignOut.Visibility = Visibility.Visible;
+                BtnSignIn.Visibility = Visibility.Collapsed;
+                BtnViewPics.Visibility = Visibility.Visible;
+                BtnSignOut.Visibility = Visibility.Visible;
             }
 
             if (SaveBox.IsChecked.HasValue) {
@@ -234,41 +234,41 @@ namespace ImgurSniper.UI {
             }
 
 #if DEBUG
-            Btn_Update.IsEnabled = true;
+            BtnUpdate.IsEnabled = true;
 #else
             await CheckForUpdates(false);
 #endif
 
             //Remove Loading Indicator
-            progressIndicator.BeginAnimation(OpacityProperty, Animations.FadeOut);
+            ProgressIndicator.BeginAnimation(OpacityProperty, Animations.FadeOut);
 
-            Btn_Save.IsEnabled = false;
+            BtnSave.IsEnabled = false;
         }
 
         //Enable or disable all Buttons
         public void ChangeButtonState(bool enabled) {
-            if (Btn_PinOk.Tag == null) {
-                Btn_PinOk.IsEnabled = enabled;
+            if (BtnPinOk.Tag == null) {
+                BtnPinOk.IsEnabled = enabled;
             }
 
-            if (Btn_SignIn.Tag == null) {
-                Btn_SignIn.IsEnabled = enabled;
+            if (BtnSignIn.Tag == null) {
+                BtnSignIn.IsEnabled = enabled;
             }
 
-            if (Btn_SignOut.Tag == null) {
-                Btn_SignOut.IsEnabled = enabled;
+            if (BtnSignOut.Tag == null) {
+                BtnSignOut.IsEnabled = enabled;
             }
 
-            if (Btn_ViewPics.Tag == null) {
-                Btn_ViewPics.IsEnabled = enabled;
+            if (BtnViewPics.Tag == null) {
+                BtnViewPics.IsEnabled = enabled;
             }
 
-            if (Btn_Snipe.Tag == null) {
-                Btn_Snipe.IsEnabled = enabled;
+            if (BtnSnipe.Tag == null) {
+                BtnSnipe.IsEnabled = enabled;
             }
 
-            if (Btn_Update.Tag == null) {
-                Btn_Update.IsEnabled = enabled;
+            if (BtnUpdate.Tag == null) {
+                BtnUpdate.IsEnabled = enabled;
             }
         }
 
@@ -276,21 +276,21 @@ namespace ImgurSniper.UI {
         private async Task<bool> CheckForUpdates(bool forceSearch) {
             try {
                 //Last update Check
-                DateTime lastChecked = FileIO.LastChecked;
+                DateTime lastChecked = ConfigHelper.LastChecked;
 
                 //Update Available?
-                bool updateAvailable = FileIO.UpdateAvailable;
+                bool updateAvailable = ConfigHelper.UpdateAvailable;
 
                 //Last Update Content for Label
-                Label_LastUpdate.Content = string.Format(str.updateLast, $"{lastChecked:dd.MM.yyyy HH:mm}");
+                LabelLastUpdate.Content = string.Format(str.updateLast, $"{lastChecked:dd.MM.yyyy HH:mm}");
 
                 //If AutoUpdate is disabled and the User does not manually search, exit Method
-                if (!FileIO.AutoUpdate && !forceSearch) {
+                if (!ConfigHelper.AutoUpdate && !forceSearch) {
                     return false;
                 }
 
                 //Update Loading Indicator
-                loadingDesc.Content = str.checkingUpdate;
+                LoadingDesc.Content = str.checkingUpdate;
 
                 //Check for Update, if last update is longer than 1 Day ago
                 if (forceSearch || DateTime.Now - lastChecked > TimeSpan.FromDays(1) || updateAvailable) {
@@ -301,34 +301,34 @@ namespace ImgurSniper.UI {
                     //All Commits where a new ImgurSniper Version is available start with "R:"
                     _commits = new List<GitHubCommit>(commitsRaw.Where(c => c.Commit.Message.StartsWith("R:")));
 
-                    FileIO.LastChecked = DateTime.Now;
-                    FileIO.Save();
+                    ConfigHelper.LastChecked = DateTime.Now;
+                    ConfigHelper.Save();
 
                     //Last Update Content for Label
-                    Label_LastUpdate.Content = string.Format(str.updateLast, $"{DateTime.Now:dd.MM.yyyy HH:mm}");
+                    LabelLastUpdate.Content = string.Format(str.updateLast, $"{DateTime.Now:dd.MM.yyyy HH:mm}");
 
-                    int currentCommits = FileIO.CurrentCommits;
+                    int currentCommits = ConfigHelper.CurrentCommits;
                     //999 = value is unset
                     if (currentCommits == 999) {
-                        FileIO.CurrentCommits = _commits.Count;
-                        FileIO.Save();
+                        ConfigHelper.CurrentCommits = _commits.Count;
+                        ConfigHelper.Save();
                     } else if (updateAvailable || _commits.Count > currentCommits) {
                         //Newer Version is available
-                        FileIO.UpdateAvailable = true;
-                        FileIO.Save();
-                        Btn_Update.IsEnabled = true;
-                        success_toast.Show(string.Format(str.updateAvailable, currentCommits, _commits.Count),
+                        ConfigHelper.UpdateAvailable = true;
+                        ConfigHelper.Save();
+                        BtnUpdate.IsEnabled = true;
+                        SuccessToast.Show(string.Format(str.updateAvailable, currentCommits, _commits.Count),
                             TimeSpan.FromSeconds(4));
 
                         return true;
                     } else {
                         //No Update available
-                        FileIO.UpdateAvailable = false;
-                        FileIO.Save();
+                        ConfigHelper.UpdateAvailable = false;
+                        ConfigHelper.Save();
                     }
                 }
             } catch {
-                error_toast.Show(str.failedUpdate, TimeSpan.FromSeconds(3));
+                ErrorToast.Show(str.failedUpdate, TimeSpan.FromSeconds(3));
             }
             //Any other way than return true = no update
             return false;

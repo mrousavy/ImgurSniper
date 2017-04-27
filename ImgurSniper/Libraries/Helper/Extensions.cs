@@ -1,38 +1,18 @@
-﻿using ImgurSniper.Libraries.GIF;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Animation;
 
 namespace ImgurSniper.Libraries.Helper {
     public static class Extensions {
         public const int BufferSize = 4096;
 
-        public static void SaveGIF(this Image img, Stream stream, GIFQuality quality) {
-            if (quality == GIFQuality.Default) {
-                img.Save(stream, ImageFormat.Gif);
-            } else {
-                Quantizer quantizer;
-                switch (quality) {
-                    case GIFQuality.Grayscale:
-                        quantizer = new GrayscaleQuantizer();
-                        break;
-                    case GIFQuality.Bit4:
-                        quantizer = new OctreeQuantizer(15, 4);
-                        break;
-                    default:
-                    case GIFQuality.Bit8:
-                        quantizer = new OctreeQuantizer(255, 4);
-                        break;
-                }
-
-                using (Bitmap quantized = quantizer.Quantize(img)) {
-                    quantized.Save(stream, ImageFormat.Gif);
-                }
-            }
-        }
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action) {
             if (source == null) throw new ArgumentNullException(nameof(source));
             if (action == null) throw new ArgumentNullException(nameof(action));
@@ -64,47 +44,27 @@ namespace ImgurSniper.Libraries.Helper {
             return sb.ToString();
         }
 
-        #region Stream
-        public static void Write(this FileStream stream, byte[] array) {
-            stream.Write(array, 0, array.Length);
+        public static async Task Animate(this Control control, DependencyProperty dp, double from, double to, int duration) {
+            TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
+
+            DoubleAnimation animation = new DoubleAnimation(from, to, TimeSpan.FromMilliseconds(duration));
+            animation.Completed += delegate {
+                tcs.SetResult(true);
+            };
+            control.BeginAnimation(dp, animation);
+
+            await tcs.Task;
         }
 
-        public static void CopyStreamTo(this Stream fromStream, Stream toStream, int bufferSize = BufferSize) {
-            if (fromStream.CanSeek) {
-                fromStream.Position = 0;
-            }
+        public static async Task Animate(this Control control, DependencyProperty dp, DoubleAnimation animation) {
+            TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
 
-            byte[] buffer = new byte[bufferSize];
-            int bytesRead;
+            animation.Completed += delegate {
+                tcs.SetResult(true);
+            };
+            control.BeginAnimation(dp, animation);
 
-            while ((bytesRead = fromStream.Read(buffer, 0, buffer.Length)) > 0) {
-                toStream.Write(buffer, 0, bytesRead);
-            }
+            await tcs.Task;
         }
-
-        public static int CopyStreamTo64(this FileStream fromStream, Stream toStream, long offset, int length, int bufferSize = BufferSize) {
-            fromStream.Position = offset;
-
-            byte[] buffer = new byte[bufferSize];
-            int bytesRead;
-
-            int totalBytesRead = 0;
-            int positionLimit = length - bufferSize;
-            int readLength = bufferSize;
-
-            do {
-                if (totalBytesRead > positionLimit) {
-                    readLength = length - totalBytesRead;
-                }
-
-                bytesRead = fromStream.Read(buffer, 0, readLength);
-                toStream.Write(buffer, 0, bytesRead);
-                totalBytesRead += bytesRead;
-            }
-            while (bytesRead > 0 && totalBytesRead < length);
-
-            return totalBytesRead;
-        }
-        #endregion
     }
 }

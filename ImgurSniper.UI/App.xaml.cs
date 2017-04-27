@@ -22,7 +22,7 @@ namespace ImgurSniper.UI {
 
             IsInstaller();
 
-            string language = FileIO.Language;
+            string language = ConfigHelper.Language;
 
             //If language is not yet set manually, select system default
             if (language != null) {
@@ -31,18 +31,18 @@ namespace ImgurSniper.UI {
                 FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(
                     XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
             } else {
-                FileIO.Language = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
-                FileIO.Save();
+                ConfigHelper.Language = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+                ConfigHelper.Save();
             }
         }
 
         //Load from config.json
-        private void LoadConfig() {
-            FileIO.Exists();
-            FileIO.JsonConfig = JsonConvert.DeserializeObject<FileIO.Settings>(File.ReadAllText(FileIO.ConfigFile));
+        private static void LoadConfig() {
+            ConfigHelper.Exists();
+            ConfigHelper.JsonConfig = JsonConvert.DeserializeObject<ConfigHelper.Settings>(File.ReadAllText(ConfigHelper.ConfigFile));
         }
 
-        private void IsInstaller() {
+        private static void IsInstaller() {
             //Restard if Argument "Installer" is passed (From CustomActions)
             //(Because Installer will wait for Process Exit)
             string[] args = Environment.GetCommandLineArgs();
@@ -56,10 +56,8 @@ namespace ImgurSniper.UI {
             }
         }
 
-
-
         //Unhandled Exception User Message Boxes
-        private void UnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
+        private static void UnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
             if (MessageBox.Show(strings.unhandledError,
                     "Help fixing an ImgurSniper Bug?",
                     MessageBoxButton.YesNo,
@@ -88,7 +86,9 @@ namespace ImgurSniper.UI {
                 string arguments = argumentsArray.Aggregate("", (current, arg) => current + (arg + " "));
 
                 Process.Start(Assembly.GetCallingAssembly().Location, arguments);
-            } catch { }
+            } catch {
+                // ignored
+            }
         }
     }
 }

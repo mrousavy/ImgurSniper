@@ -209,7 +209,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Cipher.cs" />
-    <Compile Include="FileIO.cs" />
+    <Compile Include="ConfigHelper.cs" />
     <Compile Include="ImgurLoginHelper.cs" />
     <Compile Include="InstallerHelper.cs" />
     <Compile Include="MainWindow.xaml.cs">

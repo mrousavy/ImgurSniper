@@ -15,7 +15,7 @@ namespace ImgurSniper.Libraries.Native {
 
         public static readonly IntPtr HwndBottom = new IntPtr(1);
 
-        private static Version OSVersion = Environment.OSVersion.Version;
+        private static readonly Version OsVersion = Environment.OSVersion.Version;
 
         #region DllImports
         #region GDI32
@@ -28,7 +28,7 @@ namespace ImgurSniper.Libraries.Native {
         [DllImport("gdi32.dll")]
         public static extern bool BitBlt(IntPtr hdc, int nXDest, int nYDest, int nWidth, int nHeight, IntPtr hdcSrc, int nXSrc, int nYSrc, CopyPixelOperation dwRop);
         [DllImport("gdi32.dll")]
-        public static extern bool DeleteDC(IntPtr hDC);
+        public static extern bool DeleteDC(IntPtr hDc);
         [DllImport("gdi32.dll")]
         public static extern bool DeleteObject(IntPtr hObject);
         #endregion
@@ -82,7 +82,7 @@ namespace ImgurSniper.Libraries.Native {
         [DllImport("user32.dll")]
         public static extern IntPtr GetDesktopWindow();
         [DllImport("user32.dll")]
-        public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+        public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, uint uFlags);
         [DllImport("user32.dll")]
         public static extern IntPtr SetActiveWindow(IntPtr hWnd);
         [DllImport("user32.dll")]
@@ -102,65 +102,29 @@ namespace ImgurSniper.Libraries.Native {
         [DllImport("user32.dll")]
         public static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
         [DllImport("user32.dll")]
-        public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
+        public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDc);
         [DllImport("user32.dll")]
         public static extern IntPtr GetWindowDC(IntPtr hWnd);
         #endregion
         #endregion
 
         #region Windows
-        public static bool IsWindowsXP() {
-            return OSVersion.Major == 5 && OSVersion.Minor == 1;
-        }
+        public static bool IsWindowsVista() => OsVersion.Major == 6;
 
-        public static bool IsWindowsXPOrGreater() {
-            return (OSVersion.Major == 5 && OSVersion.Minor >= 1) || OSVersion.Major > 5;
-        }
-
-        public static bool IsWindowsVista() {
-            return OSVersion.Major == 6;
-        }
-
-        public static bool IsWindowsVistaOrGreater() {
-            return OSVersion.Major >= 6;
-        }
-
-        public static bool IsWindows7() {
-            return OSVersion.Major == 6 && OSVersion.Minor == 1;
-        }
-
-        public static bool IsWindows7OrGreater() {
-            return (OSVersion.Major == 6 && OSVersion.Minor >= 1) || OSVersion.Major > 6;
-        }
-
-        public static bool IsWindows8() {
-            return OSVersion.Major == 6 && OSVersion.Minor == 2;
-        }
-
-        public static bool IsWindows8OrGreater() {
-            return (OSVersion.Major == 6 && OSVersion.Minor >= 2) || OSVersion.Major > 6;
-        }
-
-        public static bool IsWindows10OrGreater() {
-            return OSVersion.Major >= 10;
-        }
+        public static bool IsWindows7() => OsVersion.Major == 6 && OsVersion.Minor == 1;
 
         public enum GetWindowLongFields {
-            // ...
             GwlExstyle = -20
-            // ...
         }
 
         [Flags]
         public enum ExtendedWindowStyles {
-            // ...
             WsExToolwindow = 0x00000080
-            // ...
         }
         #endregion
 
         public static IntPtr SetWindowLong(IntPtr hWnd, int nIndex, IntPtr dwNewLong) {
-            int error = 0;
+            int error;
             IntPtr result;
             // Win32 SetWindowLong doesn't clear error on success
             SetLastError(0);
@@ -189,13 +153,9 @@ namespace ImgurSniper.Libraries.Native {
 
         public static Rectangle GetScreenBounds() => SystemInformation.VirtualScreen;
 
-        public static Point GetZeroBasedMousePosition() {
-            return ScreenToClient(GetCursorPosition());
-        }
-
         public static Point ScreenToClient(Point p) {
-            int screenX = GetSystemMetrics(SystemMetric.SM_XVIRTUALSCREEN);
-            int screenY = GetSystemMetrics(SystemMetric.SM_YVIRTUALSCREEN);
+            int screenX = GetSystemMetrics(SystemMetric.SmXvirtualscreen);
+            int screenY = GetSystemMetrics(SystemMetric.SmYvirtualscreen);
             return new Point(p.X - screenX, p.Y - screenY);
         }
 
@@ -356,10 +316,10 @@ namespace ImgurSniper.Libraries.Native {
 
         [Flags]
         public enum DwmWindowAttribute {
-            NCRenderingEnabled = 1,
-            NCRenderingPolicy,
+            NcRenderingEnabled = 1,
+            NcRenderingPolicy,
             TransitionsForceDisabled,
-            AllowNCPaint,
+            AllowNcPaint,
             CaptionButtonBounds,
             NonClientRtlLayout,
             ForceIconicRepresentation,
@@ -389,32 +349,32 @@ namespace ImgurSniper.Libraries.Native {
             }
 
             public int X {
-                get { return Left; }
+                get => Left;
                 set { Right -= Left - value; Left = value; }
             }
 
             public int Y {
-                get { return Top; }
+                get => Top;
                 set { Bottom -= Top - value; Top = value; }
             }
 
             public int Width {
-                get { return Right - Left; }
-                set { Right = value + Left; }
+                get => Right - Left;
+                set => Right = value + Left;
             }
 
             public int Height {
-                get { return Bottom - Top; }
-                set { Bottom = value + Top; }
+                get => Bottom - Top;
+                set => Bottom = value + Top;
             }
 
             public Point Location {
-                get { return new Point(Left, Top); }
+                get => new Point(Left, Top);
                 set { X = value.X; Y = value.Y; }
             }
 
             public Size Size {
-                get { return new Size(Width, Height); }
+                get => new Size(Width, Height);
                 set { Width = value.Width; Height = value.Height; }
             }
 
@@ -424,38 +384,6 @@ namespace ImgurSniper.Libraries.Native {
 
             public static implicit operator RECT(Rectangle r) {
                 return new RECT(r);
-            }
-
-            public static bool operator ==(RECT r1, RECT r2) {
-                return r1.Equals(r2);
-            }
-
-            public static bool operator !=(RECT r1, RECT r2) {
-                return !r1.Equals(r2);
-            }
-
-            public bool Equals(RECT r) {
-                return r.Left == Left && r.Top == Top && r.Right == Right && r.Bottom == Bottom;
-            }
-
-            public override bool Equals(object obj) {
-                if (obj is RECT) {
-                    return Equals((RECT)obj);
-                }
-
-                if (obj is Rectangle) {
-                    return Equals(new RECT((Rectangle)obj));
-                }
-
-                return false;
-            }
-
-            public override int GetHashCode() {
-                return ((Rectangle)this).GetHashCode();
-            }
-
-            public override string ToString() {
-                return string.Format("Left={0},Top={1},Right={2},Bottom={3}", Left, Top, Right, Bottom);
             }
         }
 

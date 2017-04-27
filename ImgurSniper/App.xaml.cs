@@ -25,14 +25,14 @@ namespace ImgurSniper {
 
 
         //Load the config.json
-        private void LoadConfig() {
-            FileIO.Exists();
-            FileIO.JsonConfig = JsonConvert.DeserializeObject<FileIO.Settings>(File.ReadAllText(FileIO.ConfigFile));
+        private static void LoadConfig() {
+            ConfigHelper.Exists();
+            ConfigHelper.JsonConfig = JsonConvert.DeserializeObject<ConfigHelper.Settings>(File.ReadAllText(ConfigHelper.ConfigFile));
         }
 
         //Set Language from Settings
-        private void LoadLanguage() {
-            string language = FileIO.Language;
+        private static void LoadLanguage() {
+            string language = ConfigHelper.Language;
             Thread.CurrentThread.CurrentCulture = new CultureInfo(language);
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
             FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(
@@ -41,7 +41,7 @@ namespace ImgurSniper {
 
 
         //Unhandled Exception User Message Boxes
-        private void UnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
+        private static void UnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
             if (MessageBox.Show(strings.unhandledError,
                     "Help fixing an ImgurSniper Bug?",
                     MessageBoxButton.YesNo,
@@ -50,7 +50,7 @@ namespace ImgurSniper {
             }
 
 
-            if (MessageBox.Show(String.Format(strings.unhandledErrorDescription, e.Exception.Message),
+            if (MessageBox.Show(string.Format(strings.unhandledErrorDescription, e.Exception.Message),
                 "ImgurSniper Error",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Error) == MessageBoxResult.Yes) {
@@ -71,7 +71,9 @@ namespace ImgurSniper {
                 string exePath = System.Reflection.Assembly.GetEntryAssembly().Location;
 
                 Process.Start(exePath, arguments);
-            } catch { }
+            } catch {
+                // ignored
+            }
 
             Process.GetCurrentProcess().Kill();
         }

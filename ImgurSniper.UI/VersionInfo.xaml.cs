@@ -1,5 +1,5 @@
-﻿using Octokit;
-using System;
+﻿using System;
+using Octokit;
 using System.Collections.Generic;
 using System.Windows;
 
@@ -7,18 +7,14 @@ namespace ImgurSniper.UI {
     /// <summary>
     ///     Interaction logic for VersionInfo.xaml
     /// </summary>
-    public partial class VersionInfo : Window {
-        private IReadOnlyList<GitHubCommit> _commits;
-        private readonly int latest;
-        public bool skipped;
+    public partial class VersionInfo {
+        private readonly int _latest;
+        public bool Skipped;
 
         public VersionInfo(IReadOnlyList<GitHubCommit> commits, int currentCommits) {
             InitializeComponent();
-
-            _commits = commits;
-
 #if DEBUG
-            latest = 50;
+            _latest = 50;
 
             //commits = null and currentCommits = ?? in DEBUG
             int commitNr = 50;
@@ -32,12 +28,12 @@ namespace ImgurSniper.UI {
                 commitNr--;
             }
 #else
-            latest = _commits.Count;
+            _latest = commits.Count;
 
             //commits = correct values
-            int commitNr = _commits.Count;
-            for(int i = 0; i < _commits.Count - currentCommits; i++) {
-                Commit commit = _commits[i].Commit;
+            int commitNr = commits.Count;
+            for (int i = 0; i < commits.Count - currentCommits; i++) {
+                Commit commit = commits[i].Commit;
                 listview.Items.Add(new VersionInfoItem {
                     Version = "v" + commitNr,
                     Date = $"{commit.Author.Date:dd.MM}",
@@ -54,10 +50,10 @@ namespace ImgurSniper.UI {
         }
 
         private void SkipClick(object sender, RoutedEventArgs e) {
-            skipped = true;
-            FileIO.CurrentCommits = latest;
-            FileIO.UpdateAvailable = false;
-            FileIO.Save();
+            Skipped = true;
+            ConfigHelper.CurrentCommits = _latest;
+            ConfigHelper.UpdateAvailable = false;
+            ConfigHelper.Save();
             DialogResult = false;
         }
 

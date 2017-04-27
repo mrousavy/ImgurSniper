@@ -26,7 +26,7 @@ namespace ImgurSniper {
     /// </summary>
     public partial class Snipe {
         private static readonly Action ActionTroubleshoot =
-            delegate { Process.Start(Path.Combine(FileIO.ProgramFiles, "ImgurSniper.UI.exe"), "Troubleshooting"); };
+            delegate { Process.Start(Path.Combine(ConfigHelper.ProgramFiles, "ImgurSniper.UI.exe"), "Troubleshooting"); };
         public static readonly Action DisposeNotification =
             delegate {
                 Notification = null;
@@ -37,7 +37,7 @@ namespace ImgurSniper {
         private string _dir;
         private bool _gif;
         private NotifyIcon _nicon;
-        private ImgurIO _imgur;
+        private ImgurUploader _imgur;
 
         private static Notification Notification {
             get => _internalNotification;
@@ -65,8 +65,8 @@ namespace ImgurSniper {
 
         //Initialize important Variables
         private void Initialize() {
-            _dir = FileIO.SaveImagesPath;
-            _imgur = new ImgurIO();
+            _dir = ConfigHelper.SaveImagesPath;
+            _imgur = new ImgurUploader();
         }
 
         //Start Everything and load CMD Args
@@ -112,7 +112,6 @@ namespace ImgurSniper {
 
             UpdateCheck();
 
-            args = null;
             if (uploadFiles == null || uploadFiles.Count < 1)
                 uploadFiles = null;
             GC.Collect();
@@ -143,8 +142,8 @@ namespace ImgurSniper {
 #if !DEBUG
             try {
                 //If automatically update, and last checked was more than 2 days ago
-                if (FileIO.AutoUpdate && (DateTime.Now - FileIO.LastChecked) > TimeSpan.FromDays(2))
-                    Process.Start(Path.Combine(FileIO.ProgramFiles, "ImgurSniper.UI.exe"), "Update");
+                if (ConfigHelper.AutoUpdate && (DateTime.Now - ConfigHelper.LastChecked) > TimeSpan.FromDays(2))
+                    Process.Start(Path.Combine(ConfigHelper.ProgramFiles, "ImgurSniper.UI.exe"), "Update");
             } catch { }
 #endif
         }
@@ -153,9 +152,9 @@ namespace ImgurSniper {
             //Wait for Dispatcher to utilize (Apparently it won't work without a Delay)
             await Task.Delay(1000);
 
-            Key imgKey = FileIO.ShortcutImgKey;
-            Key gifKey = FileIO.ShortcutGifKey;
-            bool usePrint = FileIO.UsePrint;
+            Key imgKey = ConfigHelper.ShortcutImgKey;
+            Key gifKey = ConfigHelper.ShortcutGifKey;
+            bool usePrint = ConfigHelper.UsePrint;
 
             HotKey imgHotKey = null;
             try {
@@ -179,10 +178,10 @@ namespace ImgurSniper {
             Image iconGif = null, iconHelp = null, iconSettings = null, iconExit = null;
 
             try {
-                iconGif = ImageHelper.LoadImage(Path.Combine(FileIO.ProgramFiles, "Resources", "iconGif.png"));
-                iconHelp = ImageHelper.LoadImage(Path.Combine(FileIO.ProgramFiles, "Resources", "iconHelp.png"));
-                iconSettings = ImageHelper.LoadImage(Path.Combine(FileIO.ProgramFiles, "Resources", "iconSettings.png"));
-                iconExit = ImageHelper.LoadImage(Path.Combine(FileIO.ProgramFiles, "Resources", "iconExit.png"));
+                iconGif = ImageHelper.LoadImage(Path.Combine(ConfigHelper.ProgramFiles, "Resources", "iconGif.png"));
+                iconHelp = ImageHelper.LoadImage(Path.Combine(ConfigHelper.ProgramFiles, "Resources", "iconHelp.png"));
+                iconSettings = ImageHelper.LoadImage(Path.Combine(ConfigHelper.ProgramFiles, "Resources", "iconSettings.png"));
+                iconExit = ImageHelper.LoadImage(Path.Combine(ConfigHelper.ProgramFiles, "Resources", "iconExit.png"));
             } catch {
                 //Images not found
             }
@@ -201,7 +200,7 @@ namespace ImgurSniper {
             helpMenuItem.Image = iconHelp;
             helpMenuItem.Click += delegate {
                 try {
-                    Process.Start(Path.Combine(FileIO.ProgramFiles, "ImgurSniper.UI.exe"), "Help");
+                    Process.Start(Path.Combine(ConfigHelper.ProgramFiles, "ImgurSniper.UI.exe"), "Help");
                 } catch {
                     // ignored
                 }
@@ -212,7 +211,7 @@ namespace ImgurSniper {
             settingsMenuItem.Image = iconSettings;
             settingsMenuItem.Click += delegate {
                 try {
-                    Process.Start(Path.Combine(FileIO.ProgramFiles, "ImgurSniper.UI.exe"));
+                    Process.Start(Path.Combine(ConfigHelper.ProgramFiles, "ImgurSniper.UI.exe"));
                 } catch {
                     // ignored
                 }
@@ -369,21 +368,21 @@ namespace ImgurSniper {
 
         //Open Image Capture Window
         private async Task CaptureImage() {
-            using (ScreenshotWindow window = new ScreenshotWindow(FileIO.AllMonitors)) {
+            using (ScreenshotWindow window = new ScreenshotWindow(ConfigHelper.AllMonitors)) {
                 window.ShowDialog();
 
                 if (window.DialogResult == true) {
                     try {
                         //Config: Save Image locally?
-                        if (FileIO.SaveImages) {
+                        if (ConfigHelper.SaveImages) {
                             try {
                                 //Save File with unique name
                                 long time = DateTime.Now.ToFileTimeUtc();
-                                string extension = "." + FileIO.ImageFormat.ToString().ToLower();
+                                string extension = "." + ConfigHelper.ImageFormat.ToString().ToLower();
                                 string filename = _dir + $"\\Snipe_{time}{extension}";
                                 File.WriteAllBytes(filename, window.CroppedImage);
 
-                                if (FileIO.OpenAfterUpload) {
+                                if (ConfigHelper.OpenAfterUpload) {
                                     //If name contains Spaces, Arguments get seperated by the Space
                                     if (filename.Contains(" ")) {
                                         //Open Image itself
@@ -398,12 +397,12 @@ namespace ImgurSniper {
                             }
                         }
 
-                        bool imgurAfterSnipe = FileIO.ImgurAfterSnipe;
+                        bool imgurAfterSnipe = ConfigHelper.ImgurAfterSnipe;
 
                         //Config: Upload Image to Imgur or Copy to Clipboard?
                         if (imgurAfterSnipe) {
                             //Log user in (Imgur)
-                            ImgurIO imgur = new ImgurIO();
+                            ImgurUploader imgur = new ImgurUploader();
                             await imgur.Login();
 
 #if DEBUG
@@ -463,22 +462,22 @@ namespace ImgurSniper {
 
         //Open GIF Capture Window
         private async Task CaptureGif() {
-            using (GifWindow window = new GifWindow(FileIO.AllMonitors)) {
+            using (GifWindow window = new GifWindow(ConfigHelper.AllMonitors)) {
                 window.ShowDialog();
 
                 if (window.DialogResult == true) {
                     try {
-                        bool imgurAfterSnipe = FileIO.ImgurAfterSnipe;
+                        bool imgurAfterSnipe = ConfigHelper.ImgurAfterSnipe;
 
                         //Config: Save Image locally?
-                        if (FileIO.SaveImages) {
+                        if (ConfigHelper.SaveImages) {
                             try {
                                 //Save File with unique name
                                 long time = DateTime.Now.ToFileTimeUtc();
                                 string filename = _dir + $"\\Snipe_{time}.gif";
                                 File.WriteAllBytes(filename, window.CroppedGif);
 
-                                if (FileIO.OpenAfterUpload) {
+                                if (ConfigHelper.OpenAfterUpload) {
                                     //If name contains Spaces, Arguments get seperated by the Space
                                     if (filename.Contains(" ")) {
                                         //Open Image itself
@@ -496,7 +495,7 @@ namespace ImgurSniper {
                         //Config: Upload Image to Imgur or Copy to Clipboard?
                         if (imgurAfterSnipe) {
                             //Log user in (Imgur)
-                            ImgurIO imgur = new ImgurIO();
+                            ImgurUploader imgur = new ImgurUploader();
                             await imgur.Login();
 
 #if DEBUG
@@ -559,7 +558,7 @@ namespace ImgurSniper {
 
                 Action action = delegate { Process.Start(link); };
 
-                if (FileIO.OpenAfterUpload) {
+                if (ConfigHelper.OpenAfterUpload) {
                     Process.Start(link);
                     action = null;
                 }
@@ -584,7 +583,7 @@ namespace ImgurSniper {
 
             Action action = delegate { Process.Start(link); };
 
-            if (FileIO.OpenAfterUpload) {
+            if (ConfigHelper.OpenAfterUpload) {
                 Process.Start(link);
                 action = null;
             }
@@ -627,7 +626,7 @@ namespace ImgurSniper {
                     player.Close();
                 };
 
-                string path = Path.Combine(FileIO.ProgramFiles, "Resources\\Blop.wav");
+                string path = Path.Combine(ConfigHelper.ProgramFiles, "Resources\\Blop.wav");
 
                 player.Open(new Uri(path));
                 player.Play();

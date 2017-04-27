@@ -7,7 +7,7 @@ using System.IO;
 using System.Threading.Tasks;
 
 namespace ImgurSniper.Libraries.Helper {
-    public class ImgurIO {
+    public class ImgurUploader {
         private readonly ImgurClient _client;
 
         public static string ClientId => "766263aaa4c9882";
@@ -17,7 +17,7 @@ namespace ImgurSniper.Libraries.Helper {
         /// <summary>
         ///     Login to Imgur with OAuth2
         /// </summary>
-        public ImgurIO() {
+        public ImgurUploader() {
             _client = new ImgurClient(ClientId, ClientSecret);
         }
 
@@ -26,7 +26,7 @@ namespace ImgurSniper.Libraries.Helper {
             try {
                 OAuth2Endpoint endpoint = new OAuth2Endpoint(_client);
 
-                string refreshToken = FileIO.ReadRefreshToken();
+                string refreshToken = ConfigHelper.ReadRefreshToken();
 
                 if (string.IsNullOrWhiteSpace(refreshToken)) {
                     IOAuth2Token token = await endpoint.GetTokenByRefreshTokenAsync(refreshToken);

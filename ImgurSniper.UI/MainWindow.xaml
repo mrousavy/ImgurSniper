@@ -18,7 +18,7 @@
 
 	<!--<md:Card HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignPaper}">-->
 	<md:DialogHost x:Name="DialogHost">
-		<Grid x:Name="grid">
+		<Grid x:Name="Grid">
 			<!--CATEGORY: Custom (MacOSX Style) Title Bar        => 35 Top Margin for Underlying Controls-->
 			<!--<md:Card HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="{DynamicResource MaterialDesignPaper}" MouseDown="Window_Move">
 				
@@ -192,33 +192,33 @@
 							</StackPanel>
 
 							<!--HEADER: Imgur Account-->
-							<Label Margin="10,5,5,5" FontSize="15" x:Name="Label_Account"
+							<Label Margin="10,5,5,5" FontSize="15" x:Name="LabelAccount"
 								   Content="{x:Static Member=cultureStrings:strings.imgurAcc}" />
 
 							<Grid Margin="15,5,5,5">
 								<StackPanel Orientation="Horizontal" Visibility="Collapsed"
-											x:Name="Panel_PIN">
+											x:Name="PanelPin">
 									<Label Foreground="Gray" FontSize="13" VerticalAlignment="Center" Content="PIN:" />
 
-									<TextBox Margin="5" MaxLength="20" Width="100" x:Name="Box_PIN"
+									<TextBox Margin="5" MaxLength="20" Width="100" x:Name="BoxPin"
 											 VerticalAlignment="Bottom" TextChanged="Box_PIN_TextChanged" />
 
-									<Button Margin="5" IsEnabled="False" x:Name="Btn_PinOk"
-											VerticalAlignment="Bottom" Click="PINOk"
+									<Button Margin="5" IsEnabled="False" x:Name="BtnPinOk"
+											VerticalAlignment="Bottom" Click="PinOk"
 											Content=">" />
 
 								</StackPanel>
 
 								<Button HorizontalAlignment="Left" Visibility="Visible"
-										x:Name="Btn_SignIn" Click="SignIn"
+										x:Name="BtnSignIn" Click="SignIn"
 										Content="{x:Static Member=cultureStrings:strings.singIn}" />
 
 								<StackPanel Orientation="Horizontal">
 									<Button HorizontalAlignment="Left" Visibility="Collapsed"
-											x:Name="Btn_SignOut" Click="SignOut"
+											x:Name="BtnSignOut" Click="SignOut"
 											Content="{x:Static Member=cultureStrings:strings.singOut}" Margin="0,0,5,0" />
 									<Button HorizontalAlignment="Left" Visibility="Collapsed"
-											x:Name="Btn_ViewPics" Click="ViewPics"
+											x:Name="BtnViewPics" Click="ViewPics"
 											Content="{x:Static Member=cultureStrings:strings.viewPics}"
 											Margin="5,0,0,0" />
 								</StackPanel>
@@ -275,7 +275,7 @@
 								<Button HorizontalAlignment="Left"
 										Content="{x:Static Member=cultureStrings:strings.updateNow}"
 										Click="Btn_SearchUpdates" />
-								<Label x:Name="Label_LastUpdate" Margin="-3" FontSize="12" Foreground="Gray"
+								<Label x:Name="LabelLastUpdate" Margin="-3" FontSize="12" Foreground="Gray"
 									   HorizontalAlignment="Center">
 									Debug Test
 								</Label>
@@ -300,16 +300,16 @@
 								HorizontalAlignment="Right" VerticalAlignment="Bottom">
 						<!--<Button Margin="5" Click="Repair" x:Name="Btn_Repair"
 							Content="{x:Static Member=cultureStrings:strings.repair}"/>-->
-						<Button Margin="5" Click="Save" x:Name="Btn_Save" IsEnabled="False"
+						<Button Margin="5" Click="Save" x:Name="BtnSave" IsEnabled="False"
 								Content="{x:Static Member=cultureStrings:strings.apply}" />
 
-						<Button Margin="5" Click="Help" x:Name="Btn_Help"
+						<Button Margin="5" Click="Help" x:Name="BtnHelp"
 								Content="{x:Static Member=cultureStrings:strings.help}" />
 
-						<Button Margin="5" Click="Update" x:Name="Btn_Update" IsEnabled="False"
+						<Button Margin="5" Click="Update" x:Name="BtnUpdate" IsEnabled="False"
 								Content="{x:Static Member=cultureStrings:strings.update}" />
 
-						<Button Margin="5" Click="Snipe" x:Name="Btn_Snipe" Content="Snipe!" />
+						<Button Margin="5" Click="Snipe" x:Name="BtnSnipe" Content="Snipe!" />
 					</StackPanel>
 
 
@@ -317,18 +317,18 @@
 			</md:Transitioner>
 
 			<!--CATEGORY: Bottom Statusbar-->
-			<StackPanel Orientation="Horizontal" x:Name="progressIndicator" Opacity="0.7"
+			<StackPanel Orientation="Horizontal" x:Name="ProgressIndicator" Opacity="0.7"
 						HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="12">
 
-				<ProgressBar x:Name="progressBar" IsIndeterminate="True"
+				<ProgressBar x:Name="ProgressBar" IsIndeterminate="True"
 							 Style="{StaticResource MaterialDesignCircularProgressBar}" Value="35" />
 
-				<Label x:Name="loadingDesc" Foreground="Gray" />
+				<Label x:Name="LoadingDesc" Foreground="Gray" />
 			</StackPanel>
 
 
 			<!--CATEGORY: Toasts-->
-			<toasty:Toasty x:Name="success_toast"
+			<toasty:Toasty x:Name="SuccessToast"
 						   Height="30"
 						   VerticalAlignment="Bottom"
 						   Duration="0:0:0:2.5"
@@ -339,7 +339,7 @@
 						   Background="#2196F3"
 						   FontSize="13" />
 
-			<toasty:Toasty x:Name="error_toast"
+			<toasty:Toasty x:Name="ErrorToast"
 						   Height="30"
 						   VerticalAlignment="Bottom"
 						   Duration="0:0:0:2.7"

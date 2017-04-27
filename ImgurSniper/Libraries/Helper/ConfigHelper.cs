@@ -1,55 +1,30 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Reflection;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Windows.Input;
 
 namespace ImgurSniper.Libraries.Helper {
-    public static class FileIO {
+    public static class ConfigHelper {
+        #region Properties
         //Value whether ImgurSniper should strech over all screens or not
-        public static bool AllMonitors {
-            get {
-                return JsonConfig.AllMonitors;
-            }
-        }
+        public static bool AllMonitors => JsonConfig.AllMonitors;
 
         //The Image Format for normal Images
-        public static ImageFormat ImageFormat {
-            get {
-                return JsonConfig.ImageFormat;
-            }
-        }
+        public static ImageFormat ImageFormat => JsonConfig.ImageFormat;
 
         //Value whether ImgurSniper should open the uploaded Image in Browser after upload
-        public static bool OpenAfterUpload {
-            get {
-                return JsonConfig.OpenAfterUpload;
-            }
-        }
+        public static bool OpenAfterUpload => JsonConfig.OpenAfterUpload;
 
         //Key for ImgurSniper Image Shortcut
-        public static Key ShortcutImgKey {
-            get {
-                return JsonConfig.ShortcutImgKey;
-            }
-        }
+        public static Key ShortcutImgKey => JsonConfig.ShortcutImgKey;
 
         //Key for ImgurSniper GIF Shortcut
-        public static Key ShortcutGifKey {
-            get {
-                return JsonConfig.ShortcutGifKey;
-            }
-        }
+        public static Key ShortcutGifKey => JsonConfig.ShortcutGifKey;
 
         //Use PrintKey for ImgurSniper Shortcut?
-        public static bool UsePrint {
-            get {
-                return JsonConfig.UsePrint;
-            }
-        }
+        public static bool UsePrint => JsonConfig.UsePrint;
 
         //The Path where images should be saved (if enabled)
         public static string SaveImagesPath {
@@ -62,65 +37,56 @@ namespace ImgurSniper.Libraries.Helper {
         }
 
         //Value wether Images should be saved or not
-        public static bool SaveImages {
-            get {
-                return JsonConfig.SaveImages;
-            }
-        }
+        public static bool SaveImages => JsonConfig.SaveImages;
 
         //Value wether upload Images to Imgur or copy to Clipboard
-        public static bool ImgurAfterSnipe {
-            get {
-                return JsonConfig.ImgurAfterSnipe;
-            }
-        }
+        public static bool ImgurAfterSnipe => JsonConfig.ImgurAfterSnipe;
 
         //Last Time, ImgurSniper checked for Updates
-        public static DateTime LastChecked {
-            get {
-                return JsonConfig.LastChecked;
-            }
-        }
+        public static DateTime LastChecked => JsonConfig.LastChecked;
 
         //Text Language
-        public static string Language {
-            get {
-                return JsonConfig.Language;
-            }
-        }
+        public static string Language => JsonConfig.Language;
 
         //Frames per Second of GIF Capture
-        public static int GifFps {
-            get {
-                return JsonConfig.GifFps;
-            }
-        }
+        public static int GifFps => JsonConfig.GifFps;
 
         //Maximum GIF Length in Milliseconds
-        public static int GifLength {
-            get {
-                return JsonConfig.GifLength;
-            }
-        }
+        public static int GifLength => JsonConfig.GifLength;
 
         //Show Mouse Cursor on Screenshot
-        public static bool ShowMouse {
-            get {
-                return JsonConfig.ShowMouse;
-            }
-        }
+        public static bool ShowMouse => JsonConfig.ShowMouse;
 
         //Value whether ImgurSniper should automatically search for Updates
-        public static bool AutoUpdate {
-            get {
-                return JsonConfig.AutoUpdate;
-            }
-        }
+        public static bool AutoUpdate => JsonConfig.AutoUpdate;
 
         //Compression of Image (0 being lowest, 100 being highest Quality)
-        public static byte Compression {
-            get => JsonConfig.Compression;
+        public static byte Compression => JsonConfig.Compression;
+        #endregion
+
+        #region Imgur Account
+
+        //Does Imgur Refresh Token exist?
+        public static bool TokenExists => File.Exists(TokenPath);
+
+        //Path to Imgur User Refresh Token
+        public static string TokenPath
+            => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper",
+                "refreshtoken.imgurtoken");
+
+        public static string ReadRefreshToken() {
+            if (!File.Exists(TokenPath)) {
+                File.Create(TokenPath);
+                return null;
+            }
+
+            string token = File.ReadAllText(TokenPath);
+            token = Cipher.Decrypt(token, PassPhrase);
+
+            return token;
         }
+
+        #endregion
 
         public static Settings JsonConfig;
 
@@ -133,15 +99,6 @@ namespace ImgurSniper.Libraries.Helper {
 
         //Path to Installation Folder
         public static string ProgramFiles => AppDomain.CurrentDomain.BaseDirectory;
-
-        //Version of ImgurSniper
-        public static string FileVersion {
-            get {
-                Assembly assembly = Assembly.GetExecutingAssembly();
-                FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
-                return fvi.FileVersion;
-            }
-        }
 
         //Salt for Cipher Encryption
         private const string PassPhrase = "ImgurSniper User-Login File_PassPhrase :)";
@@ -173,10 +130,14 @@ namespace ImgurSniper.Libraries.Helper {
                         continue;
                     }
 
-                    if (rule.AccessControlType == AccessControlType.Allow) {
-                        writeAllow = true;
-                    } else if (rule.AccessControlType == AccessControlType.Deny) {
-                        writeDeny = true;
+                    switch (rule.AccessControlType) {
+                        case AccessControlType.Allow:
+                            writeAllow = true;
+                            break;
+                        default:
+                        case AccessControlType.Deny:
+                            writeDeny = true;
+                            break;
                     }
                 }
 
@@ -217,28 +178,5 @@ namespace ImgurSniper.Libraries.Helper {
             public ImageFormat ImageFormat = ImageFormat.Png;
         }
 
-        #region Imgur Account
-
-        //Does Imgur Refresh Token exist?
-        public static bool TokenExists => File.Exists(TokenPath);
-
-        //Path to Imgur User Refresh Token
-        public static string TokenPath
-            => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper",
-                "refreshtoken.imgurtoken");
-
-        public static string ReadRefreshToken() {
-            if (!File.Exists(TokenPath)) {
-                File.Create(TokenPath);
-                return null;
-            }
-
-            string token = File.ReadAllText(TokenPath);
-            token = Cipher.Decrypt(token, PassPhrase);
-
-            return token;
-        }
-
-        #endregion
     }
 }
