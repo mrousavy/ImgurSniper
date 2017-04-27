@@ -56,13 +56,13 @@ namespace ImgurSniper.Libraries.Helper {
             await tcs.Task;
         }
 
-        public static async Task Animate(this Control control, DependencyProperty dp, DoubleAnimation animation) {
+        public static async Task Animate(this UIElement element, DependencyProperty dp, DoubleAnimation animation) {
             TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
 
             animation.Completed += delegate {
                 tcs.SetResult(true);
             };
-            control.BeginAnimation(dp, animation);
+            element.BeginAnimation(dp, animation);
 
             await tcs.Task;
         }
