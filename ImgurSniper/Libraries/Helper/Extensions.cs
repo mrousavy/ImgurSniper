@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media.Animation;
 
 namespace ImgurSniper.Libraries.Helper {
@@ -44,19 +40,20 @@ namespace ImgurSniper.Libraries.Helper {
             return sb.ToString();
         }
 
-        public static async Task Animate(this Control control, DependencyProperty dp, double from, double to, int duration) {
+        #region UI
+        public static async Task AnimateAsync(this UIElement element, DependencyProperty dp, double from, double to, int duration) {
             TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
 
             DoubleAnimation animation = new DoubleAnimation(from, to, TimeSpan.FromMilliseconds(duration));
             animation.Completed += delegate {
                 tcs.SetResult(true);
             };
-            control.BeginAnimation(dp, animation);
+            element.BeginAnimation(dp, animation);
 
             await tcs.Task;
         }
 
-        public static async Task Animate(this UIElement element, DependencyProperty dp, DoubleAnimation animation) {
+        public static async Task AnimateAsync(this UIElement element, DependencyProperty dp, DoubleAnimation animation) {
             TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
 
             animation.Completed += delegate {
@@ -66,5 +63,29 @@ namespace ImgurSniper.Libraries.Helper {
 
             await tcs.Task;
         }
+
+        public static async void Animate(this UIElement element, DependencyProperty dp, double from, double to, int duration) {
+            TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
+
+            DoubleAnimation animation = new DoubleAnimation(from, to, TimeSpan.FromMilliseconds(duration));
+            animation.Completed += delegate {
+                tcs.SetResult(true);
+            };
+            element.BeginAnimation(dp, animation);
+
+            await tcs.Task;
+        }
+
+        public static async void Animate(this UIElement element, DependencyProperty dp, DoubleAnimation animation) {
+            TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
+
+            animation.Completed += delegate {
+                tcs.SetResult(true);
+            };
+            element.BeginAnimation(dp, animation);
+
+            await tcs.Task;
+        }
+        #endregion
     }
 }

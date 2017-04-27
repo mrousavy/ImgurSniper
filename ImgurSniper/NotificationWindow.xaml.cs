@@ -1,15 +1,20 @@
 ﻿using ImgurSniper.Libraries.Helper;
 using System;
+using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media.Animation;
 
 namespace ImgurSniper {
     /// <summary>
-    ///     Interaction logic for Notification.xaml
+    ///     Interaction logic for NotificationWindow.xaml
     /// </summary>
-    public partial class Notification : Window {
+    public partial class NotificationWindow : Window, IDisposable {
+
+        public static readonly Action ActionTroubleshoot =
+            delegate { Process.Start(Path.Combine(ConfigHelper.ProgramFiles, "ImgurSniper.UI.exe"), "Troubleshooting"); };
+
         public enum NotificationType {
             Progress,
             Success,
@@ -20,7 +25,7 @@ namespace ImgurSniper {
         private readonly TaskCompletionSource<bool> _task = new TaskCompletionSource<bool>();
         private bool _autoHide;
 
-        public Notification(string text, NotificationType type, bool autoHide, Action onClick) {
+        public NotificationWindow(string text, NotificationType type, bool autoHide, Action onClick) {
             InitializeComponent();
 
             _left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width;
@@ -56,6 +61,8 @@ namespace ImgurSniper {
             }
         }
 
+        public NotificationWindow(string text, NotificationType type, bool autoHide) : this(text, type, autoHide, null) { }
+
 
         private async void Window_Loaded(object sender, RoutedEventArgs e) {
             FadeIn();
@@ -81,28 +88,20 @@ namespace ImgurSniper {
 
         //Open Animation
         private void FadeIn() {
-            DoubleAnimation fadeIn = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(200));
-            DoubleAnimation slideInX = new DoubleAnimation(_left, _left - Width - 10, TimeSpan.FromMilliseconds(150));
-
-            BeginAnimation(LeftProperty, slideInX);
-            BeginAnimation(OpacityProperty, fadeIn);
+            this.Animate(OpacityProperty, 0, 1, 200);
+            this.Animate(LeftProperty, _left, _left - Width - 10, 150);
         }
 
         //Close Animation
-        private void FadeOut() {
-            DoubleAnimation fadeOut = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(100));
-            DoubleAnimation slideOutX = new DoubleAnimation(Left, _left, TimeSpan.FromMilliseconds(80));
+        private async void FadeOut() {
+            this.Animate(OpacityProperty, 1, 0, 100);
+            await this.AnimateAsync(LeftProperty, Left, _left, 100);
 
-            fadeOut.Completed += delegate {
-                try {
-                    _task.SetResult(true);
-                } catch { }
-                Snipe.DisposeNotification.Invoke();
-                base.Close();
-            };
-
-            BeginAnimation(LeftProperty, slideOutX);
-            BeginAnimation(OpacityProperty, fadeOut);
+            try {
+                _task.SetResult(true);
+            } catch { }
+            GC.Collect();
+            base.Close();
         }
 
         private void Window_Close(object sender, MouseButtonEventArgs e) {
@@ -123,6 +122,14 @@ namespace ImgurSniper {
 
         private void Close_MouseLeave(object sender, MouseEventArgs e) {
             CloseIcon.BeginAnimation(OpacityProperty, Animations.FadeOut);
+        }
+
+        public void Dispose() {
+            try {
+                Close();
+            } catch {
+                // ignored
+            }
         }
     }
 }

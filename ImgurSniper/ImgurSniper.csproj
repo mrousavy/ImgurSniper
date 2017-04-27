@@ -120,12 +120,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Libraries\Helper\ClipboardHelper.cs" />
+    <Compile Include="Libraries\Start\StartGif.cs" />
+    <Compile Include="Libraries\Start\StartImage.cs" />
+    <Compile Include="Libraries\Start\StartTray.cs" />
     <Compile Include="Libraries\FFmpeg\ExternalCLIManager.cs" />
     <Compile Include="Libraries\FFmpeg\FFmpegEnums.cs" />
     <Compile Include="Libraries\FFmpeg\FFmpegHelper.cs" />
     <Compile Include="Libraries\FFmpeg\FFmpegOptions.cs" />
     <Compile Include="Libraries\Helper\Animations.cs" />
     <Compile Include="Libraries\Helper\CaptureHelpers.cs" />
+    <Compile Include="Libraries\Helper\CommandLineHelpers.cs" />
     <Compile Include="Libraries\Helper\CursorData.cs" />
     <Compile Include="Libraries\Helper\Extensions.cs" />
     <Compile Include="Libraries\Helper\Helpers.cs" />
@@ -143,8 +148,9 @@
     <Compile Include="Libraries\Native\NativeStructs.cs" />
     <Compile Include="Libraries\ScreenCapture\ScreencastOptions.cs" />
     <Compile Include="Libraries\ScreenCapture\Screenshot.cs" />
-    <Compile Include="Notification.xaml.cs">
-      <DependentUpon>Notification.xaml</DependentUpon>
+    <Compile Include="Libraries\Start\StartUpload.cs" />
+    <Compile Include="NotificationWindow.xaml.cs">
+      <DependentUpon>NotificationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\strings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -152,6 +158,7 @@
       <DependentUpon>strings.resx</DependentUpon>
     </Compile>
     <Compile Include="Libraries\ScreenCapture\ScreenRecorder.cs" />
+    <Compile Include="Statics.cs" />
     <Page Include="GifRecorder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -160,7 +167,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Notification.xaml">
+    <Page Include="NotificationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -168,24 +175,16 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Snipe.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Libraries\Helper\Cipher.cs" />
     <Compile Include="Libraries\Helper\ConfigHelper.cs" />
-    <Compile Include="Libraries\Helper\ImgurIO.cs" />
+    <Compile Include="Libraries\Helper\ImgurUploader.cs" />
     <Compile Include="Libraries\ScreenCapture\ScreenCapture.cs" />
     <Compile Include="ScreenshotWindow.xaml.cs">
       <DependentUpon>ScreenshotWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Snipe.xaml.cs">
-      <DependentUpon>Snipe.xaml</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using ImgurSniper.Libraries.Helper;
+using ImgurSniper.Libraries.Start;
 using ImgurSniper.Properties;
 using Newtonsoft.Json;
 using System;
@@ -16,11 +17,40 @@ namespace ImgurSniper {
     /// </summary>
     public partial class App {
         public App() {
-            LoadConfig();
-
             DispatcherUnhandledException += UnhandledException;
 
+            LoadConfig();
+
             LoadLanguage();
+        }
+
+        //select startup by command line args
+        protected override void OnStartup(StartupEventArgs e) {
+            base.OnStartup(e);
+
+            CommandlineArgs args = CommandLineHelpers.GetCommandlineArguments();
+
+            switch (args.Argument) {
+                case CommandLineHelpers.Argument.Autostart:
+                    //Tray with Hotkeys
+                    StartTray.Initialize();
+                    break;
+                case CommandLineHelpers.Argument.GIF:
+                    //GIF Recording Capture
+                    StartGif.CaptureGif();
+                    break;
+                case CommandLineHelpers.Argument.Snipe:
+                    //Normal Image Capture
+                    StartImage.CaptureImage();
+                    break;
+                case CommandLineHelpers.Argument.Upload:
+                    //Context Menu Instant Upload
+                    if (args.UploadFiles.Count > 1)
+                        StartUpload.UploadMultiple(args.UploadFiles);
+                    else
+                        StartUpload.UploadSingle(args.UploadFiles[0]);
+                    break;
+            }
         }
 
 

@@ -1,44 +1,21 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
 
-namespace Hotkeys {
+namespace ImgurSniper.Libraries.Hotkeys {
     public sealed class HotKey : IDisposable {
         private readonly IntPtr _handle;
-
         private readonly int _id;
-
         private bool _isKeyRegistered;
-
         private Dispatcher _currentDispatcher;
 
-        [DllImport("user32.dll")]
-        static extern IntPtr GetForegroundWindow();
-
-        public HotKey(ModifierKeys modifierKeys, Key key, Window window)
-            : this(modifierKeys, key, new WindowInteropHelper(window), null) {
-        }
-
-        public HotKey(ModifierKeys modifierKeys, Key key, WindowInteropHelper window)
-            : this(modifierKeys, key, window.Handle, null) {
-        }
-
-        public HotKey(ModifierKeys modifierKeys, Key key, Window window, Action<HotKey> onKeyAction)
-            : this(modifierKeys, key, new WindowInteropHelper(window), onKeyAction) {
-        }
-
-        public HotKey(ModifierKeys modifierKeys, Key key, WindowInteropHelper window, Action<HotKey> onKeyAction)
-            : this(modifierKeys, key, window.Handle, onKeyAction) {
-        }
-
-        public HotKey(ModifierKeys modifierKeys, Key key, IntPtr windowHandle, Action<HotKey> onKeyAction = null) {
+        public HotKey(ModifierKeys modifierKeys, Key key, Action<HotKey> onKeyAction = null) {
             Key = key;
             KeyModifier = modifierKeys;
             _id = GetHashCode();
-            _handle = windowHandle == IntPtr.Zero ? GetForegroundWindow() : windowHandle;
+            _handle = GetHiddenWindow();
             _currentDispatcher = Dispatcher.CurrentDispatcher;
             RegisterHotKey();
             ComponentDispatcher.ThreadPreprocessMessage += ThreadPreprocessMessageMethod;
@@ -49,6 +26,12 @@ namespace Hotkeys {
 
         ~HotKey() {
             Dispose();
+        }
+
+        private IntPtr GetHiddenWindow() {
+            WindowInteropHelper helper = new WindowInteropHelper(new Window());
+            helper.EnsureHandle();
+            return helper.Handle;
         }
 
         public event Action<HotKey> HotKeyPressed;

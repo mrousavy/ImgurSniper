@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Windows.Media;
 
 namespace ImgurSniper.Libraries.Helper {
     public static class Helpers {
@@ -52,6 +53,23 @@ namespace ImgurSniper.Libraries.Helper {
         }
         public static T[] GetEnums<T>() {
             return (T[])Enum.GetValues(typeof(T));
+        }
+
+        //Play the Blop Success Sound
+        public static void PlayBlop() {
+            try {
+                MediaPlayer player = new MediaPlayer { Volume = 30 };
+                player.MediaEnded += delegate {
+                    player.Close();
+                };
+
+                string path = Path.Combine(ConfigHelper.ProgramFiles, "Resources\\Blop.wav");
+
+                player.Open(new Uri(path));
+                player.Play();
+            } catch {
+                // ignored
+            }
         }
     }
 }

@@ -2,7 +2,7 @@
 using Imgur.API.Endpoints.Impl;
 using Imgur.API.Models;
 using ImgurSniper.Properties;
-using System.Collections.Generic;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -15,7 +15,7 @@ namespace ImgurSniper.Libraries.Helper {
         public static string ClientSecret => "1f16f21e51e499422fb90ae670a1974e88f7c6ae";
 
         /// <summary>
-        ///     Login to Imgur with OAuth2
+        /// Login to Imgur with OAuth2
         /// </summary>
         public ImgurUploader() {
             _client = new ImgurClient(ClientId, ClientSecret);
@@ -28,22 +28,20 @@ namespace ImgurSniper.Libraries.Helper {
 
                 string refreshToken = ConfigHelper.ReadRefreshToken();
 
-                if (string.IsNullOrWhiteSpace(refreshToken)) {
-                    IOAuth2Token token = await endpoint.GetTokenByRefreshTokenAsync(refreshToken);
-                    _client.SetOAuth2Token(token);
-                }
+                IOAuth2Token token = await endpoint.GetTokenByRefreshTokenAsync(refreshToken);
+                _client.SetOAuth2Token(token);
             } catch {
                 // ignored
             }
         }
 
         /// <summary>
-        ///     Upload Image to Imgur
+        /// Upload Image to Imgur
         /// </summary>
         /// <param name="bimage">The Image as byte[]</param>
         /// <param name="windowName">The name of the Window</param>
         /// <returns>The Link to the uploaded Image</returns>
-        public async Task<string> Upload(byte[] bimage, string windowName) {
+        public async Task<string> Upload(byte[] bimage, string windowName = null) {
             ImageEndpoint endpoint = new ImageEndpoint(_client);
 
             IImage image;
@@ -59,25 +57,42 @@ namespace ImgurSniper.Libraries.Helper {
         }
 
         /// <summary>
-        ///     Create a New Album and get Id
+        /// Upload Image to Imgur Album
         /// </summary>
-        /// <returns>Album ID and DeleteHash (If not logged in)</returns>
-        public async Task<KeyValuePair<string, string>> CreateAlbum() {
+        /// <param name="bimage">The Image as byte[]</param>
+        /// <param name="windowName">The name of the Window</param>
+        /// <param name="albumId">The ID of the Album, or for anonymous Albums: DeleteHash</param>
+        public async Task UploadToAlbum(byte[] bimage, string windowName, string albumId) {
+            ImageEndpoint endpoint = new ImageEndpoint(_client);
+
+            IImage image;
+            using (MemoryStream stream = new MemoryStream(bimage)) {
+                string title = string.IsNullOrWhiteSpace(windowName)
+                    ? strings.uploadTitle
+                    : $"{windowName}  -  ({strings.uploadTitle})";
+                image = await endpoint.UploadImageStreamAsync(stream, albumId);
+            }
+        }
+
+        /// <summary>
+        /// Create a New Album and get Link and AlbumID/DeleteHash
+        /// </summary>
+        /// <returns>Album Link and Album ID (or Album DeleteHash, if not logged in)</returns>
+        public async Task<Tuple<string, string>> CreateAlbum() {
             AlbumEndpoint endpoint = new AlbumEndpoint(_client);
             IAlbum album = await endpoint.CreateAlbumAsync("Images uploaded with ImgurSniper",
                 "https://mrousavy.github.io/ImgurSniper");
 
-            KeyValuePair<string, string> pair;
+            Tuple<string, string> pair;
 
-            //Logged in User = Album ID for uploads
+            //Logged in User = Item2 = Album ID
             if (_client.OAuth2Token != null) {
-                pair = new KeyValuePair<string, string>(album.Id, album.Id);
+                pair = new Tuple<string, string>(album.Id, album.Id);
             }
-            //Not Logged in User = Album Delete Has (Anonymous Albums)
+            //Not Logged in User = Item2 = Album Delete Hash (Anonymous Albums)
             else {
-                pair = new KeyValuePair<string, string>(album.Id, album.DeleteHash);
+                pair = new Tuple<string, string>(album.Id, album.DeleteHash);
             }
-
             return pair;
         }
     }

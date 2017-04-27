@@ -81,6 +81,11 @@ namespace ImgurSniper.Libraries.Helper {
             }
 
             string token = File.ReadAllText(TokenPath);
+
+            if (string.IsNullOrWhiteSpace(token)) {
+                return null;
+            }
+
             token = Cipher.Decrypt(token, PassPhrase);
 
             return token;
