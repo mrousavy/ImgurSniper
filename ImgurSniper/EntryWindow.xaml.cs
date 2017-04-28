@@ -32,9 +32,15 @@ namespace ImgurSniper {
                 case CommandLineHelper.Argument.Upload:
                     //Context Menu Instant Upload
                     if (args.UploadFiles.Count > 1)
+                        //1 or more files
+                        //TODO: Implement "%1" more than 1
                         await StartUpload.UploadMultiple(args.UploadFiles);
-                    else
+                    else if (args.UploadFiles.Count == 1)
+                        //1 File
                         await StartUpload.UploadSingle(args.UploadFiles[0]);
+                    else
+                        //No Image File detected
+                        await Statics.ShowNotificationAsync(Properties.strings.notAnImage, NotificationWindow.NotificationType.Error);
                     break;
             }
             Application.Current.Shutdown();

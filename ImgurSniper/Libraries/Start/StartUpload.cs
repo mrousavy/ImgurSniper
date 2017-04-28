@@ -56,7 +56,7 @@ namespace ImgurSniper.Libraries.Start {
                 await OpenAlbum(albumInfo.Item1);
             } catch {
                 //Unsupported File Type? Internet connection error?
-                await ShowNotificationAsync(strings.errorInstantUpload, NotificationType.Error, true, ActionTroubleshoot);
+                await ShowNotificationAsync(strings.errorInstantUpload, NotificationType.Error, ActionTroubleshoot);
             }
 
             await Task.Delay(500);
@@ -87,7 +87,7 @@ namespace ImgurSniper.Libraries.Start {
                 Notification?.Close();
             } catch {
                 //Unsupported File Type? Internet connection error?
-                await ShowNotificationAsync(strings.errorInstantUpload, NotificationType.Error, true, ActionTroubleshoot);
+                await ShowNotificationAsync(strings.errorInstantUpload, NotificationType.Error, ActionTroubleshoot);
             }
 
             await Task.Delay(500);

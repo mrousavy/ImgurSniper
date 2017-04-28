@@ -103,7 +103,7 @@ namespace ImgurSniper.Libraries.Helper {
                 "config.json");
 
         //Path to Installation Folder
-        public static string ProgramFiles => AppDomain.CurrentDomain.BaseDirectory;
+        public static string InstallDir => AppDomain.CurrentDomain.BaseDirectory;
 
         //Salt for Cipher Encryption
         private const string PassPhrase = "ImgurSniper User-Login File_PassPhrase :)";
@@ -156,18 +156,13 @@ namespace ImgurSniper.Libraries.Helper {
             public bool AllMonitors = true;
             public bool AutoUpdate = true;
             public bool ShowMouse = false;
-            public bool UpdateAvailable = false;
             public bool UsePrint = false;
             public bool ImgurAfterSnipe = true;
-            public bool IsInContextMenu = false;
-            public bool MagnifyingGlassEnabled = true;
             public bool OpenAfterUpload = true;
-            public bool RunOnBoot = true;
             public bool SaveImages = false;
 
             public byte Compression = 90;
 
-            public int CurrentCommits = 999;
             public int GifFps = 10;
             public int GifLength = 10000;
 

@@ -32,7 +32,7 @@ namespace ImgurSniper {
             try {
                 //If automatically update, and last checked was more than 2 days ago
                 if (ConfigHelper.AutoUpdate && (DateTime.Now - ConfigHelper.LastChecked) > TimeSpan.FromDays(2))
-                    Process.Start(Path.Combine(ConfigHelper.ProgramFiles, "ImgurSniper.UI.exe"), "Update");
+                    Process.Start(Path.Combine(ConfigHelper.InstallDir, "ImgurSniper.UI.exe"), "Update");
             } catch { }
 #endif
         }
@@ -46,6 +46,8 @@ namespace ImgurSniper {
         //Set Language from Settings
         private static void LoadLanguage() {
             string language = ConfigHelper.Language;
+            if (string.IsNullOrWhiteSpace(language))
+                return;
             Thread.CurrentThread.CurrentCulture = new CultureInfo(language);
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
             FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(
@@ -55,11 +57,14 @@ namespace ImgurSniper {
 
         //Unhandled Exception User Message Boxes
         private static void UnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
-            if (MessageBox.Show(strings.unhandledError,
+            MessageBoxResult helpFixing = MessageBox.Show(strings.unhandledError,
                     "Help fixing an ImgurSniper Bug?",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Question) == MessageBoxResult.Yes) {
+                    MessageBoxButton.YesNoCancel,
+                    MessageBoxImage.Question);
+            if (helpFixing == MessageBoxResult.Yes) {
                 Process.Start("https://github.com/mrousavy/ImgurSniper/issues/new");
+            } else if (helpFixing == MessageBoxResult.Cancel) {
+                Process.GetCurrentProcess().Kill();
             }
 
 
@@ -79,6 +84,7 @@ namespace ImgurSniper {
             }
 
             try {
+                //Restart with same args
                 string[] argumentsArray = Environment.GetCommandLineArgs();
                 string arguments = argumentsArray.Aggregate("", (current, arg) => current + (arg.Contains(" ") ? "\"" + arg + "\" " : arg + " "));
                 string exePath = System.Reflection.Assembly.GetEntryAssembly().Location;

@@ -16,16 +16,18 @@ namespace ImgurSniper.UI {
     /// </summary>
     public partial class App {
         public App() {
-            LoadConfig();
-
             DispatcherUnhandledException += UnhandledException;
 
-            IsInstaller();
+            LoadConfig();
 
+            LoadLanguage();
+        }
+
+        private static void LoadLanguage() {
             string language = ConfigHelper.Language;
 
             //If language is not yet set manually, select system default
-            if (language != null) {
+            if (!string.IsNullOrWhiteSpace(language)) {
                 Thread.CurrentThread.CurrentCulture = new CultureInfo(language);
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
                 FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(
@@ -42,27 +44,16 @@ namespace ImgurSniper.UI {
             ConfigHelper.JsonConfig = JsonConvert.DeserializeObject<ConfigHelper.Settings>(File.ReadAllText(ConfigHelper.ConfigFile));
         }
 
-        private static void IsInstaller() {
-            //Restard if Argument "Installer" is passed (From CustomActions)
-            //(Because Installer will wait for Process Exit)
-            string[] args = Environment.GetCommandLineArgs();
-            if (args.Length > 0 && args.Contains("Installer")) {
-                string fileName = Assembly.GetEntryAssembly().Location;
-                if (fileName != null) {
-                    Process.Start(fileName);
-                }
-
-                Current.Shutdown(0);
-            }
-        }
-
         //Unhandled Exception User Message Boxes
         private static void UnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
-            if (MessageBox.Show(strings.unhandledError,
-                    "Help fixing an ImgurSniper Bug?",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Question) == MessageBoxResult.Yes) {
+            MessageBoxResult helpFixing = MessageBox.Show(strings.unhandledError,
+                "Help fixing an ImgurSniper Bug?",
+                MessageBoxButton.YesNoCancel,
+                MessageBoxImage.Question);
+            if (helpFixing == MessageBoxResult.Yes) {
                 Process.Start("https://github.com/mrousavy/ImgurSniper/issues/new");
+            } else if (helpFixing == MessageBoxResult.Cancel) {
+                Process.GetCurrentProcess().Kill();
             }
 
 

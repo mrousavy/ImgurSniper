@@ -37,7 +37,7 @@ namespace ImgurSniper.Libraries.Helper {
                     await ClipboardHelper.CopyImage(image);
                 }
             } catch (Exception ex) {
-                await ShowNotificationAsync(strings.errorMsg, NotificationType.Error, true, ActionTroubleshoot);
+                await ShowNotificationAsync(strings.errorMsg, NotificationType.Error, ActionTroubleshoot);
                 MessageBox.Show(string.Format(strings.otherErrorMsg, ex.Message), strings.errorMsg);
             }
         }
@@ -69,7 +69,7 @@ namespace ImgurSniper.Libraries.Helper {
                     await ClipboardHelper.CopyImage(image);
                 }
             } catch (Exception ex) {
-                await ShowNotificationAsync(strings.errorMsg, NotificationType.Error, true, ActionTroubleshoot);
+                await ShowNotificationAsync(strings.errorMsg, NotificationType.Error, ActionTroubleshoot);
                 MessageBox.Show(string.Format(strings.otherErrorMsg, ex.Message), strings.errorMsg);
             }
         }
@@ -88,7 +88,7 @@ namespace ImgurSniper.Libraries.Helper {
 #endif
             if (tooBig) {
                 //Could not upload to imgur
-                await ShowNotificationAsync(gif ? strings.imgTooBigGif : strings.imgTooBig, NotificationType.Error, true, ActionTroubleshoot);
+                await ShowNotificationAsync(gif ? strings.imgTooBigGif : strings.imgTooBig, NotificationType.Error, ActionTroubleshoot);
                 return;
             }
 

@@ -63,7 +63,7 @@ namespace ImgurSniper.Libraries.Helper {
                     player.Close();
                 };
 
-                string path = Path.Combine(ConfigHelper.ProgramFiles, "Resources\\Blop.wav");
+                string path = Path.Combine(ConfigHelper.InstallDir, "Resources\\Blop.wav");
 
                 player.Open(new Uri(path));
                 player.Play();

@@ -308,7 +308,7 @@ namespace ImgurSniper.UI {
         }
 
         private async void Snipe(object sender, RoutedEventArgs e) {
-            string exe = System.IO.Path.Combine(Path, "ImgurSniper.exe");
+            string exe = Path.Combine(ConfigHelper.InstallDir, "ImgurSniper.exe");
 
             if (File.Exists(exe)) {
                 Process snipeProc = new Process { StartInfo = new ProcessStartInfo(exe) };

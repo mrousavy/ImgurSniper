@@ -22,8 +22,8 @@ namespace ImgurSniper {
             Notification.Show();
         }
 
-        public static async Task ShowNotificationAsync(string text, NotificationWindow.NotificationType type, bool autoHide, Action onClick = null) {
-            Notification = new NotificationWindow(text, type, autoHide, onClick);
+        public static async Task ShowNotificationAsync(string text, NotificationWindow.NotificationType type, Action onClick = null) {
+            Notification = new NotificationWindow(text, type, true, onClick);
             await Notification.ShowAsync();
         }
     }

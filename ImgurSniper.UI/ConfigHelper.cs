@@ -174,16 +174,6 @@ namespace ImgurSniper.UI {
             }
         }
 
-        //Value wether "Upload Image to Imgur" is already in Registry
-        public static bool IsInContextMenu {
-            get => JsonConfig.IsInContextMenu;
-            set {
-                Settings settings = JsonConfig;
-                settings.IsInContextMenu = value;
-                JsonConfig = settings;
-            }
-        }
-
         //Count of Commits for this ImgurSniper Version (for checking for Updates)
         public static int CurrentCommits {
             get => JsonConfig.CurrentCommits;
@@ -261,8 +251,9 @@ namespace ImgurSniper.UI {
             => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper");
 
         public static string ConfigFile
-            => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper",
-                    "config.json");
+            => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper", "config.json");
+
+        public static string InstallDir => AppDomain.CurrentDomain.BaseDirectory;
 
         //Salt for Cipher Encryption
         private static string PassPhrase => "ImgurSniper User-Login File_PassPhrase :)";
@@ -325,7 +316,6 @@ namespace ImgurSniper.UI {
             public bool UpdateAvailable = false;
             public bool UsePrint = false;
             public bool ImgurAfterSnipe = true;
-            public bool IsInContextMenu = false;
             public bool MagnifyingGlassEnabled = true;
             public bool OpenAfterUpload = true;
             public bool RunOnBoot = true;

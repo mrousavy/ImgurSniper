@@ -22,7 +22,7 @@ namespace ImgurSniper.Libraries.Helper {
                 action = null;
             }
 
-            await ShowNotificationAsync(strings.linkclipboard, NotificationType.Success, true, action);
+            await ShowNotificationAsync(strings.linkclipboard, NotificationType.Success, action);
         }
 
         //Parse byte[] to Image and write to Clipboard
@@ -43,7 +43,7 @@ namespace ImgurSniper.Libraries.Helper {
             //Copy whole Image to Clipboard
             Clipboard.SetImage(image);
 
-            await ShowNotificationAsync(strings.imgclipboard, NotificationType.Success, true);
+            await ShowNotificationAsync(strings.imgclipboard, NotificationType.Success);
         }
     }
 }

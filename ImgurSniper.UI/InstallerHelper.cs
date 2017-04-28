@@ -16,17 +16,13 @@ using Toast;
 
 namespace ImgurSniper.UI {
     public class InstallerHelper {
-        private static string _path;
-        private static string _docPath;
         private static string _downloads;
         private static string _updateZipPath;
         private readonly Toasty _error;
         private readonly MainWindow _invoker;
         private readonly Toasty _success;
 
-        public InstallerHelper(string path, string docPath, Toasty errorToast, Toasty successToast, MainWindow invoker) {
-            _path = path;
-            _docPath = docPath;
+        public InstallerHelper(string docPath, Toasty errorToast, Toasty successToast, MainWindow invoker) {
             try {
                 SHGetKnownFolderPath(KnownFolder.Downloads, 0, IntPtr.Zero, out _downloads);
             } catch {
@@ -42,7 +38,7 @@ namespace ImgurSniper.UI {
 
         public void Clean() {
             try {
-                _updateZipPath = Directory.Exists(_downloads) ? _downloads : _docPath;
+                _updateZipPath = Directory.Exists(_downloads) ? _downloads : ConfigHelper.ConfigPath;
                 string file = Path.Combine(_updateZipPath, "ImgurSniperSetup.zip");
                 string directory = Path.Combine(_updateZipPath, "ImgurSniperInstaller");
 
@@ -59,28 +55,9 @@ namespace ImgurSniper.UI {
             Download(panel);
         }
 
-        public void AddToContextMenu() {
-            string addPath = Path.Combine(_path, "AddToContextMenu.exe");
-
-            if (!File.Exists(addPath)) {
-                return;
-            }
-
-            Process add = new Process {
-                StartInfo = new ProcessStartInfo {
-                    FileName = addPath
-                }
-            };
-            add.Start();
-            add.WaitForExit();
-        }
-
-        /// <summary>
-        ///     Download the ImgurSniper Archive from github
-        /// </summary>
-        /// <param name="panel">The Panel for the Progressbar</param>
+        //Download the ImgurSniper Archive from github
         private void Download(Panel panel) {
-            _updateZipPath = Directory.Exists(_downloads) ? _downloads : _docPath;
+            _updateZipPath = Directory.Exists(_downloads) ? _downloads : ConfigHelper.ConfigPath;
             string file = Path.Combine(_updateZipPath, "ImgurSniperSetup.zip");
 
             if (File.Exists(file)) {
@@ -132,7 +109,7 @@ namespace ImgurSniper.UI {
 
             if (processes.Count < 1) {
                 Process p = new Process();
-                p.StartInfo.FileName = Path.Combine(_path, "ImgurSniper.exe");
+                p.StartInfo.FileName = Path.Combine(ConfigHelper.ConfigPath, "ImgurSniper.exe");
                 p.StartInfo.Arguments = "-autostart";
                 p.Start();
             }
@@ -141,7 +118,7 @@ namespace ImgurSniper.UI {
         private void DownloadCompleted(object sender, AsyncCompletedEventArgs e) {
             string file = Path.Combine(_updateZipPath, "ImgurSniperSetup.zip");
             string extractTo = Path.Combine(_updateZipPath, "ImgurSniperInstaller");
-            string msiPath = Path.Combine(extractTo, "ImgurSniperSetup.msi");
+            string msiPath = Path.Combine(extractTo, "ImgurSniperSetup.exe");
 
             if (!File.Exists(file)) {
                 _error.Show(strings.couldNotDownload,
@@ -167,11 +144,7 @@ namespace ImgurSniper.UI {
             }
         }
 
-        /// <summary>
-        ///     Extract the downloaded ImgurSniper Messenger Archive
-        /// </summary>
-        /// <param name="file">The path of the Archive</param>
-        /// <param name="path">The path of the Folder</param>
+        //Extract the downloaded ImgurSniper Messenger Archive
         private static void Extract(string file, string path) {
             using (ZipArchive archive = new ZipArchive(new FileStream(file, FileMode.Open))) {
                 if (Directory.Exists(path)) {
@@ -184,7 +157,7 @@ namespace ImgurSniper.UI {
 
         public void Autostart(bool? boxIsChecked) {
             try {
-                string path = Path.Combine(_path, "ImgurSniper.exe -autostart");
+                string path = Path.Combine(ConfigHelper.ConfigPath, "ImgurSniper.exe -autostart");
 
                 using (
                     RegistryKey baseKey =

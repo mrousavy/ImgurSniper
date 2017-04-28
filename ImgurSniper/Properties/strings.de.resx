@@ -220,4 +220,7 @@ Wollen Sie mehr Details über den Fehler sehen?</value>
   <data name="loggingIn" xml:space="preserve">
     <value>Logge in Imgur Account ein..</value>
   </data>
+  <data name="notAnImage" xml:space="preserve">
+    <value>Die ausgewählte Datei ist keine gültige Bild-Datei!</value>
+  </data>
 </root>

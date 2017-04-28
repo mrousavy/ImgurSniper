@@ -383,7 +383,7 @@ namespace ImgurSniper {
                     return;
                 } else {
                     if (Error)
-                        await Statics.ShowNotificationAsync(strings.uploadingError, NotificationWindow.NotificationType.Error, true);
+                        await Statics.ShowNotificationAsync(strings.uploadingError, NotificationWindow.NotificationType.Error);
                 }
             } catch {
                 // could not finish screenshot

@@ -13,7 +13,7 @@ namespace ImgurSniper {
     public partial class NotificationWindow : Window, IDisposable {
 
         public static readonly Action ActionTroubleshoot =
-            delegate { Process.Start(Path.Combine(ConfigHelper.ProgramFiles, "ImgurSniper.UI.exe"), "Troubleshooting"); };
+            delegate { Process.Start(Path.Combine(ConfigHelper.InstallDir, "ImgurSniper.UI.exe"), "Troubleshooting"); };
 
         public enum NotificationType {
             Progress,

@@ -139,7 +139,7 @@ namespace ImgurSniper {
                     Process ffmpegHelper = new Process {
                         StartInfo = new ProcessStartInfo {
                             Arguments = "install",
-                            FileName = Path.Combine(ConfigHelper.ProgramFiles, "FFmpegManager.exe")
+                            FileName = Path.Combine(ConfigHelper.InstallDir, "FFmpegManager.exe")
                         }
                     };
 

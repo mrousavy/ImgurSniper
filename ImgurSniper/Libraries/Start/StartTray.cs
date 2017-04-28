@@ -40,10 +40,10 @@ namespace ImgurSniper.Libraries.Start {
             Image iconGif = null, iconHelp = null, iconSettings = null, iconExit = null;
 
             try {
-                iconGif = ImageHelper.LoadImage(Path.Combine(ConfigHelper.ProgramFiles, "Resources", "iconGif.png"));
-                iconHelp = ImageHelper.LoadImage(Path.Combine(ConfigHelper.ProgramFiles, "Resources", "iconHelp.png"));
-                iconSettings = ImageHelper.LoadImage(Path.Combine(ConfigHelper.ProgramFiles, "Resources", "iconSettings.png"));
-                iconExit = ImageHelper.LoadImage(Path.Combine(ConfigHelper.ProgramFiles, "Resources", "iconExit.png"));
+                iconGif = ImageHelper.LoadImage(Path.Combine(ConfigHelper.InstallDir, "Resources", "iconGif.png"));
+                iconHelp = ImageHelper.LoadImage(Path.Combine(ConfigHelper.InstallDir, "Resources", "iconHelp.png"));
+                iconSettings = ImageHelper.LoadImage(Path.Combine(ConfigHelper.InstallDir, "Resources", "iconSettings.png"));
+                iconExit = ImageHelper.LoadImage(Path.Combine(ConfigHelper.InstallDir, "Resources", "iconExit.png"));
             } catch {
                 //Images not found
             }
@@ -62,7 +62,7 @@ namespace ImgurSniper.Libraries.Start {
             helpMenuItem.Image = iconHelp;
             helpMenuItem.Click += delegate {
                 try {
-                    Process.Start(Path.Combine(ConfigHelper.ProgramFiles, "ImgurSniper.UI.exe"), "Help");
+                    Process.Start(Path.Combine(ConfigHelper.InstallDir, "ImgurSniper.UI.exe"), "Help");
                 } catch {
                     // ignored
                 }
@@ -73,7 +73,7 @@ namespace ImgurSniper.Libraries.Start {
             settingsMenuItem.Image = iconSettings;
             settingsMenuItem.Click += delegate {
                 try {
-                    Process.Start(Path.Combine(ConfigHelper.ProgramFiles, "ImgurSniper.UI.exe"));
+                    Process.Start(Path.Combine(ConfigHelper.InstallDir, "ImgurSniper.UI.exe"));
                 } catch {
                     // ignored
                 }

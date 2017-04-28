@@ -227,6 +227,15 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The File you selected is not a valid Image File!.
+        /// </summary>
+        public static string notAnImage {
+            get {
+                return ResourceManager.GetString("notAnImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An unknown Error occured! (Show this to the Smart Computer Apes: {0}).
         /// </summary>
         public static string otherErrorMsg {

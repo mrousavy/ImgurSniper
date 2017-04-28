@@ -27,7 +27,7 @@ namespace ImgurSniper.UI {
             }
 
             //Initialize Helpers
-            Helper = new InstallerHelper(Path, DocPath, ErrorToast, SuccessToast, this);
+            Helper = new InstallerHelper(DocPath, ErrorToast, SuccessToast, this);
             _imgurhelper = new ImgurLoginHelper(ErrorToast, SuccessToast);
         }
 
@@ -52,7 +52,7 @@ namespace ImgurSniper.UI {
                 //Task.Delay for Open/Close Animations
                 await Task.Delay(400);
                 await ShowOkDialog(str.troubleshooting, str.troubleshootingTips);
-                await Task.Delay(400);
+                await Task.Delay(200);
                 Close();
             }
         }
@@ -60,16 +60,6 @@ namespace ImgurSniper.UI {
         //Load all Config Params
         private async void Load() {
             PathBox.Text = DocPath;
-
-            //Is "Upload to Imgur" entry in Windows Explorer Context Menu?
-            if (!ConfigHelper.IsInContextMenu) {
-                Helper.AddToContextMenu();
-                ConfigHelper.IsInContextMenu = true;
-                ConfigHelper.Save();
-
-                //First time using ImgurSniper? Show Help Window
-                Help(null, null);
-            }
 
             //Update Loading Indicator
             LoadingDesc.Content = str.loadConf;
@@ -340,7 +330,6 @@ namespace ImgurSniper.UI {
         private readonly ImgurLoginHelper _imgurhelper;
 
         //Path to Program Files/ImgurSniper Folder
-        private static string Path => AppDomain.CurrentDomain.BaseDirectory;
         private List<GitHubCommit> _commits;
 
         //Path to Documents/ImgurSniper Folder
