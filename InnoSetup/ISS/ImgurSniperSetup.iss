@@ -1,5 +1,6 @@
 #define MyAppName "ImgurSniper"
 #define MyAppSettingsName "ImgurSniper.UI"
+#define MyAppSettingsNameFriendly "ImgurSniper Settings"
 #define MyAppFFmpegName "FFmpegManager"
 #define MyAppRootDirectory "..\.."
 #define MySetupRootDirectory ".."
@@ -65,10 +66,10 @@ Source: "{#MyAppBuildDirectory}\Resources\*"; DestDir: {app}\Resources\; Flags: 
 Source: "{#MyAppBuildDirectory}\de\*"; DestDir: {app}\de\; Flags: ignoreversion
 
 [Icons]
-Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppFilename}"; WorkingDir: "{app}"
+Name: "{group}\{#MyAppSettingsNameFriendly}"; Filename: "{app}\{#MyAppSettingsFilename}"; WorkingDir: "{app}"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"; WorkingDir: "{app}"
-Name: "{userdesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppFilename}"; WorkingDir: "{app}"; Tasks: CreateDesktopIcon; Check: not DesktopIconExists
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Filename: "{app}\{#MyAppFilename}"; WorkingDir: "{app}"; Tasks: CreateQuickLaunchEntry
+Name: "{userdesktop}\{#MyAppSettingsNameFriendly}"; Filename: "{app}\{#MyAppSettingsFilename}"; WorkingDir: "{app}"; Tasks: CreateDesktopIcon; Check: not DesktopIconExists
+Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppSettingsNameFriendly}"; Filename: "{app}\{#MyAppSettingsFilename}"; WorkingDir: "{app}"; Tasks: CreateQuickLaunchEntry
 Name: "{sendto}\Imgur"; Filename: "{app}\{#MyAppFilename}"; WorkingDir: "{app}"; Tasks: CreateSendToEntry
 Name: "{userstartup}\{#MyAppName}"; Filename: "{app}\{#MyAppFilename}"; WorkingDir: "{app}"; Parameters: "-autostart"; Tasks: CreateAutostartEntry
 

@@ -312,11 +312,11 @@ namespace ImgurSniper.UI {
         public class Settings {
             public bool AllMonitors = true;
             public bool AutoUpdate = true;
-            public bool ShowMouse = false;
+            public bool ShowMouse = true;
             public bool UpdateAvailable = false;
             public bool UsePrint = false;
             public bool ImgurAfterSnipe = true;
-            public bool MagnifyingGlassEnabled = true;
+            public bool MagnifyingGlassEnabled = false;
             public bool OpenAfterUpload = true;
             public bool RunOnBoot = true;
             public bool SaveImages = false;
@@ -325,7 +325,7 @@ namespace ImgurSniper.UI {
 
             public int CurrentCommits = 999;
             public int GifFps = 10;
-            public int GifLength = 10000;
+            public int GifLength = 12000;
 
             public string Language = null;
             public string SaveImagesPath = Path.Combine(

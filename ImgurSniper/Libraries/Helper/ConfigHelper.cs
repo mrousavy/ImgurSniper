@@ -155,7 +155,7 @@ namespace ImgurSniper.Libraries.Helper {
         public class Settings {
             public bool AllMonitors = true;
             public bool AutoUpdate = true;
-            public bool ShowMouse = false;
+            public bool ShowMouse = true;
             public bool UsePrint = false;
             public bool ImgurAfterSnipe = true;
             public bool OpenAfterUpload = true;
@@ -164,7 +164,7 @@ namespace ImgurSniper.Libraries.Helper {
             public byte Compression = 90;
 
             public int GifFps = 10;
-            public int GifLength = 10000;
+            public int GifLength = 12000;
 
             public string Language = null;
             public string SaveImagesPath = Path.Combine(
