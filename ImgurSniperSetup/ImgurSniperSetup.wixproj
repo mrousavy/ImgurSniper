@@ -21,6 +21,32 @@
   <ItemGroup>
     <Compile Include="Product.wxs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FFmpegManager\FFmpegManager.csproj">
+      <Name>FFmpegManager</Name>
+      <Project>{ffe83e16-5e55-485e-acac-99d585c74070}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\ImgurSniper.UI\ImgurSniper.UI.csproj">
+      <Name>ImgurSniper.UI</Name>
+      <Project>{ce496908-66ad-419a-8903-7ca8a8902dc1}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\ImgurSniper\ImgurSniper.csproj">
+      <Name>ImgurSniper</Name>
+      <Project>{8ed6ecef-039d-4ba1-87e3-e8ea7a8237c4}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(WixTargetsPath)" Condition=" '$(WixTargetsPath)' != '' " />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets" Condition=" '$(WixTargetsPath)' == '' AND Exists('$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets') " />
   <Target Name="EnsureWixToolsetInstalled" Condition=" '$(WixTargetsImported)' != 'true' ">

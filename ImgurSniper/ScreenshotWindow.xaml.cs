@@ -253,9 +253,10 @@ namespace ImgurSniper {
                 HwndName = buff.ToString();
             }
 
-            Point to = new Point(hwnd.Width, hwnd.Height);
+            Point to = new Point(hwnd.Left + hwnd.Width, hwnd.Top + hwnd.Height);
+            Point from = new Point(hwnd.Left, hwnd.Top);
 
-            Crop(whandle, new Point(0, 0), to);
+            Crop(from, to);
         }
 
         #endregion
@@ -341,19 +342,19 @@ namespace ImgurSniper {
                 await Task.Delay(100);
 
                 //Crop Image
-                Crop(NativeMethods.GetDesktopWindow(), from, to);
+                Crop(from, to);
             }
         }
 
         //Make Image from custom Coords
-        private void Crop(IntPtr ptr, Point from, Point to) {
+        private void Crop(Point from, Point to) {
             int w = (int)(to.X - from.X);
             int h = (int)(to.Y - from.Y);
 
             try {
                 Rectangle size = new Rectangle((int)from.X, (int)from.Y, w, h);
 
-                using (Image img = Screenshot.GetScreenshotNative(ptr, size, ConfigHelper.ShowMouse)) {
+                using (Image img = Screenshot.GetScreenshotNative(NativeMethods.GetDesktopWindow(), size, ConfigHelper.ShowMouse)) {
                     if (ConfigHelper.Compression < 100) {
                         using (MemoryStream stream = ImageHelper.CompressImage(img, ConfigHelper.ImageFormat, ConfigHelper.Compression)) {
                             CroppedImage = stream.ToArray();

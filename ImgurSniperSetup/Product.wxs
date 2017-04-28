@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="A04208AA-ED6C-419A-A132-D21820036456" Name="ImgurSniperSetup" Language="1033"
+  <Product Id="A04208AA-ED6C-419A-A132-D21820036456" Name="ImgurSniper" Language="1033"
            Version="1.0.7.6" Manufacturer="mrousavy" UpgradeCode="E2A07A51-DC98-4929-BEE4-010F55608455">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
@@ -9,7 +9,11 @@
 
     <Feature Id="ProductFeature" Title="ImgurSniperSetup" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="ProgramMenuComponent" />
+      <ComponentGroupRef Id="TranslationsDe" />
     </Feature>
+  
+    <Icon Id="ImgurSniper.exe" SourceFile="$(var.ImgurSniper.TargetDir)\ImgurSniper.exe" />
   </Product>
 
   <Fragment>
@@ -18,37 +22,87 @@
         <Directory Id="mrousavy" Name="mrousavy">
           <Directory Id="INSTALLFOLDER" Name="ImgurSniper">
 
-            <Component Id="ImgurSniperApp" Guid="F5CAFEA1-B371-4AC3-8831-853211DD7004">
-              <File Id='ImgurSniperExe' Name='ImgurSniper.exe' DiskId='1' Source='ImgurSniper.exe' KeyPath='yes' />
-              <RegistryValue Root="HKCR" Key="*\shell\ImgurSniperUpload" Name="Icon" Value="[INSTALLFOLDER]\ImgurSniper.exe" Type="string" Action="write" />
-              <RegistryValue Root="HKCR" Key="*\shell\ImgurSniperUpload" Value="Upload to Imgur" Type="string" Action="write" />
-              <RegistryValue Root="HKCR" Key="*\shell\ImgurSniperUpload\command" Name="(Default)" Value="&quot;[INSTALLFOLDER]&quot; -upload &quot;%1&quot;" Type="string" Action="write" />
-            </Component>
-            <Component Id="ImgurSniperUiApp" Guid="BA2BDBA3-C9B7-4436-B31D-B32A27D631D2">
-              <File Id='ImgurSniperUiExe' Name='ImgurSniper.UI.exe' DiskId='1' Source='ImgurSniper.UI.exe' KeyPath='yes' />
-            </Component>
-            <Component Id="CleanupApp" Guid="C1F6AEF3-5357-4E3A-8505-BBB26B59D505">
-              <File Id='CleanupExe' Name='Cleanup.exe' DiskId='1' Source='Cleanup.exe' KeyPath='yes' />
-            </Component>
-            <Component Id="AddToContextMenuApp" Guid="D55F9EE4-B4C9-4622-B506-4565A21424CB">
-              <File Id='AddToContextMenuExe' Name='AddToContextMenu.exe' DiskId='1' Source='AddToContextMenu.exe' KeyPath='yes' />
-            </Component>
-            <Component Id="FFmpegManagerApp" Guid="049A343D-372E-4476-B6E9-2DF3C9C8FDD5">
-              <File Id='FFmpegManagerExe' Name='FFmpegManager.exe' DiskId='1' Source='FFmpegManager.exe' KeyPath='yes' />
-            </Component>
-
+            <!--C:\Program Files\mrousavy\ImgurSniper\-->
+            
+          <Directory Id="TranslationsDeDir" Name="de"/>
+            
           </Directory>
         </Directory>
       </Directory>
+
+      <Directory Id="ProgramMenuFolder" Name="Programs">
+        <Directory Id="ProgramMenuDir" Name="ImgurSniper">
+          
+          <!--C:\ProgramData\-->
+        
+        </Directory>
+      </Directory>
+      
+      <Directory Id="DesktopFolder" Name="DesktopFolder"/>
     </Directory>
   </Fragment>
 
   <Fragment>
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-      <!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
-      <!-- <Component Id="ProductComponent"> -->
-      <!-- TODO: Insert files, registry keys, and other resources here. -->
-      <!-- </Component> -->
+      <!--ImgurSniper-->
+      <Component Id="ImgurSniperApp" Guid="F5CAFEA1-B371-4AC3-8831-853211DD7004">
+        <File Id='ImgurSniperExe' Name='ImgurSniper.exe' DiskId='1' Source='$(var.ImgurSniper.TargetDir)ImgurSniper.exe' KeyPath='yes' >
+          <Shortcut Id="ImgurSniperAppStartmenu" Directory="ProgramMenuDir" Name="ImgurSniper"
+              WorkingDirectory='INSTALLDIR' Icon="ImgurSniper.exe" IconIndex="0" Advertise="yes" />
+          <Shortcut Id="ImgurSniperAppDesktop" Directory="DesktopFolder" Name="ImgurSniper"
+              WorkingDirectory='INSTALLDIR' Icon="ImgurSniper.exe" IconIndex="0" Advertise="yes" />
+        </File>
+        <File Id='ImgurSniperImgurApiDll' Name="Imgur.API.dll" DiskId='1' Source="$(var.ImgurSniper.TargetDir)Imgur.API.dll" />
+        <File Id='ImgurSniperMdc' Name="MaterialDesignColors.dll" DiskId='1' Source="$(var.ImgurSniper.TargetDir)MaterialDesignColors.dll" />
+        <File Id='ImgurSniperMdt' Name="MaterialDesignThemes.Wpf.dll" DiskId='1' Source="$(var.ImgurSniper.TargetDir)MaterialDesignThemes.Wpf.dll" />
+        <File Id='ImgurSniperJson' Name="Newtonsoft.Json.dll" DiskId='1' Source="$(var.ImgurSniper.TargetDir)Newtonsoft.Json.dll" />
+        
+        
+        
+        <!--Registry Keys (Context Menu)-->
+        <RegistryValue Root="HKCR" Key="*\shell\ImgurSniperUpload" Name="Icon" Value="[INSTALLFOLDER]\ImgurSniper.exe" Type="string" Action="write" />
+        <RegistryValue Root="HKCR" Key="*\shell\ImgurSniperUpload" Value="Upload to Imgur" Type="string" Action="write" />
+        <RegistryValue Root="HKCR" Key="*\shell\ImgurSniperUpload\command" Value="&quot;[INSTALLFOLDER]\ImgurSniper.exe&quot; -upload &quot;%1&quot;" Type="string" Action="write" />
+      </Component>
+      
+        <!--ImgurSniper.UI-->
+      <Component Id="ImgurSniperUiApp" Guid="BA2BDBA3-C9B7-4436-B31D-B32A27D631D2">
+        <File Id='ImgurSniperUiExe' Name='ImgurSniper.UI.exe' DiskId='1' Source="$(var.ImgurSniper.UI.TargetDir)ImgurSniper.UI.exe" KeyPath='yes' >
+          <Shortcut Id="ImgurSniperUiAppStartmenu" Directory="ProgramMenuDir" Name="ImgurSniper Settings"
+              WorkingDirectory='INSTALLDIR' Icon="ImgurSniper.exe" IconIndex="0" Advertise="yes" />
+          <Shortcut Id="ImgurSniperUiAppDesktop" Directory="DesktopFolder" Name="ImgurSniper Settings"
+              WorkingDirectory='INSTALLDIR' Icon="ImgurSniper.exe" IconIndex="0" Advertise="yes" />
+        </File>
+        <File Id='ImgurSniperUiDragablz' Name="Dragablz.dll" DiskId='1' Source="$(var.ImgurSniper.UI.TargetDir)Dragablz.dll" />
+        <File Id='ImgurSniperUiOctokit' Name="Octokit.dll" DiskId='1' Source="$(var.ImgurSniper.UI.TargetDir)Octokit.dll" />
+        <File Id='ImgurSniperUiToast' Name="Toast.dll" DiskId='1' Source="$(var.ImgurSniper.UI.TargetDir)Toast.dll" />
+        <File Id='ImgurSniperUiWpfGif' Name="WpfAnimatedGif.dll" DiskId='1' Source="$(var.ImgurSniper.UI.TargetDir)WpfAnimatedGif.dll" />
+      </Component>
+      
+      <!--FFmpegManager-->
+      <Component Id="FFmpegManagerApp" Guid="049A343D-372E-4476-B6E9-2DF3C9C8FDD5">
+        <File Id='FFmpegManagerExe' Name='FFmpegManager.exe' DiskId='1' Source='$(var.FFmpegManager.TargetDir)FFmpegManager.exe' KeyPath='yes' />
+      </Component>
+    </ComponentGroup>
+    
+    <ComponentGroup Id="TranslationsDe" Directory="TranslationsDeDir">
+      <Component Id="FFmpegManagerRes" Guid="009CAC04-45EC-4DDD-855F-90665F6496C8">
+        <File Id="FFmpegManagerResDll" Name="FFmpegManager.resources.dll"  DiskId='1' Source='$(var.FFmpegManager.TargetDir)de\FFmpegManager.resources.dll' KeyPath='yes' />
+      </Component>
+      <Component Id="ImgurSniperRes" Guid="D37A6EB9-5781-4E26-9384-99F6B3AC5C2F">
+        <File Id="ImgurSniperResDll" Name="ImgurSniper.resources.dll"  DiskId='1' Source='$(var.ImgurSniper.TargetDir)de\ImgurSniper.resources.dll' KeyPath='yes' />
+      </Component>
+      <Component Id="ImgurSniperUiRes" Guid="0A1640A3-E2CA-48D5-9473-E6D51353D2C0">
+        <File Id="ImgurSniperUiResDll" Name="ImgurSniper.UI.resources.dll"  DiskId='1' Source='$(var.ImgurSniper.UI.TargetDir)de\ImgurSniper.UI.resources.dll' KeyPath='yes' />
+      </Component>
+    </ComponentGroup>
+  
+
+    <ComponentGroup Id="ProgramMenuComponent" Directory="ProgramMenuDir">
+      <Component Id="ProgramMenuDir" Guid="385C2EB3-3D25-412A-A5F1-9001FF9AF94F">
+        <RemoveFolder Id='ProgramMenuDir' On='uninstall' />
+        <RegistryValue Root='HKCU' Key='Software\[Manufacturer]\[ProductName]' Type='string' Value='' KeyPath='yes' />
+      </Component>
     </ComponentGroup>
   </Fragment>
 </Wix>
