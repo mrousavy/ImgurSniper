@@ -109,7 +109,7 @@ namespace ImgurSniper.UI {
 
             if (processes.Count < 1) {
                 Process p = new Process();
-                p.StartInfo.FileName = Path.Combine(ConfigHelper.ConfigPath, "ImgurSniper.exe");
+                p.StartInfo.FileName = Path.Combine(ConfigHelper.InstallDir, "ImgurSniper.exe");
                 p.StartInfo.Arguments = "-autostart";
                 p.Start();
             }
