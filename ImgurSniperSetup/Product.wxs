@@ -1,30 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="ImgurSniperSetup" Language="1033" Version="1.0.0.0" Manufacturer="" UpgradeCode="601656cc-05e1-4739-a406-ee4d74d4489f">
-		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+  <Product Id="A04208AA-ED6C-419A-A132-D21820036456" Name="ImgurSniperSetup" Language="1033"
+           Version="1.0.7.6" Manufacturer="mrousavy" UpgradeCode="E2A07A51-DC98-4929-BEE4-010F55608455">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
-		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-		<MediaTemplate />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of ImgurSniper is already installed." />
+    <MediaTemplate />
 
-		<Feature Id="ProductFeature" Title="ImgurSniperSetup" Level="1">
-			<ComponentGroupRef Id="ProductComponents" />
-		</Feature>
-	</Product>
+    <Feature Id="ProductFeature" Title="ImgurSniperSetup" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+    </Feature>
+  </Product>
 
-	<Fragment>
-		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="ImgurSniperSetup" />
-			</Directory>
-		</Directory>
-	</Fragment>
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="mrousavy" Name="mrousavy">
+          <Directory Id="INSTALLFOLDER" Name="ImgurSniper">
 
-	<Fragment>
-		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
-			<!-- <Component Id="ProductComponent"> -->
-				<!-- TODO: Insert files, registry keys, and other resources here. -->
-			<!-- </Component> -->
-		</ComponentGroup>
-	</Fragment>
+            <Component Id="ImgurSniperApp" Guid="F5CAFEA1-B371-4AC3-8831-853211DD7004">
+              <File Id='ImgurSniperExe' Name='ImgurSniper.exe' DiskId='1' Source='ImgurSniper.exe' KeyPath='yes' />
+              <RegistryValue Root="HKCR" Key="*\shell\ImgurSniperUpload" Name="Icon" Value="[INSTALLFOLDER]\ImgurSniper.exe" Type="string" Action="write" />
+              <RegistryValue Root="HKCR" Key="*\shell\ImgurSniperUpload" Value="Upload to Imgur" Type="string" Action="write" />
+              <RegistryValue Root="HKCR" Key="*\shell\ImgurSniperUpload\command" Name="(Default)" Value="&quot;[INSTALLFOLDER]&quot; -upload &quot;%1&quot;" Type="string" Action="write" />
+            </Component>
+            <Component Id="ImgurSniperUiApp" Guid="BA2BDBA3-C9B7-4436-B31D-B32A27D631D2">
+              <File Id='ImgurSniperUiExe' Name='ImgurSniper.UI.exe' DiskId='1' Source='ImgurSniper.UI.exe' KeyPath='yes' />
+            </Component>
+            <Component Id="CleanupApp" Guid="C1F6AEF3-5357-4E3A-8505-BBB26B59D505">
+              <File Id='CleanupExe' Name='Cleanup.exe' DiskId='1' Source='Cleanup.exe' KeyPath='yes' />
+            </Component>
+            <Component Id="AddToContextMenuApp" Guid="D55F9EE4-B4C9-4622-B506-4565A21424CB">
+              <File Id='AddToContextMenuExe' Name='AddToContextMenu.exe' DiskId='1' Source='AddToContextMenu.exe' KeyPath='yes' />
+            </Component>
+            <Component Id="FFmpegManagerApp" Guid="049A343D-372E-4476-B6E9-2DF3C9C8FDD5">
+              <File Id='FFmpegManagerExe' Name='FFmpegManager.exe' DiskId='1' Source='FFmpegManager.exe' KeyPath='yes' />
+            </Component>
+
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+      <!-- <Component Id="ProductComponent"> -->
+      <!-- TODO: Insert files, registry keys, and other resources here. -->
+      <!-- </Component> -->
+    </ComponentGroup>
+  </Fragment>
 </Wix>
