@@ -51,7 +51,8 @@
 
             <Label HorizontalAlignment="Center"
                    Grid.Row="6" FontSize="12" Foreground="Gray"
-                   Name="CommitsDisplay" Content="0 Commits"/>
+                   Name="CommitsDisplay" Content="0 Commits"
+                   Cursor="Hand" MouseDown="CommitsDisplay_MouseDown"/>
         </Grid>
     </md:DialogHost>
 </Page>

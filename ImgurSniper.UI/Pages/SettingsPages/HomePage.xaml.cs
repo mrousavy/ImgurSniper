@@ -35,12 +35,12 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
                 Process snipeProc = new Process { StartInfo = new ProcessStartInfo(exe) };
                 snipeProc.Start();
 
-                Visibility = Visibility.Hidden;
+                _window.Visibility = Visibility.Hidden;
 
                 await Task.Delay(500);
                 snipeProc.WaitForExit();
 
-                Visibility = Visibility.Visible;
+                _window.Visibility = Visibility.Visible;
             } else {
                 _window.ErrorToast.Show(strings.imgurSniperNotFound,
                     TimeSpan.FromSeconds(3));
@@ -59,17 +59,20 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
                 };
                 snipeProc.Start();
 
-                Visibility = Visibility.Hidden;
+                _window.Visibility = Visibility.Hidden;
 
                 await Task.Delay(500);
                 snipeProc.WaitForExit();
 
-                Visibility = Visibility.Visible;
+                _window.Visibility = Visibility.Visible;
             } else {
                 _window.ErrorToast.Show(strings.imgurSniperNotFound,
                     TimeSpan.FromSeconds(3));
             }
         }
 
+        private void CommitsDisplay_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            Process.Start("http://www.github.com/mrousavy/ImgurSniper");
+        }
     }
 }
