@@ -462,9 +462,6 @@ Wollen Sie mehr Details über den Fehler sehen?</value>
   <data name="error" xml:space="preserve">
     <value>Fehler</value>
   </data>
-  <data name="settingsHome" xml:space="preserve">
-    <value>Start</value>
-  </data>
   <data name="commitsDisplay" xml:space="preserve">
     <value>{0} Commits auf GitHub</value>
   </data>
@@ -473,5 +470,20 @@ Wollen Sie mehr Details über den Fehler sehen?</value>
   </data>
   <data name="image" xml:space="preserve">
     <value>Bild</value>
+  </data>
+  <data name="settingsCapture" xml:space="preserve">
+    <value>Aufnahme</value>
+  </data>
+  <data name="settingsEvents" xml:space="preserve">
+    <value>Events</value>
+  </data>
+  <data name="settingsHome" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="settingsImgur" xml:space="preserve">
+    <value>Imgur</value>
+  </data>
+  <data name="settingsOther" xml:space="preserve">
+    <value>Anderes</value>
   </data>
 </root>
