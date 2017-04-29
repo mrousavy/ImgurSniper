@@ -102,6 +102,7 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
                 }
             }
         }
+
         private async void Btn_SearchUpdates(object sender, RoutedEventArgs e) {
             Button btn = sender as Button;
             if (btn != null) {
@@ -236,6 +237,7 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
             if (sender is ComboBox box) {
                 try {
                     ConfigHelper.Language = ((ComboBoxItem)box.SelectedItem).Name.ToLower();
+                    ConfigHelper.Save();
 
                     bool result = await Dialog.ShowAskDialog(strings.langChanged);
 

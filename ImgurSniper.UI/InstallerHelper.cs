@@ -151,15 +151,16 @@ namespace ImgurSniper.UI {
             }
         }
 
-        public static void Autostart(bool? boxIsChecked) {
+        public static void Autostart(bool enableAutostart) {
             try {
                 string path = Path.Combine(ConfigHelper.ConfigPath, "ImgurSniper.exe -autostart");
 
                 using (RegistryKey baseKey =
                         Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run")) {
                     if (baseKey != null) {
-                        if (boxIsChecked == true) {
+                        if (enableAutostart) {
                             baseKey.SetValue("ImgurSniper", path);
+                            StartImgurSniper();
                         } else {
                             baseKey.DeleteValue("ImgurSniper");
                         }
