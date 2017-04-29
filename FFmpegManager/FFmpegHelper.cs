@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace FFmpegManager {
     internal static class FFmpegHelper {
-        internal static string FFmpegPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "ffmpeg.exe");
-        internal static string FFmpegDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources");
+        //Needs requireAdministrator in manifest if write protected Directory
+        internal static string Documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        internal static string FFmpegDirectory = Path.Combine(Documents, "ImgurSniper");
+        internal static string FFmpegPath = Path.Combine(FFmpegDirectory, "ffmpeg.exe");
         internal const string FFmpegUrl = "http://ffmpeg.zeranoe.com/builds/win64/static/ffmpeg-20170425-b4330a0-win64-static.zip";
 
         internal static bool FFmpegInstalled {

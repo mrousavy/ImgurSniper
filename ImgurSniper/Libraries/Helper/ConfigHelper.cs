@@ -33,7 +33,7 @@ namespace ImgurSniper.Libraries.Helper {
         public static string SaveImagesPath {
             get {
                 string path = JsonConfig.SaveImagesPath;
-                string ret = CanWrite(path) ? path : ConfigPath;
+                string ret = CanWrite(path) ? path : DocumentsDirectory;
 
                 return ret;
             }
@@ -98,7 +98,7 @@ namespace ImgurSniper.Libraries.Helper {
 
         public static Settings JsonConfig;
 
-        public static string ConfigPath
+        public static string DocumentsDirectory
             => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ImgurSniper");
 
         public static string ConfigFile
@@ -112,8 +112,8 @@ namespace ImgurSniper.Libraries.Helper {
         private const string PassPhrase = "ImgurSniper User-Login File_PassPhrase :)";
 
         public static void Exists() {
-            if (!Directory.Exists(ConfigPath)) {
-                Directory.CreateDirectory(ConfigPath);
+            if (!Directory.Exists(DocumentsDirectory)) {
+                Directory.CreateDirectory(DocumentsDirectory);
             }
 
             if (!File.Exists(ConfigFile)) {

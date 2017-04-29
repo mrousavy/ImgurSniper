@@ -150,9 +150,7 @@
                         Click="Btn_SearchUpdates"/>
                 <Label Grid.Row="1" Grid.Column="0" x:Name="LabelLastUpdate" Margin="-3"
                        FontSize="12" Foreground="Gray"
-                       HorizontalAlignment="Center" VerticalAlignment="Top">
-                    Debug Test
-                </Label>
+                       HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
                 <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center"
                         Margin="5" Click="Update" x:Name="BtnUpdate" IsEnabled="False"

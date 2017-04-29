@@ -1,6 +1,7 @@
 ﻿using ImgurSniper.Libraries.FFmpeg;
 using ImgurSniper.Libraries.Helper;
 using ImgurSniper.Libraries.ScreenCapture;
+using ImgurSniper.Properties;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -9,7 +10,6 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
-using ImgurSniper.Properties;
 
 namespace ImgurSniper {
     /// <summary>
@@ -32,10 +32,10 @@ namespace ImgurSniper {
 
             _size = size;
 
-            Left = size.Left - 2;
-            Top = size.Top - 2;
-            Width = size.Width + 4;
-            Height = size.Height + 4;
+            Left = size.Left - 3;
+            Top = size.Top - 3;
+            Width = size.Width + 6;
+            Height = size.Height + 6;
 
             Outline.Width = Width;
             Outline.Height = Height;
@@ -134,10 +134,11 @@ namespace ImgurSniper {
                     File.Delete(_outputGif);
 
                 //Path to FFmpeg.exe
-                string ffmpegPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "ffmpeg.exe");
+                string ffmpegPath = Path.Combine(ConfigHelper.DocumentsDirectory, "ffmpeg.exe");
 
                 //FFmpeg.exe must be in ../ImgurSniper/Resources/ffmpeg.exe, install if not exists
                 if (!File.Exists(ffmpegPath)) {
+
                     Process ffmpegHelper = new Process {
                         StartInfo = new ProcessStartInfo {
                             Arguments = "install",
@@ -220,6 +221,7 @@ namespace ImgurSniper {
             //MP4 -> GIF
             bool success = _recorder.FFmpegEncodeAsGif(_outputGif);
             using (FileStream fstream = new FileStream(_outputGif, FileMode.Open, FileAccess.Read)) {
+                Gif = new MemoryStream();
                 await fstream.CopyToAsync(Gif);
             }
 
