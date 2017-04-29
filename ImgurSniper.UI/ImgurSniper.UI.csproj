@@ -155,6 +155,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Animations.cs" />
+    <Compile Include="DialogHelper.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Help.xaml.cs">
       <DependentUpon>Help.xaml</DependentUpon>
     </Compile>
@@ -183,6 +185,21 @@
     </Compile>
     <Compile Include="Pages\RightClickPage.xaml.cs">
       <DependentUpon>RightClickPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SettingsPages\CapturePage.xaml.cs">
+      <DependentUpon>CapturePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SettingsPages\EventsPage.xaml.cs">
+      <DependentUpon>EventsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SettingsPages\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SettingsPages\ImgurPage.xaml.cs">
+      <DependentUpon>ImgurPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SettingsPages\OtherPage.xaml.cs">
+      <DependentUpon>OtherPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\TrayPage.xaml.cs">
       <DependentUpon>TrayPage.xaml</DependentUpon>
@@ -253,6 +270,26 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\RightClickPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SettingsPages\CapturePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SettingsPages\EventsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SettingsPages\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SettingsPages\ImgurPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SettingsPages\OtherPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

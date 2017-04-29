@@ -6,9 +6,10 @@
 		xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
 		xmlns:toasty="clr-namespace:Toast;assembly=Toast"
 		xmlns:cultureStrings="clr-namespace:ImgurSniper.UI.Properties"
-		mc:Ignorable="d" MinHeight="500" MinWidth="575"
-		Title="{x:Static Member=cultureStrings:strings.title}" Height="590" Width="600"
-		Closing="Window_Closing" Loaded="Window_Loaded"
+		xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
+		mc:Ignorable="d" MinHeight="500" MinWidth="500"
+		Title="{x:Static Member=cultureStrings:strings.title}" Height="500" Width="500"
+		Closing="Window_Closing"
 		
 		Background="{DynamicResource MaterialDesignPaper}"
 		TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -16,29 +17,31 @@
 		TextElement.FontSize="14"
 		FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
 
-	<!--<md:Card HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignPaper}">-->
-	<md:DialogHost x:Name="DialogHost">
-		<Grid x:Name="Grid">
-			<!--CATEGORY: Logo(s)-->
-			<StackPanel Orientation="Horizontal" Margin="5,0,15,5"
+    <!--<md:Card HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignPaper}">-->
+    <md:DialogHost x:Name="DialogHost">
+        <Grid x:Name="Grid">
+            <!--CATEGORY: Logo(s)-->
+            <StackPanel Orientation="Horizontal" Margin="5,0,15,5"
 						HorizontalAlignment="Right" VerticalAlignment="Top">
-				<Image Width="100" Margin="10" RenderOptions.BitmapScalingMode="HighQuality"
+                <Image Width="100" Margin="10" RenderOptions.BitmapScalingMode="HighQuality"
 					   Source="Resources/mrousavy.png" Cursor="Hand" MouseDown="Image_OpenGitHub"/>
-				<Image Width="30" Margin="10" RenderOptions.BitmapScalingMode="HighQuality"
+                <Image Width="30" Margin="10" RenderOptions.BitmapScalingMode="HighQuality"
 					   Source="Resources/Logo.png" Cursor="Hand" MouseDown="Image_OpenRepository"/>
-			</StackPanel>
+            </StackPanel>
 
 
-			<!--CATEGORY: Different Toggles/Settings-->
-			<ScrollViewer Margin="0,0,0,50" VerticalScrollBarVisibility="Auto">
+            <!--CATEGORY: Different Toggles/Settings-->
+            <ScrollViewer Margin="0,0,0,50" VerticalScrollBarVisibility="Auto">
 
-				<!--Animation-->
-				<md:Transitioner SelectedIndex="0">
-					<md:TransitionerSlide OpeningEffect="{md:TransitionEffect FadeIn}">
+                <!--Animation-->
+                <md:Transitioner SelectedIndex="0">
+                    <md:TransitionerSlide OpeningEffect="{md:TransitionEffect FadeIn}">
 
 
-						<StackPanel Margin="5">
-							<!--HEADER: After Snapping-->
+                        <!--<StackPanel Margin="5">
+							-->
+                        <!--HEADER: After Snapping-->
+                        <!--
 							<Label Margin="10,5,5,5" FontSize="15"
 								   Content="{x:Static Member=cultureStrings:strings.afterSnapping}" />
 							<RadioButton GroupName="AfterSnap" Tag="Imgur" IsChecked="True" VerticalAlignment="Bottom"
@@ -68,7 +71,9 @@
 							</StackPanel>
 
 
-							<!--HEADER: Where to snipe-->
+							-->
+                        <!--HEADER: Where to snipe-->
+                        <!--
 							<Label Margin="10,5,5,5" FontSize="15"
 								   Content="{x:Static Member=cultureStrings:strings.whereSnipe}" />
 							<RadioButton GroupName="MonitorGroup" Tag="Current" IsChecked="True"
@@ -84,7 +89,9 @@
 										 Content="{x:Static Member=cultureStrings:strings.allMonitor}" />
 
 
-							<!--HEADER: Tray/Background Service-->
+							-->
+                        <!--HEADER: Tray/Background Service-->
+                        <!--
 							<Label Margin="10,5,5,5" FontSize="15"
 								   Content="{x:Static Member=cultureStrings:strings.trayService}" />
 
@@ -135,10 +142,14 @@
 								</Border>
 							</StackPanel>
 
-							<!--HEADER: GIF-->
+							-->
+                        <!--HEADER: GIF-->
+                        <!--
 							<Label Margin="10,5,5,5" FontSize="15"
 								   Content="{x:Static Member=cultureStrings:strings.gif}" />
-							<!--GIF Length-->
+							-->
+                        <!--GIF Length-->
+                        <!--
 							<StackPanel Margin="15,5,0,0">
 								<Grid>
 									<Grid.RowDefinitions>
@@ -160,7 +171,9 @@
 									<Label Grid.Row="0" Grid.Column="2" Margin="5,0,0,0" Foreground="Gray" x:Name="GifLengthLabel" />
 
 
-									<!--GIF FPS-->
+									-->
+                        <!--GIF FPS-->
+                        <!--
 									<Label Foreground="Gray" Grid.Row="1" Grid.Column="0"
 										   Content="{x:Static Member=cultureStrings:strings.gifFps}" />
 									<Slider Maximum="30" Minimum="1" Width="200"
@@ -171,7 +184,9 @@
 								</Grid>
 							</StackPanel>
 							
-							<!--HEADER: Image Format-->
+							-->
+                        <!--HEADER: Image Format-->
+                        <!--
 							<Label Margin="10,5,5,5" FontSize="15"
 								   Content="{x:Static Member=cultureStrings:strings.imgFormat}" />
 
@@ -192,7 +207,9 @@
 								<Label Margin="10,5,5,5" FontSize="13" VerticalAlignment="Center" x:Name="QualityLabel">90%</Label>
 							</StackPanel>
 
-							<!--HEADER: Imgur Account-->
+							-->
+                        <!--HEADER: Imgur Account-->
+                        <!--
 							<Label Margin="10,5,5,5" FontSize="15" x:Name="LabelAccount"
 								   Content="{x:Static Member=cultureStrings:strings.imgurAcc}" />
 
@@ -228,7 +245,9 @@
 
 
 
-							<!--HEADER: Other...-->
+							-->
+                        <!--HEADER: Other...-->
+                        <!--
 							<Label Margin="10,5,5,5" FontSize="15"
 								   Content="{x:Static Member=cultureStrings:strings.other}" />
 							<CheckBox x:Name="MagnifyingGlassBox" FontSize="14" Margin="15,0,0,0"
@@ -254,7 +273,9 @@
 								</ComboBox>
 							</StackPanel>
 
-							<!--HEADER: Update-->
+							-->
+                        <!--HEADER: Update-->
+                        <!--
 							<Label Margin="10,5,5,5" FontSize="15"
 								   Content="{x:Static Member=cultureStrings:strings.update}" />
 
@@ -272,54 +293,83 @@
 								</Label>
 							</StackPanel>
 
-						</StackPanel>
+						</StackPanel>-->
 
-					</md:TransitionerSlide>
-				</md:Transitioner>
-			</ScrollViewer>
+                    </md:TransitionerSlide>
+                </md:Transitioner>
+            </ScrollViewer>
 
-
-			<Separator VerticalAlignment="Bottom" Margin="0,0,0,48" Foreground="LightGray" />
-
-
-			<!--CATEGORY: Bottom Button and Statusbar-->
-			<md:Transitioner SelectedIndex="0">
-				<md:TransitionerSlide OpeningEffect="{md:TransitionEffect SlideInFromBottom}">
-
-					<!--CATEGORY: Bottom Buttons-->
-					<StackPanel Orientation="Horizontal"
-								HorizontalAlignment="Right" VerticalAlignment="Bottom">
-						<!--<Button Margin="5" Click="Repair" x:Name="Btn_Repair"
-							Content="{x:Static Member=cultureStrings:strings.repair}"/>-->
-						<Button Margin="5" Click="Save" x:Name="BtnSave" IsEnabled="False"
-								Content="{x:Static Member=cultureStrings:strings.apply}" />
-
-						<Button Margin="5" Click="Help" x:Name="BtnHelp"
-								Content="{x:Static Member=cultureStrings:strings.help}" />
-
-						<Button Margin="5" Click="Update" x:Name="BtnUpdate" IsEnabled="False"
-								Content="{x:Static Member=cultureStrings:strings.update}" />
-
-						<Button Margin="5" Click="Snipe" x:Name="BtnSnipe" Content="Snipe!" />
-					</StackPanel>
+            <dragablz:TabablzControl Margin="0,0,0,50" Name="TabControl">
+                <dragablz:TabablzControl.InterTabController>
+                    <dragablz:InterTabController />
+                </dragablz:TabablzControl.InterTabController>
+                <TabItem Header="{x:Static Member=cultureStrings:strings.settingsHome}">
+                    <Frame Source="/ImgurSniper.UI;component/Pages/SettingsPages/HomePage.xaml" />
+                </TabItem>
+                <TabItem Header="{x:Static Member=cultureStrings:strings.settingsCapture}">
+                    <Frame Source="/ImgurSniper.UI;component/Pages/SettingsPages/CapturePage.xaml" />
+                </TabItem>
+                <TabItem Header="{x:Static Member=cultureStrings:strings.settingsEvents}">
+                    <Frame Source="/ImgurSniper.UI;component/Pages/SettingsPages/EventsPage.xaml" />
+                </TabItem>
+                <TabItem Header="{x:Static Member=cultureStrings:strings.settingsImgur}">
+                    <Frame Source="/ImgurSniper.UI;component/Pages/SettingsPages/ImgurPage.xaml" />
+                </TabItem>
+                <TabItem Header="{x:Static Member=cultureStrings:strings.settingsOther}">
+                    <Frame Source="/ImgurSniper.UI;component/Pages/SettingsPages/OtherPage.xaml" />
+                </TabItem>
+            </dragablz:TabablzControl>
 
 
-				</md:TransitionerSlide>
-			</md:Transitioner>
+            <md:Transitioner SelectedIndex="0">
+                <md:TransitionerSlide OpeningEffect="{md:TransitionEffect SlideInFromBottom}">
+                    <Grid VerticalAlignment="Bottom" Margin="10,0,5,3">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
 
-			<!--CATEGORY: Bottom Statusbar-->
-			<StackPanel Orientation="Horizontal" x:Name="ProgressIndicator" Opacity="0.7"
-						HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="12">
+                        <Grid Grid.Column="0" VerticalAlignment="Center" Name="ProgressIndicator">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-				<ProgressBar x:Name="ProgressBar" IsIndeterminate="True"
-							 Style="{StaticResource MaterialDesignCircularProgressBar}" Value="35" />
 
-				<Label x:Name="LoadingDesc" Foreground="Gray" />
-			</StackPanel>
+                            <ProgressBar Grid.Column="0" x:Name="ProgressBar" IsIndeterminate="True"
+                        Style="{StaticResource MaterialDesignCircularProgressBar}" Value="35"
+                        VerticalAlignment="Center" HorizontalAlignment="Center"
+                        Margin="5"/>
+
+                            <TextBlock Grid.Column="1" x:Name="LoadingDesc" Foreground="Gray" 
+                VerticalAlignment="Center" Text="Test" TextWrapping="Wrap"/>
+
+                        </Grid>
+
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Column="0" Margin="5" Click="Save" x:Name="BtnSave" IsEnabled="False"
+                                    Content="{x:Static Member=cultureStrings:strings.apply}" />
+                        </Grid>
+                    </Grid>
+                </md:TransitionerSlide>
+            </md:Transitioner>
 
 
-			<!--CATEGORY: Toasts-->
-			<toasty:Toasty x:Name="SuccessToast"
+            <!--CATEGORY: Toasts-->
+            <toasty:Toasty x:Name="SuccessToast"
 						   Height="30"
 						   VerticalAlignment="Bottom"
 						   Duration="0:0:0:2.5"
@@ -330,7 +380,7 @@
 						   Background="#2196F3"
 						   FontSize="13" />
 
-			<toasty:Toasty x:Name="ErrorToast"
+            <toasty:Toasty x:Name="ErrorToast"
 						   Height="30"
 						   VerticalAlignment="Bottom"
 						   Duration="0:0:0:2.7"
@@ -340,7 +390,7 @@
 						   MessageColor="White"
 						   Background="#F44336"
 						   FontSize="13" />
-		</Grid>
-	</md:DialogHost>
-	<!--</md:Card>-->
+        </Grid>
+    </md:DialogHost>
+    <!--</md:Card>-->
 </Window>

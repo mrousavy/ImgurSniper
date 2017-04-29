@@ -184,7 +184,7 @@
     <value>Imgur Account</value>
   </data>
   <data name="imgurAccSignedIn" xml:space="preserve">
-    <value>Imgur Account (angemeldet als {0})</value>
+    <value>Imgur Account (angemeldet als "{0}")</value>
   </data>
   <data name="imgurSniperNotFound" xml:space="preserve">
     <value>Fehler, ImgurSniper wurde nicht auf Ihrem System gefunden!</value>
@@ -455,5 +455,17 @@ Wollen Sie mehr Details über den Fehler sehen?</value>
   </data>
   <data name="quality" xml:space="preserve">
     <value>Qualität:</value>
+  </data>
+  <data name="trayServiceStartFail" xml:space="preserve">
+    <value>ImgurSniper Tray Service konnte nicht gestartet werden!</value>
+  </data>
+  <data name="error" xml:space="preserve">
+    <value>Fehler</value>
+  </data>
+  <data name="settingsHome" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="commitsDisplay" xml:space="preserve">
+    <value>{0} Commits auf GitHub</value>
   </data>
 </root>

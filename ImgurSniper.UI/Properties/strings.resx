@@ -142,7 +142,7 @@
     <value>Imgur Account</value>
   </data>
   <data name="imgurAccSignedIn" xml:space="preserve">
-    <value>Imgur Account (signed in as {0})</value>
+    <value>Imgur Account (signed in as "{0}")</value>
   </data>
   <data name="openBrowser" xml:space="preserve">
     <value>Open Image in Browser after Upload</value>
@@ -454,5 +454,29 @@ Do you want to help out and submit a ticket?
   </data>
   <data name="quality" xml:space="preserve">
     <value>Quality:</value>
+  </data>
+  <data name="trayServiceStartFail" xml:space="preserve">
+    <value>Could not start ImgurSniper tray service!</value>
+  </data>
+  <data name="error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="settingsCapture" xml:space="preserve">
+    <value>Capture</value>
+  </data>
+  <data name="settingsEvents" xml:space="preserve">
+    <value>Events</value>
+  </data>
+  <data name="settingsImgur" xml:space="preserve">
+    <value>Imgur</value>
+  </data>
+  <data name="settingsOther" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="settingsHome" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="commitsDisplay" xml:space="preserve">
+    <value>{0} Commits on GitHub</value>
   </data>
 </root>

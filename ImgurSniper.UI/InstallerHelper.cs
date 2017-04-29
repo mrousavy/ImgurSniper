@@ -9,25 +9,34 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
-using System.Windows;
+using System.Threading.Tasks;
 using System.Windows.Controls;
+using Octokit;
 using Toast;
+using Application = System.Windows.Application;
+using FileMode = System.IO.FileMode;
 
 namespace ImgurSniper.UI {
     public class InstallerHelper {
-        private static string _downloads;
         private static string _updateZipPath;
         private readonly Toasty _error;
-        private readonly MainWindow _invoker;
+        private static string Downloads {
+            get {
+                string ret;
+                try {
+                    SHGetKnownFolderPath(KnownFolder.DownloadsGuid, 0, IntPtr.Zero, out ret);
+                } catch {
+                    ret = ConfigHelper.ConfigPath;
+                }
 
-        public InstallerHelper(Toasty errorToast, MainWindow invoker) {
-            try {
-                SHGetKnownFolderPath(KnownFolder.Downloads, 0, IntPtr.Zero, out _downloads);
-            } catch {
-                // ignored
+                return ret;
             }
+        }
 
-            _invoker = invoker;
+        public static int TotalCommits = ConfigHelper.TotalCommits;
+        public static List<GitHubCommit> Commits { get; set; }
+
+        public InstallerHelper(Toasty errorToast) {
             _error = errorToast;
 
             Clean();
@@ -35,7 +44,7 @@ namespace ImgurSniper.UI {
 
         public void Clean() {
             try {
-                _updateZipPath = Directory.Exists(_downloads) ? _downloads : ConfigHelper.ConfigPath;
+                _updateZipPath = Directory.Exists(Downloads) ? Downloads : ConfigHelper.ConfigPath;
                 string file = Path.Combine(_updateZipPath, "ImgurSniperSetup.zip");
                 string directory = Path.Combine(_updateZipPath, "ImgurSniperInstaller");
 
@@ -50,13 +59,9 @@ namespace ImgurSniper.UI {
             }
         }
 
-        public void Update(StackPanel panel) {
-            Download(panel);
-        }
-
         //Download the ImgurSniper Archive from github
-        private void Download(Panel panel) {
-            _updateZipPath = Directory.Exists(_downloads) ? _downloads : ConfigHelper.ConfigPath;
+        public void Update(Panel panel) {
+            _updateZipPath = Directory.Exists(Downloads) ? Downloads : ConfigHelper.ConfigPath;
             string file = Path.Combine(_updateZipPath, "ImgurSniperSetup.zip");
 
             if (File.Exists(file)) {
@@ -73,8 +78,7 @@ namespace ImgurSniper.UI {
                 };
 
                 client.DownloadFileAsync(
-                    new Uri(
-                        @"https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperSetup.zip?raw=true"),
+                    new Uri(@"https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperSetup.zip?raw=true"),
                     file);
             }
         }
@@ -117,20 +121,20 @@ namespace ImgurSniper.UI {
             }
         }
 
-        private void DownloadCompleted(object sender, AsyncCompletedEventArgs e) {
+        private async void DownloadCompleted(object sender, AsyncCompletedEventArgs e) {
             string file = Path.Combine(_updateZipPath, "ImgurSniperSetup.zip");
             string extractTo = Path.Combine(_updateZipPath, "ImgurSniperInstaller");
-            string msiPath = Path.Combine(extractTo, "ImgurSniperSetup.exe");
+            string installerPath = Path.Combine(extractTo, "ImgurSniperSetup.exe");
 
             if (!File.Exists(file)) {
                 _error.Show(strings.couldNotDownload,
                     TimeSpan.FromSeconds(5));
+                await Task.Delay(1000);
                 Process.Start("https://mrousavy.github.io/ImgurSniper");
-                _invoker.ChangeButtonState(true);
             } else {
                 Extract(file, extractTo);
-                
-                Process.Start(msiPath);
+
+                Process.Start(installerPath);
 
                 KillImgurSniper(true);
             }
@@ -147,7 +151,7 @@ namespace ImgurSniper.UI {
             }
         }
 
-        public void Autostart(bool? boxIsChecked) {
+        public static void Autostart(bool? boxIsChecked) {
             try {
                 string path = Path.Combine(ConfigHelper.ConfigPath, "ImgurSniper.exe -autostart");
 
@@ -166,12 +170,74 @@ namespace ImgurSniper.UI {
             }
         }
 
+        //forceSearch = true if should search for updates even if Last Checked is not longer than 1 Day ago
+        public static async Task<bool> CheckForUpdates(MainWindow window, bool forceSearch) {
+            try {
+                //Last update Check
+                DateTime lastChecked = ConfigHelper.LastChecked;
+
+                //Update Available?
+                bool updateAvailable = ConfigHelper.UpdateAvailable;
+
+                //Last Update Content for Label
+                window.SetProgressStatus(string.Format(strings.updateLast, $"{lastChecked:dd.MM.yyyy HH:mm}"));
+
+                //If AutoUpdate is disabled and the User does not manually search, exit Method
+                if (!ConfigHelper.AutoUpdate && !forceSearch) {
+                    return false;
+                }
+
+                //Update Loading Indicator
+                window.SetProgressStatus(strings.checkingUpdate);
+
+                //Check for Update, if last update is longer than 1 Day ago
+                if (forceSearch || DateTime.Now - lastChecked > TimeSpan.FromDays(1) || updateAvailable) {
+                    //Retrieve info from github
+                    GitHubClient github = new GitHubClient(new ProductHeaderValue("ImgurSniper"));
+                    IReadOnlyList<GitHubCommit> commitsRaw = await github.Repository.Commit.GetAll("mrousavy",
+                        "ImgurSniper");
+                    //All Commits where a new ImgurSniper Version is available start with "R:"
+                    Commits = new List<GitHubCommit>(commitsRaw.Where(c => c.Commit.Message.StartsWith("R:")));
+                    TotalCommits = commitsRaw.Count;
+                    ConfigHelper.TotalCommits = TotalCommits;
+                    ConfigHelper.LastChecked = DateTime.Now;
+                    ConfigHelper.Save();
+
+                    //Last Update Content for Label
+                    window.SetProgressStatus(string.Format(strings.updateLast, $"{DateTime.Now:dd.MM.yyyy HH:mm}"));
+
+                    int currentCommits = ConfigHelper.CurrentCommits;
+                    //999 = value is unset
+                    if (currentCommits == 999) {
+                        ConfigHelper.CurrentCommits = Commits.Count;
+                        ConfigHelper.Save();
+                    } else if (updateAvailable || Commits.Count > currentCommits) {
+                        //Newer Version is available
+                        ConfigHelper.UpdateAvailable = true;
+                        ConfigHelper.Save();
+                        window.SuccessToast.Show(string.Format(strings.updateAvailable, currentCommits, Commits.Count),
+                            TimeSpan.FromSeconds(4));
+
+                        return true;
+                    } else {
+                        //No Update available
+                        ConfigHelper.UpdateAvailable = false;
+                        ConfigHelper.Save();
+                    }
+                }
+            } catch {
+                window.ErrorToast.Show(strings.failedUpdate, TimeSpan.FromSeconds(3));
+            }
+            //Any other way than return true = no update
+            return false;
+        }
+
         [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
         private static extern int SHGetKnownFolderPath([MarshalAs(UnmanagedType.LPStruct)] Guid rfid, uint dwFlags,
             IntPtr hToken, out string pszPath);
 
         public static class KnownFolder {
-            public static readonly Guid Downloads = new Guid("374DE290-123F-4565-9164-39C4925E467B");
+            public static readonly Guid DownloadsGuid = new Guid("374DE290-123F-4565-9164-39C4925E467B");
         }
     }
 }

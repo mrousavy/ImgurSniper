@@ -1,0 +1,57 @@
+﻿<Page x:Class="ImgurSniper.UI.Pages.SettingsPages.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  
+      xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:cultureStrings="clr-namespace:ImgurSniper.UI.Properties"
+      mc:Ignorable="d" 
+      d:DesignHeight="500" d:DesignWidth="450"
+      Title="Imgur"
+      
+      Background="{DynamicResource MaterialDesignPaper}"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Medium"
+      TextElement.FontSize="14"
+      FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
+
+    <md:DialogHost Name="Dialog">
+        <Grid Margin="50">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label HorizontalAlignment="Center" Grid.Row="0"
+                   FontSize="21" Content="ImgurSniper"/>
+            <Label HorizontalAlignment="Center"
+                   Grid.Row="1" VerticalAlignment="Top"
+                   FontSize="13" Foreground="Gray"
+                   Content="by mrousavy"/>
+            
+            <StackPanel Grid.Row="5" Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <Button Margin="5" Click="Help" x:Name="BtnHelp"
+                        Content="{x:Static Member=cultureStrings:strings.help}" />
+
+                <Button Margin="5" Click="Gif" x:Name="BtnGif"
+                        Content="{x:Static Member=cultureStrings:strings.gif}" />
+
+                <Button Margin="5" Click="Snipe" x:Name="BtnSnipe" Content="Snipe!" />
+
+            </StackPanel>
+
+            <Label HorizontalAlignment="Center"
+                   Grid.Row="6" FontSize="12" Foreground="Gray"
+                   Name="CommitsDisplay" Content="0 Commits"/>
+        </Grid>
+    </md:DialogHost>
+</Page>

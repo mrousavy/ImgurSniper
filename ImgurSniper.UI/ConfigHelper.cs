@@ -184,6 +184,16 @@ namespace ImgurSniper.UI {
             }
         }
 
+        //Count of total Commits on GitHub
+        public static int TotalCommits {
+            get => JsonConfig.TotalCommits;
+            set {
+                Settings settings = JsonConfig;
+                settings.TotalCommits = value;
+                JsonConfig = settings;
+            }
+        }
+
         //Is an Update Available and not yet downloaded?
         public static bool UpdateAvailable {
             get => JsonConfig.UpdateAvailable;
@@ -228,6 +238,10 @@ namespace ImgurSniper.UI {
             }
 
             string token = File.ReadAllText(TokenPath);
+
+            if (string.IsNullOrWhiteSpace(token))
+                return null;
+
             token = Cipher.Decrypt(token, PassPhrase);
 
             return token;
@@ -312,23 +326,24 @@ namespace ImgurSniper.UI {
         public bool AllMonitors = true;
         public bool AutoUpdate = true;
         public bool ShowMouse = true;
-        public bool UpdateAvailable ;
-        public bool UsePrint ;
+        public bool UpdateAvailable;
+        public bool UsePrint;
         public bool ImgurAfterSnipe = true;
-        public bool MagnifyingGlassEnabled ;
+        public bool MagnifyingGlassEnabled;
         public bool OpenAfterUpload = true;
         public bool RunOnBoot = true;
-        public bool SaveImages ;
+        public bool SaveImages;
 
         public byte Compression = 90;
 
         public int CurrentCommits = 999;
+        public int TotalCommits = 999;
         public int GifFps = 10;
         public int GifLength = 12000;
 
-        public string Language ;
-        public string SaveImagesPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "ImgurSniperImages");
+        public string Language;
+        public string SaveImagesPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
+            "ImgurSniperImages");
 
         public Key ShortcutGifKey = Key.G;
         public Key ShortcutImgKey = Key.X;

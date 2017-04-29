@@ -1,0 +1,70 @@
+﻿<Page x:Class="ImgurSniper.UI.Pages.SettingsPages.ImgurPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  
+      xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:cultureStrings="clr-namespace:ImgurSniper.UI.Properties"
+      mc:Ignorable="d" 
+      d:DesignHeight="500" d:DesignWidth="450"
+      Title="Imgur"
+      
+      Background="{DynamicResource MaterialDesignPaper}"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Medium"
+      TextElement.FontSize="14"
+      FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
+
+    <md:DialogHost Name="Dialog">
+        <Grid Margin="50">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <!--HEADER: Imgur Account-->
+            <Label HorizontalAlignment="Center" Grid.Row="0" Margin="10,5,5,5" FontSize="15" x:Name="LabelAccount"
+               Content="{x:Static Member=cultureStrings:strings.imgurAcc}" />
+
+
+            <!--SIGN IN BUTTON-->
+            <Button HorizontalAlignment="Center" Grid.Row="1" Visibility="Visible"
+                    x:Name="BtnSignIn" Click="SignIn"
+                    Content="{x:Static Member=cultureStrings:strings.singIn}" />
+
+            <!--PIN INPUT-->
+            <StackPanel HorizontalAlignment="Center" Grid.Row="2"
+                        Orientation="Horizontal"
+                        x:Name="PinInputPanel">
+                <Label Foreground="Gray" FontSize="13"
+                       VerticalAlignment="Center" Content="PIN:" />
+
+                <TextBox Margin="5" MaxLength="20" Width="100" x:Name="BoxPin"
+                         VerticalAlignment="Bottom" TextChanged="Box_PIN_TextChanged" />
+
+                <Button Margin="5" IsEnabled="False" x:Name="BtnPinOk"
+                        VerticalAlignment="Bottom" Click="PinOk"
+                        Content=">" />
+            </StackPanel>
+
+            <!--SIGN OUT AND MY IMAGES BUTTONS-->
+            <StackPanel HorizontalAlignment="Center" Grid.Row="3"
+                        Orientation="Horizontal"
+                        x:Name="MyAccountPanel">
+                <Button Click="SignOut" Margin="0,0,5,0"
+                        Content="{x:Static Member=cultureStrings:strings.singOut}"/>
+                <Button Click="ViewPics" Margin="5,0,0,0"
+                        Content="{x:Static Member=cultureStrings:strings.viewPics}"/>
+            </StackPanel>
+        </Grid>
+    </md:DialogHost>
+</Page>

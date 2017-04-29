@@ -142,6 +142,15 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} Commits on GitHub.
+        /// </summary>
+        public static string commitsDisplay {
+            get {
+                return ResourceManager.GetString("commitsDisplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connecting to Imgur....
         /// </summary>
         public static string contactImgur {
@@ -268,6 +277,15 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string error {
+            get {
+                return ResourceManager.GetString("error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error while loading Config!
         ///(&quot;{0}&quot;).
         /// </summary>
@@ -377,7 +395,7 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Imgur Account (signed in as {0}).
+        ///   Looks up a localized string similar to Imgur Account (signed in as &quot;{0}&quot;).
         /// </summary>
         public static string imgurAccSignedIn {
             get {
@@ -751,6 +769,51 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Capture.
+        /// </summary>
+        public static string settingsCapture {
+            get {
+                return ResourceManager.GetString("settingsCapture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Events.
+        /// </summary>
+        public static string settingsEvents {
+            get {
+                return ResourceManager.GetString("settingsEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string settingsHome {
+            get {
+                return ResourceManager.GetString("settingsHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Imgur.
+        /// </summary>
+        public static string settingsImgur {
+            get {
+                return ResourceManager.GetString("settingsImgur", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other.
+        /// </summary>
+        public static string settingsOther {
+            get {
+                return ResourceManager.GetString("settingsOther", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show Mouse.
         /// </summary>
         public static string showMouse {
@@ -828,6 +891,15 @@ namespace ImgurSniper.UI.Properties {
         public static string trayServiceNotRunning {
             get {
                 return ResourceManager.GetString("trayServiceNotRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not start ImgurSniper tray service!.
+        /// </summary>
+        public static string trayServiceStartFail {
+            get {
+                return ResourceManager.GetString("trayServiceStartFail", resourceCulture);
             }
         }
         

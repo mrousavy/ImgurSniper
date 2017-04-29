@@ -57,7 +57,7 @@ namespace ImgurSniper.UI {
             }
 
 
-            if (MessageBox.Show(String.Format(strings.unhandledErrorDescription, e.Exception.Message),
+            if (MessageBox.Show(string.Format(strings.unhandledErrorDescription, e.Exception.Message),
                 "ImgurSniper Error",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Error) == MessageBoxResult.Yes) {
@@ -80,6 +80,8 @@ namespace ImgurSniper.UI {
             } catch {
                 // ignored
             }
+
+            Process.GetCurrentProcess().Kill();
         }
     }
 }
