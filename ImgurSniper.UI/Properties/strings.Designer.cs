@@ -1008,7 +1008,7 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search for Updates.
+        ///   Looks up a localized string similar to Search now.
         /// </summary>
         public static string updateNow {
             get {

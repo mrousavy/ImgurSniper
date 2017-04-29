@@ -135,26 +135,26 @@
                       Content="{x:Static Member=cultureStrings:strings.autoUpdate}" />
 
 
-            <Grid Grid.Row="9" Grid.Column="0" Margin="15,0,0,0">
+            <Grid Grid.Row="9" Grid.Column="0" Margin="20,0,0,0">
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left"
+                <Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center"
                         Content="{x:Static Member=cultureStrings:strings.updateNow}"
-                        Click="Btn_SearchUpdates" />
+                        Click="Btn_SearchUpdates"/>
                 <Label Grid.Row="1" Grid.Column="0" x:Name="LabelLastUpdate" Margin="-3"
                        FontSize="12" Foreground="Gray"
                        HorizontalAlignment="Center" VerticalAlignment="Top">
                     Debug Test
                 </Label>
 
-                <Button Grid.Row="0" Grid.Column="1"
+                <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center"
                         Margin="5" Click="Update" x:Name="BtnUpdate" IsEnabled="False"
                         Content="{x:Static Member=cultureStrings:strings.update}" />
             </Grid>

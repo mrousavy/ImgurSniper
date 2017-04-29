@@ -355,7 +355,7 @@ Pro Tip: Hit Ctrl + A to instantly create a Screenshot of your whole Desktop.</v
     <value>Initializing...</value>
   </data>
   <data name="updateNow" xml:space="preserve">
-    <value>Search for Updates</value>
+    <value>Search now</value>
   </data>
   <data name="updateLast" xml:space="preserve">
     <value>Last: {0}</value>
