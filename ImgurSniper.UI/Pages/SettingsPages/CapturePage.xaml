@@ -64,11 +64,22 @@
                    Content="{x:Static Member=cultureStrings:strings.image}" />
 
 
+            <!--IMAGE QUALITY-->
+            <Label Grid.Row="4" Grid.Column="0" Foreground="Gray" Margin="15,0,0,0"
+                       Content="{x:Static Member=cultureStrings:strings.quality}" />
+
+            <Slider Grid.Row="4" Grid.Column="1" Maximum="100" Minimum="1" Width="200" HorizontalAlignment="Left"
+                        VerticalAlignment="Center" x:Name="QualitySlider"/>
+
+            <Label Grid.Row="4" Grid.Column="2" Foreground="Gray"
+                   x:Name="QualityLabel" Content="90%"
+                   Margin="10,0,0,0"/>
+
             <!--IMAGE FORMAT-->
-            <Label Grid.Row="4" Grid.Column="0" Margin="15,0,0,0" Foreground="Gray" 
+            <Label Grid.Row="5" Grid.Column="0" Margin="15,0,0,0" Foreground="Gray" 
                        Content="{x:Static Member=cultureStrings:strings.imgFormat}" />
 
-            <ComboBox Grid.Row="4" Grid.Column="1" x:Name="ImageFormatBox" FontSize="13"
+            <ComboBox Grid.Row="6" Grid.Column="1" x:Name="ImageFormatBox" FontSize="13"
                           VerticalAlignment="Center" Foreground="Gray" Width="50"
                           HorizontalAlignment="Left" Margin="5,0,0,0">
                 <ComboBoxItem>Jpeg</ComboBoxItem>
@@ -76,16 +87,6 @@
                 <ComboBoxItem>Gif</ComboBoxItem>
                 <ComboBoxItem>Tiff</ComboBoxItem>
             </ComboBox>
-
-            <Label Grid.Row="5" Grid.Column="0" Foreground="Gray" Margin="15,0,0,0"
-                       Content="{x:Static Member=cultureStrings:strings.quality}" />
-
-            <Slider Grid.Row="5" Grid.Column="1" Maximum="100" Minimum="1" Width="200" HorizontalAlignment="Left"
-                        VerticalAlignment="Center" Margin="10,0,0,0" x:Name="QualitySlider"/>
-
-            <Label Grid.Row="5" Grid.Column="2" Foreground="Gray"
-                   x:Name="QualityLabel" Content="90%"
-                   Margin="10,0,0,0"/>
 
             <Label Grid.Row="6" Grid.Column="0" Margin="5,5,5,5" FontSize="15"
                    Content="{x:Static Member=cultureStrings:strings.other}" />
