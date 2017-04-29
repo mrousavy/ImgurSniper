@@ -21,7 +21,7 @@ namespace ImgurSniper {
     /// </summary>
     public partial class GifWindow : IDisposable {
         private bool _drag;
-        
+
         public Point From, To;
         public string HwndName;
         public bool Error = true;
@@ -152,7 +152,7 @@ namespace ImgurSniper {
                 HwndName = buff.ToString();
             }
 
-            Point to = new Point(hwnd.Width, hwnd.Height);
+            Point to = new Point(hwnd.Left + hwnd.Width, hwnd.Top + hwnd.Height);
             Point from = new Point(hwnd.Left, hwnd.Top);
 
             Crop(from, to);
