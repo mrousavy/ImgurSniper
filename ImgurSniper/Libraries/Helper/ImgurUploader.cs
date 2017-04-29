@@ -4,7 +4,6 @@ using Imgur.API.Models;
 using ImgurSniper.Properties;
 using System;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace ImgurSniper.Libraries.Helper {

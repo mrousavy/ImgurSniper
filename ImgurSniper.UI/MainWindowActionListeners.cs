@@ -172,21 +172,30 @@ namespace ImgurSniper.UI {
             }
 
             try {
-                HotKeySelector sel = new HotKeySelector();
+                bool keyAvailable;
+                Key selectedKey;
+                do {
+                    HotKeySelector sel = new HotKeySelector();
 
-                try {
-                    sel.Owner = this;
-                } catch {
-                    // ignored
-                }
+                    try {
+                        sel.Owner = this;
+                    } catch {
+                        // ignored
+                    }
 
-                bool? result = sel.ShowDialog();
+                    bool? result = sel.ShowDialog();
 
-                if (result == true) {
-                    ConfigHelper.ShortcutImgKey = sel.key;
-                    BtnSave.IsEnabled = true;
-                    HotkeyImgBox.Text = sel.key.ToString();
-                }
+                    if (result == true) {
+                        selectedKey = sel.Key;
+                        keyAvailable = ConfigHelper.ShortcutGifKey != selectedKey;
+                    } else {
+                        return;
+                    }
+                } while (!keyAvailable);
+
+                ConfigHelper.ShortcutImgKey = selectedKey;
+                BtnSave.IsEnabled = true;
+                HotkeyImgBox.Text = selectedKey.ToString();
             } catch {
                 // ignored
             }
@@ -199,21 +208,30 @@ namespace ImgurSniper.UI {
             }
 
             try {
-                HotKeySelector sel = new HotKeySelector();
+                bool keyAvailable;
+                Key selectedKey;
+                do {
+                    HotKeySelector sel = new HotKeySelector();
 
-                try {
-                    sel.Owner = this;
-                } catch {
-                    // ignored
-                }
+                    try {
+                        sel.Owner = this;
+                    } catch {
+                        // ignored
+                    }
 
-                bool? result = sel.ShowDialog();
+                    bool? result = sel.ShowDialog();
 
-                if (result == true) {
-                    ConfigHelper.ShortcutGifKey = sel.key;
-                    BtnSave.IsEnabled = true;
-                    HotkeyGifBox.Text = sel.key.ToString();
-                }
+                    if (result == true) {
+                        selectedKey = sel.Key;
+                        keyAvailable = ConfigHelper.ShortcutImgKey != selectedKey;
+                    } else {
+                        return;
+                    }
+                } while (!keyAvailable);
+
+                ConfigHelper.ShortcutGifKey = selectedKey;
+                BtnSave.IsEnabled = true;
+                HotkeyGifBox.Text = selectedKey.ToString();
             } catch {
                 // ignored
             }
@@ -222,7 +240,7 @@ namespace ImgurSniper.UI {
         private async void LanguageBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             if (sender is ComboBox box) {
                 try {
-                    ConfigHelper.Language = ((ComboBoxItem)box.SelectedItem).Name;
+                    ConfigHelper.Language = ((ComboBoxItem)box.SelectedItem).Name.ToLower();
 
                     bool result = await ShowAskDialog(str.langChanged);
 

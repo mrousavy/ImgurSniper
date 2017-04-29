@@ -2,6 +2,7 @@
 using Octokit;
 using System.Collections.Generic;
 using System.Windows;
+// ReSharper disable UnusedParameter.Local
 
 namespace ImgurSniper.UI {
     /// <summary>
@@ -10,7 +11,7 @@ namespace ImgurSniper.UI {
     public partial class VersionInfo {
         private readonly int _latest;
         public bool Skipped;
-
+        
         public VersionInfo(IReadOnlyList<GitHubCommit> commits, int currentCommits) {
             InitializeComponent();
 #if DEBUG
@@ -19,7 +20,7 @@ namespace ImgurSniper.UI {
             //commits = null and currentCommits = ?? in DEBUG
             int commitNr = 50;
             for (int i = 0; i < 50 - 4; i++) {
-                listview.Items.Add(new VersionInfoItem {
+                Listview.Items.Add(new VersionInfoItem {
                     Version = "v" + commitNr,
                     Date = $"{DateTime.Now:dd.MM}",
                     Message = "\"Updated Something! (this is debug and not release 123)\""

@@ -31,6 +31,7 @@ namespace ImgurSniper.Libraries.Helper {
         public static string ExpandFolderVariables(string path) {
             if (!string.IsNullOrEmpty(path)) {
                 try {
+                    // ReSharper disable once AccessToModifiedClosure
                     GetEnums<Environment.SpecialFolder>().ForEach(x => path = path.Replace($"%{x}%", Environment.GetFolderPath(x), StringComparison.InvariantCultureIgnoreCase));
                     path = Environment.ExpandEnvironmentVariables(path);
                 } catch (Exception e) {

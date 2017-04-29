@@ -52,7 +52,7 @@ namespace ImgurSniper.Libraries.Start {
                 foreach (MemoryStream image in images) {
                     using (image) {
                         try {
-                            Notification.contentLabel.Text =
+                            Notification.ContentLabel.Text =
                                 string.Format(strings.uploadingFiles, kb, index, images.Count);
                             await imgur.UploadToAlbum(image, "", albumInfo.Item2);
                         } catch (Exception e) {

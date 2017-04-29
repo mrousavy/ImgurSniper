@@ -8,7 +8,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,9 +19,8 @@ namespace ImgurSniper.UI {
         private static string _updateZipPath;
         private readonly Toasty _error;
         private readonly MainWindow _invoker;
-        private readonly Toasty _success;
 
-        public InstallerHelper(string docPath, Toasty errorToast, Toasty successToast, MainWindow invoker) {
+        public InstallerHelper(Toasty errorToast, MainWindow invoker) {
             try {
                 SHGetKnownFolderPath(KnownFolder.Downloads, 0, IntPtr.Zero, out _downloads);
             } catch {
@@ -31,7 +29,6 @@ namespace ImgurSniper.UI {
 
             _invoker = invoker;
             _error = errorToast;
-            _success = successToast;
 
             Clean();
         }
@@ -48,7 +45,9 @@ namespace ImgurSniper.UI {
                 if (Directory.Exists(directory)) {
                     Directory.Delete(directory, true);
                 }
-            } catch { }
+            } catch {
+                // ignored
+            }
         }
 
         public void Update(StackPanel panel) {
@@ -108,9 +107,12 @@ namespace ImgurSniper.UI {
                     && p.Id != Process.GetCurrentProcess().Id)));
 
             if (processes.Count < 1) {
-                Process p = new Process();
-                p.StartInfo.FileName = Path.Combine(ConfigHelper.InstallDir, "ImgurSniper.exe");
-                p.StartInfo.Arguments = "-autostart";
+                Process p = new Process {
+                    StartInfo = {
+                        FileName = Path.Combine(ConfigHelper.InstallDir, "ImgurSniper.exe"),
+                        Arguments = "-autostart"
+                    }
+                };
                 p.Start();
             }
         }
@@ -127,18 +129,8 @@ namespace ImgurSniper.UI {
                 _invoker.ChangeButtonState(true);
             } else {
                 Extract(file, extractTo);
-
-                FileVersionInfo versionInfoMSI = null;
-                FileVersionInfo versionInfoThis = null;
-                try {
-                    versionInfoMSI = FileVersionInfo.GetVersionInfo(msiPath);
-                    versionInfoThis = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
-                } catch { }
-
-                if (versionInfoMSI != null && versionInfoThis != null &&
-                    versionInfoMSI.ProductVersion != versionInfoThis.ProductVersion) {
-                    Process.Start(msiPath);
-                }
+                
+                Process.Start(msiPath);
 
                 KillImgurSniper(true);
             }
@@ -159,13 +151,14 @@ namespace ImgurSniper.UI {
             try {
                 string path = Path.Combine(ConfigHelper.ConfigPath, "ImgurSniper.exe -autostart");
 
-                using (
-                    RegistryKey baseKey =
+                using (RegistryKey baseKey =
                         Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run")) {
-                    if (boxIsChecked == true) {
-                        baseKey.SetValue("ImgurSniper", path);
-                    } else {
-                        baseKey.DeleteValue("ImgurSniper");
+                    if (baseKey != null) {
+                        if (boxIsChecked == true) {
+                            baseKey.SetValue("ImgurSniper", path);
+                        } else {
+                            baseKey.DeleteValue("ImgurSniper");
+                        }
                     }
                 }
             } catch {

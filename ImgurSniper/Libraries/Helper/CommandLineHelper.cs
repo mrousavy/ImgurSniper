@@ -8,10 +8,10 @@ namespace ImgurSniper.Libraries.Helper {
         public enum Argument {
             Snipe,
             Autostart,
-            GIF,
+            Gif,
             Upload
         }
-        private static string[] parameters = { "autostart", "gif", "upload" };
+        private static readonly string[] Parameters = { "autostart", "gif", "upload" };
 
 
         /// <summary>
@@ -29,13 +29,13 @@ namespace ImgurSniper.Libraries.Helper {
             args = new List<string>(args.Select(arg => regexParam.Replace(arg, "")));
 
             //Get Parameter from Arguments
-            string param = args.FirstOrDefault(arg => parameters.Contains(arg));
+            string param = args.FirstOrDefault(arg => Parameters.Contains(arg));
 
             switch (param) {
                 case "autostart":
                     return new CommandlineArgs(Argument.Autostart);
                 case "gif":
-                    return new CommandlineArgs(Argument.GIF);
+                    return new CommandlineArgs(Argument.Gif);
                 case "upload":
                     return new CommandlineArgs(Argument.Upload, (args.AsParallel().Where(a => ImageHelper.IsImage(a))).ToList());
                 default:

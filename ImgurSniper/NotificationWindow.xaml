@@ -31,16 +31,16 @@
                             Name="NotificationContent">
 
                     <Grid Margin="10" Height="25" Width="25">
-                        <ProgressBar x:Name="progressBar" IsIndeterminate="True"
+                        <ProgressBar x:Name="ProgressBar" IsIndeterminate="True"
                                      Style="{StaticResource MaterialDesignCircularProgressBar}" Value="35"
                                      VerticalAlignment="Center" Visibility="Collapsed" />
-                        <md:PackIcon x:Name="successIcon" Kind="CheckCircle" Foreground="#2196F3" Height="25"
+                        <md:PackIcon x:Name="SuccessIcon" Kind="CheckCircle" Foreground="#2196F3" Height="25"
                                      Width="25" Visibility="Collapsed" />
-                        <md:PackIcon x:Name="errorIcon" Kind="CloseCircle" Foreground="#F44336" Height="25" Width="25"
+                        <md:PackIcon x:Name="ErrorIcon" Kind="CloseCircle" Foreground="#F44336" Height="25" Width="25"
                                      Visibility="Collapsed" />
                     </Grid>
 
-                    <TextBlock Foreground="#616161" x:Name="contentLabel" VerticalAlignment="Center" Width="225"
+                    <TextBlock Foreground="#616161" x:Name="ContentLabel" VerticalAlignment="Center" Width="225"
                                Margin="10" FontSize="12" x:FieldModifier="public" TextWrapping="Wrap">
                         Test
                     </TextBlock>
@@ -51,7 +51,7 @@
             <!--Close "Button"-->
             <Border CornerRadius="10" Height="12" Width="12" Margin="5" VerticalAlignment="Top"
                     HorizontalAlignment="Right" Background="#FD5E4E" MouseDown="Window_Close" Cursor="Hand"
-                    x:Name="Btn_Close" Opacity="0" MouseEnter="Close_MouseEnter" MouseLeave="Close_MouseLeave">
+                    x:Name="BtnClose" Opacity="0" MouseEnter="Close_MouseEnter" MouseLeave="Close_MouseLeave">
                 <md:PackIcon Kind="WindowClose" Width="10" Height="10" VerticalAlignment="Center"
                              HorizontalAlignment="Center" Foreground="#222222" x:Name="CloseIcon" Opacity="0" />
             </Border>

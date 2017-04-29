@@ -20,7 +20,8 @@ namespace ImgurSniper.Libraries.ScreenCapture {
             IntPtr hdcDest = NativeMethods.CreateCompatibleDC(hdcSrc);
             IntPtr hBitmap = NativeMethods.CreateCompatibleBitmap(hdcSrc, rect.Width, rect.Height);
             IntPtr hOld = NativeMethods.SelectObject(hdcDest, hBitmap);
-            NativeMethods.BitBlt(hdcDest, 0, 0, rect.Width, rect.Height, hdcSrc, rect.X, rect.Y, CopyPixelOperation.SourceCopy | CopyPixelOperation.CaptureBlt);
+            NativeMethods.BitBlt(hdcDest, 0, 0, rect.Width, rect.Height, hdcSrc, rect.X, rect.Y,
+                CopyPixelOperation.SourceCopy | CopyPixelOperation.CaptureBlt);
 
             if (captureCursor) {
                 Point cursorOffset = CaptureHelpers.ScreenToClient(rect.Location);
@@ -84,10 +85,11 @@ namespace ImgurSniper.Libraries.ScreenCapture {
         private static extern bool GetCursorInfo(out CURSORINFO pci);
 
         [DllImport("user32.dll")]
-        private static extern bool DrawIcon(IntPtr hDC, int X, int Y, IntPtr hIcon);
+        private static extern bool DrawIcon(IntPtr hDc, int x, int y, IntPtr hIcon);
 
 
         [StructLayout(LayoutKind.Sequential)]
+        // ReSharper disable once InconsistentNaming
         private struct CURSORINFO {
             public int cbSize;
             public readonly int flags;
@@ -96,6 +98,7 @@ namespace ImgurSniper.Libraries.ScreenCapture {
         }
 
         [StructLayout(LayoutKind.Sequential)]
+        // ReSharper disable once InconsistentNaming
         private struct POINTAPI {
             public readonly int x;
             public readonly int y;

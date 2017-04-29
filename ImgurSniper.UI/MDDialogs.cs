@@ -131,7 +131,9 @@ namespace ImgurSniper.UI {
             vpanel.Children.Add(label);
             vpanel.Children.Add(bar);
 
+#pragma warning disable 4014
             DialogHost.ShowDialog(vpanel);
+#pragma warning restore 4014
 
             return vpanel;
         }

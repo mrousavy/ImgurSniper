@@ -11,6 +11,25 @@ using str = ImgurSniper.UI.Properties.strings;
 
 namespace ImgurSniper.UI {
     public partial class MainWindow {
+        #region Fields
+
+        public InstallerHelper Helper;
+        private readonly ImgurLoginHelper _imgurhelper;
+
+        //Path to Program Files/ImgurSniper Folder
+        private List<GitHubCommit> _commits;
+
+        //Path to Documents/ImgurSniper Folder
+        private static string DocPath {
+            get {
+                string value = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                    "ImgurSniper");
+                return value;
+            }
+        }
+
+        #endregion
+
         //Constructor
         public MainWindow() {
             InitializeComponent();
@@ -27,7 +46,7 @@ namespace ImgurSniper.UI {
             }
 
             //Initialize Helpers
-            Helper = new InstallerHelper(DocPath, ErrorToast, SuccessToast, this);
+            Helper = new InstallerHelper(ErrorToast, this);
             _imgurhelper = new ImgurLoginHelper(ErrorToast, SuccessToast);
         }
 
@@ -68,7 +87,7 @@ namespace ImgurSniper.UI {
 
             try {
                 //Only 1x ConfigHelper File read, optimized performance
-                ConfigHelper.Settings settings = ConfigHelper.JsonConfig;
+                Settings settings = ConfigHelper.JsonConfig;
 
                 bool allMonitors = settings.AllMonitors;
                 bool openAfterUpload = settings.OpenAfterUpload;
@@ -165,10 +184,10 @@ namespace ImgurSniper.UI {
                 //Set correct Language for Current Language Box
                 switch (language) {
                     case "en":
-                        LanguageBox.SelectedItem = en;
+                        LanguageBox.SelectedItem = En;
                         break;
                     case "de":
-                        LanguageBox.SelectedItem = de;
+                        LanguageBox.SelectedItem = De;
                         break;
                 }
                 LanguageBox.SelectionChanged += LanguageBox_SelectionChanged;
@@ -323,24 +342,5 @@ namespace ImgurSniper.UI {
             //Any other way than return true = no update
             return false;
         }
-
-        #region Fields
-
-        public InstallerHelper Helper;
-        private readonly ImgurLoginHelper _imgurhelper;
-
-        //Path to Program Files/ImgurSniper Folder
-        private List<GitHubCommit> _commits;
-
-        //Path to Documents/ImgurSniper Folder
-        private static string DocPath {
-            get {
-                string value = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                    "ImgurSniper");
-                return value;
-            }
-        }
-
-        #endregion
     }
 }

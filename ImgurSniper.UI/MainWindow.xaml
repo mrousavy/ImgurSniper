@@ -249,8 +249,8 @@
 
 								<ComboBox x:Name="LanguageBox" FontSize="13" Margin="15,0,0,0"
 										  VerticalAlignment="Center" SelectedIndex="0" Foreground="Gray">
-									<ComboBoxItem x:Name="en">English</ComboBoxItem>
-									<ComboBoxItem x:Name="de">German</ComboBoxItem>
+									<ComboBoxItem x:Name="En">English</ComboBoxItem>
+									<ComboBoxItem x:Name="De">German</ComboBoxItem>
 								</ComboBox>
 							</StackPanel>
 

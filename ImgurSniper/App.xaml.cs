@@ -27,20 +27,22 @@ namespace ImgurSniper {
         }
 
         //Check for Updates
-        private void UpdateCheck() {
+        private static void UpdateCheck() {
 #if !DEBUG
             try {
                 //If automatically update, and last checked was more than 2 days ago
                 if (ConfigHelper.AutoUpdate && (DateTime.Now - ConfigHelper.LastChecked) > TimeSpan.FromDays(2))
                     Process.Start(Path.Combine(ConfigHelper.InstallDir, "ImgurSniper.UI.exe"), "Update");
-            } catch { }
+            } catch {
+                // ignored
+            }
 #endif
         }
 
         //Load the config.json
         private static void LoadConfig() {
             ConfigHelper.Exists();
-            ConfigHelper.JsonConfig = JsonConvert.DeserializeObject<ConfigHelper.Settings>(File.ReadAllText(ConfigHelper.ConfigFile));
+            ConfigHelper.JsonConfig = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(ConfigHelper.ConfigFile));
         }
 
         //Set Language from Settings

@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Interop;
 using ImgurSniper.Libraries.Native;
 using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Threading;
-using Cursor = System.Windows.Forms.Cursor;
-using Cursors = System.Windows.Forms.Cursors;
-using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
 using System.Drawing;
 
 namespace ImgurSniper.Libraries.Helper {
@@ -17,7 +10,7 @@ namespace ImgurSniper.Libraries.Helper {
 
         //Size of current Mouse Location screen
         public static Rectangle Screen
-            => System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position).Bounds;
+            => System.Windows.Forms.Screen.FromPoint(Cursor.Position).Bounds;
 
         //Size of whole Screen Array
         public static Rectangle AllScreens => SystemInformation.VirtualScreen;

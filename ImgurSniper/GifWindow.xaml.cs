@@ -65,7 +65,7 @@ namespace ImgurSniper {
         }
 
         private void WindowLoaded(object sender, RoutedEventArgs e) {
-            selectionRectangle.CaptureMouse();
+            SelectionRectangle.CaptureMouse();
 
             Activate();
             Focus();
@@ -85,7 +85,7 @@ namespace ImgurSniper {
                 case Key.Escape:
                     //Close
                     Error = false;
-                    CloseSnap(false, 0);
+                    CloseSnap(false);
                     break;
                 case Key.A:
                     //Select All
@@ -97,7 +97,7 @@ namespace ImgurSniper {
 
         //Make image of whole Window with Ctrl + A
         private void SelectAllCmd() {
-            selectionRectangle.Margin = new Thickness(0);
+            SelectionRectangle.Margin = new Thickness(0);
 
             From = new Point(0, 0);
             To = new Point(Width, Height);
@@ -126,13 +126,13 @@ namespace ImgurSniper {
             NativeMethods.GetCursorPos(out NativeStructs.POINT point);
 
             //Fade out
-            await grid.AnimateAsync(OpacityProperty, grid.Opacity, 0, 250);
+            await Grid.AnimateAsync(OpacityProperty, Grid.Opacity, 0, 250);
 
             Topmost = false;
             Opacity = 0;
 
             //For render complete
-            await Dispatcher.InvokeAsync(new Action(() => { }), DispatcherPriority.ContextIdle);
+            await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ContextIdle);
             await Task.Delay(50);
 
             //Send Window to back, so WinAPI.User32.WindowFromPoint does not detect ImgurSniper as Window
@@ -186,7 +186,7 @@ namespace ImgurSniper {
                 double right = Width - left - w;
                 double bottom = Height - top - h;
 
-                selectionRectangle.Margin = new Thickness(left, top, right, bottom);
+                SelectionRectangle.Margin = new Thickness(left, top, right, bottom);
             }
         }
 
@@ -204,7 +204,7 @@ namespace ImgurSniper {
 
             if (Math.Abs(To.X - From.X) < 9 || Math.Abs(To.Y - From.Y) < 9) {
                 // Too small
-                selectionRectangle.Margin = new Thickness(99999);
+                SelectionRectangle.Margin = new Thickness(99999);
             } else {
                 //Prevent input
                 IsEnabled = false;
@@ -212,7 +212,7 @@ namespace ImgurSniper {
                 Cursor = Cursors.Arrow;
 
                 //Fade out animation
-                await grid.AnimateAsync(OpacityProperty, grid.Opacity, 0, 150);
+                await Grid.AnimateAsync(OpacityProperty, Grid.Opacity, 0, 150);
                 //Fade out render complete
                 await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ContextIdle);
                 await Task.Delay(100);

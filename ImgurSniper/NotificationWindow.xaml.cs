@@ -41,17 +41,17 @@ namespace ImgurSniper {
 
             _autoHide = autoHide;
 
-            contentLabel.Text = text;
+            ContentLabel.Text = text;
 
             switch (type) {
                 case NotificationType.Error:
-                    errorIcon.Visibility = Visibility.Visible;
+                    ErrorIcon.Visibility = Visibility.Visible;
                     break;
                 case NotificationType.Progress:
-                    progressBar.Visibility = Visibility.Visible;
+                    ProgressBar.Visibility = Visibility.Visible;
                     break;
                 case NotificationType.Success:
-                    successIcon.Visibility = Visibility.Visible;
+                    SuccessIcon.Visibility = Visibility.Visible;
                     break;
             }
 
@@ -124,11 +124,11 @@ namespace ImgurSniper {
         }
 
         private void Window_MouseEnter(object sender, MouseEventArgs e) {
-            Btn_Close.BeginAnimation(OpacityProperty, Animations.FadeIn);
+            BtnClose.BeginAnimation(OpacityProperty, Animations.FadeIn);
         }
 
         private void Window_MouseLeave(object sender, MouseEventArgs e) {
-            Btn_Close.BeginAnimation(OpacityProperty, Animations.FadeOut);
+            BtnClose.BeginAnimation(OpacityProperty, Animations.FadeOut);
         }
 
         private void Close_MouseEnter(object sender, MouseEventArgs e) {

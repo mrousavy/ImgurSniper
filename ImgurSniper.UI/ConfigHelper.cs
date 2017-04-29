@@ -297,7 +297,6 @@ namespace ImgurSniper.UI {
                             writeAllow = true;
                             break;
                         default:
-                        case AccessControlType.Deny:
                             writeDeny = true;
                             break;
                     }
@@ -308,35 +307,34 @@ namespace ImgurSniper.UI {
                 return false;
             }
         }
+    }
+    public class Settings {
+        public bool AllMonitors = true;
+        public bool AutoUpdate = true;
+        public bool ShowMouse = true;
+        public bool UpdateAvailable ;
+        public bool UsePrint ;
+        public bool ImgurAfterSnipe = true;
+        public bool MagnifyingGlassEnabled ;
+        public bool OpenAfterUpload = true;
+        public bool RunOnBoot = true;
+        public bool SaveImages ;
 
-        public class Settings {
-            public bool AllMonitors = true;
-            public bool AutoUpdate = true;
-            public bool ShowMouse = true;
-            public bool UpdateAvailable = false;
-            public bool UsePrint = false;
-            public bool ImgurAfterSnipe = true;
-            public bool MagnifyingGlassEnabled = false;
-            public bool OpenAfterUpload = true;
-            public bool RunOnBoot = true;
-            public bool SaveImages = false;
+        public byte Compression = 90;
 
-            public byte Compression = 90;
+        public int CurrentCommits = 999;
+        public int GifFps = 10;
+        public int GifLength = 12000;
 
-            public int CurrentCommits = 999;
-            public int GifFps = 10;
-            public int GifLength = 12000;
+        public string Language ;
+        public string SaveImagesPath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "ImgurSniperImages");
 
-            public string Language = null;
-            public string SaveImagesPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "ImgurSniperImages");
+        public Key ShortcutGifKey = Key.G;
+        public Key ShortcutImgKey = Key.X;
 
-            public Key ShortcutGifKey = Key.G;
-            public Key ShortcutImgKey = Key.X;
+        public DateTime LastChecked = DateTime.Now;
 
-            public DateTime LastChecked = DateTime.Now;
-
-            public ImageFormat ImageFormat = ImageFormat.Png;
-        }
+        public ImageFormat ImageFormat = ImageFormat.Png;
     }
 }

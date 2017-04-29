@@ -1,10 +1,8 @@
-﻿using System.Windows;
-
-namespace ImgurSniper.UI {
+﻿namespace ImgurSniper.UI {
     /// <summary>
     ///     Interaction logic for Help.xaml
     /// </summary>
-    public partial class Help : Window {
+    public partial class Help  {
         public Help() {
             InitializeComponent();
         }

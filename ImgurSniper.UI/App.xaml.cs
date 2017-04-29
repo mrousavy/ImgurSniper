@@ -41,7 +41,7 @@ namespace ImgurSniper.UI {
         //Load from config.json
         private static void LoadConfig() {
             ConfigHelper.Exists();
-            ConfigHelper.JsonConfig = JsonConvert.DeserializeObject<ConfigHelper.Settings>(File.ReadAllText(ConfigHelper.ConfigFile));
+            ConfigHelper.JsonConfig = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(ConfigHelper.ConfigFile));
         }
 
         //Unhandled Exception User Message Boxes

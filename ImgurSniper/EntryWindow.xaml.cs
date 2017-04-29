@@ -22,7 +22,7 @@ namespace ImgurSniper {
                     //Tray with Hotkeys
                     await StartTray.Initialize(this);
                     break;
-                case CommandLineHelper.Argument.GIF:
+                case CommandLineHelper.Argument.Gif:
                     //GIF Recording Capture
                     using (GifWindow window = new GifWindow())
                         window.ShowDialog();

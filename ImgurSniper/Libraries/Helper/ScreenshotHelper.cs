@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using static ImgurSniper.NotificationWindow;
 using static ImgurSniper.Statics;
+// ReSharper disable HeuristicUnreachableCode
 
 namespace ImgurSniper.Libraries.Helper {
     public static class ScreenshotHelper {
@@ -91,11 +92,13 @@ namespace ImgurSniper.Libraries.Helper {
             await imgur.Login();
 
 #if DEBUG
+            // ReSharper disable once ConvertToConstant.Local
             bool tooBig = false;
 #else
             //10 MB = 10.485.760 Bytes => Imgur's max. File Size
             bool tooBig = image.Length >= 10485760;
 #endif
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
             if (tooBig) {
                 //Could not upload to imgur
                 await ShowNotificationAsync(gif ? strings.imgTooBigGif : strings.imgTooBig, NotificationType.Error, ActionTroubleshoot);

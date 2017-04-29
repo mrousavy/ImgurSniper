@@ -140,7 +140,6 @@ namespace ImgurSniper.Libraries.Helper {
                             writeAllow = true;
                             break;
                         default:
-                        case AccessControlType.Deny:
                             writeDeny = true;
                             break;
                     }
@@ -152,31 +151,33 @@ namespace ImgurSniper.Libraries.Helper {
             }
         }
 
-        public class Settings {
-            public bool AllMonitors = true;
-            public bool AutoUpdate = true;
-            public bool ShowMouse = true;
-            public bool UsePrint = false;
-            public bool ImgurAfterSnipe = true;
-            public bool OpenAfterUpload = true;
-            public bool SaveImages = false;
 
-            public byte Compression = 90;
 
-            public int GifFps = 10;
-            public int GifLength = 12000;
+    }
 
-            public string Language = null;
-            public string SaveImagesPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "ImgurSniperImages");
+    public class Settings {
+        public bool AllMonitors = true;
+        public bool AutoUpdate = true;
+        public bool ShowMouse = true;
+        public bool UsePrint = false;
+        public bool ImgurAfterSnipe = true;
+        public bool OpenAfterUpload = true;
+        public bool SaveImages = false;
 
-            public Key ShortcutGifKey = Key.G;
-            public Key ShortcutImgKey = Key.X;
+        public byte Compression = 90;
 
-            public DateTime LastChecked = DateTime.Now;
+        public int GifFps = 10;
+        public int GifLength = 12000;
 
-            public ImageFormat ImageFormat = ImageFormat.Png;
-        }
+        public string Language = null;
+        public string SaveImagesPath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "ImgurSniperImages");
 
+        public Key ShortcutGifKey = Key.G;
+        public Key ShortcutImgKey = Key.X;
+
+        public DateTime LastChecked = DateTime.Now;
+
+        public ImageFormat ImageFormat = ImageFormat.Png;
     }
 }

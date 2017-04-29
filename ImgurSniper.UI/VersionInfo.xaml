@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ImgurSniper.UI"
         xmlns:cultureStrings="clr-namespace:ImgurSniper.UI.Properties"
         mc:Ignorable="d" WindowStartupLocation="CenterOwner"
         Title="{x:Static Member=cultureStrings:strings.verInfo}" MinHeight="250" MinWidth="300" Width="500"
@@ -11,7 +10,7 @@
     <Grid Margin="5">
         <Label FontSize="14" Content="{x:Static Member=cultureStrings:strings.changelog}" VerticalAlignment="Top" />
 
-        <ListView x:Name="listview" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5,35,5,45"
+        <ListView x:Name="Listview" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5,35,5,45"
                   ScrollViewer.HorizontalScrollBarVisibility="Auto">
             <ListView.View>
                 <GridView>

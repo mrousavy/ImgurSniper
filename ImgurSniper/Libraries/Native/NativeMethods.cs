@@ -252,6 +252,7 @@ namespace ImgurSniper.Libraries.Native {
         }
 
         [StructLayout(LayoutKind.Sequential)]
+        // ReSharper disable once InconsistentNaming
         public struct RECT {
             public int Left, Top, Right, Bottom;
 
