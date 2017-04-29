@@ -377,7 +377,16 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image Format:.
+        ///   Looks up a localized string similar to Image.
+        /// </summary>
+        public static string image {
+            get {
+                return ResourceManager.GetString("image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Format:.
         /// </summary>
         public static string imgFormat {
             get {
@@ -519,6 +528,15 @@ namespace ImgurSniper.UI.Properties {
         public static string openBrowser {
             get {
                 return ResourceManager.GetString("openBrowser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Image in File Explorer after Snap.
+        /// </summary>
+        public static string openFile {
+            get {
+                return ResourceManager.GetString("openFile", resourceCulture);
             }
         }
         

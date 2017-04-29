@@ -26,7 +26,7 @@ namespace ImgurSniper.Libraries.Helper {
                             await stream.CopyToAsync(fstream);
                         }
 
-                        if (ConfigHelper.OpenAfterUpload) {
+                        if (ConfigHelper.OpenFileAfterSnap) {
                             //Open Explorer and Highlight Image
                             Process.Start("explorer.exe", $"/select, \"{filename}\"");
                         }
@@ -63,7 +63,7 @@ namespace ImgurSniper.Libraries.Helper {
                             await stream.CopyToAsync(fstream);
                         }
 
-                        if (ConfigHelper.OpenAfterUpload) {
+                        if (ConfigHelper.OpenFileAfterSnap) {
                             //Open Explorer and Highlight Image
                             Process.Start("explorer.exe", $"/select, \"{filename}\"");
                         }
@@ -96,7 +96,7 @@ namespace ImgurSniper.Libraries.Helper {
             bool tooBig = false;
 #else
             //10 MB = 10.485.760 Bytes => Imgur's max. File Size
-            bool tooBig = image.Length >= 10485760;
+            bool tooBig = stream.Length >= 10485760;
 #endif
             // ReSharper disable once ConditionIsAlwaysTrueOrFalse
             if (tooBig) {

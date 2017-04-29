@@ -136,7 +136,7 @@
     <value>Enable Magnifying Glass</value>
   </data>
   <data name="imgFormat" xml:space="preserve">
-    <value>Image Format:</value>
+    <value>Format:</value>
   </data>
   <data name="imgurAcc" xml:space="preserve">
     <value>Imgur Account</value>
@@ -478,5 +478,11 @@ Do you want to help out and submit a ticket?
   </data>
   <data name="commitsDisplay" xml:space="preserve">
     <value>{0} Commits on GitHub</value>
+  </data>
+  <data name="openFile" xml:space="preserve">
+    <value>Open Image in File Explorer after Snap</value>
+  </data>
+  <data name="image" xml:space="preserve">
+    <value>Image</value>
   </data>
 </root>

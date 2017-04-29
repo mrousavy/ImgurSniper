@@ -15,7 +15,10 @@ namespace ImgurSniper.Libraries.Helper {
         public static ImageFormat ImageFormat => JsonConfig.ImageFormat;
 
         //Value whether ImgurSniper should open the uploaded Image in Browser after upload
-        public static bool OpenAfterUpload => JsonConfig.OpenAfterUpload;
+        public static bool OpenBrowserAfterUpload => JsonConfig.OpenBrowserAfterUpload;
+
+        //Value whether ImgurSniper should open the saved Image in Windows Explorer after upload
+        public static bool OpenFileAfterSnap => JsonConfig.OpenFileAfterSnap;
 
         //Key for ImgurSniper Image Shortcut
         public static Key ShortcutImgKey => JsonConfig.ShortcutImgKey;
@@ -161,7 +164,8 @@ namespace ImgurSniper.Libraries.Helper {
         public bool ShowMouse = true;
         public bool UsePrint = false;
         public bool ImgurAfterSnipe = true;
-        public bool OpenAfterUpload = true;
+        public bool OpenBrowserAfterUpload = true;
+        public bool OpenFileAfterSnap = false;
         public bool SaveImages = false;
 
         public byte Compression = 90;

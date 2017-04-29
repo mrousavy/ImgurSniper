@@ -1,7 +1,7 @@
-﻿using System;
-using Octokit;
+﻿using Octokit;
 using System.Collections.Generic;
 using System.Windows;
+using ImgurSniper.UI.Properties;
 // ReSharper disable UnusedParameter.Local
 
 namespace ImgurSniper.UI {
@@ -11,7 +11,7 @@ namespace ImgurSniper.UI {
     public partial class VersionInfo {
         private readonly int _latest;
         public bool Skipped;
-        
+
         public VersionInfo(IReadOnlyList<GitHubCommit> commits, int currentCommits) {
             InitializeComponent();
 #if DEBUG
@@ -35,7 +35,7 @@ namespace ImgurSniper.UI {
             int commitNr = commits.Count;
             for (int i = 0; i < commits.Count - currentCommits; i++) {
                 Commit commit = commits[i].Commit;
-                listview.Items.Add(new VersionInfoItem {
+                Listview.Items.Add(new VersionInfoItem {
                     Version = "v" + commitNr,
                     Date = $"{commit.Author.Date:dd.MM}",
                     Message = $"\"{commit.Message}\""

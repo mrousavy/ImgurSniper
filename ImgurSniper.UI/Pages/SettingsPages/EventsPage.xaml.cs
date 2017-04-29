@@ -33,7 +33,8 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
             try {
                 Settings settings = ConfigHelper.JsonConfig;
 
-                bool openAfterUpload = settings.OpenAfterUpload;
+                bool openBrowserAfterUpload = settings.OpenBrowserAfterUpload;
+                bool openFileAfterSnap = settings.OpenFileAfterSnap;
                 bool saveImages = settings.SaveImages;
                 bool imgurAfterSnipe = settings.ImgurAfterSnipe;
                 string saveImagesPath = settings.SaveImagesPath;
@@ -43,6 +44,7 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
                 SaveBox.IsChecked = saveImages;
                 if (saveImages) {
                     PathPanel.IsEnabled = true;
+                    OpenFileAfterSnapBox.IsEnabled = true;
                 }
 
                 //Path to Saved Images
@@ -61,13 +63,18 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
                 }
 
                 //Open Image in Browser after upload
-                OpenAfterUploadBox.IsChecked = openAfterUpload;
+                OpenBrowserAfterUploadBox.IsChecked = openBrowserAfterUpload;
+
+                //Open Image in Windows Explorer after snap
+                OpenFileAfterSnapBox.IsChecked = openFileAfterSnap;
 
                 //Upload to Imgur or Copy to Clipboard after Snipe
                 if (imgurAfterSnipe) {
                     ImgurRadio.IsChecked = true;
+                    OpenBrowserAfterUploadBox.IsEnabled = true;
                 } else {
                     ClipboardRadio.IsChecked = true;
+                    OpenBrowserAfterUploadBox.IsEnabled = false;
                 }
             } catch {
                 await Dialog.ShowOkDialog(strings.couldNotLoad, string.Format(strings.errorConfig, ConfigHelper.ConfigPath));
@@ -83,16 +90,34 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
             if (button == null) {
                 return;
             }
-            ConfigHelper.ImgurAfterSnipe = button.Tag as string == "Imgur";
+            if (button.Tag as string == "Imgur") {
+                ConfigHelper.ImgurAfterSnipe = true;
+                OpenBrowserAfterUploadBox.IsEnabled = true;
+            } else {
+                ConfigHelper.ImgurAfterSnipe = false;
+                OpenBrowserAfterUploadBox.IsEnabled = false;
+            }
             EnableSave();
         }
-        private void OpenAfterUpload_Checkbox(object sender, RoutedEventArgs e) {
+        private void OpenBrowserAfterUpload_Checkbox(object sender, RoutedEventArgs e) {
             CheckBox box = sender as CheckBox;
             if (box == null) {
                 return;
             }
             try {
-                ConfigHelper.OpenAfterUpload = box.IsChecked == true;
+                ConfigHelper.OpenBrowserAfterUpload = box.IsChecked == true;
+                EnableSave();
+            } catch {
+                // ignored
+            }
+        }
+        private void OpenFileAfterSnap_Checkbox(object sender, RoutedEventArgs e) {
+            CheckBox box = sender as CheckBox;
+            if (box == null) {
+                return;
+            }
+            try {
+                ConfigHelper.OpenFileAfterSnap = box.IsChecked == true;
                 EnableSave();
             } catch {
                 // ignored
@@ -109,6 +134,7 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
 
             if (box.IsChecked.HasValue) {
                 PathPanel.IsEnabled = (bool)box.IsChecked;
+                OpenFileAfterSnapBox.IsEnabled = (bool)box.IsChecked;
             }
         }
         private void PathChooser(object sender, RoutedEventArgs e) {

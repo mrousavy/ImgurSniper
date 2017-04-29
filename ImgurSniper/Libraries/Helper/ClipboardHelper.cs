@@ -17,7 +17,7 @@ namespace ImgurSniper.Libraries.Helper {
 
             Action action = delegate { Process.Start(link); };
 
-            if (ConfigHelper.OpenAfterUpload) {
+            if (ConfigHelper.OpenBrowserAfterUpload) {
                 Process.Start(link);
                 action = null;
             }

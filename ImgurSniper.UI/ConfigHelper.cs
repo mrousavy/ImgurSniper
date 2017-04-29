@@ -30,11 +30,21 @@ namespace ImgurSniper.UI {
         }
 
         //Value whether ImgurSniper should open the uploaded Image in Browser after upload
-        public static bool OpenAfterUpload {
-            get => JsonConfig.OpenAfterUpload;
+        public static bool OpenBrowserAfterUpload {
+            get => JsonConfig.OpenBrowserAfterUpload;
             set {
                 Settings settings = JsonConfig;
-                settings.OpenAfterUpload = value;
+                settings.OpenBrowserAfterUpload = value;
+                JsonConfig = settings;
+            }
+        }
+
+        //Value whether ImgurSniper should open the uploaded Image in Browser after upload
+        public static bool OpenFileAfterSnap {
+            get => JsonConfig.OpenFileAfterSnap;
+            set {
+                Settings settings = JsonConfig;
+                settings.OpenFileAfterSnap = value;
                 JsonConfig = settings;
             }
         }
@@ -330,7 +340,8 @@ namespace ImgurSniper.UI {
         public bool UsePrint;
         public bool ImgurAfterSnipe = true;
         public bool MagnifyingGlassEnabled;
-        public bool OpenAfterUpload = true;
+        public bool OpenBrowserAfterUpload = true;
+        public bool OpenFileAfterSnap = false;
         public bool RunOnBoot = true;
         public bool SaveImages;
 
