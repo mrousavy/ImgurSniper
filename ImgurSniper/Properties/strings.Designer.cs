@@ -79,6 +79,51 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ffmpeg.exe failed to convert MP4 to GIF!.
+        /// </summary>
+        public static string couldNotCreateGif {
+            get {
+                return ResourceManager.GetString("couldNotCreateGif", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not find FFmpegManager.exe!.
+        /// </summary>
+        public static string couldNotFindFfmpeg {
+            get {
+                return ResourceManager.GetString("couldNotFindFfmpeg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not install ffmpeg.exe!.
+        /// </summary>
+        public static string couldNotInstallFfmpeg {
+            get {
+                return ResourceManager.GetString("couldNotInstallFfmpeg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ffmpeg.exe could not start screen recording!.
+        /// </summary>
+        public static string couldNotStartFfmpeg {
+            get {
+                return ResourceManager.GetString("couldNotStartFfmpeg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not begin recording GIF!.
+        /// </summary>
+        public static string couldNotStartRecording {
+            get {
+                return ResourceManager.GetString("couldNotStartRecording", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ctrl + Shift + {0}.
         /// </summary>
         public static string ctrlShiftShortcut {
@@ -88,7 +133,7 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An unknown Error occured in ImgurSniper.UI!
+        ///   Looks up a localized string similar to An unknown Error occured in ImgurSniper!
         ///ImgurSniper has to shut down!
         ///Would you like to see a detailed Exception Info? ({0}).
         /// </summary>
@@ -314,7 +359,7 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error creating/uploading GIF to Imgur!.
+        ///   Looks up a localized string similar to Error creating GIF! ({0}).
         /// </summary>
         public static string uploadingErrorGif {
             get {

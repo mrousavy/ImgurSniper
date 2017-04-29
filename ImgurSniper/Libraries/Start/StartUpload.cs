@@ -21,15 +21,23 @@ namespace ImgurSniper.Libraries.Start {
                 await imgur.Login();
 
                 //Binary Image
-                List<byte[]> images = new List<byte[]>();
+                List<MemoryStream> images = new List<MemoryStream>();
 
                 //Load every Image
                 double size = 0;
-                foreach (string file in files) {
-                    byte[] image = File.ReadAllBytes(file);
-                    images.Add(image);
-                    size += image.Length;
-                }
+                Parallel.ForEach(files, async (f) => {
+                    using (FileStream fstream = new FileStream(f, FileMode.Open, FileAccess.Read)) {
+                        //Init MemoryStream with FileStream Contents
+                        MemoryStream mstream = new MemoryStream();
+                        await fstream.CopyToAsync(mstream);
+
+                        //Set Position to 0 and add to List
+                        mstream.Position = 0;
+                        images.Add(mstream);
+
+                        size += mstream.Length;
+                    }
+                });
 
                 //Image Size
                 string kb = $"{size / 1024d:0.#}";
@@ -41,15 +49,19 @@ namespace ImgurSniper.Libraries.Start {
 
                 int index = 1;
                 //Upload each image
-                foreach (byte[] image in images) {
-                    try {
-                        Notification.contentLabel.Text = string.Format(strings.uploadingFiles, kb, index, images.Count);
-                        await imgur.UploadToAlbum(image, "", albumInfo.Item2);
-                    } catch (Exception e) {
-                        Console.WriteLine(e.Message);
-                        //this image was not uploaded
-                    }
-                    index++;
+                foreach (MemoryStream image in images) {
+                    using (image) {
+                        try {
+                            Notification.contentLabel.Text =
+                                string.Format(strings.uploadingFiles, kb, index, images.Count);
+                            await imgur.UploadToAlbum(image, "", albumInfo.Item2);
+                        } catch (Exception e) {
+                            Console.WriteLine(e.Message);
+                            //this image was not uploaded
+                        } finally {
+                            index++;
+                        }
+                    } //Dispose image
                 }
 
                 Notification?.Close();
@@ -71,23 +83,30 @@ namespace ImgurSniper.Libraries.Start {
             ImgurUploader imgur = new ImgurUploader();
             await imgur.Login();
 
-            try {
-                //Binary Image
-                byte[] byteImg = File.ReadAllBytes(file);
+            using (MemoryStream stream = new MemoryStream()) {
+                try {
+                    //Binary Image
+                    using (FileStream fstream = new FileStream(file, FileMode.Open, FileAccess.Read)) {
+                        await fstream.CopyToAsync(stream);
 
-                //Image Size
-                string kb = $"{byteImg.Length / 1024d:0.#}";
+                        //Set Stream Position to 0
+                        stream.Position = 0;
+                    }
 
-                //e.g. "Uploading Image (123KB)"
-                ShowNotification(string.Format(strings.uploading, kb), NotificationType.Progress, false);
+                    //Image Size
+                    string kb = $"{stream.Length / 1024d:0.#}";
 
-                string link = await imgur.Upload(byteImg);
-                await ClipboardHelper.CopyLink(link);
+                    //e.g. "Uploading Image (123KB)"
+                    ShowNotification(string.Format(strings.uploading, kb), NotificationType.Progress, false);
 
-                Notification?.Close();
-            } catch {
-                //Unsupported File Type? Internet connection error?
-                await ShowNotificationAsync(strings.errorInstantUpload, NotificationType.Error, ActionTroubleshoot);
+                    string link = await imgur.Upload(stream);
+                    await ClipboardHelper.CopyLink(link);
+
+                    Notification?.Close();
+                } catch {
+                    //Unsupported File Type? Internet connection error?
+                    await ShowNotificationAsync(strings.errorInstantUpload, NotificationType.Error, ActionTroubleshoot);
+                }
             }
 
             await Task.Delay(500);

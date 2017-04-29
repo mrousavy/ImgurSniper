@@ -10,7 +10,11 @@ namespace ImgurSniper {
     /// <summary>
     ///     Interaction logic for NotificationWindow.xaml
     /// </summary>
-    public partial class NotificationWindow : Window, IDisposable {
+    public partial class NotificationWindow : IDisposable {
+        /// <summary>
+        /// Is a Notification currently shown
+        /// </summary>
+        public static bool IsShown { get; private set; }
 
         public static readonly Action ActionTroubleshoot =
             delegate { Process.Start(Path.Combine(ConfigHelper.InstallDir, "ImgurSniper.UI.exe"), "Troubleshooting"); };
@@ -20,6 +24,7 @@ namespace ImgurSniper {
             Success,
             Error
         }
+        public const int ShowDuration = 3500;
 
         private readonly double _left;
         private readonly TaskCompletionSource<bool> _task = new TaskCompletionSource<bool>();
@@ -55,20 +60,26 @@ namespace ImgurSniper {
                 NotificationContent.MouseDown += delegate {
                     try {
                         onClick.Invoke();
-                    } catch { }
+                    } catch {
+                        // ignored
+                    }
                     FadeOut();
                 };
             }
         }
 
+        ~NotificationWindow() { Dispose(); }
+
         public NotificationWindow(string text, NotificationType type, bool autoHide) : this(text, type, autoHide, null) { }
 
 
         private async void Window_Loaded(object sender, RoutedEventArgs e) {
+            IsShown = true;
+
             FadeIn();
 
             if (_autoHide) {
-                await Task.Delay(3000);
+                await Task.Delay(ShowDuration);
 
                 FadeOut();
             }
@@ -94,12 +105,18 @@ namespace ImgurSniper {
 
         //Close Animation
         private async void FadeOut() {
-            this.Animate(OpacityProperty, 1, 0, 100);
-            await this.AnimateAsync(LeftProperty, Left, _left, 100);
+            try {
+                this.Animate(OpacityProperty, 1, 0, 100);
+                await this.AnimateAsync(LeftProperty, Left, _left, 100);
 
-            _task.TrySetResult(true);
-            GC.Collect();
-            base.Close();
+                _task.TrySetResult(true);
+                GC.Collect();
+                base.Close();
+            } catch {
+                // Invalid Operation, Task Canceled, Wrong Thread...
+            } finally {
+                IsShown = false;
+            }
         }
 
         private void Window_Close(object sender, MouseButtonEventArgs e) {

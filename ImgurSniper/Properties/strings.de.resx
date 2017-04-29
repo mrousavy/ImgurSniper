@@ -209,7 +209,7 @@ Wollen Sie helfen, den Fehler zu beheben indem Sie ein Formular detailreich ausf
     <value>GIF</value>
   </data>
   <data name="uploadingErrorGif" xml:space="preserve">
-    <value>Beim erstellen/hochladen des GIFs ist ein Fehler aufgetreten!</value>
+    <value>Beim erstellen des GIFs ist ein Fehler aufgetreten! ({0})</value>
   </data>
   <data name="unhandledErrorDescription" xml:space="preserve">
     <value>Ein unbekannter Fehler in ImgurSniper ist aufgetreten.
@@ -222,5 +222,20 @@ Wollen Sie mehr Details über den Fehler sehen?</value>
   </data>
   <data name="notAnImage" xml:space="preserve">
     <value>Die ausgewählte Datei ist keine gültige Bild-Datei!</value>
+  </data>
+  <data name="couldNotFindFfmpeg" xml:space="preserve">
+    <value>FFmpegManager.exe wurde nicht gefunden!</value>
+  </data>
+  <data name="couldNotStartRecording" xml:space="preserve">
+    <value>GIF Aufnahme konnte nicht gestartet werden!</value>
+  </data>
+  <data name="couldNotCreateGif" xml:space="preserve">
+    <value>ffmpeg.exe konnte MP4 nicht zu GIF verarbeiten!</value>
+  </data>
+  <data name="couldNotInstallFfmpeg" xml:space="preserve">
+    <value>ffmpeg.exe konnte nicht installiert werden!</value>
+  </data>
+  <data name="couldNotStartFfmpeg" xml:space="preserve">
+    <value>ffmpeg.exe Aufnahme konnte nicht gestartet werden!</value>
   </data>
 </root>

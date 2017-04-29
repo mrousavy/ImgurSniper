@@ -3,6 +3,7 @@ using Imgur.API.Endpoints.Impl;
 using Imgur.API.Models;
 using ImgurSniper.Properties;
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -39,11 +40,12 @@ namespace ImgurSniper.Libraries.Helper {
         /// <summary>
         /// Upload Image to Imgur
         /// </summary>
-        /// <param name="bimage">The Image as byte[]</param>
+        /// <param name="stream">The Image as any sort of Stream</param>
         /// <param name="windowName">The name of the Window</param>
         /// <returns>The Link to the uploaded Image</returns>
-        public async Task<string> Upload(byte[] bimage, string windowName = null) {
-            int threadId = Thread.CurrentThread.ManagedThreadId;
+        public async Task<string> Upload(Stream stream, string windowName = null) {
+            //Set Stream Position to beginning
+            stream.Position = 0;
 
             ImgurClient client = new ImgurClient(ClientId, ClientSecret);
 
@@ -53,23 +55,26 @@ namespace ImgurSniper.Libraries.Helper {
                 ? strings.uploadTitle
                 : $"{windowName}  -  ({strings.uploadTitle})";
 
-            IImage image = await endpoint.UploadImageBinaryAsync(bimage, null, title, "https://mrousavy.github.io/ImgurSniper");
+            IImage image = await endpoint.UploadImageStreamAsync(stream, null, title, "https://mrousavy.github.io/ImgurSniper");
             return image.Link;
         }
 
         /// <summary>
         /// Upload Image to Imgur Album
         /// </summary>
-        /// <param name="bimage">The Image as byte[]</param>
+        /// <param name="stream">The Image as any sort of Stream</param>
         /// <param name="windowName">The name of the Window</param>
         /// <param name="albumId">The ID of the Album, or for anonymous Albums: DeleteHash</param>
-        public async Task UploadToAlbum(byte[] bimage, string windowName, string albumId) {
+        public async Task UploadToAlbum(Stream stream, string windowName, string albumId) {
+            //Set Stream Position to beginning
+            stream.Position = 0;
+
             ImageEndpoint endpoint = new ImageEndpoint(_client);
 
             string title = string.IsNullOrWhiteSpace(windowName)
-                ? strings.uploadTitle
-                : $"{windowName}  -  ({strings.uploadTitle})";
-            await endpoint.UploadImageBinaryAsync(bimage, albumId);
+                ? null
+                : windowName;
+            await endpoint.UploadImageStreamAsync(stream, albumId, title);
         }
 
         /// <summary>
@@ -81,16 +86,10 @@ namespace ImgurSniper.Libraries.Helper {
             IAlbum album = await endpoint.CreateAlbumAsync("Images uploaded with ImgurSniper",
                 "https://mrousavy.github.io/ImgurSniper");
 
-            Tuple<string, string> pair;
-
             //Logged in User = Item2 = Album ID
-            if (_client.OAuth2Token != null) {
-                pair = new Tuple<string, string>(album.Id, album.Id);
-            }
-            //Not Logged in User = Item2 = Album Delete Hash (Anonymous Albums)
-            else {
-                pair = new Tuple<string, string>(album.Id, album.DeleteHash);
-            }
+            Tuple<string, string> pair = _client.OAuth2Token != null ?
+                new Tuple<string, string>(album.Id, album.Id) :
+                new Tuple<string, string>(album.Id, album.DeleteHash);
             return pair;
         }
     }

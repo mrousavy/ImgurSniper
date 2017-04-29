@@ -25,19 +25,17 @@ namespace ImgurSniper.Libraries.Helper {
             await ShowNotificationAsync(strings.linkclipboard, NotificationType.Success, action);
         }
 
-        //Parse byte[] to Image and write to Clipboard
-        public static async Task CopyImage(byte[] cimg) {
+        //Parse stream to Image and write to Clipboard
+        public static async Task CopyImage(Stream stream) {
             //Parse byte[] to Images
             BitmapImage image = new BitmapImage();
-            using (MemoryStream mem = new MemoryStream(cimg)) {
-                mem.Position = 0;
-                image.BeginInit();
-                image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.UriSource = null;
-                image.StreamSource = mem;
-                image.EndInit();
-            }
+            stream.Position = 0;
+            image.BeginInit();
+            image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+            image.CacheOption = BitmapCacheOption.OnLoad;
+            image.UriSource = null;
+            image.StreamSource = stream;
+            image.EndInit();
             image.Freeze();
 
             //Copy whole Image to Clipboard

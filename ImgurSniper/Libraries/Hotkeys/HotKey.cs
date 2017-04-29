@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
@@ -9,13 +8,13 @@ namespace ImgurSniper.Libraries.Hotkeys {
         private readonly IntPtr _handle;
         private readonly int _id;
         private bool _isKeyRegistered;
-        private Dispatcher _currentDispatcher;
+        private readonly Dispatcher _currentDispatcher;
 
-        public HotKey(ModifierKeys modifierKeys, Key key, Action<HotKey> onKeyAction = null) {
+        public HotKey(IntPtr wHandle, ModifierKeys modifierKeys, Key key, Action<HotKey> onKeyAction = null) {
             Key = key;
             KeyModifier = modifierKeys;
             _id = GetHashCode();
-            _handle = GetHiddenWindow();
+            _handle = wHandle;
             _currentDispatcher = Dispatcher.CurrentDispatcher;
             RegisterHotKey();
             ComponentDispatcher.ThreadPreprocessMessage += ThreadPreprocessMessageMethod;
@@ -26,12 +25,6 @@ namespace ImgurSniper.Libraries.Hotkeys {
 
         ~HotKey() {
             Dispose();
-        }
-
-        private IntPtr GetHiddenWindow() {
-            WindowInteropHelper helper = new WindowInteropHelper(new Window());
-            helper.EnsureHandle();
-            return helper.Handle;
         }
 
         public event Action<HotKey> HotKeyPressed;

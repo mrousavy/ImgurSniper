@@ -12,8 +12,8 @@
         Title="Snipe a Screenshot!" WindowStartupLocation="Manual" Loaded="WindowLoaded" KeyDown="WindowKeyDown">
 
     <Grid>
-        <Grid x:Name="grid" MouseDown="BeginRectangle" MouseUp="ReleaseRectangle" MouseMove="MoveRectangle">
-            <Border x:Name="selectionRectangle" Margin="9999"
+        <Grid x:Name="Grid" MouseDown="BeginRectangle" MouseUp="ReleaseRectangle" MouseMove="MoveRectangle">
+            <Border x:Name="SelectionRectangle" Margin="9999"
                     BorderBrush="DarkGray" BorderThickness="1">
                 <Rectangle Fill="Gray" Opacity="0.3" />
             </Border>

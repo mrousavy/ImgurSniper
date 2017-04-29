@@ -28,18 +28,15 @@ namespace ImgurSniper {
     /// </summary>
     public partial class ScreenshotWindow : IDisposable {
         private bool _drag;
-
-        public byte[] CroppedImage;
+        
         public Point From, To;
         public string HwndName;
         public bool Error = true;
 
-        //Size of current Mouse Location screen
-        public static Rectangle Screen
-            => System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position).Bounds;
-
-        //Size of whole Screen Array
-        public static Rectangle AllScreens => SystemInformation.VirtualScreen;
+        /// <summary>
+        /// The Selected Area (Image or GIF) as a Stream
+        /// </summary>
+        public MemoryStream SelectionStream { get; private set; }
 
 
         public ScreenshotWindow() {
@@ -51,7 +48,7 @@ namespace ImgurSniper {
 
             InitializeComponent();
 
-            Position();
+            WindowHelper.Position(this);
         }
 
 
@@ -60,39 +57,21 @@ namespace ImgurSniper {
             Dispose();
         }
 
-        //Position Window correctly
-        private void Position() {
-            Rectangle size = ConfigHelper.AllMonitors ? AllScreens : Screen;
-
-            Left = size.Left;
-            Top = size.Top;
-            Width = size.Width;
-            Height = size.Height;
-        }
 
         private void WindowLoaded(object sender, RoutedEventArgs e) {
-            selectionRectangle.CaptureMouse();
+            SelectionRectangle.CaptureMouse();
 
             //Set Position for Spacebar Menu
-            Rectangle bounds = System.Windows.Forms.Screen.PrimaryScreen.Bounds;
+            Rectangle bounds = Screen.PrimaryScreen.Bounds;
             SelectedMode.Margin = new Thickness(
                 bounds.Width / 2 - 50,
                 bounds.Height / 2 - 25,
                 bounds.Width / 2 - 50,
                 bounds.Height / 2 - 25);
 
-            //Activate & Focus Window
-            Activate();
-            Focus();
-
-            //Hide in Alt + Tab Switcher View
-            WindowInteropHelper wndHelper = new WindowInteropHelper(this);
-
-            int exStyle = (int)NativeMethods.GetWindowLong(wndHelper.Handle, (int)NativeMethods.GetWindowLongFields.GwlExstyle);
-
-            exStyle |= (int)NativeMethods.ExtendedWindowStyles.WsExToolwindow;
-            NativeMethods.SetWindowLong(wndHelper.Handle, (int)NativeMethods.GetWindowLongFields.GwlExstyle, (IntPtr)exStyle);
+            WindowHelper.WindowLoaded(this);
         }
+
 
         //All Keys
         private void WindowKeyDown(object sender, KeyEventArgs e) {
@@ -119,52 +98,9 @@ namespace ImgurSniper {
             }
         }
 
-        //Switch between Rectangle Snapping and Painting
-        private void SwitchMode() {
-            grid.IsEnabled = !grid.IsEnabled;
-            PaintSurface.IsEnabled = !PaintSurface.IsEnabled;
-
-            _currentPath = null;
-
-            //"Hide" Selection Rectangle
-            selectionRectangle.Margin = new Thickness(99999);
-
-            //Stop animations by setting AnimationTimeline to null
-            SelectedMode.BeginAnimation(OpacityProperty, null);
-
-            //Set correct Selected Mode Indicator
-            if (grid.IsEnabled) {
-                //Prevent Painting in Capture Rectangle mode
-                grid.CaptureMouse();
-                Cursor = Cursors.Cross;
-                CropIcon.Background = Brushes.Gray;
-                DrawIcon.Background = Brushes.Transparent;
-            } else {
-                //Prevent Capturing Rectangle in Paint Mode
-                PaintSurface.CaptureMouse();
-                Cursor = Cursors.Pen;
-                DrawIcon.Background = Brushes.Gray;
-                CropIcon.Background = Brushes.Transparent;
-            }
-
-            //Fade Selected Mode View in
-            FadeSelectedModeIn();
-        }
-
-        //Fade the Selected Mode (Drawing/Rectangle) in
-        private async void FadeSelectedModeIn() {
-            await SelectedMode.AnimateAsync(OpacityProperty, SelectedMode.Opacity, 0.9, 250);
-            FadeSelectedModeOut();
-        }
-
-        //Fade the Selected Mode (Drawing/Rectangle) out
-        private void FadeSelectedModeOut() {
-            SelectedMode.Animate(OpacityProperty, SelectedMode.Opacity, 0, 250, 1000);
-        }
-
         //Make image of whole Window with Ctrl + A
         private void SelectAllCmd() {
-            selectionRectangle.Margin = new Thickness(0);
+            SelectionRectangle.Margin = new Thickness(0);
 
             From = new Point(0, 0);
             To = new Point(Width, Height);
@@ -204,7 +140,7 @@ namespace ImgurSniper {
                 double right = Width - left - w;
                 double bottom = Height - top - h;
 
-                selectionRectangle.Margin = new Thickness(left, top, right, bottom);
+                SelectionRectangle.Margin = new Thickness(left, top, right, bottom);
             }
         }
 
@@ -227,13 +163,13 @@ namespace ImgurSniper {
             NativeMethods.GetCursorPos(out NativeStructs.POINT point);
 
             //Fade out
-            await grid.AnimateAsync(OpacityProperty, grid.Opacity, 0, 250);
+            await Grid.AnimateAsync(OpacityProperty, Grid.Opacity, 0, 250);
 
             Topmost = false;
             Opacity = 0;
 
             //For render complete
-            await Dispatcher.InvokeAsync(new Action(() => { }), DispatcherPriority.ContextIdle);
+            await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ContextIdle);
             await Task.Delay(50);
 
             //Send Window to back, so WinAPI.User32.WindowFromPoint does not detect ImgurSniper as Window
@@ -316,6 +252,52 @@ namespace ImgurSniper {
 
         #endregion
 
+        #region Painting Events
+
+        //Switch between Rectangle Snapping and Painting
+        private void SwitchMode() {
+            Grid.IsEnabled = !Grid.IsEnabled;
+            PaintSurface.IsEnabled = !PaintSurface.IsEnabled;
+
+            _currentPath = null;
+
+            //"Hide" Selection Rectangle
+            SelectionRectangle.Margin = new Thickness(99999);
+
+            //Stop animations by setting AnimationTimeline to null
+            SelectedMode.BeginAnimation(OpacityProperty, null);
+
+            //Set correct Selected Mode Indicator
+            if (Grid.IsEnabled) {
+                //Prevent Painting in Capture Rectangle mode
+                Grid.CaptureMouse();
+                Cursor = Cursors.Cross;
+                CropIcon.Background = Brushes.Gray;
+                DrawIcon.Background = Brushes.Transparent;
+            } else {
+                //Prevent Capturing Rectangle in Paint Mode
+                PaintSurface.CaptureMouse();
+                Cursor = Cursors.Pen;
+                DrawIcon.Background = Brushes.Gray;
+                CropIcon.Background = Brushes.Transparent;
+            }
+
+            //Fade Selected Mode View in
+            FadeSelectedModeIn();
+        }
+
+        //Fade the Selected Mode (Drawing/Rectangle) in
+        private async void FadeSelectedModeIn() {
+            await SelectedMode.AnimateAsync(OpacityProperty, SelectedMode.Opacity, 0.9, 250);
+            FadeSelectedModeOut();
+        }
+
+        //Fade the Selected Mode (Drawing/Rectangle) out
+        private void FadeSelectedModeOut() {
+            SelectedMode.Animate(OpacityProperty, SelectedMode.Opacity, 0, 250, 1000);
+        }
+        #endregion
+
         #region Snap Helper
 
         //Finish drawing Rectangle
@@ -328,7 +310,7 @@ namespace ImgurSniper {
 
             if (Math.Abs(To.X - From.X) < 9 || Math.Abs(To.Y - From.Y) < 9) {
                 // Too small
-                selectionRectangle.Margin = new Thickness(99999);
+                SelectionRectangle.Margin = new Thickness(99999);
             } else {
                 //Prevent input
                 IsEnabled = false;
@@ -336,7 +318,7 @@ namespace ImgurSniper {
                 Cursor = Cursors.Arrow;
 
                 //Fade out animation
-                await grid.AnimateAsync(OpacityProperty, grid.Opacity, 0, 150);
+                await Grid.AnimateAsync(OpacityProperty, Grid.Opacity, 0, 150);
                 //Fade out render complete
                 await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.ContextIdle);
                 await Task.Delay(100);
@@ -356,19 +338,15 @@ namespace ImgurSniper {
 
                 using (Image img = Screenshot.GetScreenshotNative(NativeMethods.GetDesktopWindow(), size, ConfigHelper.ShowMouse)) {
                     if (ConfigHelper.Compression < 100) {
-                        using (MemoryStream stream = ImageHelper.CompressImage(img, ConfigHelper.ImageFormat, ConfigHelper.Compression)) {
-                            CroppedImage = stream.ToArray();
-                        }
+                        SelectionStream = ImageHelper.CompressImage(img, ConfigHelper.ImageFormat, ConfigHelper.Compression);
                     } else {
-                        using (MemoryStream stream = new MemoryStream()) {
-                            img.Save(stream, ConfigHelper.ImageFormat);
-                            CroppedImage = stream.ToArray();
-                        }
+                        SelectionStream = new MemoryStream();
+                        img.Save(SelectionStream, ConfigHelper.ImageFormat);
                     }
                 }
-                CloseSnap(true, 0);
+                CloseSnap(true);
             } catch {
-                CloseSnap(false, 0);
+                CloseSnap(false);
             }
         }
 
@@ -378,13 +356,12 @@ namespace ImgurSniper {
 
             try {
                 if (result) {
-                    await ScreenshotHelper.FinishScreenshot(CroppedImage, HwndName);
+                    await ScreenshotHelper.FinishScreenshot(SelectionStream, HwndName);
                     DialogResult = true;
                     return;
-                } else {
-                    if (Error)
-                        await Statics.ShowNotificationAsync(strings.uploadingError, NotificationWindow.NotificationType.Error);
                 }
+                if (Error)
+                    await Statics.ShowNotificationAsync(strings.uploadingError, NotificationWindow.NotificationType.Error);
             } catch {
                 // could not finish screenshot
             }
@@ -395,7 +372,8 @@ namespace ImgurSniper {
 
         //Release any Resources
         public void Dispose() {
-            CroppedImage = null;
+            SelectionStream?.Dispose();
+            SelectionStream = null;
 
             try {
                 Dispatcher.Invoke(Close);

@@ -2,6 +2,7 @@
 using ImgurSniper.Libraries.Native;
 using ImgurSniper.Properties;
 using System;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,11 +21,13 @@ namespace ImgurSniper {
     /// </summary>
     public partial class GifWindow : IDisposable {
         private bool _drag;
-
-        public byte[] CroppedGif;
+        
         public Point From, To;
         public string HwndName;
         public bool Error = true;
+        public string ErrorMsg;
+
+        public MemoryStream SelectionStream { get; private set; }
 
 
         public GifWindow() {
@@ -230,34 +233,37 @@ namespace ImgurSniper {
                 using (GifRecorder recorder = new GifRecorder(size)) {
                     bool? result = recorder.ShowDialog();
 
-                    if (result != true)
-                        CloseSnap(false);
+                    if (result != true) {
+                        CloseSnap(false, 0, recorder.ErrorMsg);
+                        return;
+                    }
 
-                    CroppedGif = recorder.Gif;
+                    SelectionStream = recorder.Gif;
                 }
 
                 CloseSnap(true);
             } catch {
-                CloseSnap(false);
+                CloseSnap(false, 0, strings.couldNotStartRecording);
             }
         }
 
         //Close Window with fade out animation
-        private async void CloseSnap(bool result, int delay = 0) {
+        private async void CloseSnap(bool result, int delay = 0, string errorMessage = null) {
             await this.AnimateAsync(OpacityProperty, Opacity, 0, 150, delay);
 
             try {
                 if (result) {
-                    await ScreenshotHelper.FinishGif(CroppedGif, HwndName);
+                    await ScreenshotHelper.FinishGif(SelectionStream, HwndName);
                     try {
                         DialogResult = true;
                     } catch {
                         // not dialog
                     }
                     return;
-                } else {
-                    if (Error)
-                        await Statics.ShowNotificationAsync(strings.uploadingErrorGif, NotificationWindow.NotificationType.Error);
+                }
+                if (Error) {
+                    await Statics.ShowNotificationAsync(string.Format(strings.uploadingErrorGif, errorMessage),
+                        NotificationWindow.NotificationType.Error);
                 }
             } catch {
                 // could not finish screenshot
@@ -272,7 +278,8 @@ namespace ImgurSniper {
         #endregion
 
         public void Dispose() {
-            CroppedGif = null;
+            SelectionStream?.Dispose();
+            SelectionStream = null;
 
             try {
                 Close();

@@ -9,6 +9,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using ImgurSniper.Properties;
 
 namespace ImgurSniper {
     /// <summary>
@@ -23,7 +24,8 @@ namespace ImgurSniper {
         private bool _stopRequested;
         private double _startTime;
 
-        public byte[] Gif;
+        public MemoryStream Gif;
+        public string ErrorMsg;
 
         public GifRecorder(Rectangle size) {
             InitializeComponent();
@@ -144,6 +146,7 @@ namespace ImgurSniper {
                     };
 
                     if (!File.Exists(ffmpegHelper.StartInfo.FileName)) {
+                        ErrorMsg = strings.couldNotFindFfmpeg;
                         FadeOut(false);
                         return;
                     }
@@ -152,6 +155,7 @@ namespace ImgurSniper {
                     ffmpegHelper.WaitForExit();
 
                     if (!File.Exists(ffmpegPath)) {
+                        ErrorMsg = strings.couldNotInstallFfmpeg;
                         FadeOut(false);
                         return;
                     }
@@ -195,6 +199,7 @@ namespace ImgurSniper {
                 //Finish Gif (Convert)
                 MakeGif();
             } catch {
+                ErrorMsg = strings.couldNotStartFfmpeg;
                 FadeOut(false);
                 return;
             }
@@ -211,18 +216,22 @@ namespace ImgurSniper {
             new Thread(_recorder.StopRecording).Start();
         }
 
-        private void MakeGif() {
+        private async void MakeGif() {
             //MP4 -> GIF
             bool success = _recorder.FFmpegEncodeAsGif(_outputGif);
-            Gif = File.ReadAllBytes(_outputGif);
+            using (FileStream fstream = new FileStream(_outputGif, FileMode.Open, FileAccess.Read)) {
+                await fstream.CopyToAsync(Gif);
+            }
 
             _recorder.Dispose();
             _recorder = null;
 
-            if (!success || !File.Exists(_outputGif) || (_recorder != null && _recorder.IsRecording))
+            if (!success || !File.Exists(_outputGif) || (_recorder != null && _recorder.IsRecording)) {
+                ErrorMsg = strings.couldNotCreateGif;
                 FadeOut(false);
-            else
+            } else {
                 FadeOut(true);
+            }
         }
         #endregion
 

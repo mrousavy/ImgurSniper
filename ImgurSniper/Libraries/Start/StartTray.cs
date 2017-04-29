@@ -1,4 +1,5 @@
-﻿using ImgurSniper.Libraries.Helper;
+﻿using System;
+using ImgurSniper.Libraries.Helper;
 using ImgurSniper.Libraries.Hotkeys;
 using ImgurSniper.Properties;
 using System.Diagnostics;
@@ -7,29 +8,34 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Interop;
 
 namespace ImgurSniper.Libraries.Start {
     public static class StartTray {
-        private static HotKey imgHotKey = null, gifHotKey = null;
+        private static HotKey _imgHotKey , _gifHotKey ;
+        private static NotifyIcon _nicon;
+        private static Image _iconGif, _iconHelp, _iconSettings, _iconExit;
+        private static bool _isDisposed;
 
-        public static async Task Initialize() {
+        public static async Task Initialize(EntryWindow caller) {
             TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
+            IntPtr handle = new WindowInteropHelper(caller).Handle;
 
             Key imgKey = ConfigHelper.ShortcutImgKey;
             Key gifKey = ConfigHelper.ShortcutGifKey;
             bool usePrint = ConfigHelper.UsePrint;
 
             try {
-                imgHotKey = usePrint
-                    ? new HotKey(ModifierKeys.None, Key.PrintScreen)
-                    : new HotKey(ModifierKeys.Control | ModifierKeys.Shift, imgKey);
-                imgHotKey.HotKeyPressed += OpenFromShortcutImg;
+                _imgHotKey = usePrint
+                    ? new HotKey(handle,ModifierKeys.None, Key.PrintScreen)
+                    : new HotKey(handle, ModifierKeys.Control | ModifierKeys.Shift, imgKey);
+                _imgHotKey.HotKeyPressed += OpenFromShortcutImg;
             } catch {
                 //ignored
             }
             try {
-                gifHotKey = new HotKey(ModifierKeys.Control | ModifierKeys.Shift, gifKey);
-                gifHotKey.HotKeyPressed += OpenFromShortcutGif;
+                _gifHotKey = new HotKey(handle, ModifierKeys.Control | ModifierKeys.Shift, gifKey);
+                _gifHotKey.HotKeyPressed += OpenFromShortcutGif;
             } catch {
                 //ignored
             }
@@ -37,29 +43,27 @@ namespace ImgurSniper.Libraries.Start {
             ContextMenuStrip contextMenu = new ContextMenuStrip();
 
             //Icons
-            Image iconGif = null, iconHelp = null, iconSettings = null, iconExit = null;
-
             try {
-                iconGif = ImageHelper.LoadImage(Path.Combine(ConfigHelper.InstallDir, "Resources", "iconGif.png"));
-                iconHelp = ImageHelper.LoadImage(Path.Combine(ConfigHelper.InstallDir, "Resources", "iconHelp.png"));
-                iconSettings = ImageHelper.LoadImage(Path.Combine(ConfigHelper.InstallDir, "Resources", "iconSettings.png"));
-                iconExit = ImageHelper.LoadImage(Path.Combine(ConfigHelper.InstallDir, "Resources", "iconExit.png"));
+                _iconGif = ImageHelper.LoadImage(Path.Combine(ConfigHelper.InstallDir, "Resources", "iconGif.png"));
+                _iconHelp = ImageHelper.LoadImage(Path.Combine(ConfigHelper.InstallDir, "Resources", "iconHelp.png"));
+                _iconSettings = ImageHelper.LoadImage(Path.Combine(ConfigHelper.InstallDir, "Resources", "iconSettings.png"));
+                _iconExit = ImageHelper.LoadImage(Path.Combine(ConfigHelper.InstallDir, "Resources", "iconExit.png"));
             } catch {
                 //Images not found
             }
 
             //Item: GIF
             ToolStripItem gifMenuItem = contextMenu.Items.Add(strings.gif);
-            gifMenuItem.Image = iconGif;
-            gifMenuItem.Click += delegate { OpenFromShortcutGif(null); };
-            gifMenuItem.Font = new Font(gifMenuItem.Font, gifMenuItem.Font.Style | System.Drawing.FontStyle.Bold);
+            gifMenuItem.Image = _iconGif;
+            gifMenuItem.Click += delegate { OpenFromShortcutGif(); };
+            gifMenuItem.Font = new Font(gifMenuItem.Font, gifMenuItem.Font.Style | FontStyle.Bold);
 
             //Item: -
             contextMenu.Items.Add(new ToolStripSeparator());
 
             //Item: Help
             ToolStripItem helpMenuItem = contextMenu.Items.Add(strings.help);
-            helpMenuItem.Image = iconHelp;
+            helpMenuItem.Image = _iconHelp;
             helpMenuItem.Click += delegate {
                 try {
                     Process.Start(Path.Combine(ConfigHelper.InstallDir, "ImgurSniper.UI.exe"), "Help");
@@ -70,7 +74,7 @@ namespace ImgurSniper.Libraries.Start {
 
             //Item: Settings
             ToolStripItem settingsMenuItem = contextMenu.Items.Add(strings.settings);
-            settingsMenuItem.Image = iconSettings;
+            settingsMenuItem.Image = _iconSettings;
             settingsMenuItem.Click += delegate {
                 try {
                     Process.Start(Path.Combine(ConfigHelper.InstallDir, "ImgurSniper.UI.exe"));
@@ -81,11 +85,14 @@ namespace ImgurSniper.Libraries.Start {
 
             //Item: Exit
             ToolStripItem exitMenuItem = contextMenu.Items.Add(strings.exit);
-            exitMenuItem.Image = iconExit;
-            exitMenuItem.Click += delegate { tcs.SetResult(true); };
+            exitMenuItem.Image = _iconExit;
+            exitMenuItem.Click += delegate {
+                DisposeJunk();
+                tcs.SetResult(true);
+            };
 
             //NotifyIcon
-            NotifyIcon nicon = new NotifyIcon {
+            _nicon = new NotifyIcon {
                 Icon = Resources.Logo,
                 ContextMenuStrip = contextMenu,
                 Visible = true,
@@ -93,22 +100,14 @@ namespace ImgurSniper.Libraries.Start {
                        (usePrint ? strings.printKeyShortcut : string.Format(strings.ctrlShiftShortcut, imgKey)) +
                        strings.toSnipeNew
             };
-            nicon.MouseClick += (sender, e) => {
+            _nicon.MouseClick += (sender, e) => {
                 if (e.Button == MouseButtons.Left) {
                     OpenFromShortcutImg();
                 }
             };
 
-            System.Windows.Application.Current.Exit += delegate {
-                nicon.Icon = null;
-                nicon.Visible = false;
-                nicon.Dispose();
-                nicon = null;
-
-                iconGif?.Dispose();
-                iconHelp?.Dispose();
-                iconSettings?.Dispose();
-                iconExit?.Dispose();
+            System.Windows.Application.Current.Exit += (sender, e) => {
+                DisposeJunk();
             };
 
             await tcs.Task;
@@ -124,6 +123,25 @@ namespace ImgurSniper.Libraries.Start {
             using (ScreenshotWindow window = new ScreenshotWindow()) {
                 window.ShowDialog();
             }
+        }
+
+        private static void DisposeJunk() {
+            if (_isDisposed)
+                return;
+
+            using (_nicon) {
+                using (_nicon.Icon) { }
+                _nicon.Icon = null;
+                _nicon.Visible = false;
+            }
+            _nicon = null;
+
+            using (_iconGif) {}
+            using (_iconExit) { }
+            using (_iconHelp) { }
+            using (_iconSettings) { }
+
+            _isDisposed = true;
         }
     }
 }

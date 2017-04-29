@@ -124,7 +124,7 @@
     <value>Ctrl + Shift + {0}</value>
   </data>
   <data name="error" xml:space="preserve">
-    <value>An unknown Error occured in ImgurSniper.UI!
+    <value>An unknown Error occured in ImgurSniper!
 ImgurSniper has to shut down!
 Would you like to see a detailed Exception Info? ({0})</value>
   </data>
@@ -209,7 +209,7 @@ Do you want to help out and submit a ticket?
     <value>GIF</value>
   </data>
   <data name="uploadingErrorGif" xml:space="preserve">
-    <value>Error creating/uploading GIF to Imgur!</value>
+    <value>Error creating GIF! ({0})</value>
   </data>
   <data name="unhandledErrorDescription" xml:space="preserve">
     <value>An unknown Error occured in ImgurSniper.
@@ -222,5 +222,20 @@ Do you want to see more details about that Error?</value>
   </data>
   <data name="notAnImage" xml:space="preserve">
     <value>The File you selected is not a valid Image File!</value>
+  </data>
+  <data name="couldNotCreateGif" xml:space="preserve">
+    <value>ffmpeg.exe failed to convert MP4 to GIF!</value>
+  </data>
+  <data name="couldNotFindFfmpeg" xml:space="preserve">
+    <value>Could not find FFmpegManager.exe!</value>
+  </data>
+  <data name="couldNotInstallFfmpeg" xml:space="preserve">
+    <value>Could not install ffmpeg.exe!</value>
+  </data>
+  <data name="couldNotStartFfmpeg" xml:space="preserve">
+    <value>ffmpeg.exe could not start screen recording!</value>
+  </data>
+  <data name="couldNotStartRecording" xml:space="preserve">
+    <value>Could not begin recording GIF!</value>
   </data>
 </root>

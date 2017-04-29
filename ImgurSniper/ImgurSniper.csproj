@@ -139,6 +139,7 @@
     </Compile>
     <Compile Include="Libraries\Helper\ClipboardHelper.cs" />
     <Compile Include="Libraries\Helper\ScreenshotHelper.cs" />
+    <Compile Include="Libraries\Helper\WindowHelper.cs" />
     <Compile Include="Libraries\Start\StartTray.cs" />
     <Compile Include="Libraries\FFmpeg\ExternalCLIManager.cs" />
     <Compile Include="Libraries\FFmpeg\FFmpegEnums.cs" />
@@ -223,6 +224,7 @@
     <EmbeddedResource Include="Properties\strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>strings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="app.manifest" />

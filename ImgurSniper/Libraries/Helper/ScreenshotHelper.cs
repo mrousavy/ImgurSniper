@@ -9,8 +9,11 @@ using static ImgurSniper.Statics;
 
 namespace ImgurSniper.Libraries.Helper {
     public static class ScreenshotHelper {
-        public static async Task FinishScreenshot(byte[] image, string hwndName) {
+        public static async Task FinishScreenshot(Stream stream, string hwndName) {
             try {
+                //Set Stream Position to beginning
+                stream.Position = 0;
+
                 //Config: Save Image locally?
                 if (ConfigHelper.SaveImages) {
                     try {
@@ -18,7 +21,9 @@ namespace ImgurSniper.Libraries.Helper {
                         long time = DateTime.Now.ToFileTimeUtc();
                         string extension = "." + ConfigHelper.ImageFormat.ToString().ToLower();
                         string filename = Path.Combine(ConfigHelper.SaveImagesPath, $"Snipe_{time}{extension}");
-                        File.WriteAllBytes(filename, image);
+                        using (FileStream fstream = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.Write)) {
+                            await stream.CopyToAsync(fstream);
+                        }
 
                         if (ConfigHelper.OpenAfterUpload) {
                             //Open Explorer and Highlight Image
@@ -31,10 +36,10 @@ namespace ImgurSniper.Libraries.Helper {
 
                 //Config: Upload Image to Imgur or Copy to Clipboard?
                 if (ConfigHelper.ImgurAfterSnipe) {
-                    await UploadImgur(image, hwndName, false);
+                    await UploadImgur(stream, hwndName, false);
                 } else {
                     //Copy Binary Image to Clipboard
-                    await ClipboardHelper.CopyImage(image);
+                    await ClipboardHelper.CopyImage(stream);
                 }
             } catch (Exception ex) {
                 await ShowNotificationAsync(strings.errorMsg, NotificationType.Error, ActionTroubleshoot);
@@ -42,15 +47,20 @@ namespace ImgurSniper.Libraries.Helper {
             }
         }
 
-        public static async Task FinishGif(byte[] image, string hwndName) {
+        public static async Task FinishGif(Stream stream, string hwndName) {
             try {
+                //Set Stream Position to beginning
+                stream.Position = 0;
+
                 //Config: Save GIF locally?
                 if (ConfigHelper.SaveImages) {
                     try {
                         //Save File with unique name
                         long time = DateTime.Now.ToFileTimeUtc();
                         string filename = Path.Combine(ConfigHelper.SaveImagesPath, $"Snipe_{time}.gif");
-                        File.WriteAllBytes(filename, image);
+                        using (FileStream fstream = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.Write)) {
+                            await stream.CopyToAsync(fstream);
+                        }
 
                         if (ConfigHelper.OpenAfterUpload) {
                             //Open Explorer and Highlight Image
@@ -63,10 +73,10 @@ namespace ImgurSniper.Libraries.Helper {
 
                 //Config: Upload GIF to Imgur or Copy to Clipboard?
                 if (ConfigHelper.ImgurAfterSnipe) {
-                    await UploadImgur(image, hwndName, true);
+                    await UploadImgur(stream, hwndName, true);
                 } else {
                     //Copy Binary GIF to Clipboard
-                    await ClipboardHelper.CopyImage(image);
+                    await ClipboardHelper.CopyImage(stream);
                 }
             } catch (Exception ex) {
                 await ShowNotificationAsync(strings.errorMsg, NotificationType.Error, ActionTroubleshoot);
@@ -76,7 +86,7 @@ namespace ImgurSniper.Libraries.Helper {
 
 
 
-        private static async Task UploadImgur(byte[] image, string hwndName, bool gif) {
+        private static async Task UploadImgur(Stream stream, string hwndName, bool gif) {
             ImgurUploader imgur = new ImgurUploader();
             await imgur.Login();
 
@@ -93,11 +103,11 @@ namespace ImgurSniper.Libraries.Helper {
             }
 
             //Progress Indicator
-            string kb = $"{image.Length / 1024d:0.#}";
+            string kb = $"{stream.Length / 1024d:0.#}";
             ShowNotification(string.Format(gif ? strings.uploadingGif : strings.uploading, kb), NotificationType.Progress, false);
 
             //Upload Binary
-            string link = await imgur.Upload(image, hwndName);
+            string link = await imgur.Upload(stream, hwndName);
             await ClipboardHelper.CopyLink(link);
         }
     }
