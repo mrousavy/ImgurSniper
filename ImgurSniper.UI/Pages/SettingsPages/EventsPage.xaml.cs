@@ -1,8 +1,8 @@
-﻿using System.IO;
+﻿using ImgurSniper.UI.Properties;
+using System.IO;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
-using ImgurSniper.UI.Properties;
 using Application = System.Windows.Application;
 using CheckBox = System.Windows.Controls.CheckBox;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
@@ -25,10 +25,10 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
 
         //Load all Config Params
         private async void Load() {
-            _window.ShowProgressIndicator();
+            _window?.ShowProgressIndicator();
 
             //Update Loading Indicator
-            _window.SetProgressStatus(strings.loadConf);
+            _window?.SetProgressStatus(strings.loadConf);
 
             try {
                 Settings settings = ConfigHelper.JsonConfig;
@@ -81,7 +81,7 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
             }
 
             //Remove Loading Indicator
-            _window.HideProgressIndicator();
+            _window?.HideProgressIndicator();
         }
 
         #region UI
@@ -174,7 +174,7 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
 
         private void EnableSave() {
             try {
-                _window.EnableSave();
+                _window?.EnableSave();
             } catch {
                 // no parent found
             }

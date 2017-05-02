@@ -46,12 +46,12 @@ namespace ImgurSniper.UI {
         //Command Line Args
         private async void Arguments() {
             string[] args = Environment.GetCommandLineArgs();
-            if (args.Contains("Help")) {
+            if (args.Contains("help")) {
                 Hide();
                 Help(null, null);
                 Close();
             }
-            if (args.Contains("Update")) {
+            if (args.Contains("update")) {
                 Hide();
                 bool updateAvailable = await InstallerHelper.CheckForUpdates(this, true);
                 if (updateAvailable) {
@@ -60,7 +60,7 @@ namespace ImgurSniper.UI {
                     Close();
                 }
             }
-            if (args.Contains("Troubleshooting")) {
+            if (args.Contains("troubleshooting")) {
                 //Task.Delay for Open/Close Animations
                 await Task.Delay(400);
                 await ShowOkDialog(str.troubleshooting, str.troubleshootingTips);

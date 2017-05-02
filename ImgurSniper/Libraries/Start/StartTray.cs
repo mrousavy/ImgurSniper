@@ -1,7 +1,7 @@
-﻿using System;
-using ImgurSniper.Libraries.Helper;
+﻿using ImgurSniper.Libraries.Helper;
 using ImgurSniper.Libraries.Hotkeys;
 using ImgurSniper.Properties;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -66,7 +66,7 @@ namespace ImgurSniper.Libraries.Start {
             helpMenuItem.Image = _iconHelp;
             helpMenuItem.Click += delegate {
                 try {
-                    Process.Start(Path.Combine(ConfigHelper.InstallDir, "ImgurSniper.UI.exe"), "Help");
+                    Process.Start(Path.Combine(ConfigHelper.InstallDir, "ImgurSniper.UI.exe"), "help");
                 } catch {
                     // ignored
                 }

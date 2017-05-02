@@ -1,7 +1,7 @@
-﻿using System.Drawing.Imaging;
+﻿using ImgurSniper.UI.Properties;
+using System.Drawing.Imaging;
 using System.Windows;
 using System.Windows.Controls;
-using ImgurSniper.UI.Properties;
 
 namespace ImgurSniper.UI.Pages.SettingsPages {
     /// <summary>
@@ -21,10 +21,10 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
 
         //Load all Config Params
         private async void Load() {
-            _window.ShowProgressIndicator();
+            _window?.ShowProgressIndicator();
 
             //Update Loading Indicator
-            _window.SetProgressStatus(strings.loadConf);
+            _window?.SetProgressStatus(strings.loadConf);
 
             try {
                 Settings settings = ConfigHelper.JsonConfig;
@@ -76,7 +76,7 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
             }
 
             //Remove Loading Indicator
-            _window.HideProgressIndicator();
+            _window?.HideProgressIndicator();
         }
 
 
@@ -146,7 +146,7 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
 
         private void EnableSave() {
             try {
-                _window.EnableSave();
+                _window?.EnableSave();
             } catch {
                 // no parent found
             }

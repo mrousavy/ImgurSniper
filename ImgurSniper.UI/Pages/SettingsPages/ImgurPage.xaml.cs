@@ -1,9 +1,7 @@
-﻿using System.Diagnostics;
+﻿using ImgurSniper.UI.Properties;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using ImgurSniper.UI.Properties;
 
 namespace ImgurSniper.UI.Pages.SettingsPages {
     /// <summary>
@@ -17,17 +15,17 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
             InitializeComponent();
 
             _window = (MainWindow)Application.Current.MainWindow;
-            _imgurhelper = new ImgurLoginHelper(_window.ErrorToast, _window.SuccessToast);
+            _imgurhelper = new ImgurLoginHelper(_window?.ErrorToast, _window?.SuccessToast);
 
             Load();
         }
 
         //Load all Config Params
         private async void Load() {
-            _window.ShowProgressIndicator();
+            _window?.ShowProgressIndicator();
 
             //Update Loading Indicator
-            _window.SetProgressStatus(strings.contactImgur);
+            _window?.SetProgressStatus(strings.contactImgur);
 
             try {
                 string refreshToken = ConfigHelper.ReadRefreshToken();
@@ -55,7 +53,7 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
             }
 
             //Remove Loading Indicator
-            _window.HideProgressIndicator();
+            _window?.HideProgressIndicator();
         }
 
 

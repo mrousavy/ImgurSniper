@@ -17,7 +17,7 @@ namespace ImgurSniper {
         public static bool IsShown { get; private set; }
 
         public static readonly Action ActionTroubleshoot =
-            delegate { Process.Start(Path.Combine(ConfigHelper.InstallDir, "ImgurSniper.UI.exe"), "Troubleshooting"); };
+            delegate { Process.Start(Path.Combine(ConfigHelper.InstallDir, "ImgurSniper.UI.exe"), "troubleshooting"); };
 
         public enum NotificationType {
             Progress,

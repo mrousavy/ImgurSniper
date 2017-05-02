@@ -1,9 +1,9 @@
-﻿using System;
+﻿using ImgurSniper.UI.Properties;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
-using ImgurSniper.UI.Properties;
 using Path = System.IO.Path;
 
 namespace ImgurSniper.UI.Pages.SettingsPages {
@@ -26,7 +26,7 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
             }
         }
 
-        private void Help(object sender, RoutedEventArgs e) { _window.Help(sender, e); }
+        private void Help(object sender, RoutedEventArgs e) { _window?.Help(sender, e); }
 
         private async void Snipe(object sender, RoutedEventArgs e) {
             string exe = Path.Combine(ConfigHelper.InstallDir, "ImgurSniper.exe");
@@ -35,14 +35,16 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
                 Process snipeProc = new Process { StartInfo = new ProcessStartInfo(exe) };
                 snipeProc.Start();
 
-                _window.Visibility = Visibility.Hidden;
+                if (_window != null)
+                    _window.Visibility = Visibility.Hidden;
 
                 await Task.Delay(500);
                 snipeProc.WaitForExit();
 
-                _window.Visibility = Visibility.Visible;
+                if (_window != null)
+                    _window.Visibility = Visibility.Visible;
             } else {
-                _window.ErrorToast.Show(strings.imgurSniperNotFound,
+                _window?.ErrorToast.Show(strings.imgurSniperNotFound,
                     TimeSpan.FromSeconds(3));
             }
         }
@@ -59,14 +61,16 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
                 };
                 snipeProc.Start();
 
-                _window.Visibility = Visibility.Hidden;
+                if (_window != null)
+                    _window.Visibility = Visibility.Hidden;
 
                 await Task.Delay(500);
                 snipeProc.WaitForExit();
 
-                _window.Visibility = Visibility.Visible;
+                if (_window != null)
+                    _window.Visibility = Visibility.Visible;
             } else {
-                _window.ErrorToast.Show(strings.imgurSniperNotFound,
+                _window?.ErrorToast.Show(strings.imgurSniperNotFound,
                     TimeSpan.FromSeconds(3));
             }
         }

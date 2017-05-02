@@ -1,8 +1,8 @@
-﻿using System.Diagnostics;
+﻿using ImgurSniper.UI.Properties;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using ImgurSniper.UI.Properties;
 using Application = System.Windows.Application;
 
 namespace ImgurSniper.UI.Pages.SettingsPages {
@@ -20,10 +20,10 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
         }
 
         private async void Load() {
-            _window.ShowProgressIndicator();
+            _window?.ShowProgressIndicator();
 
             //Update Loading Indicator
-            _window.SetProgressStatus(strings.loadConf);
+            _window?.SetProgressStatus(strings.loadConf);
 
             try {
                 Settings settings = ConfigHelper.JsonConfig;
@@ -71,16 +71,18 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
             }
 
             //Search for Updates
-            _window.SetProgressStatus(strings.checkingUpdate);
-            BtnUpdate.IsEnabled = await InstallerHelper.CheckForUpdates(_window, false);
+            if (_window != null) {
+                _window.SetProgressStatus(strings.checkingUpdate);
+                BtnUpdate.IsEnabled = await InstallerHelper.CheckForUpdates(_window, false);
+            }
 
             //Remove Loading Indicator
-            _window.HideProgressIndicator();
+            _window?.HideProgressIndicator();
         }
 
 
         #region UI
-        private void Update(object sender, RoutedEventArgs e) { _window.Update(sender, e); }
+        private void Update(object sender, RoutedEventArgs e) { _window?.Update(sender, e); }
 
         private async void RunOnBoot_Checkbox(object sender, RoutedEventArgs e) {
             if (sender is CheckBox box) {
@@ -110,12 +112,12 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
             }
 
             //Show Progress Indicator
-            _window.ShowProgressIndicator();
+            _window?.ShowProgressIndicator();
 
             BtnUpdate.IsEnabled = await InstallerHelper.CheckForUpdates(_window, true);
 
             //Hide Progress Indicator
-            _window.HideProgressIndicator();
+            _window?.HideProgressIndicator();
 
             if (btn != null) {
                 btn.IsEnabled = true;
@@ -255,7 +257,7 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
 
         private void EnableSave() {
             try {
-                _window.EnableSave();
+                _window?.EnableSave();
             } catch {
                 // no parent found
             }
