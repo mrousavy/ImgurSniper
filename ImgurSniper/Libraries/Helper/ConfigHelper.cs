@@ -64,7 +64,7 @@ namespace ImgurSniper.Libraries.Helper {
         public static bool AutoUpdate => JsonConfig.AutoUpdate;
 
         //Quality of Image (1 being lowest, 100 being highest)
-        public static byte Quality => JsonConfig.Quality;
+        public static long Quality => JsonConfig.Quality;
         #endregion
 
         #region Imgur Account
@@ -168,10 +168,10 @@ namespace ImgurSniper.Libraries.Helper {
         public bool OpenFileAfterSnap = false;
         public bool SaveImages = false;
 
-        public byte Quality = 90;
-
         public int GifFps = 10;
         public int GifLength = 12000;
+
+        public long Quality = 90;
 
         public string Language = null;
         public string SaveImagesPath = Path.Combine(

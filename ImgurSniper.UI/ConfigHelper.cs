@@ -225,7 +225,7 @@ namespace ImgurSniper.UI {
         }
 
         //Quality of Image (1 being lowest, 100 being highest Quality)
-        public static byte Quality {
+        public static long Quality {
             get => JsonConfig.Quality;
             set {
                 Settings settings = JsonConfig;
@@ -345,12 +345,12 @@ namespace ImgurSniper.UI {
         public bool RunOnBoot = true;
         public bool SaveImages;
 
-        public byte Quality = 90;
-
         public int CurrentCommits = 999;
         public int TotalCommits = 999;
         public int GifFps = 10;
         public int GifLength = 12000;
+
+        public long Quality = 90;
 
         public string Language;
         public string SaveImagesPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
