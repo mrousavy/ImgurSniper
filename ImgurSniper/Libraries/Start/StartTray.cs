@@ -12,7 +12,7 @@ using System.Windows.Interop;
 
 namespace ImgurSniper.Libraries.Start {
     public static class StartTray {
-        private static HotKey _imgHotKey , _gifHotKey ;
+        private static HotKey _imgHotKey, _gifHotKey;
         private static NotifyIcon _nicon;
         private static Image _iconGif, _iconHelp, _iconSettings, _iconExit;
         private static bool _isDisposed;
@@ -27,7 +27,7 @@ namespace ImgurSniper.Libraries.Start {
 
             try {
                 _imgHotKey = usePrint
-                    ? new HotKey(handle,ModifierKeys.None, Key.PrintScreen)
+                    ? new HotKey(handle, ModifierKeys.None, Key.PrintScreen)
                     : new HotKey(handle, ModifierKeys.Control | ModifierKeys.Shift, imgKey);
                 _imgHotKey.HotKeyPressed += OpenFromShortcutImg;
             } catch {
@@ -136,7 +136,7 @@ namespace ImgurSniper.Libraries.Start {
             }
             _nicon = null;
 
-            using (_iconGif) {}
+            using (_iconGif) { }
             using (_iconExit) { }
             using (_iconHelp) { }
             using (_iconSettings) { }
