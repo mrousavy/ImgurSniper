@@ -6,8 +6,8 @@
 struct box;
 
 //vars
-float m2;
-long int wt, mr, mg, mb;
+float m2[33][33][33];
+long int wt[33][33][33], mr[33][33][33], mg[33][33][33], mb[33][33][33];
 unsigned char *Ir, *Ig, *Ib;
 int size, K;
 unsigned short int *Qadd;
@@ -20,7 +20,7 @@ long int Bottom(struct box *cube, unsigned char dir, int *mmt);
 long int Top(struct box *cube, unsigned char dir, int pos, int *mmt);
 float Var(struct box *cube);
 float Maximize(struct box *cube, unsigned char dir,
-	int first, int last, int cut,
+	int first, int last, int *cut,
 	long int whole_r, long int whole_g, long int whole_b, long int whole_w);
 int Cut(struct box *set1, struct box *set2);
 void Mark(struct box *cube, int label, unsigned char *tag);

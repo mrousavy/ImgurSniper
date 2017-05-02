@@ -20,10 +20,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Quantizer.c">
+    <ClCompile Include="WuQuantizerClr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WuQuantizerClr.cpp">
+    <ClCompile Include="Quantizer.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
