@@ -1,5 +1,5 @@
 #include "Quantizer.h"
-#include<stdio.h>
+#include <stdio.h>
 
 #define MAXCOLOR	256
 #define	RED	2
