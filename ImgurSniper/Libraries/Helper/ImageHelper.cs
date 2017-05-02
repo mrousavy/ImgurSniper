@@ -20,6 +20,9 @@ namespace ImgurSniper.Libraries.Helper {
             } else if (format.Equals(ImageFormat.Tiff)) {
                 //Tiff Compression in %
                 return CompressTiff(image);
+            } else if (format.Equals(ImageFormat.Png)) {
+                //Png Compression by reducing Color Palette
+                return CompressPng(image);
             } else {
                 //No compression (Png, Gif, ..)
                 MemoryStream stream = new MemoryStream();
@@ -65,7 +68,9 @@ namespace ImgurSniper.Libraries.Helper {
         }
 
         //Compress PNG by reducing Color amout to 256
-        private static MemoryStream CompressPng(Image image, long quality) {
+        private static MemoryStream CompressPng(Image image) {
+            //TODO: Use WuQuantizer C Project here
+
             //256 color palette (lesser colors = compression)
             //BitmapPalette palette = BitmapPalettes.Halftone256;
 
@@ -87,6 +92,7 @@ namespace ImgurSniper.Libraries.Helper {
 
             //Save to stream and return
             MemoryStream stream = new MemoryStream();
+            image.Save(stream, ImageFormat.Png);
             return stream;
         }
 
