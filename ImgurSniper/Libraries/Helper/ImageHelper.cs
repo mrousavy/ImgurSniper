@@ -63,31 +63,30 @@ namespace ImgurSniper.Libraries.Helper {
             image.Save(stream, codec, parameters);
             return stream;
         }
-        
+
         //Compress PNG by reducing Color amout to 256
         private static MemoryStream CompressPng(Image image, long quality) {
             //256 color palette (lesser colors = compression)
-            BitmapPalette palette = BitmapPalettes.Halftone256;
+            //BitmapPalette palette = BitmapPalettes.Halftone256;
 
-            // Creates a new empty image with the pre-defined palette
-            BitmapSource bitmapSource = BitmapSource.Create(
-                image.Width,
-                image.Height,
-                96,
-                96,
-                PixelFormats.Indexed8,
-                palette,
-                pixels,
-                image.Width);
+            //// Creates a new empty image with the pre-defined palette
+            //BitmapSource bitmapSource = BitmapSource.Create(
+            //    image.Width,
+            //    image.Height,
+            //    96,
+            //    96,
+            //    PixelFormats.Indexed8,
+            //    palette,
+            //    pixels,
+            //    image.Width);
 
-            //Create and init Encoder
-            PngBitmapEncoder encoder = new PngBitmapEncoder();
-            encoder.Interlace = PngInterlaceOption.On;
-            encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
-            
+            ////Create and init Encoder
+            //PngBitmapEncoder encoder = new PngBitmapEncoder();
+            //encoder.Interlace = PngInterlaceOption.On;
+            //encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
+
             //Save to stream and return
             MemoryStream stream = new MemoryStream();
-            encoder.Save(stream);
             return stream;
         }
 

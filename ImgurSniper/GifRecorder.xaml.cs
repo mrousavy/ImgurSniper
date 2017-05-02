@@ -268,9 +268,6 @@ namespace ImgurSniper {
             } catch {
                 //Window already closed
             }
-
-            GC.Collect();
         }
-
     }
 }

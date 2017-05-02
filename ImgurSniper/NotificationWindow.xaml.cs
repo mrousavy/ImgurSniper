@@ -110,7 +110,6 @@ namespace ImgurSniper {
                 await this.AnimateAsync(LeftProperty, Left, _left, 100);
 
                 _task.TrySetResult(true);
-                GC.Collect();
                 base.Close();
             } catch {
                 // Invalid Operation, Task Canceled, Wrong Thread...
