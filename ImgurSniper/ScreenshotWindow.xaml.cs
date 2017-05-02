@@ -28,7 +28,7 @@ namespace ImgurSniper {
     /// </summary>
     public partial class ScreenshotWindow : IDisposable {
         private bool _drag;
-        
+
         public Point From, To;
         public string HwndName;
         public bool Error = true;
@@ -337,8 +337,8 @@ namespace ImgurSniper {
                 Rectangle size = new Rectangle((int)from.X, (int)from.Y, w, h);
 
                 using (Image img = Screenshot.GetScreenshotNative(NativeMethods.GetDesktopWindow(), size, ConfigHelper.ShowMouse)) {
-                    if (ConfigHelper.Compression < 100) {
-                        SelectionStream = ImageHelper.CompressImage(img, ConfigHelper.ImageFormat, ConfigHelper.Compression);
+                    if (ConfigHelper.Quality < 100) {
+                        SelectionStream = ImageHelper.CompressImage(img, ConfigHelper.ImageFormat, ConfigHelper.Quality);
                     } else {
                         SelectionStream = new MemoryStream();
                         img.Save(SelectionStream, ConfigHelper.ImageFormat);

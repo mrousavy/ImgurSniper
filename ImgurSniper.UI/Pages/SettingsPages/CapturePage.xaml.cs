@@ -32,7 +32,7 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
                 bool showMouse = settings.ShowMouse;
                 int gifFps = settings.GifFps;
                 int gifLength = settings.GifLength / 1000;
-                long compression = settings.Compression;
+                long compression = settings.Quality;
                 ImageFormat format = settings.ImageFormat;
 
                 //Image Format
@@ -136,7 +136,7 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
         private void QualitySlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
             if (sender is Slider slider) {
                 byte value = (byte)slider.Value;
-                ConfigHelper.Compression = value;
+                ConfigHelper.Quality = value;
                 EnableSave();
 
                 QualityLabel.Content = value + "%";

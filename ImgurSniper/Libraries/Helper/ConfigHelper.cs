@@ -63,8 +63,8 @@ namespace ImgurSniper.Libraries.Helper {
         //Value whether ImgurSniper should automatically search for Updates
         public static bool AutoUpdate => JsonConfig.AutoUpdate;
 
-        //Compression of Image (0 being lowest, 100 being highest Quality)
-        public static byte Compression => JsonConfig.Compression;
+        //Quality of Image (1 being lowest, 100 being highest)
+        public static byte Quality => JsonConfig.Quality;
         #endregion
 
         #region Imgur Account
@@ -168,7 +168,7 @@ namespace ImgurSniper.Libraries.Helper {
         public bool OpenFileAfterSnap = false;
         public bool SaveImages = false;
 
-        public byte Compression = 90;
+        public byte Quality = 90;
 
         public int GifFps = 10;
         public int GifLength = 12000;

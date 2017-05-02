@@ -7,19 +7,21 @@ using System.Linq;
 
 namespace ImgurSniper.Libraries.Helper {
     public static class ImageHelper {
-        public static readonly string[] ImageFileExtensions = new string[] { "jpg", "jpeg", "png", "apng", "gif", "bmp", "ico", "tif", "tiff" };
+        public static readonly string[] ImageFileExtensions = { "jpg", "jpeg", "png", "apng", "gif", "bmp", "ico", "tif", "tiff" };
 
-        public static MemoryStream CompressImage(Image image, ImageFormat format, byte compression) {
+        public static MemoryStream CompressImage(Image image, ImageFormat format, byte quality) {
             if (image == null) {
                 throw new ArgumentNullException();
             }
 
             ImageCodecInfo codec = GetEncoder(format);
 
-            Encoder encoder = Encoder.Quality;
-            EncoderParameters parameters = new EncoderParameters(1);
-            EncoderParameter parameter = new EncoderParameter(encoder, (long)compression);
-            parameters.Param[0] = parameter;
+            EncoderParameters parameters =
+                new EncoderParameters(1) {
+                    Param = {
+                        [0] = new EncoderParameter(Encoder.Quality, (long)quality)
+                    }
+                };
 
             MemoryStream stream = new MemoryStream();
             image.Save(stream, codec, parameters);

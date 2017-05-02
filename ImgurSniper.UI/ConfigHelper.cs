@@ -224,12 +224,12 @@ namespace ImgurSniper.UI {
             }
         }
 
-        //Compression of Image (0 being lowest, 100 being highest Quality)
-        public static byte Compression {
-            get => JsonConfig.Compression;
+        //Quality of Image (1 being lowest, 100 being highest Quality)
+        public static byte Quality {
+            get => JsonConfig.Quality;
             set {
                 Settings settings = JsonConfig;
-                settings.Compression = value;
+                settings.Quality = value;
                 JsonConfig = settings;
             }
         }
@@ -341,11 +341,11 @@ namespace ImgurSniper.UI {
         public bool ImgurAfterSnipe = true;
         public bool MagnifyingGlassEnabled;
         public bool OpenBrowserAfterUpload = true;
-        public bool OpenFileAfterSnap = false;
+        public bool OpenFileAfterSnap;
         public bool RunOnBoot = true;
         public bool SaveImages;
 
-        public byte Compression = 90;
+        public byte Quality = 90;
 
         public int CurrentCommits = 999;
         public int TotalCommits = 999;
