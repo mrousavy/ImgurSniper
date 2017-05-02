@@ -135,6 +135,9 @@ namespace ImgurSniper.UI {
                 Extract(file, extractTo);
 
                 Process.Start(installerPath);
+                
+                //Wait until process has started
+                await Task.Delay(2000);
 
                 KillImgurSniper(true);
             }
