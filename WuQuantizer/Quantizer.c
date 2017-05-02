@@ -326,6 +326,7 @@ struct box *set1, *set2;
 }
 
 
+void
 Mark(cube, label, tag)
 struct box *cube;
 int label;
