@@ -19,7 +19,7 @@ namespace ImgurSniper.Libraries.Helper {
                 return CompressJpeg(image, quality);
             } else if (format.Equals(ImageFormat.Tiff)) {
                 //Tiff Compression in %
-                return CompressTiff(image, quality);
+                return CompressTiff(image);
             } else {
                 //No compression (Png, Gif, ..)
                 MemoryStream stream = new MemoryStream();
@@ -43,13 +43,13 @@ namespace ImgurSniper.Libraries.Helper {
             return stream;
         }
 
-        private static MemoryStream CompressTiff(Image image, long quality) {
+        private static MemoryStream CompressTiff(Image image) {
             ImageCodecInfo codec = GetEncoder(ImageFormat.Tiff);
 
             EncoderParameters parameters =
                 new EncoderParameters(1) {
                     Param = {
-                        [0] = new EncoderParameter(Encoder.Quality, 100 - quality)
+                        [0] = new EncoderParameter(Encoder.Compression, (long)EncoderValue.CompressionLZW)
                     }
                 };
 
