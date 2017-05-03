@@ -40,8 +40,6 @@ namespace ImgurSniper.UI {
             _error = errorToast;
             _updateZipPath = Directory.Exists(Downloads) ? Downloads : ConfigHelper.ConfigPath;
 
-            DownloadCompleted(null, null);
-
             Clean();
         }
 
