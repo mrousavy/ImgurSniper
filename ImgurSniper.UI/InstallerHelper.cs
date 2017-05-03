@@ -38,13 +38,15 @@ namespace ImgurSniper.UI {
 
         public InstallerHelper(Toasty errorToast) {
             _error = errorToast;
+            _updateZipPath = Directory.Exists(Downloads) ? Downloads : ConfigHelper.ConfigPath;
+
+            DownloadCompleted(null, null);
 
             Clean();
         }
 
         public void Clean() {
             try {
-                _updateZipPath = Directory.Exists(Downloads) ? Downloads : ConfigHelper.ConfigPath;
                 string file = Path.Combine(_updateZipPath, "ImgurSniperSetup.zip");
                 string directory = Path.Combine(_updateZipPath, "ImgurSniperInstaller");
 
@@ -85,7 +87,9 @@ namespace ImgurSniper.UI {
 
         public static void KillImgurSniper(bool killSelf) {
             List<Process> processes =
-                new List<Process>(Process.GetProcesses().Where(p => p.ProcessName.Contains("ImgurSniper")));
+                new List<Process>(Process.GetProcesses().Where(p =>
+                (p.ProcessName.Contains("ImgurSniper")) &&
+                (!p.ProcessName.Contains("Setup"))));
 
             foreach (Process p in processes) {
                 try {
@@ -134,10 +138,8 @@ namespace ImgurSniper.UI {
             } else {
                 Extract(file, extractTo);
 
-                Process.Start(installerPath);
-                
-                //Wait until process has started
-                await Task.Delay(2000);
+                //Remove /VERYSILENT ?
+                Process.Start(installerPath, "/VERYSILENT");
 
                 KillImgurSniper(true);
             }
