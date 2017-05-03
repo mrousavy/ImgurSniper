@@ -1,3 +1,7 @@
 .img-circle {
     border-radius: 50%;
 }
+
+.demo-images {
+    box-shadow: -20px 20px 20px #000;
+}
