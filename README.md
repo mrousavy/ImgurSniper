@@ -8,6 +8,9 @@
 #### [⇩ Imgur Sniper (10 MB) (Portable)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.zip?raw=true)
 
 #### [View all Releases](https://github.com/mrousavy/ImgurSniper/releases)
+
+#### [Looking for a MacOS Version? Use Snappy (WIP)](https://github.com/mrousavy/Snappy)
+
 Icon by [jinga](http://github.com/jingafreak), Idea by [dmaniak](http://github.com/dmaniak)
 
 ## Why choose ImgurSniper?
