@@ -134,7 +134,7 @@ Would you like to see a detailed Exception Info? ({0})</value>
   <data name="exit" xml:space="preserve">
     <value>Exit</value>
   </data>
-  <data name="imgclipboard" xml:space="preserve">
+  <data name="imgCopyClipboard" xml:space="preserve">
     <value>Image was copied to your Clipboard!</value>
   </data>
   <data name="imgSize" xml:space="preserve">
@@ -196,7 +196,7 @@ Do you want to help out and submit a ticket?
   <data name="close" xml:space="preserve">
     <value>Close</value>
   </data>
-  <data name="imgclipboardGif" xml:space="preserve">
+  <data name="gifCopyClipboard" xml:space="preserve">
     <value>GIF was copied to your Clipboard!</value>
   </data>
   <data name="imgTooBigGif" xml:space="preserve">
@@ -237,5 +237,17 @@ Do you want to see more details about that Error?</value>
   </data>
   <data name="couldNotStartRecording" xml:space="preserve">
     <value>Could not begin recording GIF!</value>
+  </data>
+  <data name="imgCopyClipboardSaved" xml:space="preserve">
+    <value>Image was copied to your Clipboard and saved to file!</value>
+  </data>
+  <data name="gifCopyClipboardSaved" xml:space="preserve">
+    <value>GIF was copied to your Clipboard and saved to file!</value>
+  </data>
+  <data name="linkclipboardAndSaved" xml:space="preserve">
+    <value>Link to Imgur has been copied to your Clipboard and saved to file!</value>
+  </data>
+  <data name="savedToFile" xml:space="preserve">
+    <value>Image was saved to file!</value>
   </data>
 </root>

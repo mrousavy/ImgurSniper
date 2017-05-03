@@ -486,4 +486,7 @@ Wollen Sie mehr Details über den Fehler sehen?</value>
   <data name="settingsOther" xml:space="preserve">
     <value>Anderes</value>
   </data>
+  <data name="doNothing" xml:space="preserve">
+    <value>Keine Aktion</value>
+  </data>
 </root>

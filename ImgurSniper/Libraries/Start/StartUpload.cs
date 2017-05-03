@@ -100,7 +100,7 @@ namespace ImgurSniper.Libraries.Start {
                     ShowNotification(string.Format(strings.uploading, kb), NotificationType.Progress, false);
 
                     string link = await imgur.Upload(stream);
-                    await ClipboardHelper.CopyLink(link);
+                    await ClipboardHelper.CopyLink(link, false);
 
                     Notification?.Close();
                 } catch {
@@ -118,7 +118,7 @@ namespace ImgurSniper.Libraries.Start {
             //Default Imgur Album URL
             string link = "http://imgur.com/a/" + albumId;
 
-            await ClipboardHelper.CopyLink(link);
+            await ClipboardHelper.CopyLink(link, false);
         }
     }
 }

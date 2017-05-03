@@ -485,4 +485,7 @@ Do you want to help out and submit a ticket?
   <data name="image" xml:space="preserve">
     <value>Image</value>
   </data>
+  <data name="doNothing" xml:space="preserve">
+    <value>Do nothing</value>
+  </data>
 </root>

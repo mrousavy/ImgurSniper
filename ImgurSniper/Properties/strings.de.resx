@@ -131,7 +131,7 @@ Möchten Sie detaillierte Informationen über die Fehlermeldung erhalten? ({0})<
   <data name="exit" xml:space="preserve">
     <value>Beenden</value>
   </data>
-  <data name="imgclipboard" xml:space="preserve">
+  <data name="imgCopyClipboard" xml:space="preserve">
     <value>Screenshot wurde in die Zwischenablage kopiert!</value>
   </data>
   <data name="imgSize" xml:space="preserve">
@@ -196,7 +196,7 @@ Wollen Sie helfen, den Fehler zu beheben indem Sie ein Formular detailreich ausf
   <data name="close" xml:space="preserve">
     <value>Schließen</value>
   </data>
-  <data name="imgclipboardGif" xml:space="preserve">
+  <data name="gifCopyClipboard" xml:space="preserve">
     <value>GIF wurde in die Zwischenablage kopiert!</value>
   </data>
   <data name="imgTooBigGif" xml:space="preserve">
@@ -237,5 +237,17 @@ Wollen Sie mehr Details über den Fehler sehen?</value>
   </data>
   <data name="couldNotStartFfmpeg" xml:space="preserve">
     <value>ffmpeg.exe Aufnahme konnte nicht gestartet werden!</value>
+  </data>
+  <data name="imgCopyClipboardSaved" xml:space="preserve">
+    <value>Screenshot wurde in die Zwischenablage kopiert und gespeichert!</value>
+  </data>
+  <data name="gitCopyClipboardSaved" xml:space="preserve">
+    <value>GIF wurde in die Zwischenablage kopiert und gespeichert!</value>
+  </data>
+  <data name="linkclipboardAndSaved" xml:space="preserve">
+    <value>Link zum Bild wurde in die Zwischenablage kopiert und Bild gespeichert!</value>
+  </data>
+  <data name="savedToFile" xml:space="preserve">
+    <value>Bild wurde in Datei gespeichert!</value>
   </data>
 </root>

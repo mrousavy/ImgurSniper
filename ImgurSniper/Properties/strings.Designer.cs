@@ -180,6 +180,24 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GIF was copied to your Clipboard!.
+        /// </summary>
+        public static string gifCopyClipboard {
+            get {
+                return ResourceManager.GetString("gifCopyClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GIF was copied to your Clipboard and saved to file!.
+        /// </summary>
+        public static string gifCopyClipboardSaved {
+            get {
+                return ResourceManager.GetString("gifCopyClipboardSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Help.
         /// </summary>
         public static string help {
@@ -191,18 +209,18 @@ namespace ImgurSniper.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Image was copied to your Clipboard!.
         /// </summary>
-        public static string imgclipboard {
+        public static string imgCopyClipboard {
             get {
-                return ResourceManager.GetString("imgclipboard", resourceCulture);
+                return ResourceManager.GetString("imgCopyClipboard", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to GIF was copied to your Clipboard!.
+        ///   Looks up a localized string similar to Image was copied to your Clipboard and saved to file!.
         /// </summary>
-        public static string imgclipboardGif {
+        public static string imgCopyClipboardSaved {
             get {
-                return ResourceManager.GetString("imgclipboardGif", resourceCulture);
+                return ResourceManager.GetString("imgCopyClipboardSaved", resourceCulture);
             }
         }
         
@@ -252,6 +270,15 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Link to Imgur has been copied to your Clipboard and saved to file!.
+        /// </summary>
+        public static string linkclipboardAndSaved {
+            get {
+                return ResourceManager.GetString("linkclipboardAndSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Logging into Imgur Account....
         /// </summary>
         public static string loggingIn {
@@ -295,6 +322,15 @@ namespace ImgurSniper.Properties {
         public static string printKeyShortcut {
             get {
                 return ResourceManager.GetString("printKeyShortcut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image was saved to file!.
+        /// </summary>
+        public static string savedToFile {
+            get {
+                return ResourceManager.GetString("savedToFile", resourceCulture);
             }
         }
         

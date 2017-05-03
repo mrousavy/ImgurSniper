@@ -48,7 +48,7 @@ namespace ImgurSniper.Libraries.ScreenCapture {
         //Get a normal Screenshot
         public static Bitmap GetScreenshot(Rectangle coordinates) {
             //Use Pixel Format with 32 bits per pixel and no Alpha Channel (RGB)
-            Bitmap screenBmp = new Bitmap(coordinates.Width, coordinates.Height, PixelFormat.Format32bppRgb);
+            Bitmap screenBmp = new Bitmap(coordinates.Width, coordinates.Height, PixelFormat.Format24bppRgb);
 
             using (Graphics bmpGraphics = Graphics.FromImage(screenBmp)) {
                 bmpGraphics.CopyFromScreen(coordinates.Left, coordinates.Top, 0, 0,
@@ -61,7 +61,7 @@ namespace ImgurSniper.Libraries.ScreenCapture {
         //~10 ms Slower on 4480 x 1440 Size
         //Get a Screenshot with mouse cursor
         public static Bitmap GetScreenshotWithMouse(Rectangle size) {
-            Bitmap result = new Bitmap(size.Width, size.Height, PixelFormat.Format32bppRgb);
+            Bitmap result = new Bitmap(size.Width, size.Height, PixelFormat.Format24bppRgb);
 
             using (Graphics g = Graphics.FromImage(result)) {
                 g.CopyFromScreen(size.Left, size.Top, 0, 0, size.Size, CopyPixelOperation.SourceCopy);

@@ -105,11 +105,11 @@ namespace ImgurSniper.UI {
         }
 
         //Value wether upload Images to Imgur or copy to Clipboard
-        public static bool ImgurAfterSnipe {
-            get => JsonConfig.ImgurAfterSnipe;
+        public static AfterSnipe AfterSnipeAction {
+            get => JsonConfig.AfterSnipeAction;
             set {
                 Settings settings = JsonConfig;
-                settings.ImgurAfterSnipe = value;
+                settings.AfterSnipeAction = value;
                 JsonConfig = settings;
             }
         }
@@ -332,13 +332,22 @@ namespace ImgurSniper.UI {
             }
         }
     }
+
+    /// <summary>
+    /// Action after Sniping
+    /// </summary>
+    public enum AfterSnipe {
+        UploadImgur,
+        CopyClipboard,
+        DoNothing
+    }
+
     public class Settings {
         public bool AllMonitors = true;
         public bool AutoUpdate = true;
         public bool ShowMouse = true;
         public bool UpdateAvailable;
         public bool UsePrint;
-        public bool ImgurAfterSnipe = true;
         public bool MagnifyingGlassEnabled;
         public bool OpenBrowserAfterUpload = true;
         public bool OpenFileAfterSnap;
@@ -355,6 +364,8 @@ namespace ImgurSniper.UI {
         public string Language;
         public string SaveImagesPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
             "ImgurSniperImages");
+
+        public AfterSnipe AfterSnipeAction = AfterSnipe.UploadImgur;
 
         public Key ShortcutGifKey = Key.G;
         public Key ShortcutImgKey = Key.X;

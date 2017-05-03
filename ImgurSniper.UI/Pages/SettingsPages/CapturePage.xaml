@@ -79,7 +79,7 @@
             <Label Grid.Row="5" Grid.Column="0" Margin="15,0,0,0" Foreground="Gray" 
                        Content="{x:Static Member=cultureStrings:strings.imgFormat}" />
 
-            <ComboBox Grid.Row="6" Grid.Column="1" x:Name="ImageFormatBox" FontSize="13"
+            <ComboBox Grid.Row="5" Grid.Column="1" x:Name="ImageFormatBox" FontSize="13"
                           VerticalAlignment="Center" Foreground="Gray" Width="50"
                           HorizontalAlignment="Left" Margin="5,0,0,0">
                 <ComboBoxItem>Jpeg</ComboBoxItem>
@@ -87,7 +87,9 @@
                 <ComboBoxItem>Gif</ComboBoxItem>
                 <ComboBoxItem>Tiff</ComboBoxItem>
             </ComboBox>
-
+            
+            
+            <!--OTHER-->
             <Label Grid.Row="6" Grid.Column="0" Margin="5,5,5,5" FontSize="15"
                    Content="{x:Static Member=cultureStrings:strings.other}" />
             

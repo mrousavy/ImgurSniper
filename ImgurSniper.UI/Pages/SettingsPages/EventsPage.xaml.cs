@@ -1,4 +1,5 @@
-﻿using ImgurSniper.UI.Properties;
+﻿using System;
+using ImgurSniper.UI.Properties;
 using System.IO;
 using System.Windows;
 using System.Windows.Forms;
@@ -36,7 +37,7 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
                 bool openBrowserAfterUpload = settings.OpenBrowserAfterUpload;
                 bool openFileAfterSnap = settings.OpenFileAfterSnap;
                 bool saveImages = settings.SaveImages;
-                bool imgurAfterSnipe = settings.ImgurAfterSnipe;
+                AfterSnipe action = settings.AfterSnipeAction;
                 string saveImagesPath = settings.SaveImagesPath;
 
 
@@ -69,12 +70,19 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
                 OpenFileAfterSnapBox.IsChecked = openFileAfterSnap;
 
                 //Upload to Imgur or Copy to Clipboard after Snipe
-                if (imgurAfterSnipe) {
-                    ImgurRadio.IsChecked = true;
-                    OpenBrowserAfterUploadBox.IsEnabled = true;
-                } else {
-                    ClipboardRadio.IsChecked = true;
-                    OpenBrowserAfterUploadBox.IsEnabled = false;
+                switch (action) {
+                    case AfterSnipe.CopyClipboard:
+                        ClipboardRadio.IsChecked = true;
+                        OpenBrowserAfterUploadBox.IsEnabled = false;
+                        break;
+                    case AfterSnipe.DoNothing:
+                        DoNothingRadio.IsChecked = true;
+                        OpenBrowserAfterUploadBox.IsEnabled = false;
+                        break;
+                    case AfterSnipe.UploadImgur:
+                        ImgurRadio.IsChecked = true;
+                        OpenBrowserAfterUploadBox.IsEnabled = true;
+                        break;
                 }
             } catch {
                 await Dialog.ShowOkDialog(strings.couldNotLoad, string.Format(strings.errorConfig, ConfigHelper.ConfigPath));
@@ -90,13 +98,21 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
             if (button == null) {
                 return;
             }
-            if (button.Tag as string == "Imgur") {
-                ConfigHelper.ImgurAfterSnipe = true;
-                OpenBrowserAfterUploadBox.IsEnabled = true;
-            } else {
-                ConfigHelper.ImgurAfterSnipe = false;
-                OpenBrowserAfterUploadBox.IsEnabled = false;
+
+            AfterSnipe action = (AfterSnipe)Enum.Parse(typeof(AfterSnipe), (string)button.Tag);
+
+            switch (action) {
+                case AfterSnipe.CopyClipboard:
+                case AfterSnipe.DoNothing:
+                    OpenBrowserAfterUploadBox.IsEnabled = false;
+                    break;
+                case AfterSnipe.UploadImgur:
+                    OpenBrowserAfterUploadBox.IsEnabled = true;
+                    break;
             }
+
+            ConfigHelper.AfterSnipeAction = action;
+
             EnableSave();
         }
         private void OpenBrowserAfterUpload_Checkbox(object sender, RoutedEventArgs e) {

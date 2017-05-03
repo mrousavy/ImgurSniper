@@ -250,6 +250,15 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do nothing.
+        /// </summary>
+        public static string doNothing {
+            get {
+                return ResourceManager.GetString("doNothing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Downloading from github.com/mrousavy/ImgurSniper....
         /// </summary>
         public static string downloadingGitHub {

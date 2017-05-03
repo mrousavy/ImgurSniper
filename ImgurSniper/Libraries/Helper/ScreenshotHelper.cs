@@ -15,6 +15,8 @@ namespace ImgurSniper.Libraries.Helper {
                 //Set Stream Position to beginning
                 stream.Position = 0;
 
+                bool wasSaved = false;
+
                 //Config: Save Image locally?
                 if (ConfigHelper.SaveImages) {
                     try {
@@ -25,6 +27,7 @@ namespace ImgurSniper.Libraries.Helper {
                         using (FileStream fstream = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.Write)) {
                             await stream.CopyToAsync(fstream);
                         }
+                        wasSaved = true;
 
                         if (ConfigHelper.OpenFileAfterSnap) {
                             //Open Explorer and Highlight Image
@@ -36,11 +39,21 @@ namespace ImgurSniper.Libraries.Helper {
                 }
 
                 //Config: Upload Image to Imgur or Copy to Clipboard?
-                if (ConfigHelper.ImgurAfterSnipe) {
-                    await UploadImgur(stream, hwndName, false);
-                } else {
-                    //Copy Binary Image to Clipboard
-                    await ClipboardHelper.CopyImage(stream);
+                switch (ConfigHelper.AfterSnipeAction) {
+                    case AfterSnipe.CopyClipboard:
+                        //Copy Binary Image to Clipboard
+                        await ClipboardHelper.CopyImage(stream, wasSaved, false);
+                        break;
+                    case AfterSnipe.DoNothing:
+                        //Do nothing (just save file e.g.)
+                        if (wasSaved)
+                            await ShowNotificationAsync(strings.savedToFile, NotificationType.Success);
+                        break;
+                    case AfterSnipe.UploadImgur:
+                        //Upload image to imgur and copy link
+                        string link = await UploadImgur(stream, hwndName, false);
+                        await ClipboardHelper.CopyLink(link, wasSaved);
+                        break;
                 }
             } catch (Exception ex) {
                 await ShowNotificationAsync(strings.errorMsg, NotificationType.Error, ActionTroubleshoot);
@@ -53,6 +66,8 @@ namespace ImgurSniper.Libraries.Helper {
                 //Set Stream Position to beginning
                 stream.Position = 0;
 
+                bool wasSaved = false;
+
                 //Config: Save GIF locally?
                 if (ConfigHelper.SaveImages) {
                     try {
@@ -62,6 +77,7 @@ namespace ImgurSniper.Libraries.Helper {
                         using (FileStream fstream = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.Write)) {
                             await stream.CopyToAsync(fstream);
                         }
+                        wasSaved = true;
 
                         if (ConfigHelper.OpenFileAfterSnap) {
                             //Open Explorer and Highlight Image
@@ -73,11 +89,22 @@ namespace ImgurSniper.Libraries.Helper {
                 }
 
                 //Config: Upload GIF to Imgur or Copy to Clipboard?
-                if (ConfigHelper.ImgurAfterSnipe) {
-                    await UploadImgur(stream, hwndName, true);
-                } else {
-                    //Copy Binary GIF to Clipboard
-                    await ClipboardHelper.CopyImage(stream);
+                switch (ConfigHelper.AfterSnipeAction) {
+                    case AfterSnipe.CopyClipboard:
+                        //Copy Binary GIF to Clipboard
+                        //TODO: Remove? GIFs cant be copied to clipboard
+                        await ClipboardHelper.CopyImage(stream, wasSaved, true);
+                        break;
+                    case AfterSnipe.DoNothing:
+                        //Do nothing (just save file e.g.)
+                        if (wasSaved)
+                            await ShowNotificationAsync(strings.savedToFile, NotificationType.Success);
+                        break;
+                    case AfterSnipe.UploadImgur:
+                        //Upload image to imgur and copy link
+                        string link = await UploadImgur(stream, hwndName, true);
+                        await ClipboardHelper.CopyLink(link, wasSaved);
+                        break;
                 }
             } catch (Exception ex) {
                 await ShowNotificationAsync(strings.errorMsg, NotificationType.Error, ActionTroubleshoot);
@@ -87,7 +114,7 @@ namespace ImgurSniper.Libraries.Helper {
 
 
 
-        private static async Task UploadImgur(Stream stream, string hwndName, bool gif) {
+        private static async Task<string> UploadImgur(Stream stream, string hwndName, bool gif) {
             ImgurUploader imgur = new ImgurUploader();
             await imgur.Login();
 
@@ -102,7 +129,7 @@ namespace ImgurSniper.Libraries.Helper {
             if (tooBig) {
                 //Could not upload to imgur
                 await ShowNotificationAsync(gif ? strings.imgTooBigGif : strings.imgTooBig, NotificationType.Error, ActionTroubleshoot);
-                return;
+                return null;
             }
 
             //Progress Indicator
@@ -110,8 +137,7 @@ namespace ImgurSniper.Libraries.Helper {
             ShowNotification(string.Format(gif ? strings.uploadingGif : strings.uploading, kb), NotificationType.Progress, false);
 
             //Upload Binary
-            string link = await imgur.Upload(stream, hwndName);
-            await ClipboardHelper.CopyLink(link);
+            return await imgur.Upload(stream, hwndName);
         }
     }
 }

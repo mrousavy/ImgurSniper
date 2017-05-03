@@ -11,7 +11,7 @@ using static ImgurSniper.Statics;
 namespace ImgurSniper.Libraries.Helper {
     public static class ClipboardHelper {
         //Copy Link to Clipboard
-        internal static async Task CopyLink(string link) {
+        internal static async Task CopyLink(string link, bool wasSaved) {
             Clipboard.SetText(link);
             Helpers.PlayBlop();
 
@@ -22,11 +22,13 @@ namespace ImgurSniper.Libraries.Helper {
                 action = null;
             }
 
-            await ShowNotificationAsync(strings.linkclipboard, NotificationType.Success, action);
+            string content = wasSaved ? strings.linkclipboardAndSaved : strings.linkclipboard;
+
+            await ShowNotificationAsync(content, NotificationType.Success, action);
         }
 
         //Parse stream to Image and write to Clipboard
-        public static async Task CopyImage(Stream stream) {
+        public static async Task CopyImage(Stream stream, bool wasSaved, bool gif) {
             //Parse byte[] to Images
             BitmapImage image = new BitmapImage();
             stream.Position = 0;
@@ -41,7 +43,14 @@ namespace ImgurSniper.Libraries.Helper {
             //Copy whole Image to Clipboard
             Clipboard.SetImage(image);
 
-            await ShowNotificationAsync(strings.imgclipboard, NotificationType.Success);
+            string content;
+            if (wasSaved) {
+                content = gif ? strings.imgCopyClipboardSaved : strings.gifCopyClipboardSaved;
+            } else {
+                content = gif ? strings.imgCopyClipboard : strings.gifCopyClipboard;
+            }
+
+            await ShowNotificationAsync(content, NotificationType.Success);
         }
     }
 }
