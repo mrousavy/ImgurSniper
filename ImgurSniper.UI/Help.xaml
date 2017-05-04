@@ -9,10 +9,7 @@
         mc:Ignorable="d" MinHeight="200" MinWidth="200" WindowStartupLocation="CenterOwner"
         Title="{x:Static Member=cultureStrings:strings.help}" Height="620" Width="770">
     <Grid>
-        <dragablz:TabablzControl Margin="8">
-            <dragablz:TabablzControl.InterTabController>
-                <dragablz:InterTabController />
-            </dragablz:TabablzControl.InterTabController>
+        <dragablz:TabablzControl Margin="8" FixedHeaderCount="9">
             <TabItem Header="{x:Static Member=cultureStrings:strings.pageGeneral}"
                      IsSelected="True">
                 <Frame Source="/ImgurSniper.UI;component/Pages/GeneralPage.xaml" />

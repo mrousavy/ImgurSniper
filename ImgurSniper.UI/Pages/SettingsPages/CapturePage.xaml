@@ -68,12 +68,12 @@
             <Label Grid.Row="4" Grid.Column="0" Foreground="Gray" Margin="15,0,0,0"
                        Content="{x:Static Member=cultureStrings:strings.quality}" />
 
-            <Slider Grid.Row="4" Grid.Column="1" Maximum="100" Minimum="1" Width="200" HorizontalAlignment="Left"
+            <Slider Grid.Row="4" Grid.Column="1" Maximum="100" Minimum="1"
+                    Width="200" HorizontalAlignment="Left" Value="90"
                         VerticalAlignment="Center" x:Name="QualitySlider"/>
 
             <Label Grid.Row="4" Grid.Column="2" Foreground="Gray"
-                   x:Name="QualityLabel" Content="90%"
-                   Margin="10,0,0,0"/>
+                   x:Name="QualityLabel" Margin="10,0,0,0" Content="90%"/>
 
             <!--IMAGE FORMAT-->
             <Label Grid.Row="5" Grid.Column="0" Margin="15,0,0,0" Foreground="Gray" 

@@ -35,7 +35,7 @@
                     </ResourceDictionary.MergedDictionaries>
                     <SolidColorBrush x:Key="SecondaryAccentBrush" Color="{StaticResource Accent200}" />
                     <SolidColorBrush x:Key="SecondaryAccentForegroundBrush"
-                                     Color="{StaticResource Accent200Foreground}" />
+                                     Color="{StaticResource Accent400Foreground}" />
                 </ResourceDictionary>
 
                 <!-- Dragablz Material Design style -->

@@ -36,7 +36,7 @@ namespace ImgurSniper.UI {
                 Foreground = Brushes.Gray,
                 Width = 60,
                 Margin = new Thickness(3),
-                Style = (Style) FindResource("MaterialDesignFlatButton")
+                Style = (Style)FindResource("MaterialDesignFlatButton")
             };
             yes.Click += delegate {
                 choice = true;
@@ -47,7 +47,7 @@ namespace ImgurSniper.UI {
                 Foreground = Brushes.Gray,
                 Width = 60,
                 Margin = new Thickness(3),
-                Style = (Style) FindResource("MaterialDesignFlatButton")
+                Style = (Style)FindResource("MaterialDesignFlatButton")
             };
             no.Click += delegate {
                 choice = false;
@@ -95,7 +95,7 @@ namespace ImgurSniper.UI {
                 Foreground = Brushes.Gray,
                 Width = 60,
                 Margin = new Thickness(3),
-                Style = (Style) FindResource("MaterialDesignFlatButton"),
+                Style = (Style)FindResource("MaterialDesignFlatButton"),
                 HorizontalAlignment = HorizontalAlignment.Right
             };
             ok.Click += delegate { CloseDia(); };

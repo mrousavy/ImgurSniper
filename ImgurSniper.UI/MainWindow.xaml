@@ -29,10 +29,8 @@
 					   Source="Resources/Logo.png" Cursor="Hand" MouseDown="Image_OpenRepository"/>
             </StackPanel>
 
-            <dragablz:TabablzControl Margin="0,0,0,50" Name="TabControl">
-                <dragablz:TabablzControl.InterTabController>
-                    <dragablz:InterTabController />
-                </dragablz:TabablzControl.InterTabController>
+            <dragablz:TabablzControl Margin="0,0,0,50" Name="TabControl"
+                                     FixedHeaderCount="5">
                 <TabItem Header="{x:Static Member=cultureStrings:strings.settingsHome}">
                     <Frame Source="/ImgurSniper.UI;component/Pages/SettingsPages/HomePage.xaml" />
                 </TabItem>
