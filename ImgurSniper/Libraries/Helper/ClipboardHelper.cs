@@ -45,9 +45,9 @@ namespace ImgurSniper.Libraries.Helper {
 
             string content;
             if (wasSaved) {
-                content = gif ? strings.imgCopyClipboardSaved : strings.gifCopyClipboardSaved;
+                content = gif ? strings.gifCopyClipboardSaved : strings.imgCopyClipboardSaved;
             } else {
-                content = gif ? strings.imgCopyClipboard : strings.gifCopyClipboard;
+                content = gif ? strings.gifCopyClipboard : strings.imgCopyClipboard;
             }
 
             await ShowNotificationAsync(content, NotificationType.Success);
