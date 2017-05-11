@@ -488,4 +488,11 @@ Do you want to help out and submit a ticket?
   <data name="doNothing" xml:space="preserve">
     <value>Do nothing</value>
   </data>
+  <data name="freezeScreen" xml:space="preserve">
+    <value>Freeze Screen</value>
+  </data>
+  <data name="freezeScreenTooltip" xml:space="preserve">
+    <value>Use this option if you want to pause the screen as soon as you open up ImgurSniper,
+e.g. for screenshotting elements that disappear once you open ImgurSniper.</value>
+  </data>
 </root>

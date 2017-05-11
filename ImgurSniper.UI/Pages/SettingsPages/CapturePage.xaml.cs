@@ -30,6 +30,7 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
                 Settings settings = ConfigHelper.JsonConfig;
 
                 bool showMouse = settings.ShowMouse;
+                bool freezeScreen = settings.FreezeScreen;
                 int gifFps = settings.GifFps;
                 int gifLength = settings.GifLength / 1000;
                 long compression = settings.Quality;
@@ -53,9 +54,10 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
                 ImageFormatBox.SelectionChanged += ImageFormatBoxChanged;
 
                 //Show Mouse Cursor on Image Capture
-                if (showMouse) {
-                    ShowMouseBox.IsChecked = true;
-                }
+                ShowMouseBox.IsChecked = showMouse;
+
+                //Show Mouse Cursor on Image Capture
+                FreezeScreenBox.IsChecked = freezeScreen;
 
                 //Set GIF FPS
                 GifFpsSlider.Value = gifFps;
@@ -87,6 +89,14 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
                 return;
             }
             ConfigHelper.ShowMouse = box.IsChecked == true;
+            EnableSave();
+        }
+        private void FreezeScreenBox_Check(object sender, RoutedEventArgs e) {
+            CheckBox box = sender as CheckBox;
+            if (box == null) {
+                return;
+            }
+            ConfigHelper.FreezeScreen = box.IsChecked == true;
             EnableSave();
         }
         private void ImageFormatBoxChanged(object sender, SelectionChangedEventArgs e) {

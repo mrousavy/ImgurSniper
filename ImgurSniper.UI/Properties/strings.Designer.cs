@@ -314,6 +314,25 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Freeze Screen.
+        /// </summary>
+        public static string freezeScreen {
+            get {
+                return ResourceManager.GetString("freezeScreen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use this option if you want to pause the screen as soon as you open up ImgurSniper,
+        ///e.g. for screenshotting elements that disappear once you open ImgurSniper..
+        /// </summary>
+        public static string freezeScreenTooltip {
+            get {
+                return ResourceManager.GetString("freezeScreenTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GIF.
         /// </summary>
         public static string gif {

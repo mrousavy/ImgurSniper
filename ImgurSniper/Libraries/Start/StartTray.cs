@@ -120,8 +120,14 @@ namespace ImgurSniper.Libraries.Start {
         }
 
         private static void OpenFromShortcutImg(HotKey obj = null) {
-            using (ScreenshotWindow window = new ScreenshotWindow()) {
-                window.ShowDialog();
+            if (ConfigHelper.FreezeScreen) {
+                using (ScreenshotWindowFreeze window = new ScreenshotWindowFreeze()) {
+                    window.ShowDialog();
+                }
+            } else {
+                using (ScreenshotWindow window = new ScreenshotWindow()) {
+                    window.ShowDialog();
+                }
             }
         }
 

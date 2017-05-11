@@ -26,6 +26,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -81,19 +82,26 @@
 
             <ComboBox Grid.Row="5" Grid.Column="1" x:Name="ImageFormatBox" FontSize="13"
                           VerticalAlignment="Center" Foreground="Gray" Width="50"
-                          HorizontalAlignment="Left" Margin="5,0,0,0">
+                          HorizontalAlignment="Left">
                 <ComboBoxItem>Jpeg</ComboBoxItem>
                 <ComboBoxItem>Png</ComboBoxItem>
                 <ComboBoxItem>Gif</ComboBoxItem>
                 <ComboBoxItem>Tiff</ComboBoxItem>
             </ComboBox>
-            
-            
+
+            <!--FREEZE SCREEN-->
+            <CheckBox Grid.Row="6" Grid.Column="0" x:Name="FreezeScreenBox"
+                      FontSize="14" Margin="15,0,0,0" VerticalAlignment="Bottom"
+                      Foreground="Gray" Click="FreezeScreenBox_Check"
+                      Content="{x:Static Member=cultureStrings:strings.freezeScreen}"
+                      ToolTip="{x:Static Member=cultureStrings:strings.freezeScreenTooltip}"/>
+
+
             <!--OTHER-->
-            <Label Grid.Row="6" Grid.Column="0" Margin="5,5,5,5" FontSize="15"
+            <Label Grid.Row="7" Grid.Column="0" Margin="5,5,5,5" FontSize="15"
                    Content="{x:Static Member=cultureStrings:strings.other}" />
             
-            <CheckBox Grid.Row="7" Grid.Column="0" x:Name="ShowMouseBox" FontSize="14" Margin="15,0,0,0" VerticalAlignment="Bottom" Foreground="Gray" Click="ShowMouseBox_Check" Content="{x:Static Member=cultureStrings:strings.showMouse}"/>
+            <CheckBox Grid.Row="8" Grid.Column="0" x:Name="ShowMouseBox" FontSize="14" Margin="15,0,0,0" VerticalAlignment="Bottom" Foreground="Gray" Click="ShowMouseBox_Check" Content="{x:Static Member=cultureStrings:strings.showMouse}"/>
 
         </Grid>
     </md:DialogHost>

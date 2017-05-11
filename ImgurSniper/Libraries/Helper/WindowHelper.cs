@@ -1,9 +1,9 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Interop;
-using ImgurSniper.Libraries.Native;
-using System.Windows.Forms;
+﻿using ImgurSniper.Libraries.Native;
+using System;
 using System.Drawing;
+using System.Windows;
+using System.Windows.Forms;
+using System.Windows.Interop;
 
 namespace ImgurSniper.Libraries.Helper {
     public static class WindowHelper {
@@ -27,7 +27,6 @@ namespace ImgurSniper.Libraries.Helper {
         }
 
         public static void WindowLoaded(Window window) {
-
             //Activate & Focus Window
             window.Activate();
             window.Focus();

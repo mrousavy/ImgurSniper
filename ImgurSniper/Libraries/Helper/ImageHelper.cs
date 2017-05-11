@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Windows.Media;
 
 namespace ImgurSniper.Libraries.Helper {
     public static class ImageHelper {
@@ -136,6 +137,34 @@ namespace ImgurSniper.Libraries.Helper {
             }
 
             return null;
+        }
+
+
+        public static ImageSource ImageToImageSource(Image image) {
+            System.Windows.Media.Imaging.BitmapImage bitmapImage;
+            using (var ms = new MemoryStream()) {
+                image.Save(ms, ImageFormat.Png);
+                ms.Position = 0;
+
+                bitmapImage = new System.Windows.Media.Imaging.BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.CacheOption = System.Windows.Media.Imaging.BitmapCacheOption.OnLoad;
+                bitmapImage.StreamSource = ms;
+                bitmapImage.EndInit();
+            }
+
+            return bitmapImage;
+        }
+
+        public static Image Crop(Image screenshot, System.Windows.Point from, System.Windows.Point to) {
+            Rectangle cropRect = new Rectangle((int)from.X, (int)from.Y, (int)to.X - (int)from.X, (int)to.Y - (int)from.Y);
+            Image cropped = new Bitmap(cropRect.Width, cropRect.Height);
+
+            using (Graphics g = Graphics.FromImage(cropped)) {
+                g.DrawImage(screenshot, new Rectangle(0, 0, cropped.Width, cropped.Height), cropRect, GraphicsUnit.Pixel);
+            }
+
+            return cropped;
         }
     }
 }

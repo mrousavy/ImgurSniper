@@ -60,6 +60,9 @@ namespace ImgurSniper.Libraries.Helper {
         //Show Mouse Cursor on Screenshot
         public static bool ShowMouse => JsonConfig.ShowMouse;
 
+        //Freeze Screen on Image Capture
+        public static bool FreezeScreen => JsonConfig.FreezeScreen;
+
         //Value whether ImgurSniper should automatically search for Updates
         public static bool AutoUpdate => JsonConfig.AutoUpdate;
 
@@ -171,6 +174,7 @@ namespace ImgurSniper.Libraries.Helper {
         public bool AllMonitors = true;
         public bool AutoUpdate = true;
         public bool ShowMouse = true;
+        public bool FreezeScreen = false;
         public bool UsePrint = false;
         public bool OpenBrowserAfterUpload = true;
         public bool OpenFileAfterSnap = false;

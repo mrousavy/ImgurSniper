@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using ImgurSniper.Libraries.Helper;
+﻿using ImgurSniper.Libraries.Helper;
 using ImgurSniper.Libraries.Start;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace ImgurSniper {
@@ -26,11 +26,16 @@ namespace ImgurSniper {
                     //GIF Recording Capture
                     using (GifWindow window = new GifWindow())
                         window.ShowDialog();
-                        break;
+                    break;
                 case CommandLineHelper.Argument.Snipe:
                     //Normal Image Capture
-                    using (ScreenshotWindow window = new ScreenshotWindow())
-                        window.ShowDialog();
+                    if (ConfigHelper.FreezeScreen) {
+                        using (ScreenshotWindowFreeze window = new ScreenshotWindowFreeze())
+                            window.ShowDialog();
+                    } else {
+                        using (ScreenshotWindow window = new ScreenshotWindow())
+                            window.ShowDialog();
+                    }
                     break;
                 case CommandLineHelper.Argument.Upload:
                     //Context Menu Instant Upload
@@ -48,7 +53,7 @@ namespace ImgurSniper {
             }
 
             //Wait for every Notification to close
-            if(NotificationWindow.IsShown)
+            if (NotificationWindow.IsShown)
                 await Task.Delay(NotificationWindow.ShowDuration);
 
             Application.Current.Shutdown();

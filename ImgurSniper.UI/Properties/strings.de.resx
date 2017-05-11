@@ -489,4 +489,11 @@ Wollen Sie mehr Details über den Fehler sehen?</value>
   <data name="doNothing" xml:space="preserve">
     <value>Keine Aktion</value>
   </data>
+  <data name="freezeScreen" xml:space="preserve">
+    <value>Bildschirm einfrieren</value>
+  </data>
+  <data name="freezeScreenTooltip" xml:space="preserve">
+    <value>Aktivieren Sie dies, falls Sie den Bildschirm pausieren wollen sobald Sie ImgurSniper öffnen,
+beispielsweise um Elemente oder Fenster aufzunehmen, welche verschwinden sobald ImgurSniper geöffnet wird.</value>
+  </data>
 </root>

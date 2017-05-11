@@ -224,6 +224,16 @@ namespace ImgurSniper.UI {
             }
         }
 
+        //Freeze Screen on Image Capture
+        public static bool FreezeScreen {
+            get => JsonConfig.FreezeScreen;
+            set {
+                Settings settings = JsonConfig;
+                settings.FreezeScreen = value;
+                JsonConfig = settings;
+            }
+        }
+
         //Quality of Image (1 being lowest, 100 being highest Quality)
         public static long Quality {
             get => JsonConfig.Quality;
@@ -346,6 +356,7 @@ namespace ImgurSniper.UI {
         public bool AllMonitors = true;
         public bool AutoUpdate = true;
         public bool ShowMouse = true;
+        public bool FreezeScreen = false;
         public bool UpdateAvailable;
         public bool UsePrint;
         public bool MagnifyingGlassEnabled;
