@@ -138,6 +138,11 @@ namespace ImgurSniper.UI {
 
                 //Remove /VERYSILENT ?
                 Process.Start(installerPath, "/VERYSILENT");
+                
+                
+                ConfigHelper.CurrentCommits = Commits.Count;
+                ConfigHelper.UpdateAvailable = false;
+                ConfigHelper.Save();
 
                 KillImgurSniper(true);
             }
