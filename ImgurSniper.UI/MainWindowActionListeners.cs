@@ -56,9 +56,6 @@ namespace ImgurSniper.UI {
                 bool? result = info.ShowDialog();
 
                 if (result == true) {
-                    ConfigHelper.CurrentCommits = InstallerHelper.Commits.Count;
-                    ConfigHelper.UpdateAvailable = false;
-
                     StackPanel panel = ShowProgressDialog();
                     Helper.Update(panel);
                 } else {
