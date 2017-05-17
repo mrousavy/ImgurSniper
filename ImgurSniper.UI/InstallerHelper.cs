@@ -1,5 +1,6 @@
 ﻿using ImgurSniper.UI.Properties;
 using Microsoft.Win32;
+using Octokit;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +12,6 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Octokit;
 using Toast;
 using Application = System.Windows.Application;
 using FileMode = System.IO.FileMode;
@@ -136,13 +136,13 @@ namespace ImgurSniper.UI {
             } else {
                 Extract(file, extractTo);
 
-                //Remove /VERYSILENT ?
-                Process.Start(installerPath, "/VERYSILENT");
-                
-                
+                //Update current version
                 ConfigHelper.CurrentCommits = Commits.Count;
                 ConfigHelper.UpdateAvailable = false;
                 ConfigHelper.Save();
+
+                //Remove /VERYSILENT ?
+                Process.Start(installerPath, "/VERYSILENT");
 
                 KillImgurSniper(true);
             }
