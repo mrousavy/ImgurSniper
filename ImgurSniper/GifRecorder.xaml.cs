@@ -111,6 +111,11 @@ namespace ImgurSniper {
                     double elapsed = (currentTime - _startTime);
                     ProgressBar.Value = elapsed / 100;
 
+                    //Enable after min length (1 sec)
+                    if (elapsed >= 1000 && !DoneButton.IsEnabled) {
+                        DoneButton.IsEnabled = true;
+                    }
+
                     if (elapsed >= ConfigHelper.GifLength && !_stopRequested) {
                         StopRecording();
                         _progressTimer.Dispose();

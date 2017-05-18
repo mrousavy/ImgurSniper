@@ -337,7 +337,12 @@ namespace ImgurSniper {
         private void Crop(Point from, Point to) {
             try {
                 using (_screenshot) {
-                    using (Image cropped = ImageHelper.Crop(_screenshot, from, to)) {
+                    Image cropped = ImageHelper.Crop(_screenshot, from, to);
+
+                    using (cropped) {
+#pragma warning disable CS0728
+                        ImageHelper.WriteExif(ref cropped, NativeMethods.GetWindowName(new NativeStructs.POINT((int)(from.X + (to.X - from.X / 2)), (int)(from.Y + (to.Y - from.Y / 2)))));
+#pragma warning restore CS0728
 
                         if (ConfigHelper.Quality < 100) {
                             SelectionStream = ImageHelper.CompressImage(cropped, ConfigHelper.ImageFormat, ConfigHelper.Quality);

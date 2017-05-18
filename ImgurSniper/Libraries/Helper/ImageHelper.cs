@@ -97,6 +97,35 @@ namespace ImgurSniper.Libraries.Helper {
             return stream;
         }
 
+        public static void WriteExif(ref Image img, string windowTitle) {
+            try {
+                if (img.PropertyItems.Length < 1)
+                    return;
+
+                PropertyItem prop = img.PropertyItems[0];
+                SetProperty(ref prop, 33432, "Made with ImgurSniper http://mrousavy.github.io/ImgurSniper");
+                img.SetPropertyItem(prop);
+
+                prop = img.PropertyItems[0];
+                SetProperty(ref prop, 272, "Snipe - " + windowTitle);
+                img.SetPropertyItem(prop);
+            } catch {
+                // could not write Property Items to image
+            }
+        }
+
+        private static void SetProperty(ref PropertyItem prop, int iId, string sTxt) {
+            int iLen = sTxt.Length + 1;
+            byte[] bTxt = new byte[iLen];
+            for (int i = 0; i < iLen - 1; i++)
+                bTxt[i] = (byte)sTxt[i];
+            bTxt[iLen - 1] = 0x00;
+            prop.Id = iId;
+            prop.Type = 2;
+            prop.Value = bTxt;
+            prop.Len = iLen;
+        }
+
         public static ImageCodecInfo GetEncoder(ImageFormat format) {
             ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
 

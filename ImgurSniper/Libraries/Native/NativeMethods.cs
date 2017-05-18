@@ -120,6 +120,17 @@ namespace ImgurSniper.Libraries.Native {
         }
         #endregion
 
+
+        public static string GetWindowName(POINT position) {
+            try {
+                const int nChars = 256;
+                StringBuilder buff = new StringBuilder(nChars);
+                return GetWindowText(WindowFromPoint(position), buff, nChars) > 0 ? buff.ToString() : "";
+            } catch {
+                return "";
+            }
+        }
+
         public static IntPtr SetWindowLong(IntPtr hWnd, int nIndex, IntPtr dwNewLong) {
             int error;
             IntPtr result;

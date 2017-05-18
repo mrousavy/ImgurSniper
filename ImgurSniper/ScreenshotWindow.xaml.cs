@@ -336,7 +336,14 @@ namespace ImgurSniper {
             try {
                 Rectangle size = new Rectangle((int)from.X, (int)from.Y, w, h);
 
-                using (Image img = Screenshot.GetScreenshotNative(NativeMethods.GetDesktopWindow(), size, ConfigHelper.ShowMouse)) {
+                Image img = Screenshot.GetScreenshotNative(NativeMethods.GetDesktopWindow(), size,
+                    ConfigHelper.ShowMouse);
+
+                using (img) {
+#pragma warning disable CS0728
+                    ImageHelper.WriteExif(ref img, NativeMethods.GetWindowName(new NativeStructs.POINT((int)from.X + w / 2, (int)from.Y + h / 2)));
+#pragma warning restore CS0728
+
                     if (ConfigHelper.Quality < 100) {
                         SelectionStream = ImageHelper.CompressImage(img, ConfigHelper.ImageFormat, ConfigHelper.Quality);
                     } else {

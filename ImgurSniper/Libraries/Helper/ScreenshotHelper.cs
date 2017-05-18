@@ -34,7 +34,7 @@ namespace ImgurSniper.Libraries.Helper {
                             Process.Start("explorer.exe", $"/select, \"{filename}\"");
                         }
                     } catch {
-                        // could not start process
+                        // could not save to file or start process
                     }
                 }
 
