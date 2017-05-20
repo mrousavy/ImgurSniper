@@ -1,15 +1,22 @@
-# <img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/ImgurSniper.UI/Resources/Logo.png" width="42"> ImgurSniper
+<p align="center">
+  <img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/ImgurSniper.UI/Resources/Logo.png" height="120" />
+  <h3 align="center">ImgurSniper</h3>
+  <p align="center">The faster screenshot tool</p>
+  <p align="center">
+    <a href="https://github.com/terkelg/ramme/releases"><img src="https://img.shields.io/badge/Download-Installer-brightgreen.svg" alt="Download"></a>
+  </p>
+</p>
 
-**ImgurSniper** is a small and lightweight tool that is designed to make **sharing Images** way **easier and faster** by instantly uploading them to [imgur](http://www.imgur.com)!
+**ImgurSniper** is a small and lightweight tool that is designed to make **sharing Images** way **easier and faster** by instantly uploading them to [imgur](http://www.imgur.com) or copying to your clipboard!
 
 # Downloads
-### [⇩ Imgur Sniper (9 MB) (Full Setup) (Recommended)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperSetup.zip?raw=true)
+<a href="https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperSetup.zip?raw=true"><img src="https://img.shields.io/badge/Download-Installer-brightgreen.svg" alt="Download Installer"></a>
 
-#### [⇩ Imgur Sniper (10 MB) (Portable)](https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.zip?raw=true)
+<a href="https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.zip?raw=true"><img src="https://img.shields.io/badge/Download-Portable-brightgreen.svg" alt="Download Portable"></a>
+
+<a href="https://github.com/mrousavy/Snappy"><img src="https://img.shields.io/badge/MacOS-Snappy-orange.svg" alt="Snappy"></a>
 
 #### [View all Releases](https://github.com/mrousavy/ImgurSniper/releases)
-
-#### [Looking for a MacOS Version? Use Snappy (WIP)](https://github.com/mrousavy/Snappy)
 
 Icon by [jinga](http://github.com/jingafreak), Idea by [dmaniak](http://github.com/dmaniak)
 
@@ -27,7 +34,9 @@ You can now **share the Link** that has been **copied to your Clipboard** with e
 
 (See more Info at **ImgurSniper Settings -> Help**)
 
+<p align="center">
 <img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/ImgurSniper.UI/Resources/SnipeDemo.gif">
+</p>
 
 # Features
 
@@ -47,8 +56,10 @@ You can now **share the Link** that has been **copied to your Clipboard** with e
 - Upload your Images as **PNG Format** for higher quality, or **JPEG Format** for faster uploads (Pro Tip: Enable "Upload Images in high Quality" [here](https://imgur.com/account/settings) for high quality Screenshots!)
 
 ## Settings
-<img src="http://i.imgur.com/3996TB7.png">
+<p align="center">
+  <img src="http://i.imgur.com/3996TB7.png">
 
-<img src="http://i.imgur.com/P6x8uMc.png">
+  <img src="http://i.imgur.com/P6x8uMc.png">
 
-<img src="http://i.imgur.com/FSeCfjV.png">
+  <img src="http://i.imgur.com/FSeCfjV.png">
+</p>
