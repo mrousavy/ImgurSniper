@@ -3,14 +3,14 @@
   <h3 align="center">ImgurSniper</h3>
   <p align="center">The faster screenshot tool</p>
   <p align="center">
-    <a href="https://github.com/terkelg/ramme/releases"><img src="https://img.shields.io/badge/Download-Installer-brightgreen.svg" alt="Download"></a>
+    <a href="https://github.com/terkelg/ramme/releases"><img src="https://img.shields.io/badge/Download-Setup-brightgreen.svg" alt="Download"></a>
   </p>
 </p>
 
 **ImgurSniper** is a small and lightweight tool that is designed to make **sharing Images** way **easier and faster** by instantly uploading them to [imgur](http://www.imgur.com) or copying to your clipboard!
 
 # Downloads
-<a href="https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperSetup.zip?raw=true"><img src="https://img.shields.io/badge/Download-Installer-brightgreen.svg" alt="Download Installer"></a>
+<a href="https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperSetup.zip?raw=true"><img src="https://img.shields.io/badge/Download-Setup-brightgreen.svg" alt="Download Installer"></a>
 
 <a href="https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.zip?raw=true"><img src="https://img.shields.io/badge/Download-Portable-brightgreen.svg" alt="Download Portable"></a>
 
