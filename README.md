@@ -57,9 +57,7 @@ You can now **share the Link** that has been **copied to your Clipboard** with e
 
 ## Settings
 <p align="center">
-  <img src="http://i.imgur.com/3996TB7.png">
-
-  <img src="http://i.imgur.com/P6x8uMc.png">
-
+  <img src="http://i.imgur.com/e4Ptsci.gif">
+  
   <img src="http://i.imgur.com/FSeCfjV.png">
 </p>
