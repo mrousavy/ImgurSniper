@@ -3,7 +3,7 @@
   <h3 align="center">ImgurSniper</h3>
   <p align="center">The faster screenshot tool</p>
   <p align="center">
-    <a href="https://github.com/terkelg/ramme/releases"><img src="https://img.shields.io/badge/Download-Setup-brightgreen.svg" alt="Download"></a>
+    <a href="https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperSetup.zip?raw=true"><img src="https://img.shields.io/badge/Download-Setup-brightgreen.svg" alt="Download"></a>
   </p>
 </p>
 
