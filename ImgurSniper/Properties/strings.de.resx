@@ -215,7 +215,7 @@ Wollen Sie helfen, den Fehler zu beheben indem Sie ein Formular detailreich ausf
     <value>Ein unbekannter Fehler in ImgurSniper ist aufgetreten.
 Die Fehlermeldung lautet wie folgt: "{0}"
 
-Wollen Sie mehr Details über den Fehler sehen?</value>
+Wollen Sie ImgurSniper neustarten?</value>
   </data>
   <data name="loggingIn" xml:space="preserve">
     <value>Logge in Imgur Account ein..</value>
@@ -249,5 +249,9 @@ Wollen Sie mehr Details über den Fehler sehen?</value>
   </data>
   <data name="savedToFile" xml:space="preserve">
     <value>Bild wurde in Datei gespeichert!</value>
+  </data>
+  <data name="ffmpegError" xml:space="preserve">
+    <value>Ein unbekannter Fehler in FFmpeg ist aufgetreten!
+Wollen Sie die FFmpeg Log Datei sehen?</value>
   </data>
 </root>

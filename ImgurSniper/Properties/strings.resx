@@ -215,7 +215,7 @@ Do you want to help out and submit a ticket?
     <value>An unknown Error occured in ImgurSniper.
 Error Message: "{0}"
 
-Do you want to see more details about that Error?</value>
+Do you want to restart ImgurSniper?</value>
   </data>
   <data name="loggingIn" xml:space="preserve">
     <value>Logging into Imgur Account...</value>
@@ -249,5 +249,9 @@ Do you want to see more details about that Error?</value>
   </data>
   <data name="savedToFile" xml:space="preserve">
     <value>Image was saved to file!</value>
+  </data>
+  <data name="ffmpegError" xml:space="preserve">
+    <value>FFmpeg encountered an unexpected Error!
+Do you want to see the FFmpeg Log?</value>
   </data>
 </root>

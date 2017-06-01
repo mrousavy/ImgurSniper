@@ -3,7 +3,6 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using System.Windows;
 using static ImgurSniper.NotificationWindow;
 using static ImgurSniper.Statics;
 // ReSharper disable HeuristicUnreachableCode
@@ -57,7 +56,8 @@ namespace ImgurSniper.Libraries.Helper {
                 }
             } catch (Exception ex) {
                 await ShowNotificationAsync(strings.errorMsg, NotificationType.Error, ActionTroubleshoot);
-                MessageBox.Show(string.Format(strings.otherErrorMsg, ex.Message), strings.errorMsg);
+
+                Helpers.WriteError(ex);
             }
         }
 
@@ -108,7 +108,8 @@ namespace ImgurSniper.Libraries.Helper {
                 }
             } catch (Exception ex) {
                 await ShowNotificationAsync(strings.errorMsg, NotificationType.Error, ActionTroubleshoot);
-                MessageBox.Show(string.Format(strings.otherErrorMsg, ex.Message), strings.errorMsg);
+
+                Helpers.WriteError(ex);
             }
         }
 

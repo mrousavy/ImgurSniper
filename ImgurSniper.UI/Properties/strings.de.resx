@@ -436,7 +436,7 @@ Wollen Sie helfen, den Fehler zu beheben indem Sie ein Formular detailreich ausf
     <value>Ein unbekannter Fehler in ImgurSniper ist aufgetreten.
 Die Fehlermeldung lautet wie folgt: "{0}"
 
-Wollen Sie mehr Details über den Fehler sehen?</value>
+Wollen Sie ImgurSniper neustarten?</value>
   </data>
   <data name="showMouse" xml:space="preserve">
     <value>Zeige Maus</value>

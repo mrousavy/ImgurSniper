@@ -991,7 +991,7 @@ namespace ImgurSniper.UI.Properties {
         ///   Looks up a localized string similar to An unknown Error occured in ImgurSniper.
         ///Error Message: &quot;{0}&quot;
         ///
-        ///Do you want to see more details about that Error?.
+        ///Do you want to restart ImgurSniper?.
         /// </summary>
         public static string unhandledErrorDescription {
             get {

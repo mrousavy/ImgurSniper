@@ -171,6 +171,16 @@ namespace ImgurSniper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FFmpeg encountered an unexpected Error!
+        ///Do you want to see the FFmpeg Log?.
+        /// </summary>
+        public static string ffmpegError {
+            get {
+                return ResourceManager.GetString("ffmpegError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GIF.
         /// </summary>
         public static string gif {
@@ -368,7 +378,7 @@ namespace ImgurSniper.Properties {
         ///   Looks up a localized string similar to An unknown Error occured in ImgurSniper.
         ///Error Message: &quot;{0}&quot;
         ///
-        ///Do you want to see more details about that Error?.
+        ///Do you want to restart ImgurSniper?.
         /// </summary>
         public static string unhandledErrorDescription {
             get {

@@ -59,44 +59,24 @@ namespace ImgurSniper {
 
         //Unhandled Exception User Message Boxes
         private static void UnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
-            MessageBoxResult helpFixing = MessageBox.Show(strings.unhandledError,
-                    "Help fixing an ImgurSniper Bug?",
-                    MessageBoxButton.YesNoCancel,
-                    MessageBoxImage.Question);
-            if (helpFixing == MessageBoxResult.Yes) {
-                Process.Start("https://github.com/mrousavy/ImgurSniper/issues/new");
-            } else if (helpFixing == MessageBoxResult.Cancel) {
-                Process.GetCurrentProcess().Kill();
-            }
-
-
             if (MessageBox.Show(string.Format(strings.unhandledErrorDescription, e.Exception.Message),
                 "ImgurSniper Error",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Error) == MessageBoxResult.Yes) {
+                try {
+                    //Restart with same args
+                    string[] argumentsArray = Environment.GetCommandLineArgs();
+                    string arguments = argumentsArray.Aggregate("", (current, arg) => current + (arg.Contains(" ") ? "\"" + arg + "\" " : arg + " "));
+                    string exePath = System.Reflection.Assembly.GetEntryAssembly().Location;
 
-                MessageBox.Show(
-                    "||| Base Message: " + e.Exception.GetBaseException().Message + "\n\r\n\r" +
-                    "||| Message: " + e.Exception.Message + "\n\r\n\r" +
-                    "||| Source: " + e.Exception.Source + "\n\r\n\r" +
-                    "||| Stacktrace: " + e.Exception.StackTrace,
-                    "ImgurSniper Exception - More Details",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error);
+                    Process.Start(exePath, arguments);
+                } catch {
+                    // ignored
+                }
+            } else {
+                Process.GetCurrentProcess().Kill();
+                return;
             }
-
-            try {
-                //Restart with same args
-                string[] argumentsArray = Environment.GetCommandLineArgs();
-                string arguments = argumentsArray.Aggregate("", (current, arg) => current + (arg.Contains(" ") ? "\"" + arg + "\" " : arg + " "));
-                string exePath = System.Reflection.Assembly.GetEntryAssembly().Location;
-
-                Process.Start(exePath, arguments);
-            } catch {
-                // ignored
-            }
-
-            Process.GetCurrentProcess().Kill();
         }
     }
 }

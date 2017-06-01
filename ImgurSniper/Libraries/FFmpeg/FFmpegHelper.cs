@@ -1,5 +1,6 @@
 ﻿using ImgurSniper.Libraries.Helper;
 using ImgurSniper.Libraries.ScreenCapture;
+using ImgurSniper.Properties;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -85,13 +86,16 @@ namespace ImgurSniper.Libraries.FFmpeg {
             int errorCode = Open(path, args);
             bool result = errorCode == 0;
             if (Options.FFmpeg.ShowError && !result) {
-                MessageBoxResult yesno = MessageBox.Show("FFmpeg encountered an unexpected Error!\n\rDo you want to see the FFmpeg Log?",
+                MessageBoxResult yesno = MessageBox.Show(strings.ffmpegError,
                     "FFmpeg.exe error!", MessageBoxButton.YesNo, MessageBoxImage.Error);
-
-                if (yesno == MessageBoxResult.Yes) {
-                    string tmp = Path.GetTempFileName() + ".txt";
-                    File.WriteAllText(tmp, Output.ToString());
-                    Process.Start(tmp);
+                try {
+                    if (yesno == MessageBoxResult.Yes) {
+                        string tmp = Path.GetTempFileName() + ".txt";
+                        File.WriteAllText(tmp, Output.ToString());
+                        Process.Start(tmp);
+                    }
+                } catch {
+                    // could not write
                 }
             }
             return result;

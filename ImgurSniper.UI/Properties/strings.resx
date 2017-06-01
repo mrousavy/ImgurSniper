@@ -429,7 +429,7 @@ As soon as you selected your desired area, ImgurSniper will start recording the 
     <value>An unknown Error occured in ImgurSniper.
 Error Message: "{0}"
 
-Do you want to see more details about that Error?</value>
+Do you want to restart ImgurSniper?</value>
   </data>
   <data name="unhandledError" xml:space="preserve">
     <value>Oh no! Sorry about that, it seems like ImgurSniper ran into an unexpected Error!
