@@ -54,7 +54,8 @@ namespace ImgurSniper.Libraries.Helper {
                 ? strings.uploadTitle
                 : $"{windowName}  -  ({strings.uploadTitle})";
 
-            IImage image = await endpoint.UploadImageStreamAsync(stream, null, title, "https://mrousavy.github.io/ImgurSniper");
+            //TODO: use title or null?
+            IImage image = await endpoint.UploadImageStreamAsync(stream, null, null, "https://mrousavy.github.io/ImgurSniper");
             return image.Link;
         }
 
