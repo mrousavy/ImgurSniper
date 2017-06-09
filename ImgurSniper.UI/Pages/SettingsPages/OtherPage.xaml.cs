@@ -94,7 +94,7 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
                     bool choice = box.IsChecked == true;
                     //Show Dialog on disabling
                     if (box.IsChecked == false) {
-                        choice = !await Dialog.ShowAskDialog(strings.disablingTrayWarning);
+                        choice = !(await Dialog.ShowAskDialog(strings.disablingTrayWarning));
                         RunOnBoot.IsChecked = choice;
                     }
 
