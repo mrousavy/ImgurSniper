@@ -56,7 +56,7 @@ Name: "de"; MessagesFile: "compiler:Languages\German.isl"
 [Tasks]
 Name: "CreateDesktopIcon"; Description: "Create a desktop shortcut"; GroupDescription: "Shortcuts:"
 Name: "CreateContextMenuEntry"; Description: "Show ""Upload to Imgur"" when Right-Clicking a File"; GroupDescription: "Shortcuts:"
-Name: "CreateSendToEntry"; Description: "Create shortcut in ""Send to"" Menu"; GroupDescription: "Shortcuts:"
+Name: "CreateSendToEntry"; Description: "Create shortcut in ""Send to"" Menu"; GroupDescription: "Shortcuts:"; Flags: unchecked
 Name: "CreateQuickLaunchEntry"; Description: "Create a quick launch shortcut"; GroupDescription: "Shortcuts:"; OnlyBelowVersion: 0,6.1
 Name: "CreateAutostartEntry"; Description: "Run ImgurSniper when Windows starts"; GroupDescription: "Other:"
 
