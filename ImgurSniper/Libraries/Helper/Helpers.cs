@@ -75,21 +75,23 @@ namespace ImgurSniper.Libraries.Helper {
 
 
         public static void WriteError(Exception ex) {
-            string errorFile = Path.Combine(ConfigHelper.DocumentsDirectory, "error.txt");
-            string nl = Environment.NewLine;
-            string errorDetails = $"!ImgurSniper Error @{DateTime.Now}" + nl +
-                    $"    Error Message: {ex.Message}" + nl + nl +
-                    $"    Error Stacktrace: {ex.StackTrace}";
+            try {
+                string errorFile = Path.Combine(ConfigHelper.DocumentsDirectory, "error.txt");
+                string nl = Environment.NewLine;
+                string errorDetails = $"!ImgurSniper Error @{DateTime.Now}" + nl +
+                        $"    Error Message: {ex.Message}" + nl + nl +
+                        $"    Error Stacktrace: {ex.StackTrace}";
 
-            if (File.Exists(errorFile)) {
-                File.AppendAllText(errorFile,
-                    nl + nl + "---------------------------------------------------------" + errorDetails);
-            } else {
-                File.WriteAllText(errorFile,
-                    $"Details for an Exception in ImgurSniper. " +
-                    "You can tell me about this error on http://www.github.com/mrousavy/ImgurSniper/issues so I can fix it as soon as possible!"
-                    + nl + errorDetails);
-            }
+                if (File.Exists(errorFile)) {
+                    File.AppendAllText(errorFile,
+                        nl + nl + "---------------------------------------------------------" + errorDetails);
+                } else {
+                    File.WriteAllText(errorFile,
+                        $"Details for an Exception in ImgurSniper. " +
+                        "You can tell me about this error on http://www.github.com/mrousavy/ImgurSniper/issues so I can fix it as soon as possible!"
+                        + nl + errorDetails);
+                }
+            } catch { }
         }
     }
 }

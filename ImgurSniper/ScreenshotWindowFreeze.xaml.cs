@@ -214,20 +214,16 @@ namespace ImgurSniper {
 
         #region Painting Mouse Events
 
-        private Point _startPos;
         private Path _currentPath;
 
         //Mouse Down Event - Begin Painting
         private void BeginPaint(object sender, MouseButtonEventArgs e) {
             if (e.ButtonState == MouseButtonState.Pressed) {
-                _startPos = e.GetPosition(null);
-
-
                 _currentPath = new Path {
                     Data = new PathGeometry {
                         Figures = {
                             new PathFigure {
-                                StartPoint = _startPos,
+                                StartPoint = e.GetPosition(null),
                                 Segments = {new PolyLineSegment()}
                             }
                         }
@@ -255,6 +251,22 @@ namespace ImgurSniper {
 
         //Mouse Up Event - Stop Painting
         private void StopPaint(object sender, MouseButtonEventArgs e) {
+            using (Graphics g = Graphics.FromImage(_screenshot)) {
+                System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Brushes.Red, 4);
+                System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
+
+                PolyLineSegment pls =
+                    (PolyLineSegment)((PathGeometry)_currentPath.Data).Figures.Last().Segments.Last();
+
+                PointF[] points = new PointF[pls.Points.Count];
+                for (int i = 0; i < pls.Points.Count; i++) {
+                    points[i] = new PointF((float)pls.Points[i].X, (float)pls.Points[i].Y);
+                }
+                path.AddPolygon(points);
+
+                g.DrawPath(pen, path);
+            }
+
             _currentPath = null;
         }
 
@@ -364,7 +376,8 @@ namespace ImgurSniper {
             int duration = 70;
             this.Animate(OpacityProperty, Opacity, 1, duration, delay);
             SelectionRectangle.Animate(OpacityProperty, 0.3, 0, duration, delay);
-            PaintSurface.Animate(OpacityProperty, 1, 0, duration, delay);
+            await PaintSurface.AnimateAsync(OpacityProperty, 1, 0, duration, delay);
+            WindowState = WindowState.Minimized;
 
             try {
                 if (result) {

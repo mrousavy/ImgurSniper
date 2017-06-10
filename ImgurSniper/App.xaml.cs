@@ -59,6 +59,7 @@ namespace ImgurSniper {
 
         //Unhandled Exception User Message Boxes
         private static void UnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
+            Helpers.WriteError(e.Exception);
             if (MessageBox.Show(string.Format(strings.unhandledErrorDescription, e.Exception.Message),
                 "ImgurSniper Error",
                 MessageBoxButton.YesNo,

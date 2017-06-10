@@ -92,6 +92,7 @@ namespace ImgurSniper.UI {
             foreach (Process p in processes) {
                 try {
                     if (p.Id != Process.GetCurrentProcess().Id) {
+                        //p.CloseMainWindow();    //does not work for ImgurSniper - no main window
                         p.Kill();
                         p.WaitForExit();
                     }
@@ -161,7 +162,8 @@ namespace ImgurSniper.UI {
 
         public static void Autostart(bool enableAutostart) {
             try {
-                string path = Path.Combine($"\"{ConfigHelper.InstallDir}ImgurSniper.exe\" -autostart");
+                string file = Path.Combine(ConfigHelper.InstallDir, "ImgurSniper.exe");
+                string path = $"\"{file}\" -autostart";
 
                 using (RegistryKey baseKey =
                         Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true)) {

@@ -46,6 +46,7 @@ namespace ImgurSniper.UI {
 
         //Unhandled Exception User Message Boxes
         private static void UnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
+            WriteError(e.Exception);
 
             if (MessageBox.Show(string.Format(strings.unhandledErrorDescription, e.Exception.Message),
                 "ImgurSniper Error",
@@ -65,6 +66,27 @@ namespace ImgurSniper.UI {
                 Process.GetCurrentProcess().Kill();
                 return;
             }
+        }
+
+
+        private static void WriteError(Exception ex) {
+            try {
+                string errorFile = Path.Combine(ConfigHelper.ConfigPath, "ui.error.txt");
+                string nl = Environment.NewLine;
+                string errorDetails = $"!ImgurSniper.UI Error @{DateTime.Now}" + nl +
+                        $"    Error Message: {ex.Message}" + nl + nl +
+                        $"    Error Stacktrace: {ex.StackTrace}";
+
+                if (File.Exists(errorFile)) {
+                    File.AppendAllText(errorFile,
+                        nl + nl + "---------------------------------------------------------" + errorDetails);
+                } else {
+                    File.WriteAllText(errorFile,
+                        $"Details for an Exception in ImgurSniper.UI. " +
+                        "You can tell me about this error on http://www.github.com/mrousavy/ImgurSniper/issues so I can fix it as soon as possible!"
+                        + nl + errorDetails);
+                }
+            } catch { }
         }
     }
 }
