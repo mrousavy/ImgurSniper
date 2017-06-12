@@ -9,12 +9,15 @@
 
 **ImgurSniper** is a small and lightweight tool that is designed to make **sharing Images** way **easier and faster** by instantly uploading them to [imgur](http://www.imgur.com) or copying to your clipboard!
 
-# Downloads
+# Links
 <a href="https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperSetup.zip?raw=true"><img src="https://img.shields.io/badge/Download-Setup-brightgreen.svg" alt="Download Installer"></a>
 
 <a href="https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.zip?raw=true"><img src="https://img.shields.io/badge/Download-Portable-brightgreen.svg" alt="Download Portable"></a>
 
 <a href="https://github.com/mrousavy/Snappy"><img src="https://img.shields.io/badge/MacOS-Snappy-orange.svg" alt="Snappy"></a>
+
+<a href="https://saythanks.io/to/mrousavy"><img src="https://img.shields.io/badge/Say-Thanks-ff69b4.svg" alt="Say Thanks"></a>
+
 
 #### [View all Releases](https://github.com/mrousavy/ImgurSniper/releases)
 
