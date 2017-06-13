@@ -21,12 +21,12 @@ namespace ImgurSniper.Libraries.ScreenCapture {
 
             if (!string.IsNullOrEmpty(FFmpeg.VideoSource) && FFmpeg.VideoSource.Equals("screen-capture-recorder", StringComparison.InvariantCultureIgnoreCase)) {
                 // https://github.com/rdp/screen-capture-recorder-to-video-windows-free
-                string registryPath = "Software\\screen-capture-recorder";
+                const string registryPath = "Software\\screen-capture-recorder";
                 RegistryHelper.CreateRegistry(registryPath, "start_x", CaptureArea.X);
                 RegistryHelper.CreateRegistry(registryPath, "start_y", CaptureArea.Y);
                 RegistryHelper.CreateRegistry(registryPath, "capture_width", CaptureArea.Width);
                 RegistryHelper.CreateRegistry(registryPath, "capture_height", CaptureArea.Height);
-                RegistryHelper.CreateRegistry(registryPath, "default_max_fps", 60);
+                RegistryHelper.CreateRegistry(registryPath, "default_max_fps", Giffps); //GIF FPS used for ScreenRecordFPS
                 RegistryHelper.CreateRegistry(registryPath, "capture_mouse_default_1", DrawCursor ? 1 : 0);
             }
 

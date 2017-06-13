@@ -126,10 +126,19 @@ namespace ImgurSniper.UI.Pages.SettingsPages {
         private void SliderGifLength_Changed(object sender, RoutedPropertyChangedEventArgs<double> e) {
             if (sender is Slider slider) {
                 int value = (int)slider.Value;
-                ConfigHelper.GifLength = value * 1000;
-                EnableSave();
 
-                GifLengthLabel.Content = string.Format(strings.gifLengthVal, value);
+                //value == maximum is unlimited GIF length (-1 in config)
+                if (value == (int)slider.Maximum) {
+                    ConfigHelper.GifLength = -1;
+                    EnableSave();
+
+                    GifLengthLabel.Content = string.Format(strings.gifLengthVal, strings.gifLengthUnlimited);
+                } else {
+                    ConfigHelper.GifLength = value * 1000;
+                    EnableSave();
+
+                    GifLengthLabel.Content = string.Format(strings.gifLengthVal, value);
+                }
             }
         }
 

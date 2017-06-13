@@ -496,4 +496,7 @@ Wollen Sie ImgurSniper neustarten?</value>
     <value>Aktivieren Sie dies, falls Sie den Bildschirm pausieren wollen sobald Sie ImgurSniper öffnen,
 beispielsweise um Elemente oder Fenster aufzunehmen, welche verschwinden sobald ImgurSniper geöffnet wird.</value>
   </data>
+  <data name="gifLengthUnlimited" xml:space="preserve">
+    <value>∞</value>
+  </data>
 </root>

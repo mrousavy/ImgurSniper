@@ -495,4 +495,7 @@ Do you want to help out and submit a ticket?
     <value>Use this option if you want to pause the screen as soon as you open up ImgurSniper,
 e.g. for screenshotting elements that disappear once you open ImgurSniper.</value>
   </data>
+  <data name="gifLengthUnlimited" xml:space="preserve">
+    <value>∞</value>
+  </data>
 </root>

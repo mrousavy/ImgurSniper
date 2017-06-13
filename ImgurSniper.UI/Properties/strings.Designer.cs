@@ -369,6 +369,15 @@ namespace ImgurSniper.UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ∞.
+        /// </summary>
+        public static string gifLengthUnlimited {
+            get {
+                return ResourceManager.GetString("gifLengthUnlimited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} Seconds.
         /// </summary>
         public static string gifLengthVal {

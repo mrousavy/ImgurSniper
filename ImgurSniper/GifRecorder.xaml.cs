@@ -116,7 +116,8 @@ namespace ImgurSniper {
                         DoneButton.IsEnabled = true;
                     }
 
-                    if (elapsed >= ConfigHelper.GifLength && !_stopRequested) {
+                    //Stop after configured Length (-1 meaning no autostop)
+                    if (ConfigHelper.GifLength != -1 && elapsed >= ConfigHelper.GifLength && !_stopRequested) {
                         StopRecording();
                         _progressTimer.Dispose();
                     }
