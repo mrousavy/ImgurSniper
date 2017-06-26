@@ -1,5 +1,7 @@
 ﻿using ImgurSniper.Libraries.Helper;
 using ImgurSniper.Libraries.Start;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -10,6 +12,8 @@ namespace ImgurSniper {
     public partial class EntryWindow {
         public EntryWindow() {
             Hide();
+
+            KillImgurSniper();
 
             StartWithArguments();
         }
@@ -57,6 +61,12 @@ namespace ImgurSniper {
                 await Task.Delay(NotificationWindow.ShowDuration);
 
             Application.Current.Shutdown();
+        }
+
+
+
+        public void KillImgurSniper() {
+            Process.GetProcesses().Where(p => (p.ProcessName == "ImgurSniper" && p.Id != Process.GetCurrentProcess().Id)).ForEach(p => p.Kill());
         }
     }
 }

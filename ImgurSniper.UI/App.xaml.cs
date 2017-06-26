@@ -63,6 +63,8 @@ namespace ImgurSniper.UI {
                     // ignored
                 }
             } else {
+                Current.Shutdown();
+                Thread.Sleep(1000);
                 Process.GetCurrentProcess().Kill();
                 return;
             }
