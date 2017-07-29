@@ -15,6 +15,7 @@ namespace ImgurSniper.Libraries.Helper {
                 stream.Position = 0;
 
                 bool wasSaved = false;
+                Action clickAction = null;
 
                 //Config: Save Image locally?
                 if (ConfigHelper.SaveImages) {
@@ -27,6 +28,7 @@ namespace ImgurSniper.Libraries.Helper {
                             await stream.CopyToAsync(fstream);
                         }
                         wasSaved = true;
+                        clickAction = () => { Process.Start(filename); };
 
                         if (ConfigHelper.OpenFileAfterSnap) {
                             //Open Explorer and Highlight Image
@@ -45,8 +47,8 @@ namespace ImgurSniper.Libraries.Helper {
                         break;
                     case AfterSnipe.DoNothing:
                         //Do nothing (just save file e.g.)
-                        if (wasSaved)
-                            await ShowNotificationAsync(strings.savedToFile, NotificationType.Success);
+                        if (wasSaved) 
+                            await ShowNotificationAsync(strings.savedToFile, NotificationType.Success, clickAction);
                         break;
                     case AfterSnipe.UploadImgur:
                         //Upload image to imgur and copy link
