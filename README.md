@@ -4,6 +4,7 @@
   <p align="center">The faster screenshot tool</p>
   <p align="center">
     <a href="https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniperSetup.zip?raw=true"><img src="https://img.shields.io/badge/Download-Setup-brightgreen.svg" alt="Download"></a>
+    <a href="https://github.com/mrousavy/ImgurSniper/releases"><img src="https://img.shields.io/github/downloads/mrousavy/ImgurSniper/total.svg" alt="Total downloads"></a>
   </p>
 </p>
 
