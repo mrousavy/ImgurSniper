@@ -29,9 +29,9 @@ Compared to other Screenshot software, ImgurSniper is **as fast as sharing Image
 (Meaning the Link is Image only, so you can embed the Image, or share it with Software that can preview _Image URLs_, like _Discord_, ...)
 
 # How to use
-Press _Ctrl + Shift + X_ or _Print Screen_ (depending on your Preferences) to start **ImgurSniper** Snap Mode!
+Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd> or <kbd>PrintScreen</kbd> (depending on your Preferences) to start **ImgurSniper** Snap Mode!
 **Easily capture and share a moment** by drawing a Rectangle with your _Mouse_ to automatically upload it to [Imgur](http://www.imgur.com)!
-Optionally, press _Spacebar_ to _switch Mode_ and **paint on the Screen**!
+Optionally, press <kbd>Space</kbd> to _switch Mode_ and **paint on the Screen**!
 You can now **share the Link** that has been **copied to your Clipboard** with everyone!
 
 (To change the behavior of **ImgurSniper**, right-click the _Icon in your Tray_ and click **Settings**)
@@ -55,7 +55,7 @@ You can now **share the Link** that has been **copied to your Clipboard** with e
 - (Not yet implemented) Try the **Magnifying Glass** for precise cropping
 - Open Image on Imgur in **Browser** after uploading
 - Automatically start **ImgurSniper** on PC startup
-- Open **ImgurSniper** with a click on the Tray Icon, or by pressing _Ctrl + Shift + X_ or _Print Screen_ (when Autostart is enabled)
+- Open **ImgurSniper** with a click on the Tray Icon, or by pressing <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd> or <kbd>PrintScreen</kbd> (when Autostart is enabled)
 - Launch **ImgurSniper** on the _Current Screen_ or _All Screens at once_
 - Upload your Images as **PNG Format** for higher quality, or **JPEG Format** for faster uploads (Pro Tip: Enable "Upload Images in high Quality" [here](https://imgur.com/account/settings) for high quality Screenshots!)
 
