@@ -16,9 +16,7 @@ namespace ImgurSniper.Libraries.Start {
         /// <param name="files">Path to all upload-queued Images</param>
         public static async Task UploadMultiple(IEnumerable<string> files) {
             try {
-                //Logging in
-                ImgurUploader imgur = new ImgurUploader();
-                await imgur.Login();
+                ImgurUploader imgur = await GetUploaderAsync();
 
                 //Binary Image
                 List<MemoryStream> images = new List<MemoryStream>();
@@ -80,8 +78,7 @@ namespace ImgurSniper.Libraries.Start {
         /// </summary>
         /// <param name="file">Path to Image</param>
         public static async Task UploadSingle(string file) {
-            ImgurUploader imgur = new ImgurUploader();
-            await imgur.Login();
+            ImgurUploader imgur = await GetUploaderAsync();
 
             using (MemoryStream stream = new MemoryStream()) {
                 try {

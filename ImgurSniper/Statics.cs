@@ -1,8 +1,19 @@
-﻿using System;
+﻿using ImgurSniper.Libraries.Helper;
+using System;
 using System.Threading.Tasks;
 
 namespace ImgurSniper {
     public static class Statics {
+        private static ImgurUploader _client { get; set; }
+
+        public async static Task<ImgurUploader> GetUploaderAsync() {
+            if (_client == null)
+                _client = new ImgurUploader();
+
+            await _client.Login(); // Will not do anything if token is still valid
+            return _client;
+        }
+
         public static NotificationWindow Notification {
             get => _notification;
             set {
