@@ -69,6 +69,7 @@ namespace ImgurSniper.Libraries.Helper {
                 stream.Position = 0;
 
                 bool wasSaved = false;
+                Action clickAction = null;
 
                 //Config: Save GIF locally?
                 if (ConfigHelper.SaveImages) {
@@ -80,6 +81,7 @@ namespace ImgurSniper.Libraries.Helper {
                             await stream.CopyToAsync(fstream);
                         }
                         wasSaved = true;
+                        clickAction = () => { Process.Start(filename); };
 
                         if (ConfigHelper.OpenFileAfterSnap) {
                             //Open Explorer and Highlight Image
@@ -100,7 +102,7 @@ namespace ImgurSniper.Libraries.Helper {
                     case AfterSnipe.DoNothing:
                         //Do nothing (just save file e.g.)
                         if (wasSaved)
-                            await ShowNotificationAsync(strings.savedToFile, NotificationType.Success);
+                            await ShowNotificationAsync(strings.savedToFile, NotificationType.Success, clickAction);
                         break;
                     case AfterSnipe.UploadImgur:
                         //Upload image to imgur and copy link
@@ -118,8 +120,7 @@ namespace ImgurSniper.Libraries.Helper {
 
 
         private static async Task<string> UploadImgur(Stream stream, string hwndName, bool gif) {
-            ImgurUploader imgur = new ImgurUploader();
-            await imgur.Login();
+            ImgurUploader imgur = await GetUploaderAsync();
 
 #if DEBUG
             // ReSharper disable once ConvertToConstant.Local
