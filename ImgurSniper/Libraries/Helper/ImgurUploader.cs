@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace ImgurSniper.Libraries.Helper {
     public class ImgurUploader {
         private readonly ImgurClient _client;
+        private IOAuth2Token _token;
 
         public static string ClientId => "766263aaa4c9882";
 
@@ -19,18 +20,23 @@ namespace ImgurSniper.Libraries.Helper {
         /// </summary>
         public ImgurUploader() {
             _client = new ImgurClient(ClientId, ClientSecret);
+            _token = null;
         }
 
         //Login to Imgur Account
         public async Task Login() {
             try {
-                string refreshToken = ConfigHelper.ReadRefreshToken();
-                if (string.IsNullOrWhiteSpace(refreshToken))
-                    return;
+                if (_token != null && _token.ExpiresIn > 60) 
+                    return; // More than 60 seconds left; we don't need to login
 
+                string refreshToken = ConfigHelper.ReadRefreshToken();
+                if (string.IsNullOrWhiteSpace(refreshToken)) // No refresh token found; exit
+                    throw new Exception("No refresh-token found!");
+
+                // Refresh access token
                 OAuth2Endpoint endpoint = new OAuth2Endpoint(_client);
-                IOAuth2Token token = await endpoint.GetTokenByRefreshTokenAsync(refreshToken);
-                _client.SetOAuth2Token(token);
+                _token = await endpoint.GetTokenByRefreshTokenAsync(refreshToken);
+                _client.SetOAuth2Token(_token);
             } catch {
                 // ignored
             }
@@ -46,9 +52,7 @@ namespace ImgurSniper.Libraries.Helper {
             //Set Stream Position to beginning
             stream.Position = 0;
 
-            ImgurClient client = new ImgurClient(ClientId, ClientSecret);
-
-            ImageEndpoint endpoint = new ImageEndpoint(client);
+            ImageEndpoint endpoint = new ImageEndpoint(_client);
 
             string title = string.IsNullOrWhiteSpace(windowName)
                 ? strings.uploadTitle
