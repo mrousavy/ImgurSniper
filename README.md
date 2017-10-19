@@ -22,7 +22,7 @@
 
 #### [View all Releases](https://github.com/mrousavy/ImgurSniper/releases)
 
-Icon by [jinga](http://github.com/jingafreak), Idea by [dmaniak](http://github.com/dmaniak)
+Icon by [jinga](http://github.com/jingafreak), Idea & German translations by [dmaniak](http://github.com/dmaniak)
 
 ## Why choose ImgurSniper?
 Compared to other Screenshot software, ImgurSniper is **as fast as sharing Images can get**. Also, ImgurSniper will upload directly to [imgur](http://www.imgur.com), which gets a direct Image Link 
