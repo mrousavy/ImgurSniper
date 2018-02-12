@@ -15,7 +15,7 @@
 
 <a href="https://github.com/mrousavy/ImgurSniper/blob/master/Downloads/ImgurSniper.zip?raw=true"><img src="https://img.shields.io/badge/Download-Portable-brightgreen.svg" alt="Download Portable"></a>
 
-<a href="https://github.com/mrousavy/Snappy"><img src="https://img.shields.io/badge/MacOS-Snappy-orange.svg" alt="Snappy"></a>
+<a href="https://github.com/mrousavy/PostShot"><img src="https://img.shields.io/badge/Try-PostShot-orange.svg" alt="PostShot"></a>
 
 <a href="https://saythanks.io/to/mrousavy"><img src="https://img.shields.io/badge/Say-Thanks-ff69b4.svg" alt="Say Thanks"></a>
 
