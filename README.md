@@ -19,6 +19,7 @@
 
 <a href="https://saythanks.io/to/mrousavy"><img src="https://img.shields.io/badge/Say-Thanks-ff69b4.svg" alt="Say Thanks"></a>
 
+<a href='https://ko-fi.com/F1F8CLXG' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi2.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
 #### [View all Releases](https://github.com/mrousavy/ImgurSniper/releases)
 
