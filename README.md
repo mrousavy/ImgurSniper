@@ -1,3 +1,10 @@
+# :warning: Deprecation notice :warning:
+ImgurSniper was a project I initially created as my first _"real"_ C# project while still in school. I had lots of fun developing it, but obviously made some messes in the codebase such as in-efficiency, bugs, and inconsistent styling conventions. I learned a lot from this project, and want to thank everyone of you who downloaded it, starred it and created issues in here. I'm now archiving this repository, as I have no interest in maintaining the codebase, and honestly a full rewrite with my knowledge now would be a way better decision anyways. It still works on my machine but if it doesn't work on yours then I'm afraid I can't help you. Try [ShareX](https://github.com/ShareX/ShareX).
+Check out my [other repositories](https://github.com/mrousavy) for some other possibly interesting projects.
+
+> PS: ImgurSniper is also in the 2020 GitHub Archive Program, pretty cool to think there's some floppy disk out there containing buggy C# code.
+
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/mrousavy/ImgurSniper/master/ImgurSniper.UI/Resources/Logo.png" height="120" />
   <h3 align="center">ImgurSniper</h3>
